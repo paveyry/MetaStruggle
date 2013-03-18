@@ -6,7 +6,6 @@
 *.exe
 *.pdb
 *.cachefile
-*.contentproj
 *.*.suo
 *.suo
 
