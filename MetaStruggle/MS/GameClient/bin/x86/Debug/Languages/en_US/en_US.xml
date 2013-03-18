@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<back>Back</back>
+	<fullscreen>Fullscreen : </fullscreen>
+	<language>English</language>
+	<off>Off</off>
+	<on>On</on>
+	<option>Settings</option>
+	<play>Play</play>
+	<quit>Quit</quit>
+	<resolution>Resolution : </resolution>
+	<respawn>Dead - Respawn in </respawn>
+	<graphics>Graphics</graphics>
+	<sounds>Sounds</sounds>
+	<soundeffect>Effects : </soundeffect>
+	<music>Musics : </music>
+</Language>

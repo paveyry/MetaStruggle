@@ -1,0 +1,19 @@
+# EXT
+*.user
+*.*.user
+*.vssscc
+*.vspscc
+*.exe
+*.pdb
+*.cachefile
+*.contentproj
+*.*.suo
+*.suo
+
+# DIR
+*/_ReSharper.*/
+MetaStruggle/MS/GameClient/bin/x86/Debug/Content
+MetaStruggle/MS/GameClientContent/bin/
+MetaStruggle/MS/XNAnimation/bin
+MetaStruggle/MS/XNAnimationPipeline/bin
+obj/
