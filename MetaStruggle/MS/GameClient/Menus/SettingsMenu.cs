@@ -100,15 +100,16 @@ namespace GameClient.Menus
         #region NormalSettings
         void ChangeLanguage()
         {
+            if (GameEngine.LangCenter.LanguageAvailable.Length == 0)
+                return;
             System.Threading.Thread.Sleep(200);
             int index = 0;
             if (GameEngine.LangCenter.LanguageAvailable.Contains(GameEngine.Config.Language))
             {
-                index = Array.FindIndex(GameEngine.LangCenter.LanguageAvailable,
-                                        current => current == GameEngine.Config.Language);
+                index = Array.FindIndex(GameEngine.LangCenter.LanguageAvailable, current => current == GameEngine.Config.Language);
                 index++;
             }
-            GameEngine.Config.Language = GameEngine.LangCenter.LanguageAvailable[index % GameEngine.LangCenter.LanguageAvailable.Count()];
+            GameEngine.Config.Language = GameEngine.LangCenter.LanguageAvailable[index % GameEngine.LangCenter.LanguageAvailable.Length];
             ReactualizeOption();
         }
         #endregion
