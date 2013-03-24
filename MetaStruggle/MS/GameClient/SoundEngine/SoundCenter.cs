@@ -208,17 +208,9 @@ namespace GameClient.SoundEngine
 
         public void PlaySoundEvent(Global.EventManager.EventDatas eventDatas)
         {
-            switch (eventDatas.ID)
-            {
-                case "CharacterJump":
-                    if(eventDatas.Sender == "Zeus")
-                        Play("jump");
-                    break;
-                case "CharacterDie":
-                    if (eventDatas.Sender == "Zeus")
-                        Play("die");
-                    break;
-            }
+            if (!eventDatas.ID.StartsWith("Character"))
+                return;
+            Play(eventDatas.Sender + eventDatas.ID.Remove(0, 9));
         }
     }
 }
