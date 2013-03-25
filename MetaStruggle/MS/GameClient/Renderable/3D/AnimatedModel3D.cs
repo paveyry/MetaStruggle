@@ -87,25 +87,10 @@ namespace GameClient.Renderable._3D
         {
             if (_animClip == (int) animation)
                 return;
-
-            switch (animation)
-            {
-                case Animation.Run:
-                    _animClip = 2;
-                    break;
-                case Animation.Jump:
-                    _animClip = 3;
-                    break;
-                case Animation.Attack:
-                    _animClip = 4;
-                    break;
-                case Animation.Default:
-                    _animClip = 1;
-                    break;
-            }
+            _animClip = (int) animation;
 
             if (_animClip > Model.AnimationClips.Count)
-                _animClip = 0;
+                _animClip = 1;
             AnimationController.StartClip(Model.AnimationClips.Values.Count == 1
                                               ? Model.AnimationClips.Values[0]
                                               : Model.AnimationClips.Values[_animClip]);

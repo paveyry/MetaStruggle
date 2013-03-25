@@ -8,7 +8,6 @@ namespace GameClient.SoundEngine
 {
     public class SoundCenter
     {
-
         private const string DirMusic = "Musics";
         private const string DirEffect = "Effects";
         private readonly Dictionary<string, Sound> _soundBank = new Dictionary<string, Sound>();
@@ -208,9 +207,8 @@ namespace GameClient.SoundEngine
 
         public void PlaySoundEvent(Global.EventManager.EventDatas eventDatas)
         {
-            if (!eventDatas.ID.StartsWith("Character"))
-                return;
-            Play(eventDatas.Sender + eventDatas.ID.Remove(0, 9));
+            if (eventDatas.ID.StartsWith("Character"))
+                Play(eventDatas.Sender + eventDatas.ID.Remove(0, 9));
         }
     }
 }

@@ -4,7 +4,7 @@
   <Language>fr_FR</Language>
   <ResolutionWidth>800</ResolutionWidth>
   <ResolutionHeight>600</ResolutionHeight>
-  <VolumeMusic>100</VolumeMusic>
+  <VolumeMusic>10</VolumeMusic>
   <VolumeEffect>100</VolumeEffect>
   <FullScreen>false</FullScreen>
 </Config>
