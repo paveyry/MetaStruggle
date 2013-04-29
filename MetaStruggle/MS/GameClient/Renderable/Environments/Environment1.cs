@@ -20,14 +20,15 @@ namespace GameClient.Renderable.Environments
                     new Vector3(0, 0, 0),       //Point visé par la caméra
                     spriteBatch);               //SpriteBatch
 
-            sm.Skybox = new Skybox(Global.RessourceProvider.Videos["Intro"]);
-            sm.AddElement(new Zeus(sm, new Vector3(-5, 0, -17), new Vector3(1)) {Name = "MainCharacter"});
-            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapDesert"], new Vector3(10, 0, 0),
-                                      new Vector3(1f, 1f, 0.8f)));
+            //sm.Skybox = new Skybox(Global.RessourceProvider.Videos["Intro"]);
+            sm.AddElement(new Spiderman(sm, new Vector3(-5, 0, -17), new Vector3(1.2f), 1.6f) {Name = "test"});
+            sm.AddElement(new Zeus(sm, new Vector3(-8, 0, -17), new Vector3(1)) { Name = "MainCharacter" });
+            //sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapDesert"], new Vector3(10, 0, 0),
+            //                          new Vector3(1f, 1f, 0.8f)));
 
-            sm.AddElement(new AnimatedModel3D(sm, Global.RessourceProvider.AnimatedModels["Dwarf"],
-                                              new Vector3(-9, 0, -10), new Vector3(0.04f))
-                                              {Speed = 0.5f});
+            //sm.AddElement(new AnimatedModel3D(sm, Global.RessourceProvider.AnimatedModels["Dwarf"],
+            //                                  new Vector3(-9, 0, -10), new Vector3(0.04f))
+            //                                  {Speed = 0.5f});
 
             sm.Camera.SetTarget(sm.Items.First(current => current.Name == "MainCharacter"));
 

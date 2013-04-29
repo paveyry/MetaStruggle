@@ -114,6 +114,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollisionEngine\BoundingObjectModel.cs" />
+    <Compile Include="CollisionEngine\CollisionEngine.cs" />
+    <Compile Include="CollisionEngine\RenderBoundingObjects\BoundingBoxRenderer.cs" />
+    <Compile Include="CollisionEngine\RenderBoundingObjects\BoundingSphereRenderer.cs" />
     <Compile Include="Global\Config.cs" />
     <Compile Include="Global\EventManager\EventDatas.cs" />
     <Compile Include="Global\EventManager\EventManager.cs" />
@@ -138,6 +142,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Renderable\3D\AnimatedModel3D.cs" />
+    <Compile Include="Renderable\3D\Characters\Spiderman.cs" />
     <Compile Include="Renderable\3D\Characters\Zeus.cs" />
     <Compile Include="Renderable\3D\I3DElement.cs" />
     <Compile Include="Renderable\3D\Model3D.cs" />

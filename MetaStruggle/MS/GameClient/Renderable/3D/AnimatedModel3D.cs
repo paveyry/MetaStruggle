@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameClient.CollisionEngine;
 using GameClient.Renderable.Scene;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -26,7 +27,11 @@ namespace GameClient.Renderable._3D
         public SceneManager Scene { get; set; }
         private int _animClip;
         public AnimationController AnimationController { get; set; }
-        private float _speed ;
+        private float _speed;
+        //
+        public BoundingObjectModel BonesSpheres { get; set; }
+        public float Length, Weidth;
+        //
 
         public float Speed
         {
@@ -45,49 +50,57 @@ namespace GameClient.Renderable._3D
         {
             get
             {
-                return Matrix.Identity*
-                       Matrix.CreateRotationX(Pitch)*
-                       Matrix.CreateRotationY(Yaw)*
-                       Matrix.CreateRotationZ(Roll)*
-                       Matrix.CreateScale(Scale)*
-                       Matrix.CreateTranslation(Position)*
-                       Matrix.CreateRotationX(XRotation)*
-                       Matrix.CreateRotationY(YRotation)*
+                return Matrix.Identity *
+                       Matrix.CreateRotationX(Pitch) *
+                       Matrix.CreateRotationY(Yaw) *
+                       Matrix.CreateRotationZ(Roll) *
+                       Matrix.CreateScale(Scale) *
+                       Matrix.CreateTranslation(Position) *
+                       Matrix.CreateRotationX(XRotation) *
+                       Matrix.CreateRotationY(YRotation) *
                        Matrix.CreateRotationZ(ZRotation);
             }
         }
 
         public Animation CurrentAnimation
         {
-            get { return (Animation) _animClip; }
+            get { return (Animation)_animClip; }
         }
 
-        public AnimatedModel3D(SceneManager scene, SkinnedModel model, Vector3 position, Vector3 scale)
+        public AnimatedModel3D(SceneManager scene, SkinnedModel model, Vector3 position, Vector3 scale, float speed = 1)
         {
             Model = model;
             Scene = scene;
             Position = position;
             Scale = scale;
             _animClip = 0;
-
+            //
+            Length = 1.8f;
+            Weidth = 1.2f;
+            BonesSpheres = new BoundingObjectModel(this);
+            //
             AnimationController = new AnimationController(Model.SkeletonBones)
-                {
-                    Speed = Speed,
-                    TranslationInterpolation = InterpolationMode.Linear,
-                    OrientationInterpolation = InterpolationMode.Linear,
-                    ScaleInterpolation = InterpolationMode.Linear
-                };
+            {
+                Speed = speed,
+                TranslationInterpolation = InterpolationMode.Linear,
+                OrientationInterpolation = InterpolationMode.Linear,
+                ScaleInterpolation = InterpolationMode.Linear
+            };
 
-            Speed = 1;
+            Speed = speed;
 
             SetAnimation(Animation.Default);
         }
 
         public void SetAnimation(Animation animation)
         {
-            if (_animClip == (int) animation)
+            if (_animClip == (int)animation)
                 return;
+<<<<<<< HEAD
             _animClip = (int) animation;
+=======
+            _animClip = (int)animation;
+>>>>>>> rebase
 
             if (_animClip > Model.AnimationClips.Count)
                 _animClip = 1;
@@ -107,18 +120,21 @@ namespace GameClient.Renderable._3D
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
-                    effect.SetBoneTransforms(AnimationController.SkinnedBoneTransforms);
 
+                    effect.SetBoneTransforms(AnimationController.SkinnedBoneTransforms);
                     effect.EnableDefaultLighting();
-                    /*effect.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
-                    effect.AmbientLightColor = Vector3.One;
-                    effect.SpecularColor = new Vector3(0.25f);
-                    effect.SpecularPower = 16;*/
+
+                    //
+                    BonesSpheres.UpdateSpheres(this);
+                    //
 
                     effect.World = World;
 
                     effect.View = Scene.Camera.ViewMatrix;
-                    effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f); 
+                    effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f);
+                    //
+                    BonesSpheres.Draw(spriteBatch.GraphicsDevice, Scene.Camera.ViewMatrix, effect.Projection, this);
+                    //
                 }
 
                 mesh.Draw();
@@ -128,9 +144,9 @@ namespace GameClient.Renderable._3D
 
     public enum Animation
     {
-        Default = 1, 
-        Run, 
-        Jump, 
+        Default = 1,
+        Run,
+        Jump,
         Attack
     }
 }

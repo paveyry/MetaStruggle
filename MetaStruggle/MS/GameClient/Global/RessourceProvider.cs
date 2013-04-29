@@ -27,6 +27,7 @@ namespace GameClient.Global
 
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
 
+
         public static void Fill(ContentManager content)
         {
             LoadCharacterFaces(content);
@@ -62,6 +63,7 @@ namespace GameClient.Global
         {
             AnimatedModels.Add("Zeus", GetZeus(content));
             AnimatedModels.Add("Dwarf", GetDwarf(content));
+            AnimatedModels.Add("Spiderman", GetSpiderman(content));
         }
 
         static SkinnedModel GetZeus(ContentManager content)
@@ -77,9 +79,7 @@ namespace GameClient.Global
                     effect.Texture = body;
 
                     if (mesh.Name == "Cube_001")
-                    {
                         effect.Texture = thunder;
-                    }
 
                     effect.EnableDefaultLighting();
 
@@ -103,10 +103,28 @@ namespace GameClient.Global
                     effect.Texture = body;
 
                     if (mesh.Name == "axe")
-                    {
                         effect.Texture = axe;
-                    }
 
+                    effect.EnableDefaultLighting();
+
+                    effect.SpecularColor = new Vector3(0.25f);
+                    effect.SpecularPower = 16;
+                }
+            }
+
+            return sm;
+        }
+
+        static SkinnedModel GetSpiderman(ContentManager content)
+        {
+            var sm = content.Load<SkinnedModel>("AnimatedModels\\Spiderman\\Spiderman");
+            var body = content.Load<Texture2D>("AnimatedModels\\Spiderman\\Spidermantex");
+
+            foreach (ModelMesh mesh in sm.Model.Meshes)
+            {
+                foreach (SkinnedEffect effect in mesh.Effects)
+                {
+                    effect.Texture = body;
                     effect.EnableDefaultLighting();
 
                     effect.SpecularColor = new Vector3(0.25f);
