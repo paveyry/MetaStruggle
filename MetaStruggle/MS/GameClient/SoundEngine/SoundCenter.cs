@@ -40,7 +40,7 @@ namespace GameClient.SoundEngine
         public static SoundCenter Instance
         {
             get { return _soundCenter ?? (_soundCenter = new SoundCenter()); }
-        }   
+        }
 
         public SoundCenter()
         {
@@ -49,10 +49,10 @@ namespace GameClient.SoundEngine
             LoadEffects();
             MusicStatus = Sound.Status.Stop;
 
-            GameEngine.EventManager.Register("Character.Jump", JumpEvent);
-            GameEngine.EventManager.Register("Character.Die", DieEvent);
-            GameEngine.EventManager.Register("Character.Attack", AttackEvent);
-            GameEngine.EventManager.Register("Character.Run", RunEvent);
+            GameEngine.EventManager.Register("Character.Jump", (data) => PlaySoundEvent("Jump", (Character) data));
+            GameEngine.EventManager.Register("Character.Die", (data) => PlaySoundEvent("Die", (Character) data));
+            GameEngine.EventManager.Register("Character.Attack", (data) => PlaySoundEvent("Attack", (Character) data));
+            GameEngine.EventManager.Register("Character.Run", (data) => PlaySoundEvent("Run", (Character) data));
         }
 
         void ChangeVolume(int volume, bool isMusic)
@@ -211,26 +211,6 @@ namespace GameClient.SoundEngine
         }
 
         #endregion
-
-        void JumpEvent(object data)
-        {
-            PlaySoundEvent("Jump", (Character) data);
-        }
-
-        void DieEvent(object data)
-        {
-            PlaySoundEvent("Die", (Character)data);
-        }
-
-        void AttackEvent(object data)
-        {
-            PlaySoundEvent("Attack", (Character)data);
-        }
-
-        void RunEvent(object data)
-        {
-            PlaySoundEvent("Run", (Character)data);
-        }
 
         void PlaySoundEvent(string type, Character character)
         {
