@@ -46,7 +46,7 @@ namespace GameClient.Characters
         public override void Update(GameTime gameTime)
         {
             #region ManageKeyboard
-            KeyboardState ks = Global.GameEngine.KeyboardState;
+            KeyboardState ks = GameEngine.KeyboardState;
 
             var pendingAnim = new List<Animation>();
 
@@ -62,6 +62,7 @@ namespace GameClient.Characters
             {
                 Jump(gameTime);
                 pendingAnim.Add(Animation.Jump);
+                GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
             }
             if (ks.IsKeyDown(Keys.Right))
             {
@@ -80,6 +81,7 @@ namespace GameClient.Characters
             {
                 IsDead = true;
                 DeathDate = DateTime.Now;
+                GameEngine.EventManager.ThrowNewEvent("Character.Die", this);
             }
 
             if (IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)

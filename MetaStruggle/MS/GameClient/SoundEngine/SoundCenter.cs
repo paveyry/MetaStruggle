@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using GameClient.Characters;
 using GameClient.Global;
 
 namespace GameClient.SoundEngine
@@ -13,6 +14,7 @@ namespace GameClient.SoundEngine
         private readonly Dictionary<string, Sound> _soundBank = new Dictionary<string, Sound>();
         private readonly Dictionary<string, Thread> _poolTask = new Dictionary<string, Thread>();
         private Sound.Status MusicStatus { get; set; }
+
         public int VolumeMusic
         {
             get { return GameEngine.Config.VolumeMusic; }
@@ -22,6 +24,7 @@ namespace GameClient.SoundEngine
                 ChangeVolume(GameEngine.Config.VolumeMusic, true);
             }
         }
+
         public int VolumeEffect
         {
             get { return GameEngine.Config.VolumeEffect; }
@@ -45,6 +48,11 @@ namespace GameClient.SoundEngine
             LoadMusics();
             LoadEffects();
             MusicStatus = Sound.Status.Stop;
+
+            GameEngine.EventManager.Register("Character.Jump", JumpEvent);
+            GameEngine.EventManager.Register("Character.Die", DieEvent);
+            GameEngine.EventManager.Register("Character.Attack", AttackEvent);
+            GameEngine.EventManager.Register("Character.Run", RunEvent);
         }
 
         void ChangeVolume(int volume, bool isMusic)
@@ -204,10 +212,29 @@ namespace GameClient.SoundEngine
 
         #endregion
 
-        public void PlaySoundEvent(object data)
+        void JumpEvent(object data)
         {
-            //if (eventDatas.ID.StartsWith("Character"))
-            //    Play(eventDatas.Sender + eventDatas.ID.Remove(0, 9));
+            PlaySoundEvent("Jump", (Character) data);
+        }
+
+        void DieEvent(object data)
+        {
+            PlaySoundEvent("Die", (Character)data);
+        }
+
+        void AttackEvent(object data)
+        {
+            PlaySoundEvent("Attack", (Character)data);
+        }
+
+        void RunEvent(object data)
+        {
+            PlaySoundEvent("Run", (Character)data);
+        }
+
+        void PlaySoundEvent(string type, Character character)
+        {
+            Play(character.ModelName + type);
         }
     }
 }
