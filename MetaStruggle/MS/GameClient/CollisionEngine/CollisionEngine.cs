@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameClient.Characters;
 using GameClient.Renderable._3D;
-using GameClient.Renderable._3D.Characters;
 
 namespace GameClient.CollisionEngine
 {

@@ -23,7 +23,7 @@ namespace GameClient.Renderable._3D
         public float Roll { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Scale { get; set; }
-        public string Name { get; set; }
+        public string ModelName { get; set; }
         public SceneManager Scene { get; set; }
         private int _animClip;
         public AnimationController AnimationController { get; set; }
@@ -66,8 +66,8 @@ namespace GameClient.Renderable._3D
 
         public AnimatedModel3D(string nameCharacter, SceneManager scene, Vector3 position, Vector3 scale, float speed = 1)
         {
-            Name = nameCharacter;
-            Model = Global.RessourceProvider.AnimatedModels[Name];
+            ModelName = nameCharacter;
+            Model = Global.RessourceProvider.AnimatedModels[ModelName];
             Scene = scene;
             Position = position;
             Scale = scale;

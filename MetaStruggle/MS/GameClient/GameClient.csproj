@@ -142,7 +142,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Renderable\3D\AnimatedModel3D.cs" />
-    <Compile Include="Renderable\3D\Characters\Character.cs" />
+    <Compile Include="Characters\Character.cs" />
     <Compile Include="Renderable\3D\I3DElement.cs" />
     <Compile Include="Renderable\3D\Model3D.cs" />
     <Compile Include="Renderable\3D\Skybox.cs" />

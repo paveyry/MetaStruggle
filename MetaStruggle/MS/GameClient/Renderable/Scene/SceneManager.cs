@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameClient.Characters;
 using GameClient.Global;
-using GameClient.Renderable._3D.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GameClient.Renderable._3D;
@@ -65,7 +65,7 @@ namespace GameClient.Renderable.Scene
             spriteBatch.Begin();
             Texture2D face = RessourceProvider.CharacterFaces["Zeus"];
             spriteBatch.Draw(face, new Rectangle(10,10,face.Width/10,face.Height/10), Color.White);
-            Character main = Items.Find(current => current.Name == "Spiderman") as Character;
+            Character main = Items.Find(current => current.ModelName == "Spiderman") as Character;
             spriteBatch.DrawString(RessourceProvider.Fonts["HUD"],
                                    "0% " + (main.IsDead
                                    ? Lang.Language.GetString("respawn") + ((int)(5 - (DateTime.Now - main.DeathDate).TotalSeconds)).ToString() : ""),

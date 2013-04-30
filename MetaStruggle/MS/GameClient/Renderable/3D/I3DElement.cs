@@ -18,7 +18,7 @@ namespace GameClient.Renderable._3D
         float Roll { get; set; }
         Vector3 Position { get; set; }
         Vector3 Scale { get; set; }
-        string Name { get; set; }
+        string ModelName { get; set; }
         SceneManager Scene { get; set; }
         float Speed { get; set; }
         float Gravity { get; set; }

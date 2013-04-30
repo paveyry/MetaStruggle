@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GameClient.CollisionEngine;
 using GameClient.Global.EventManager;
 using GameClient.Renderable.Scene;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable._3D.Characters
 {
-    public class Character : AnimatedModel3D
+    public class Zeus : AnimatedModel3D
     {
         private readonly float _baseYaw;
         private bool _jumping;
@@ -18,25 +18,18 @@ namespace GameClient.Renderable._3D.Characters
         public bool IsDead;
         public DateTime DeathDate;
 
-        public BoundingObjectModel BonesSpheres { get; set; }
-        public float Length, Weidth;
-
         public bool CollideWithMap
         {
             get { return Position.Y < 0.1 && Position.Y > -0.1 && Position.X < 12.58 && Position.X > -23.91; }
         }
 
-        public Character(string nameCharacter, SceneManager scene, Vector3 position, Vector3 scale, float speed = 1f)
-            : base(nameCharacter, scene, position, scale, speed)
+        public Zeus(SceneManager scene, Vector3 position, Vector3 scale)
+            : base("Zeus", scene, position, scale)
         {
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;
-            Gravity = 0.005f;
-
-            Length = 1.8f;
-            Weidth = 1.2f;
-            BonesSpheres = new BoundingObjectModel(this);
+            Gravity = 0.005f * Speed;
         }
 
         public override void Update(GameTime gameTime)
@@ -58,7 +51,7 @@ namespace GameClient.Renderable._3D.Characters
             {
                 Jump(gameTime);
                 pendingAnim.Add(Animation.Jump);
-                Global.GameEngine.EventManager.ThrowEvent(new EventDatas(base.Name, "CharacterJump", null));
+                Global.GameEngine.EventManager.ThrowEvent(new EventDatas("Zeus", "CharacterJump", null));
             }
             if (ks.IsKeyDown(Keys.Right))
             {
@@ -77,7 +70,7 @@ namespace GameClient.Renderable._3D.Characters
             {
                 IsDead = true;
                 DeathDate = DateTime.Now;
-                Global.GameEngine.EventManager.ThrowEvent(new EventDatas(base.Name, "CharacterDie", null));
+                Global.GameEngine.EventManager.ThrowEvent(new EventDatas("Zeus", "CharacterDie", null));
             }
 
             if (IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)
@@ -125,13 +118,13 @@ namespace GameClient.Renderable._3D.Characters
         void MoveRight(GameTime gameTime)
         {
             Yaw = _baseYaw + MathHelper.Pi;
-            Position -= new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
+            Position -= new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity * Speed), 0, 0);
         }
 
         void MoveLeft(GameTime gameTime)
         {
             Yaw = _baseYaw;
-            Position += new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
+            Position += new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity * Speed), 0, 0);
         }
 
         void Jump(GameTime gameTime)
@@ -165,8 +158,8 @@ namespace GameClient.Renderable._3D.Characters
 
         public override void Draw(GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            BonesSpheres.UpdateSpheres(this);
-            base.Draw(gameTime, spriteBatch, BonesSpheres);
+
+            base.Draw(gameTime, spriteBatch);
         }
     }
 }
