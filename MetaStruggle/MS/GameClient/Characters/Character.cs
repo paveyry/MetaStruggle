@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameClient.CollisionEngine;
-using GameClient.Global.EventManager;
+using GameClient.Global;
 using GameClient.Renderable.Scene;
 using GameClient.Renderable._3D;
 using Microsoft.Xna.Framework;
@@ -62,7 +62,10 @@ namespace GameClient.Characters
             {
                 Jump(gameTime);
                 pendingAnim.Add(Animation.Jump);
+<<<<<<< HEAD:MetaStruggle/MS/GameClient/Characters/Character.cs
                 Global.GameEngine.EventManager.ThrowEvent(new EventDatas(base.ModelName, "CharacterJump", null));
+=======
+>>>>>>> changement d'event manager + ajout reseau:MetaStruggle/MS/GameClient/Renderable/3D/Characters/Character.cs
             }
             if (ks.IsKeyDown(Keys.Right))
             {
@@ -81,7 +84,10 @@ namespace GameClient.Characters
             {
                 IsDead = true;
                 DeathDate = DateTime.Now;
+<<<<<<< HEAD:MetaStruggle/MS/GameClient/Characters/Character.cs
                 Global.GameEngine.EventManager.ThrowEvent(new EventDatas(base.ModelName, "CharacterDie", null));
+=======
+>>>>>>> changement d'event manager + ajout reseau:MetaStruggle/MS/GameClient/Renderable/3D/Characters/Character.cs
             }
 
             if (IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)

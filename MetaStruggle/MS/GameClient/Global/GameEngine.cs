@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using GameClient.Renderable.Scene;
+using Network;
 
 namespace GameClient.Global
 {
@@ -21,11 +22,11 @@ namespace GameClient.Global
         public static SceneManager SceneManager { get; set; }
         public static SoundCenter SoundCenter { get; set; }
         public static LanguageLoader LangCenter { get; set; }
-        public static EventManager.EventManager EventManager { get; set; }
+        public static EventManager EventManager { get; set; }
 
         public static void InitializeEngine(ContentManager content, GraphicsDeviceManager graphics)
         {
-            EventManager = new EventManager.EventManager();
+            EventManager = new EventManager();
             Config = IO.ConfigSerialization.LoadFile("config.xml");
             LangCenter = new LanguageLoader(graphics.GraphicsDevice);
             RessourceProvider.Fill(content);

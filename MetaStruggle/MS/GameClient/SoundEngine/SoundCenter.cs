@@ -41,7 +41,6 @@ namespace GameClient.SoundEngine
 
         public SoundCenter()
         {
-            Global.GameEngine.EventManager.AddListener("*", PlaySoundEvent);
             CheckDirectories();
             LoadMusics();
             LoadEffects();
@@ -205,10 +204,10 @@ namespace GameClient.SoundEngine
 
         #endregion
 
-        public void PlaySoundEvent(Global.EventManager.EventDatas eventDatas)
+        public void PlaySoundEvent(object data)
         {
-            if (eventDatas.ID.StartsWith("Character"))
-                Play(eventDatas.Sender + eventDatas.ID.Remove(0, 9));
+            //if (eventDatas.ID.StartsWith("Character"))
+            //    Play(eventDatas.Sender + eventDatas.ID.Remove(0, 9));
         }
     }
 }

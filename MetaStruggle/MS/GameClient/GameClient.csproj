@@ -65,6 +65,7 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -119,8 +120,6 @@
     <Compile Include="CollisionEngine\RenderBoundingObjects\BoundingBoxRenderer.cs" />
     <Compile Include="CollisionEngine\RenderBoundingObjects\BoundingSphereRenderer.cs" />
     <Compile Include="Global\Config.cs" />
-    <Compile Include="Global\EventManager\EventDatas.cs" />
-    <Compile Include="Global\EventManager\EventManager.cs" />
     <Compile Include="Global\GameEngine.cs" />
     <Compile Include="Global\RessourceProvider.cs" />
     <Compile Include="IO\ConfigSerialization.cs" />
@@ -164,6 +163,10 @@
     <ProjectReference Include="..\GameClientContent\GameClientContent.contentproj">
       <Name>GameClientContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
+    <ProjectReference Include="..\Network\Network.csproj">
+      <Project>{f10cb8a3-7fc2-495b-8944-3173b51586e7}</Project>
+      <Name>Network</Name>
     </ProjectReference>
     <ProjectReference Include="..\XNAnimation\XNAnimation.csproj">
       <Project>{2a857645-a225-4177-99bd-c8f6d22b72fa}</Project>

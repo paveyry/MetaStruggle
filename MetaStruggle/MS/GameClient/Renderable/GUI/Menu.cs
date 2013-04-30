@@ -113,8 +113,7 @@ namespace GameClient.Renderable.GUI
         private Texture2D GetImage(Rectangle rec, MenuButton button)
         {
             var mouse = new Rectangle(Global.GameEngine.MouseState.X, Global.GameEngine.MouseState.Y, 1, 1);
-            if (rec.Intersects(mouse))
-                mouse = mouse;
+
             return rec.Intersects(mouse) ? button.ImageOnClick : button.Image;
         }
 
