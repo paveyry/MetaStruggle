@@ -20,7 +20,7 @@ namespace GameClient.Characters
         public string PlayerName;
 
 
-        public BoundingObjectModel BonesSpheres { get; set; }
+        public BoundingObjectModel BoundingObject { get; set; }
         public float Length, Weidth;
 
         public bool CollideWithMap
@@ -40,7 +40,7 @@ namespace GameClient.Characters
 
             Length = length;
             Weidth = weidth;
-            BonesSpheres = new BoundingObjectModel(this);
+            BoundingObject = new BoundingObjectModel(this);
         }
 
         public override void Update(GameTime gameTime)
@@ -175,8 +175,8 @@ namespace GameClient.Characters
 
         public override void Draw(GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            BonesSpheres.UpdateBox(this);
-            base.Draw(gameTime, spriteBatch, BonesSpheres);
+            BoundingObject.UpdateBox(this);
+            base.Draw(gameTime, spriteBatch, BoundingObject);
         }
     }
 }
