@@ -6,9 +6,9 @@ using GameClient.Lang;
 using GameClient.Renderable.Layout;
 using GameClient.SoundEngine;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using GameClient.Renderable.Scene;
+using Microsoft.Xna.Framework.Input;
 using Network;
 
 namespace GameClient.Global
@@ -17,12 +17,13 @@ namespace GameClient.Global
     {
         public static Config Config { get; set; }
         public static Stack<IBasicLayout> DisplayStack { get; set; }
-        public static KeyboardState KeyboardState { get; set; }
-        public static MouseState MouseState { get; set; }
         public static SceneManager SceneManager { get; set; }
         public static SoundCenter SoundCenter { get; set; }
         public static LanguageLoader LangCenter { get; set; }
         public static EventManager EventManager { get; set; }
+        public static KeyboardState KeyboardState { get; set; }
+        public static MouseState MouseState { get; set; }
+
 
         public static void InitializeEngine(ContentManager content, GraphicsDeviceManager graphics)
         {
