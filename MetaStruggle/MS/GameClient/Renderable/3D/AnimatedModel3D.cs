@@ -94,9 +94,7 @@ namespace GameClient.Renderable._3D
 
             if (_animClip > Model.AnimationClips.Count)
                 _animClip = 1;
-            AnimationController.StartClip(Model.AnimationClips.Values.Count == 1
-                                              ? Model.AnimationClips.Values[0]
-                                              : Model.AnimationClips.Values[_animClip]);
+            AnimationController.StartClip(Model.AnimationClips.Values.Count == 1 ? Model.AnimationClips.Values[0] : Model.AnimationClips.Values[_animClip]);
         }
 
         public virtual void Update(GameTime gameTime)
@@ -106,9 +104,27 @@ namespace GameClient.Renderable._3D
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            foreach (ModelMesh mesh in Model.Model.Meshes)
+            {
+                foreach (SkinnedEffect effect in mesh.Effects)
+                {
+
+                    effect.SetBoneTransforms(AnimationController.SkinnedBoneTransforms);
+                    effect.EnableDefaultLighting();
+                    effect.World = World;
+                    effect.View = Scene.Camera.ViewMatrix;
+                    effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f);
+                }
+
+                mesh.Draw();
+            }
 
         }
 
+        /// FOR DEBUG! / DRAW boundingSphere/Box
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
+        /// <param name="bonesSpheres"></param>
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, BoundingObjectModel bonesSpheres)
         {
             foreach (ModelMesh mesh in Model.Model.Meshes)
@@ -130,6 +146,7 @@ namespace GameClient.Renderable._3D
                 mesh.Draw();
             }
         }
+
     }
 
     public enum Animation

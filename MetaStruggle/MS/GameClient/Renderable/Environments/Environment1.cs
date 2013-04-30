@@ -27,9 +27,7 @@ namespace GameClient.Renderable.Environments
             sm.AddElement(new Character("Zeus", sm, new Vector3(-8, 0, -17), new Vector3(1)));
             sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapDesert"], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
-            //sm.AddElement(new AnimatedModel3D(sm, Global.RessourceProvider.AnimatedModels["Dwarf"],
-            //                                  new Vector3(-9, 0, -10), new Vector3(0.04f))
-            //                                  {Speed = 0.5f});
+            sm.AddElement(new AnimatedModel3D("Dwarf",sm, new Vector3(-9, 0, -10), new Vector3(0.04f)) { Speed = 0.5f });
 
             sm.Camera.SetTarget(sm.Items.First(current => current.Name == "Zeus"));
 
