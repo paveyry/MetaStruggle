@@ -5,6 +5,7 @@ using GameClient.Global;
 using GameClient.Renderable.Scene;
 using GameClient.Renderable._3D;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Characters
@@ -14,12 +15,13 @@ namespace GameClient.Characters
         private readonly float _baseYaw;
         private bool _jumping;
         private double _jumppos;
+
         public bool IsDead;
         public DateTime DeathDate;
-        public int Damages; //
+        public int Damages = 0;
         public string PlayerName;
-
-
+        public Texture2D Face;
+        
         public BoundingObjectModel BoundingObject { get; set; }
         public float Length, Weidth;
 
@@ -33,6 +35,7 @@ namespace GameClient.Characters
             : base(nameCharacter, scene, position, scale, speed)
         {
             PlayerName = playerName;
+            Face = RessourceProvider.CharacterFaces[nameCharacter];
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;

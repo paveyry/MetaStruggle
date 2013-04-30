@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XNAnimation", "MS\XNAnimati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Network", "MS\Network\Network.csproj", "{F10CB8A3-7FC2-495B-8944-3173B51586E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master", "MS\Master\Master.csproj", "{89C412DF-038D-4C25-A3F5-AF315D271B44}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,16 +69,6 @@ Global
 		{F10CB8A3-7FC2-495B-8944-3173B51586E7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F10CB8A3-7FC2-495B-8944-3173B51586E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F10CB8A3-7FC2-495B-8944-3173B51586E7}.Release|x86.ActiveCfg = Release|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{89C412DF-038D-4C25-A3F5-AF315D271B44}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

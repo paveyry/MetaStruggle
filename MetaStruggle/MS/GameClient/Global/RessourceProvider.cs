@@ -47,6 +47,7 @@ namespace GameClient.Global
         static void LoadCharacterFaces(ContentManager content)
         {
             CharacterFaces.Add("Zeus", content.Load<Texture2D>("CharacterFaces\\Zeus"));
+            CharacterFaces.Add("Spiderman", content.Load<Texture2D>("CharacterFaces\\Spiderman"));
         }
 
         static void LoadMenuBackgrounds(ContentManager content)
@@ -114,7 +115,6 @@ namespace GameClient.Global
 
             return sm;
         }
-
         static SkinnedModel GetSpiderman(ContentManager content)
         {
             var sm = content.Load<SkinnedModel>("AnimatedModels\\Spiderman\\Spiderman");
@@ -144,6 +144,7 @@ namespace GameClient.Global
         {
             Fonts.Add("Menu", content.Load<SpriteFont>("Fonts\\Menu"));
             Fonts.Add("HUD", content.Load<SpriteFont>("Fonts\\HUD"));
+            Fonts.Add("HUDlittle", content.Load<SpriteFont>("Fonts\\HUDlittle"));
         }
 
         static void LoadCursors()

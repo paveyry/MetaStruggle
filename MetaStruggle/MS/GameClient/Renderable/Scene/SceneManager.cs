@@ -15,17 +15,21 @@ namespace GameClient.Renderable.Scene
         public SpriteBatch SpriteBatch { get; set; }
         public List<I3DElement> Items { get; private set; }
         public Skybox Skybox { get; set; }
+        public HUD Hud { get; set; }
 
         public SceneManager(Camera3D camera, SpriteBatch spriteBatch)
         {
             Camera = camera;
             SpriteBatch = spriteBatch;
             Items = new List<I3DElement>();
+            Hud = new HUD();
         }
 
         public void AddElement(I3DElement element)
         {
             Items.Add(element);
+            if(element is Character)
+                Hud.AddCharacter(element as Character);                
         }
 
         public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch)
@@ -53,25 +57,10 @@ namespace GameClient.Renderable.Scene
         {
             if(Skybox != null)
                 Skybox.Draw(spriteBatch);
-
             foreach (var element in Items)
                 element.Draw(gameTime, spriteBatch);
 
-            DrawHud(spriteBatch);
-        }
-
-        void DrawHud(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Begin();
-            Texture2D face = RessourceProvider.CharacterFaces["Zeus"];
-            spriteBatch.Draw(face, new Rectangle(10,10,face.Width/10,face.Height/10), Color.White);
-            Character main = Items.Find(current => current.ModelName == "Spiderman") as Character;
-            spriteBatch.DrawString(RessourceProvider.Fonts["HUD"],
-                                   "0% " + (main.IsDead
-                                   ? Lang.Language.GetString("respawn") + ((int)(5 - (DateTime.Now - main.DeathDate).TotalSeconds)).ToString() : ""),
-                                   new Vector2(80, 10), Color.White);
-            spriteBatch.End();
-            spriteBatch.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            Hud.DrawHUD(spriteBatch);
         }
     }
 }

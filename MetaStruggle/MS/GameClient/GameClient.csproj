@@ -153,6 +153,7 @@
     <Compile Include="Renderable\GUI\MenuButtonDisplayType.cs" />
     <Compile Include="Renderable\Layout\IBasicLayout.cs" />
     <Compile Include="Renderable\Scene\Camera3D.cs" />
+    <Compile Include="Renderable\Scene\HUD.cs" />
     <Compile Include="Renderable\Scene\SceneManager.cs" />
     <Compile Include="SoundEngine\EffectSound.cs" />
     <Compile Include="SoundEngine\Music.cs" />
