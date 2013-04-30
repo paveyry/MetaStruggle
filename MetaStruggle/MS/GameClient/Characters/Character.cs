@@ -143,8 +143,8 @@ namespace GameClient.Characters
 
             SetPriorityAnimation(pendingAnim);
 
-            if (Position.Y >= 0)
-                Scene.Camera.SetTarget(this);
+            //if (Position.Y >= 0)
+            //    Scene.Camera.SetTarget(this);
 
             base.Update(gameTime);
         }

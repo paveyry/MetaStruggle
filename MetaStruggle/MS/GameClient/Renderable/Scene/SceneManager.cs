@@ -59,7 +59,7 @@ namespace GameClient.Renderable.Scene
                 Skybox.Draw(spriteBatch);
             foreach (var element in Items)
                 element.Draw(gameTime, spriteBatch);
-
+            Camera.FollowsCharacters(Camera, Items.FindAll(e => e is Character));
             Hud.DrawHUD(spriteBatch);
         }
     }
