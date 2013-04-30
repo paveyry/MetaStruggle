@@ -15,6 +15,7 @@ namespace GameClient.Characters
         private readonly float _baseYaw;
         private bool _jumping;
         private double _jumppos;
+        private Vector3 _spawnPosition;
 
         public bool IsDead;
         public DateTime DeathDate;
@@ -40,6 +41,7 @@ namespace GameClient.Characters
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;
             Gravity = 0.005f;
+            _spawnPosition = position;
 
             Length = length;
             Weidth = weidth;
@@ -65,7 +67,7 @@ namespace GameClient.Characters
             {
                 Jump(gameTime);
                 pendingAnim.Add(Animation.Jump);
-                //GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
+                GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
             }
             if (ks.IsKeyDown(Keys.Right))
             {
@@ -92,7 +94,7 @@ namespace GameClient.Characters
                 {
                     Jump(gameTime);
                     pendingAnim.Add(Animation.Jump);
-                    //GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
+                    GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
                 }
                 if (ks.IsKeyDown(Keys.NumPad6))
                 {
@@ -120,7 +122,7 @@ namespace GameClient.Characters
             {
                 SetAnimation(Animation.Default);
                 IsDead = false;
-                Position = new Vector3(-5, 0, -17);
+                Position = _spawnPosition;
             }
             #endregion
 
@@ -206,7 +208,7 @@ namespace GameClient.Characters
             if (!CollideWithMap) return;
 
             _jumping = false;
-            //Position = new Vector3(Position.X, 0, Position.Z);
+            Position = new Vector3(Position.X, 0, Position.Z);
             _jumppos = 0;
             pendingAnim.Add(Animation.Default);
         }

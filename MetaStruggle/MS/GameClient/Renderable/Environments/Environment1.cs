@@ -22,8 +22,9 @@ namespace GameClient.Renderable.Environments
 
             sm.Skybox = new Skybox(Global.RessourceProvider.Videos["Intro"]);
 
-            sm.AddElement(new Character("Spiderman", "Spiderman", sm, new Vector3(-5, 0, -17), new Vector3(1), 1.6f, 2));
-            sm.AddElement(new Character("Zeus", "Zeus", sm, new Vector3(-8, 0, -17), new Vector3(1)));
+            sm.AddElement(new Character("Spiderman", "Spiderman", sm, new Vector3(-5, 0, -17), new Vector3(1), 1.6f));
+            sm.AddElement(new Character("Zeus", "Zeus", sm, new Vector3(-12, 0, -17), new Vector3(1)));
+            sm.AddElement(new Character("Alex", "Alex", sm, new Vector3(-8, 0, -17), new Vector3(1), 1.6f));
             sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapDesert"], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
             sm.AddElement(new AnimatedModel3D("Dwarf",sm, new Vector3(-9, 0, -10), new Vector3(0.04f)) { Speed = 0.5f });

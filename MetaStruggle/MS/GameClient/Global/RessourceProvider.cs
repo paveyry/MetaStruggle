@@ -48,6 +48,7 @@ namespace GameClient.Global
         {
             CharacterFaces.Add("Zeus", content.Load<Texture2D>("CharacterFaces\\Zeus"));
             CharacterFaces.Add("Spiderman", content.Load<Texture2D>("CharacterFaces\\Spiderman"));
+            CharacterFaces.Add("Alex", content.Load<Texture2D>("CharacterFaces\\Alex"));
         }
 
         static void LoadMenuBackgrounds(ContentManager content)
@@ -65,6 +66,7 @@ namespace GameClient.Global
             AnimatedModels.Add("Zeus", GetZeus(content));
             AnimatedModels.Add("Dwarf", GetDwarf(content));
             AnimatedModels.Add("Spiderman", GetSpiderman(content));
+            AnimatedModels.Add("Alex", GetAlex(content));
         }
 
         static SkinnedModel GetZeus(ContentManager content)
@@ -129,6 +131,33 @@ namespace GameClient.Global
 
                     effect.SpecularColor = new Vector3(0.25f);
                     effect.SpecularPower = 16;
+                }
+            }
+
+            return sm;
+        }
+
+        static SkinnedModel GetAlex(ContentManager content)
+        {
+            var sm = content.Load<SkinnedModel>("AnimatedModels\\Alex\\AlexMercer");
+            var body = content.Load<Texture2D>("AnimatedModels\\Alex\\nis_alex_body_dm");
+            var head = content.Load<Texture2D>("AnimatedModels\\Alex\\alex_head_shot_dm");
+            var hand = content.Load<Texture2D>("AnimatedModels\\Alex\\AlexHand");
+
+            foreach (ModelMesh mesh in sm.Model.Meshes)
+            {
+                foreach (SkinnedEffect effect in mesh.Effects)
+                {
+                    if (mesh.Name == "model.005")
+                        effect.Texture = body;
+                    if (mesh.Name == "model.006")
+                        effect.Texture = head;
+                    if (mesh.Name == "model.004")
+                        effect.Texture = hand;
+                    effect.EnableDefaultLighting();
+
+                    effect.SpecularColor = new Vector3(0.25f);
+                    effect.SpecularPower = 30;
                 }
             }
 
