@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameClient.Renderable._3D;
+using GameClient.Renderable._3D.Characters;
 
 namespace GameClient.CollisionEngine
 {
@@ -15,9 +16,9 @@ namespace GameClient.CollisionEngine
             _boundingObjectModels = new Dictionary<string, BoundingObjectModel>();
         }
 
-        public void Add(string name, AnimatedModel3D model)
+        public void Add(string name, Character model)
         {
-            _boundingObjectModels.Add(name,new BoundingObjectModel(model));
+            _boundingObjectModels.Add(name, new BoundingObjectModel(model));
         }
 
         public bool Intersects(string modelName)

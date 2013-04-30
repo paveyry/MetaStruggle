@@ -63,12 +63,11 @@ namespace GameClient.Renderable.Scene
         void DrawHud(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            Texture2D face = Global.RessourceProvider.CharacterFaces["Zeus"];
+            Texture2D face = RessourceProvider.CharacterFaces["Zeus"];
             spriteBatch.Draw(face, new Rectangle(10,10,face.Width/10,face.Height/10), Color.White);
-            Zeus main = Items.Find(current => current.Name == "MainCharacter") as Zeus;
-            spriteBatch.DrawString(Global.RessourceProvider.Fonts["HUD"],
-                                   "0% " +
-                                   (main.IsDead
+            Character main = Items.Find(current => current.Name == "Spiderman") as Character;
+            spriteBatch.DrawString(RessourceProvider.Fonts["HUD"],
+                                   "0% " + (main.IsDead
                                    ? Lang.Language.GetString("respawn") + ((int)(5 - (DateTime.Now - main.DeathDate).TotalSeconds)).ToString() : ""),
                                    new Vector2(80, 10), Color.White);
             spriteBatch.End();

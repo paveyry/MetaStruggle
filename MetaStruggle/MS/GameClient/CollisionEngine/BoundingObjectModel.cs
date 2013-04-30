@@ -1,5 +1,6 @@
 ﻿using GameClient.CollisionEngine.RenderBoundingObjects;
 using GameClient.Renderable._3D;
+using GameClient.Renderable._3D.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,7 +12,7 @@ namespace GameClient.CollisionEngine
         public BoundingBox BoxModel;
         private readonly float Length, WeidthOver2;
 
-        public BoundingObjectModel(AnimatedModel3D model)
+        public BoundingObjectModel(Character model)
         {
             Length = model.Length;
             WeidthOver2 = model.Weidth / 2;
@@ -34,9 +35,7 @@ namespace GameClient.CollisionEngine
         public void Draw(GraphicsDevice graphics, Matrix view, Matrix projection, AnimatedModel3D upModel)
         {
             foreach (var boundingSphere in BonesSpheres)
-            {
-                BoundingSphereRenderer.Render(boundingSphere,graphics, view, projection, new Color(255, 255, 255));
-            }
+                BoundingSphereRenderer.Render(boundingSphere, graphics, view, projection, new Color(255, 255, 255));
 
             //BoundingBoxRenderer.RenderBox(BoxModel, graphics, view, projection, new Color(255, 255, 255));
         }
@@ -50,7 +49,7 @@ namespace GameClient.CollisionEngine
         BoundingSphere[] BonesSpheres { get; set; }
         public void UpdateSpheres(AnimatedModel3D upModel)
         {
-            ModelPosition = upModel.Position;// -ModelPosition;
+            ModelPosition = upModel.Position;
             Matrix[] absolute = new Matrix[upModel.Model.Model.Bones.Count];
             Matrix[] translation = new Matrix[upModel.Model.Model.Bones.Count];
             upModel.Model.Model.CopyAbsoluteBoneTransformsTo(absolute);

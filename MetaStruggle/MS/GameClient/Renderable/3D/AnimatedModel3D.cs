@@ -28,10 +28,7 @@ namespace GameClient.Renderable._3D
         private int _animClip;
         public AnimationController AnimationController { get; set; }
         private float _speed;
-        //
-        public BoundingObjectModel BonesSpheres { get; set; }
-        public float Length, Weidth;
-        //
+
 
         public float Speed
         {
@@ -67,18 +64,15 @@ namespace GameClient.Renderable._3D
             get { return (Animation)_animClip; }
         }
 
-        public AnimatedModel3D(SceneManager scene, SkinnedModel model, Vector3 position, Vector3 scale, float speed = 1)
+        public AnimatedModel3D(string nameCharacter, SceneManager scene, Vector3 position, Vector3 scale, float speed = 1)
         {
-            Model = model;
+            Name = nameCharacter;
+            Model = Global.RessourceProvider.AnimatedModels[Name];
             Scene = scene;
             Position = position;
             Scale = scale;
             _animClip = 0;
-            //
-            Length = 1.8f;
-            Weidth = 1.2f;
-            BonesSpheres = new BoundingObjectModel(this);
-            //
+
             AnimationController = new AnimationController(Model.SkeletonBones)
             {
                 Speed = speed,
@@ -112,6 +106,11 @@ namespace GameClient.Renderable._3D
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
+        }
+
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, BoundingObjectModel bonesSpheres)
+        {
             foreach (ModelMesh mesh in Model.Model.Meshes)
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
@@ -119,17 +118,12 @@ namespace GameClient.Renderable._3D
 
                     effect.SetBoneTransforms(AnimationController.SkinnedBoneTransforms);
                     effect.EnableDefaultLighting();
-
-                    //
-                    BonesSpheres.UpdateSpheres(this);
-                    //
-
                     effect.World = World;
-
                     effect.View = Scene.Camera.ViewMatrix;
                     effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f);
+
                     //
-                    BonesSpheres.Draw(spriteBatch.GraphicsDevice, Scene.Camera.ViewMatrix, effect.Projection, this);
+                    bonesSpheres.Draw(spriteBatch.GraphicsDevice, Scene.Camera.ViewMatrix, effect.Projection, this);
                     //
                 }
 
