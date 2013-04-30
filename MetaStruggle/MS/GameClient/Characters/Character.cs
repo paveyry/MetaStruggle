@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameClient.CollisionEngine;
-using GameClient.Global;
+using GameClient.Global.EventManager;
 using GameClient.Renderable.Scene;
 using GameClient.Renderable._3D;
 using Microsoft.Xna.Framework;
@@ -21,7 +21,7 @@ namespace GameClient.Characters
 
 
         public BoundingObjectModel BoundingObject { get; set; }
-        public float Length, Weidth;
+        public float Length, Weidth; // For BoundingBoxes
 
         public bool CollideWithMap
         {
@@ -62,6 +62,10 @@ namespace GameClient.Characters
             {
                 Jump(gameTime);
                 pendingAnim.Add(Animation.Jump);
+<<<<<<< HEAD
+=======
+                Global.GameEngine.EventManager.ThrowEvent(new EventDatas(base.ModelName, "CharacterJump", null));
+>>>>>>> fuck
             }
             if (ks.IsKeyDown(Keys.Right))
             {
@@ -80,6 +84,10 @@ namespace GameClient.Characters
             {
                 IsDead = true;
                 DeathDate = DateTime.Now;
+<<<<<<< HEAD
+=======
+                Global.GameEngine.EventManager.ThrowEvent(new EventDatas(base.ModelName, "CharacterDie", null));
+>>>>>>> fuck
             }
 
             if (IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)
