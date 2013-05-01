@@ -13,8 +13,8 @@ namespace GameClient.Characters
     public class Character : AnimatedModel3D
     {
         private readonly float _baseYaw;
-        private bool _jumping;
-        private double _jumppos;
+        public bool _jumping;
+        public double _jumppos;
         private readonly Vector3 _spawnPosition;
 
         public bool IsDead;
@@ -52,36 +52,40 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
-            #region ManageKeyboard
             KeyboardState ks = GameEngine.KeyboardState;
 
             var pendingAnim = new List<Animation>();
 
-            if (CurrentAnimation != Animation.Jump)
-                pendingAnim.Add(Animation.Default);
+            if (ModelName != "Spiderman")
+            {
+                #region ManageKeyboard
+                if (CurrentAnimation != Animation.Jump)
+                    pendingAnim.Add(Animation.Default);
 
-            if (ks.IsKeyDown(Keys.Z))
-            {
-                Attack(gameTime);
-                pendingAnim.Add(Animation.Attack);
+                if (ks.IsKeyDown(Keys.Z))
+                {
+                    Attack(gameTime);
+                    pendingAnim.Add(Animation.Attack);
+                }
+                if (ks.IsKeyDown(Keys.Space) && !_jumping && CollideWithMap)
+                {
+                    Jump(gameTime);
+                    pendingAnim.Add(Animation.Jump);
+                    GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
+                }
+                if (ks.IsKeyDown(Keys.Right))
+                {
+                    MoveRight(gameTime);
+                    pendingAnim.Add(Animation.Run);
+                }
+                if (ks.IsKeyDown(Keys.Left))
+                {
+                    MoveLeft(gameTime);
+                    pendingAnim.Add(Animation.Run);
+                }
+
+                #endregion
             }
-            if (ks.IsKeyDown(Keys.Space) && !_jumping && CollideWithMap)
-            {
-                Jump(gameTime);
-                pendingAnim.Add(Animation.Jump);
-                GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
-            }
-            if (ks.IsKeyDown(Keys.Right))
-            {
-                MoveRight(gameTime);
-                pendingAnim.Add(Animation.Run);
-            }
-            if (ks.IsKeyDown(Keys.Left))
-            {
-                MoveLeft(gameTime);
-                pendingAnim.Add(Animation.Run);
-            }
-            #endregion
 
             #region tests
 
@@ -145,8 +149,15 @@ namespace GameClient.Characters
 
             ApplyGravity();
 
-            if (CollideWithMap && CurrentAnimation == Animation.Jump)
+            if (CollideWithMap && CurrentAnimation != Animation.Default)
                 pendingAnim.Add(Animation.Default);
+
+            if (!CollideWithMap && CurrentAnimation != Animation.Attack)
+            {
+                //CollisionEnabled = false;
+            }
+
+            CollisionEnabled = false;
 
             SetPriorityAnimation(pendingAnim);
 
@@ -158,12 +169,12 @@ namespace GameClient.Characters
                 if (c != null && c.Yaw == Yaw)
                     mul = -mul;
 
-                CollisionEnabled = false;
+                //CollisionEnabled = false;
 
                 Position += new Vector3(mul * (Yaw == _baseYaw ? new Random().Next(0, 1000) / 1000f : -new Random().Next(0, 1000) / 1000f), 0, 0);
             }
             else
-                CollisionEnabled = true;
+                //CollisionEnabled = true;
 
             base.Update(gameTime);
         }
@@ -201,7 +212,7 @@ namespace GameClient.Characters
 
         bool CollideWithSomeone()
         {
-            return !Scene.Items.GetRange(0, Scene.Items.Count).FindAll(e => e is Character && !e.Equals(this)).TrueForAll(e => !new BoundingObjectModel(this).Intersects(new BoundingObjectModel(e as Character)));
+            return CollisionEnabled && !Scene.Items.GetRange(0, Scene.Items.Count).FindAll(e => e is Character && !e.Equals(this)).TrueForAll(e => !new BoundingObjectModel(this).Intersects(new BoundingObjectModel(e as Character)));
         }
 
         void Jump(GameTime gameTime)
@@ -226,12 +237,15 @@ namespace GameClient.Characters
                 _jumppos = 0;
                 pendingAnim.Add(Animation.Jump);
             }
+<<<<<<< HEAD
            
+=======
+>>>>>>> modif sauts et collisions
 
             if (CollideWithSomeone())
             {
                 Position = pos + new Vector3(Yaw == _baseYaw ? 0.15f : -0.15f, 0, 0);
-                _jumppos -= gameTime.ElapsedGameTime.TotalMilliseconds*Gravity;
+                _jumppos -= gameTime.ElapsedGameTime.TotalMilliseconds * Gravity;
             }
 
             if (!CollideWithMap) return;
@@ -244,6 +258,9 @@ namespace GameClient.Characters
 
         void Attack(GameTime gameTime)
         {
+            if (CollideWithMap)
+                CollisionEnabled = true;
+
             var pos = Position;
             Position += new Vector3(Yaw == _baseYaw ? Width/2 : -Width/2, 0, 0);
             BoundingObject.UpdateBox(this);
@@ -253,8 +270,14 @@ namespace GameClient.Characters
                 var c = GetPlayerColliding();
                 if (c != null)
                 {
+                    int mul = 1;
+
+                    //c.CollisionEnabled = false;
                     c.Damages += (1 + c.Damages/50) * 0.5f;
-                    c.Position += new Vector3((Yaw == _baseYaw ? 1 : -1) * (c.Damages / 100f) , c.Damages/500f, 0);
+                    c.Position += new Vector3((Yaw == _baseYaw ? 1 : -1) * (c.Damages / 5f) , c.Damages/500f, 0);
+                    c.SetAnimation(Animation.Jump);
+                    c._jumping = true;
+                    c._jumppos = 0;
                 }
             }
 
@@ -266,7 +289,7 @@ namespace GameClient.Characters
         void ApplyGravity()
         {
             if(!CollideWithMap && !CollideWithSomeone())
-                Position -= new Vector3(0, Gravity * 3, 0);
+                Position -= new Vector3(0, Gravity * 1.5f, 0);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
