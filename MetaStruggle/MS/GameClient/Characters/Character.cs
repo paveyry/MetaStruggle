@@ -145,11 +145,6 @@ namespace GameClient.Characters
             ApplyGravity();
 
             SetPriorityAnimation(pendingAnim);
-
-<<<<<<< HEAD
-            //if (Position.Y >= 0)
-            //    Scene.Camera.SetTarget(this);
-=======
             if (CollideWithSomeone() && !_jumping && CollisionEnabled)
             {
                 var c = GetPlayerColliding();
@@ -164,10 +159,6 @@ namespace GameClient.Characters
             }
             else
                 CollisionEnabled = true;
-
-            if (Position.Y >= 0)
-                Scene.Camera.SetTarget(this);
->>>>>>> fix collision + attaque
 
             base.Update(gameTime);
         }
