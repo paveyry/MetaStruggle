@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameClient.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI.Elements
 {
@@ -15,8 +17,8 @@ namespace GameClient.Renderable.GUI.Elements
         private Color ButonColorSelected;
         private Texture2D Image;
         private Texture2D ImageSelected;
-        private Event OnClick;
         private bool isSelect;
+        private Event OnClick;
 
         public Button(Rectangle rectangle,string text, SpriteFont font,Color buttonColor, Color buttonSelected, Event onClick) : base(rectangle)
         {
@@ -36,7 +38,9 @@ namespace GameClient.Renderable.GUI.Elements
 
         public override void UpdateElement(GameTime gameTime)
         {
-            
+            KeyboardState ks = GameEngine.KeyboardState;
+            if (ks.IsKeyDown(Keys.A))
+                Name += "a";
         }
     }
 }
