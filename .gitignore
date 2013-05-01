@@ -9,7 +9,8 @@
 *.*.suo
 *.suo
 *.dll
-
+*.vsp
+*.psess
 # DIR
 */_ReSharper.*/
 MetaStruggle/MS/GameClient/bin/x86/Debug/Content
