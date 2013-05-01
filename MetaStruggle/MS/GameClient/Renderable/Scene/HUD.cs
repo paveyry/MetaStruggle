@@ -46,7 +46,7 @@ namespace GameClient.Renderable.Scene
                                            character.PlayerName,
                                            new Vector2(x + addCoordonate, height + addCoordonate), Color.White);
                 x += width;
-                spriteBatch.DrawString(RessourceProvider.Fonts["HUD"], character.Damages + "%",
+                spriteBatch.DrawString(RessourceProvider.Fonts["HUD"], (int)character.Damages + "%",
                                        new Vector2(x, height - (int) _intervalSize.Y), Color.White);
                 x += (int)_intervalSize.X;
             }

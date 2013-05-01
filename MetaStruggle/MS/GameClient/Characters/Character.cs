@@ -15,16 +15,17 @@ namespace GameClient.Characters
         private readonly float _baseYaw;
         private bool _jumping;
         private double _jumppos;
-        private Vector3 _spawnPosition;
+        private readonly Vector3 _spawnPosition;
 
         public bool IsDead;
         public DateTime DeathDate;
-        public int Damages = 0;
+        public float Damages = 0;
         public string PlayerName;
         public Texture2D Face;
+        public bool CollisionEnabled { get; set; }
         
         public BoundingObjectModel BoundingObject { get; set; }
-        public float Length, Weidth;
+        public float Length, Width;
 
         public bool CollideWithMap
         {
@@ -42,9 +43,10 @@ namespace GameClient.Characters
             _baseYaw = Yaw;
             Gravity = 0.005f;
             _spawnPosition = position;
+            CollisionEnabled = true;
 
             Length = length;
-            Weidth = weidth;
+            Width = weidth;
             BoundingObject = new BoundingObjectModel(this);
         }
 
@@ -123,6 +125,7 @@ namespace GameClient.Characters
                 SetAnimation(Animation.Default);
                 IsDead = false;
                 Position = _spawnPosition;
+                Damages = 0;
             }
             #endregion
 
@@ -143,8 +146,28 @@ namespace GameClient.Characters
 
             SetPriorityAnimation(pendingAnim);
 
+<<<<<<< HEAD
             //if (Position.Y >= 0)
             //    Scene.Camera.SetTarget(this);
+=======
+            if (CollideWithSomeone() && !_jumping && CollisionEnabled)
+            {
+                var c = GetPlayerColliding();
+                int mul = 1;
+
+                if (c != null && c.Yaw == Yaw)
+                    mul = -mul;
+
+                CollisionEnabled = false;
+
+                Position += new Vector3(mul * (Yaw == _baseYaw ? new Random().Next(0, 1000) / 1000f : -new Random().Next(0, 1000) / 1000f), 0, 0);
+            }
+            else
+                CollisionEnabled = true;
+
+            if (Position.Y >= 0)
+                Scene.Camera.SetTarget(this);
+>>>>>>> fix collision + attaque
 
             base.Update(gameTime);
         }
@@ -167,7 +190,7 @@ namespace GameClient.Characters
             Yaw = _baseYaw + MathHelper.Pi;
             Position -= new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
             
-            if (CollideWithSomeone())
+            if (CollisionEnabled && CollideWithSomeone())
                 Position += new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
         }
 
@@ -176,7 +199,7 @@ namespace GameClient.Characters
             Yaw = _baseYaw;
             Position += new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
             
-            if (CollideWithSomeone())
+            if (CollisionEnabled && CollideWithSomeone())
                 Position -= new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
         }
 
@@ -204,7 +227,6 @@ namespace GameClient.Characters
                 _jumppos -= gameTime.ElapsedGameTime.TotalMilliseconds*Gravity;
             }
 
-            //if (!(Position.Y <= 0)) return;
             if (!CollideWithMap) return;
 
             _jumping = false;
@@ -215,7 +237,22 @@ namespace GameClient.Characters
 
         void Attack(GameTime gameTime)
         {
+            var pos = Position;
+            Position += new Vector3(Yaw == _baseYaw ? Width/2 : -Width/2, 0, 0);
+            BoundingObject.UpdateBox(this);
 
+            if (CollideWithSomeone())
+            {
+                var c = GetPlayerColliding();
+                if (c != null)
+                {
+                    c.Damages += (1 + c.Damages/50) * 0.5f;
+                    c.Position += new Vector3((Yaw == _baseYaw ? 1 : -1) * (c.Damages / 100f) , c.Damages/500f, 0);
+                }
+            }
+
+            Position = pos;
+            BoundingObject.UpdateBox(this);
         }
         #endregion
 
@@ -229,6 +266,14 @@ namespace GameClient.Characters
         {
             //BoundingObject.UpdateBox(this);
             base.Draw(gameTime, spriteBatch);
+        }
+
+        Character GetPlayerColliding()
+        {
+            return
+                Scene.Items.GetRange(0, Scene.Items.Count)
+                     .FindAll(e => e is Character && !e.Equals(this))
+                     .Find(e => BoundingObject.Intersects(new BoundingObjectModel(e as Character))) as Character;
         }
     }
 }
