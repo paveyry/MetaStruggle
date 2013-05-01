@@ -118,6 +118,7 @@ namespace GameClient.Characters
                 IsDead = true;
                 DeathDate = DateTime.Now;
                 GameEngine.EventManager.ThrowNewEvent("Character.Die", this);
+                //jumping = true;
             }
 
             if (IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)

@@ -147,10 +147,14 @@
     <Compile Include="Renderable\3D\Skybox.cs" />
     <Compile Include="Renderable\Environments\Environment1.cs" />
     <Compile Include="Renderable\GUI\Cinematic.cs" />
+    <Compile Include="Renderable\GUI\Elements\Button.cs" />
+    <Compile Include="Renderable\GUI\Elements\Element.cs" />
     <Compile Include="Renderable\GUI\ListButtons.cs" />
     <Compile Include="Renderable\GUI\Menu.cs" />
+    <Compile Include="Renderable\GUI\1Menu.cs" />
     <Compile Include="Renderable\GUI\MenuButton.cs" />
     <Compile Include="Renderable\GUI\MenuButtonDisplayType.cs" />
+    <Compile Include="Renderable\GUI\Elements\Textbox.cs" />
     <Compile Include="Renderable\Layout\IBasicLayout.cs" />
     <Compile Include="Renderable\Scene\Camera3D.cs" />
     <Compile Include="Renderable\Scene\HUD.cs" />
