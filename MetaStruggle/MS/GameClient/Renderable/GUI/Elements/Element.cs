@@ -13,6 +13,7 @@ namespace GameClient.Renderable.GUI.Elements
         public delegate void Event();
 
         public Rectangle ElementRectangle;
+        public Vector2 Position { get { return new Vector2(ElementRectangle.Location.X, ElementRectangle.Y); } }
 
         public Element(Rectangle rectangle)
         {

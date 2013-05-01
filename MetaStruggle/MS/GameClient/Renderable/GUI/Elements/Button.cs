@@ -32,7 +32,7 @@ namespace GameClient.Renderable.GUI.Elements
 
         public override void DrawElement(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(ButtonFont, Name, new Vector2(ElementRectangle.Location.X, ElementRectangle.Location.Y), isSelect?ButonColorSelected:ButtonColor) ;
+            spriteBatch.DrawString(ButtonFont, Name, Position, isSelect?ButonColorSelected:ButtonColor) ;
             base.DrawElement(gameTime,spriteBatch);
         }
 
