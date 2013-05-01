@@ -227,8 +227,8 @@ namespace GameClient.Characters
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            BoundingObject.UpdateBox(this);
-            base.Draw(gameTime, spriteBatch, BoundingObject);
+            //BoundingObject.UpdateBox(this);
+            base.Draw(gameTime, spriteBatch);
         }
     }
 }

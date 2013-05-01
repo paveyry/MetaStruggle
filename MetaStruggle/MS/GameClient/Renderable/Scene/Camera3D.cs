@@ -33,7 +33,7 @@ namespace GameClient.Renderable.Scene
             Target = target;
         }
 
-        public void SetTarget(_3D.I3DElement targetElement)
+        public void SetTarget(I3DElement targetElement)
         {
             Target = new Vector3(targetElement.Position.X, targetElement.Position.Y + 4, targetElement.Position.Z);
         }
