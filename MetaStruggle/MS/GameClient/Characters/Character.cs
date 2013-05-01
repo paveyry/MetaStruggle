@@ -144,12 +144,11 @@ namespace GameClient.Characters
 
             ApplyGravity();
 
+            if (CollideWithMap && CurrentAnimation == Animation.Jump)
+                pendingAnim.Add(Animation.Default);
+
             SetPriorityAnimation(pendingAnim);
 
-<<<<<<< HEAD
-            //if (Position.Y >= 0)
-            //    Scene.Camera.SetTarget(this);
-=======
             if (CollideWithSomeone() && !_jumping && CollisionEnabled)
             {
                 var c = GetPlayerColliding();
@@ -167,7 +166,6 @@ namespace GameClient.Characters
 
             if (Position.Y >= 0)
                 Scene.Camera.SetTarget(this);
->>>>>>> fix collision + attaque
 
             base.Update(gameTime);
         }
@@ -264,7 +262,7 @@ namespace GameClient.Characters
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //BoundingObject.UpdateBox(this);
+            BoundingObject.UpdateBox(this);
             base.Draw(gameTime, spriteBatch);
         }
 
