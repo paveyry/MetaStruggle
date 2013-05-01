@@ -164,9 +164,6 @@ namespace GameClient.Characters
             else
                 CollisionEnabled = true;
 
-            if (Position.Y >= 0)
-                Scene.Camera.SetTarget(this);
-
             base.Update(gameTime);
         }
 
