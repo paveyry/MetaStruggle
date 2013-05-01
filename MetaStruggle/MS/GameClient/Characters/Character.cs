@@ -214,7 +214,18 @@ namespace GameClient.Characters
             _jumppos += gameTime.ElapsedGameTime.TotalMilliseconds * Gravity;
             var pos = Position;
 
-            Position = new Vector3(Position.X, (float)(3 * Math.Sin(_jumppos)), Position.Z);
+            if (Position.X < 12.58 && Position.X > -23.91 || Position.Y > 0.1)
+            {
+                Position = new Vector3(Position.X, (float)(3 * Math.Sin(_jumppos)), Position.Z);
+            }
+            else
+            {
+                _jumping = false;
+                Position -= new Vector3(0, (float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity * 2), 0);
+                _jumppos = 0;
+                pendingAnim.Add(Animation.Jump);
+            }
+           
 
             if (CollideWithSomeone())
             {

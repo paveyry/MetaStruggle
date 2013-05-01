@@ -194,6 +194,8 @@ namespace GameClient.Global
         static void LoadStaticModels(ContentManager content)
         {
             StaticModels.Add("MapDesert", content.Load<Model>("StaticModels\\MapDesert"));
+            StaticModels.Add("MapTardis", content.Load<Model>("StaticModels\\tardis map"));
+            StaticModels.Add("MapMinecraft", content.Load<Model>("StaticModels\\tree map"));
         }
 
         static void LoadFonts(ContentManager content)
