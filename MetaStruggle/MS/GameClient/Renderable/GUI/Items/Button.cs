@@ -12,12 +12,13 @@ namespace GameClient.Renderable.GUI.Items
     public class Button : Item
     {
         private SpriteFont ButtonFont;
-        private string Name;
+        public string Name;
         private Color ButtonColor;
         private Color ButonColorSelected;
         private Texture2D Image;
         private Texture2D ImageSelected;
-        private bool isSelect;
+        bool _isSelect { get; set; }
+        public bool IsSelect { get; set; }
         private Event OnClick;
 
         public Button(Rectangle rectangle, string text, SpriteFont font, Color buttonColor, Color buttonSelected, Event onClick)
@@ -28,12 +29,12 @@ namespace GameClient.Renderable.GUI.Items
             ButtonColor = buttonColor;
             ButonColorSelected = buttonSelected;
             OnClick = onClick;
-            isSelect = false;
+            _isSelect = false;
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(ButtonFont, Name, Position, isSelect ? ButonColorSelected : ButtonColor);
+            spriteBatch.DrawString(ButtonFont, Name, Position,_isSelect ? ButonColorSelected : ButtonColor);
             base.DrawItem(gameTime, spriteBatch);
         }
 
@@ -42,6 +43,13 @@ namespace GameClient.Renderable.GUI.Items
             var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
             if (ElementRectangle.Intersects(mouse) && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                 OnClick.Invoke();
+            if (!_isSelect)
+                IsSelect = _isSelect;
+            
+            if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+                _isSelect = ElementRectangle.Intersects(mouse);
+            if (_isSelect)
+                IsSelect = _isSelect;
         }
     }
 }

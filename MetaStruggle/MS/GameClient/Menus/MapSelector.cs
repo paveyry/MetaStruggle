@@ -44,6 +44,7 @@ namespace GameClient.Menus
 
         public void ButtonOk()
         {
+            System.Threading.Thread.Sleep(200);
             string perso = "";
             foreach (ButtonSelector e in from ButtonSelector e in Menu.Items.FindAll(e => e is ButtonSelector) where e.IsSelect select e)
                 perso = e.Text;

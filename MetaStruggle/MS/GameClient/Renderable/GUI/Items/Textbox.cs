@@ -49,7 +49,7 @@ namespace GameClient.Renderable.GUI.Items
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(TextboxButton, ElementRectangle, Color.White);
-            spriteBatch.Draw(Cursor, new Rectangle((int)((_actualPos - _displayPos)*_charLength.X), ElementRectangle.Location.Y,1,(int)_charLength.Y),ColorText );
+            spriteBatch.Draw(Cursor, new Rectangle((int)((_actualPos - _displayPos)*_charLength.X + 10), ElementRectangle.Location.Y,1,(int)_charLength.Y),ColorText );
             spriteBatch.DrawString(Font, DisplayText, Position, ColorText);
         }
 
