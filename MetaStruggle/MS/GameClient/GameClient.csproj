@@ -136,6 +136,8 @@
     </Compile>
     <Compile Include="Lang\LanguageLoader.cs" />
     <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\MapSelector.cs" />
+    <Compile Include="Menus\ServerSelector.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

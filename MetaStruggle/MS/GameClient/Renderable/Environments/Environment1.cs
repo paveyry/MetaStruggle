@@ -25,7 +25,7 @@ namespace GameClient.Renderable.Environments
             sm.AddElement(new Character("Spiderman", "Spiderman", sm, new Vector3(-5, 10, -17), new Vector3(1), 1.6f));
             sm.AddElement(new Character("Zeus", "Zeus", sm, new Vector3(-12, 10, -17), new Vector3(1)));
             sm.AddElement(new Character("ironMan", "Ironman", sm, new Vector3(-12, 10, -17), new Vector3(1)));
-            //sm.AddElement(new Character("Alex", "Alex", sm, new Vector3(-8, 10, -17), new Vector3(1), 1.6f));
+            sm.AddElement(new Character("Alex", "Alex", sm, new Vector3(-8, 10, -17), new Vector3(1), 1.6f));
             sm.AddElement(new Character("Ares", "Ares", sm, new Vector3(-3, 10, -17), new Vector3(1)));
             sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapTardis"], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));

@@ -24,15 +24,15 @@ namespace GameClient.Menus
 
         public Menu CreateMainMenu()
         {
-            Menu1 test = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            //Menu1 test = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
             //test.Add(new Textbox("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["Textbox"], RessourceProvider.Fonts["HUD"], Color.White));
-            test.Add(new ButtonSelector("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White, Color.DarkRed));
+            //test.Add(new ButtonSelector("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White, Color.DarkRed));
             //test.Add(new Button(new Rectangle(50, 10, 50, 50),"test", RessourceProvider.Fonts["HUD"], Color.White, Color.Black, () => GameEngine.DisplayStack.Pop()));
             var buttons = new List<MenuButton>
                 {
                     new MenuButton("play", Play),
                     new MenuButton("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
-                    new MenuButton("test", () => GameEngine.DisplayStack.Push(test)),
+                    new MenuButton("test", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics).Create())),
                     new MenuButton("quit", () => Environment.Exit(0))
                 };
 

@@ -10,32 +10,32 @@ namespace GameClient.Renderable.GUI
 {
     public class Menu1 : Layout.IBasicLayout
     {
-        private readonly List<Item> _items;
+        public readonly List<Item> Items;
         private Texture2D Background;
 
         public Menu1(Texture2D background)
         {
             Background = background;
-            _items=new List<Item>();
+            Items=new List<Item>();
         }
 
         public void Add(Item item)
         {
-            _items.Add(item);
+            Items.Add(item);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             DrawBackground(spriteBatch);
-            foreach (var item in _items)
+            foreach (var item in Items)
                 item.DrawItem(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
         public void Update(GameTime gameTime)
         {
-            foreach (var item in _items)
+            foreach (var item in Items)
                 item.UpdateItem(gameTime);
         }
 
