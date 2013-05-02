@@ -43,7 +43,7 @@ namespace GameClient.Menus
             return main;
         }
 
-        void Play()
+         public void Play()
         {
             if (GameEngine.SceneManager == null)
                 GameEngine.SceneManager = Renderable.Environments.Environment1.GetScene(_spriteBatch);

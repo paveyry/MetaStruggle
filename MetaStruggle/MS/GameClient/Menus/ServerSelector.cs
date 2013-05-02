@@ -58,8 +58,17 @@ namespace GameClient.Menus
         {
             menu = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
             menu.Add( new Textbox("", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White));
-            menu.Add(new Button(new Rectangle(400, 500, 50, 50), "OK", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange, ButtonOk));
+            menu.Add(new Button(new Rectangle(400, 500, 50, 50), "OK", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange,() => Play()));
             return menu;
+        }
+
+        public void Play()
+        {
+            if (GameEngine.SceneManager == null)
+                GameEngine.SceneManager = Renderable.Environments.Environment2.GetScene(s);
+
+            GameEngine.SoundCenter.PlayWithStatus("music1");
+            GameEngine.DisplayStack.Push(GameEngine.SceneManager);
         }
 
         void ButtonOk()

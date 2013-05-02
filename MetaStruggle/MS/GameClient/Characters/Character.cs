@@ -64,7 +64,7 @@ namespace GameClient.Characters
 
             var pendingAnim = new List<Animation>();
 
-            if (Playing)
+            if (Playing && ModelName != "Alex")
             {
                 #region ManageKeyboard
                 if (CurrentAnimation != Animation.Jump)
@@ -97,7 +97,7 @@ namespace GameClient.Characters
             
             #region tests
 
-            if (Client == null && ModelName == "Spiderman")
+            if (Client == null && ModelName == "Alex")
             {
                 if (ks.IsKeyDown(Keys.NumPad7))
                 {
