@@ -4,7 +4,12 @@
   <Language>fr_FR</Language>
   <ResolutionWidth>800</ResolutionWidth>
   <ResolutionHeight>600</ResolutionHeight>
+<<<<<<< HEAD
   <VolumeMusic>40</VolumeMusic>
   <VolumeEffect>100</VolumeEffect>
+=======
+  <VolumeMusic>0</VolumeMusic>
+  <VolumeEffect>0</VolumeEffect>
+>>>>>>> GameServer + reseau
   <FullScreen>false</FullScreen>
 </Config>

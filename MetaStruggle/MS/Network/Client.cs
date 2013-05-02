@@ -17,7 +17,7 @@ namespace Network
         private const int BufferSize = 4096;
         private readonly IEventDispatcher _eventDispatcher;
         private readonly string _networkInfos;
-
+        public delegate void ClientConnectedHandler(Client sender);
         private readonly Parser.ParserMethod _parseMethod;
 
         public Reader Reader
@@ -33,7 +33,7 @@ namespace Network
         public delegate void ClientDisconnectedHandler(Client sender);
         public event ClientDisconnectedHandler OnDisconnect;
 
-        public Client(TcpClient client, IEventDispatcher eventDispatcher, Parser.ParserMethod parseMethod)
+        public Client(TcpClient client, IEventDispatcher eventDispatcher, Parser.ParserMethod parseMethod, ClientConnectedHandler onConnect = null)
         {
             _client = client;
             Connected = true;
@@ -41,10 +41,13 @@ namespace Network
             _parseMethod = parseMethod;
             _networkInfos = _client.Client.RemoteEndPoint.ToString();
 
+            if (onConnect != null)
+                onConnect.BeginInvoke(this, null, null);
+
             new Task(Receive).Start();
         }
 
-        public Client(string ip, int port, IEventDispatcher eventDispatcher, Parser.ParserMethod parseMethod)
+        public Client(string ip, int port, IEventDispatcher eventDispatcher, Parser.ParserMethod parseMethod, ClientConnectedHandler onConnect = null)
         {
             try
             {
@@ -54,6 +57,9 @@ namespace Network
                 _eventDispatcher = eventDispatcher;
                 _parseMethod = parseMethod;
                 _networkInfos = _client.Client.RemoteEndPoint.ToString();
+
+                if (onConnect != null)
+                    onConnect.BeginInvoke(this, null, null);
 
                 new Task(Receive).Start();
             }
@@ -92,7 +98,7 @@ namespace Network
 
         bool CheckIfDisconnected()
         {
-            if (_client.Client.Poll(-1, SelectMode.SelectRead) && _client.Available == 0)
+            if (Connected && _client.Client.Poll(-1, SelectMode.SelectRead) && _client.Available == 0)
                 Disconnect();
 
             return !Connected;
@@ -100,8 +106,13 @@ namespace Network
 
         public void Disconnect()
         {
+            if (!Connected)
+                return;
+
             Connected = false;
-            _client.Close();
+
+            if (_client.Client != null)
+                _client.Close();
 
             if (OnDisconnect != null)
                 OnDisconnect.BeginInvoke(this, null, null);

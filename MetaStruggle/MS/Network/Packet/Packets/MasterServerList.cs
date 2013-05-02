@@ -29,7 +29,10 @@ namespace Network.Packet.Packets
                 list.Add(new MasterServerDatas
                     {
                         IP = packet.Reader.ReadString(),
-                        Port = packet.Reader.ReadInt16()
+                        Port = packet.Reader.ReadInt16(),
+                        Map = packet.Reader.ReadString(),
+                        MaxPlayer = packet.Reader.ReadByte(),
+                        ConnectedPlayer = packet.Reader.ReadByte()
                     });
 
             eventDispatcher.ThrowNewEvent(EventID, list);
@@ -46,10 +49,14 @@ namespace Network.Packet.Packets
 
             var p = new Packet(new PacketHeader {ID = ID});
             p.Writer.Write(list.Count);
+
             foreach (var masterServerDatase in list)
             {
                 p.Writer.Write(masterServerDatase.IP);
                 p.Writer.Write(masterServerDatase.Port);
+                p.Writer.Write(masterServerDatase.Map);
+                p.Writer.Write(masterServerDatase.MaxPlayer);
+                p.Writer.Write(masterServerDatase.ConnectedPlayer);
             }
 
             p.Write(w);

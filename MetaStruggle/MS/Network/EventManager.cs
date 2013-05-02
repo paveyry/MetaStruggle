@@ -16,7 +16,15 @@ namespace Network
         {
             if (_registered.ContainsKey(eventID))
                 foreach (var handler in _registered[eventID])
-                    handler.BeginInvoke(data, null, null);
+                {
+                    //try
+                    //{
+                        handler.BeginInvoke(data, null, null);
+                    //}
+                    //catch
+                    //{
+                    //}
+                }
         }
 
         public void Register(string eventID, EventHandler handler)

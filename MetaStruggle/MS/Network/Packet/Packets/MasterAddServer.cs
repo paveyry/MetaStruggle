@@ -22,14 +22,22 @@ namespace Network.Packet.Packets
 
         public void UnPack(Client client, Packet packet, IEventDispatcher eventDispatcher)
         {
-            string ip = client.ToString().Split(':')[0];
-            short port = packet.Reader.ReadInt16();
-
-            eventDispatcher.ThrowNewEvent(EventID, new MasterServerDatas { IP = ip, Port = port });
+            eventDispatcher.ThrowNewEvent(EventID,
+                                          new MasterServerDatas
+                                              {
+                                                  IP = client.ToString().Split(':')[0],
+                                                  Port = packet.Reader.ReadInt16(),
+                                                  Map = packet.Reader.ReadString(),
+                                                  MaxPlayer = packet.Reader.ReadByte(),
+                                                  ConnectedPlayer = packet.Reader.ReadByte()
+                                              });
         }
 
         /// <summary>
         /// 0: Port
+        /// 1: map
+        /// 2: maxplayer
+        /// 3: connected
         /// </summary>
         /// <param name="w"></param>
         /// <param name="datas"></param>
@@ -37,7 +45,10 @@ namespace Network.Packet.Packets
         {
             var p = new Packet(new PacketHeader { ID = ID });
             p.Writer.Write((short)datas[0]);
-            
+            p.Writer.Write((string)datas[1]);
+            p.Writer.Write((byte)datas[2]);
+            p.Writer.Write((byte)datas[3]);
+
             p.Write(w);
         }
     }

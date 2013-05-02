@@ -33,7 +33,7 @@ namespace Master
                 }
         }
 
-        static void InitServer(EventManager ev, int port)
+        static void InitServer(EventManager ev, short port)
         {
             var p = new Parser();
             p.PacketNotFound += (pck) => Console.WriteLine("Packet inconnu [ID={0}]", pck.Header.ID);
@@ -77,7 +77,7 @@ namespace Master
                 if (Servers.All(e => e.IP != serverDatas.IP || e.Port != serverDatas.Port))
                 {
                     Servers.Add(serverDatas);
-                    Console.WriteLine("[{0}:{1}] ajouté", serverDatas.IP, serverDatas.Port);
+                    Console.WriteLine("[{0}:{1}] {2} ({3}/{4}) ajouté", serverDatas.IP, serverDatas.Port, serverDatas.Map, serverDatas.ConnectedPlayer, serverDatas.MaxPlayer);
                 }
         }
 

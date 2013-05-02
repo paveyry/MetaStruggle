@@ -30,11 +30,12 @@ namespace Network
             _parserMethod = parseMethod;
         }
 
-        public void Start(int port)
+        public void Start(short port)
         {
             if (IsRunning)
                 return;
 
+            Port = port;
             _listener = new TcpListener(IPAddress.Any, port);
             _listener.Start();
             ConnectedClients = new List<Client>();
@@ -48,12 +49,11 @@ namespace Network
             {
                 try
                 {
-                    var c = new Client(_listener.AcceptTcpClient(), _eventDispatcher, _parserMethod);
+                    var c = new Client(_listener.AcceptTcpClient(), _eventDispatcher, _parserMethod,
+                                       cc => ClientConnected.BeginInvoke(cc, null, null));
+                    
                     c.OnDisconnect += OnClientDisconnected;
                     ConnectedClients.Add(c);
-
-                    if (ClientConnected != null)
-                        ClientConnected.BeginInvoke(c, null, null);
                 }
                 catch {}
             }
