@@ -7,6 +7,9 @@ using GameClient.Renderable._3D;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Network;
+using Network.Packet.Packets;
+using Network.Packet.Packets.DatasTypes;
 
 namespace GameClient.Characters
 {
@@ -17,6 +20,7 @@ namespace GameClient.Characters
         public bool _jumping;
         public double _jumppos;
         private readonly Vector3 _spawnPosition;
+        public Client Client { get; set; }
 
         public bool IsDead;
         public DateTime DeathDate;
@@ -177,8 +181,9 @@ namespace GameClient.Characters
 
                 Position += new Vector3(mul * (Yaw == _baseYaw ? new Random().Next(0, 1000) / 1000f : -new Random().Next(0, 1000) / 1000f), 0, 0);
             }
-            else
-                //CollisionEnabled = true;
+
+            if(Playing && Client != null)
+                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas(){ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw});
 
             base.Update(gameTime);
         }
@@ -186,13 +191,33 @@ namespace GameClient.Characters
         void SetPriorityAnimation(ICollection<Animation> pendingAnim)
         {
             if (pendingAnim.Contains(Animation.Attack))
+            {
                 SetAnimation(Animation.Attack);
+
+                if (Client != null)
+                    new CharacterAction().Pack(Client.Writer, ID, 3);
+            }
             else if (pendingAnim.Contains(Animation.Jump))
+            {
                 SetAnimation(Animation.Jump);
+
+                if (Client != null)
+                    new CharacterAction().Pack(Client.Writer, ID, 0);
+            }
             else if (pendingAnim.Contains(Animation.Run) && !_jumping)
+            {
                 SetAnimation(Animation.Run);
+
+                if (Client != null)
+                    new CharacterAction().Pack(Client.Writer, ID, Yaw == _baseYaw ? 1 : 2);
+            }
             else if (pendingAnim.Count != 0 && !_jumping)
+            {
                 SetAnimation(Animation.Default);
+
+                if (Client != null)
+                    new CharacterAction().Pack(Client.Writer, ID, 0);
+            }
         }
 
         #region Movements
