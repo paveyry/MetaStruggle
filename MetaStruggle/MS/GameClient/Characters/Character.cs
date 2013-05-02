@@ -12,6 +12,7 @@ namespace GameClient.Characters
 {
     public class Character : AnimatedModel3D
     {
+        public byte ID { get; set; }
         private readonly float _baseYaw;
         public bool _jumping;
         public double _jumppos;
@@ -23,7 +24,8 @@ namespace GameClient.Characters
         public string PlayerName;
         public Texture2D Face;
         public bool CollisionEnabled { get; set; }
-        
+        public bool Playing { get; set; }
+
         public BoundingObjectModel BoundingObject { get; set; }
         public float Length, Width;
 
@@ -32,10 +34,12 @@ namespace GameClient.Characters
             get { return Position.Y < 0.1 && Position.Y > -0.1 && Position.X < 12.58 && Position.X > -23.91; }
         }
 
-        public Character(string playerName, string nameCharacter, SceneManager scene, Vector3 position, Vector3 scale 
+        public Character(string playerName, string nameCharacter, SceneManager scene, Vector3 position, Vector3 scale
             ,float speed = 1f, float length = 1.8f, float weidth = 1.2f )
             : base(nameCharacter, scene, position, scale, speed)
         {
+            Playing = true;
+            ID = 0;
             PlayerName = playerName;
             Face = RessourceProvider.CharacterFaces[nameCharacter];
             Pitch = -MathHelper.PiOver2;
@@ -56,7 +60,7 @@ namespace GameClient.Characters
 
             var pendingAnim = new List<Animation>();
 
-            if (ModelName != "Spiderman")
+            if (Playing)
             {
                 #region ManageKeyboard
                 if (CurrentAnimation != Animation.Jump)
@@ -86,7 +90,7 @@ namespace GameClient.Characters
 
                 #endregion
             }
-
+            /*
             #region tests
 
             if (ModelName == "Spiderman")
@@ -115,7 +119,7 @@ namespace GameClient.Characters
             }
 
             #endregion
-
+            */
             #region Death
             if (!IsDead && Position.Y < -10)
             {

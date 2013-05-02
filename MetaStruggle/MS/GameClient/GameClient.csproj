@@ -148,6 +148,7 @@
     <Compile Include="Renderable\3D\Model3D.cs" />
     <Compile Include="Renderable\3D\Skybox.cs" />
     <Compile Include="Renderable\Environments\Environment1.cs" />
+    <Compile Include="Renderable\Environments\NetworkEnvironment.cs" />
     <Compile Include="Renderable\GUI\Cinematic.cs" />
     <Compile Include="Renderable\GUI\Items\Button.cs" />
     <Compile Include="Renderable\GUI\Items\ButtonSelector.cs" />
