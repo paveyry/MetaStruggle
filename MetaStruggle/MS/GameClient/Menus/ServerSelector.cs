@@ -63,9 +63,10 @@ namespace GameClient.Menus
         void ButtonOk()
         {
             string server = "";
+
             foreach (Textbox e in from Textbox e in menu.Items.FindAll(e => e is Textbox) where true select e)
                 PlayerName = e.Text;
-            foreach (Button e in from Button e in menu.Items.FindAll(e => e is Button) where e.IsSelect select e)
+            foreach (Button e in from Button e in menu.Items.FindAll(e => e is Button) where e.IsSelect && e.Name != "OK" select e)
                 server = e.Name;
 
             server = server.Substring(1, server.Length - 2);
