@@ -29,6 +29,7 @@ namespace Network
             _packets.Add(9, new RemovePlayer());
             _packets.Add(10, new CharacterAction());
             _packets.Add(11, new SyncPositions());
+            _packets.Add(12, new SetCharacterPosition());
         }
 
         public void Parse(Client client, Packet.Packet packet, IEventDispatcher eventDispatcher)
