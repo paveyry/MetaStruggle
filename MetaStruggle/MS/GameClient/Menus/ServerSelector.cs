@@ -19,10 +19,12 @@ namespace GameClient.Menus
         private string PlayerName;
         private List<string> servers;
         private Client c;
+        private SpriteBatch s;
         Menu1 menu;
 
         public ServerSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, string persoName)
         {
+            s = spriteBatch;
             PersoName = persoName;
             servers = new List<string>();
             Global.GameEngine.EventManager.Register("Network.Master.ServerList", ReceiveServers);
@@ -62,6 +64,7 @@ namespace GameClient.Menus
 
         void ButtonOk()
         {
+            System.Threading.Thread.Sleep(200);
             string server = "";
 
             foreach (Textbox e in from Textbox e in menu.Items.FindAll(e => e is Textbox) where true select e)
@@ -86,7 +89,7 @@ namespace GameClient.Menus
         void GameBegin(object data)
         {
             var gs = (GameStartDatas) data;
-            
+            Global.GameEngine.SceneManager = new Renderable.Environments.NetworkEnvironment(s).GetScene(s);
         }
     }
 }

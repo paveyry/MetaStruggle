@@ -28,7 +28,7 @@ namespace GameClient.Renderable.Environments
                 new Vector3(0, 0, 0), //Point visé par la caméra
                 spriteBatch); //SpriteBatch
 
-
+            RegisterEvents();
 
             sm.Camera.FollowsCharacters(sm.Camera, sm.Items.FindAll(e => e is Character));
         }

@@ -94,10 +94,10 @@ namespace GameClient.Characters
 
                 #endregion
             }
-            /*
+            
             #region tests
 
-            if (ModelName == "Spiderman")
+            if (Client == null && ModelName == "Spiderman")
             {
                 if (ks.IsKeyDown(Keys.NumPad7))
                 {
@@ -123,7 +123,7 @@ namespace GameClient.Characters
             }
 
             #endregion
-            */
+            
             #region Death
             if (!IsDead && Position.Y < -10)
             {
