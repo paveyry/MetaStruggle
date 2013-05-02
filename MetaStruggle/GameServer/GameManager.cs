@@ -43,6 +43,7 @@ namespace GameServer
         void RegisterEvents()
         {
             _em.Register("Network.Game.SetCharacterPosition", SetCharacterPos);
+            _em.Register("Network.Game.CharacterAction", CharacterAction);
         }
 
         void PlayerDisconnect(Player player)
@@ -86,6 +87,14 @@ namespace GameServer
 
             foreach (var networkCharacter in Characters.Where(e => e.ID != c.ID))
                 new SetCharacterPosition().Pack(networkCharacter.Client.Writer, c);
+        }
+
+        void CharacterAction(object data)
+        {
+            var ca = (CharacterActionDatas) data;
+
+            foreach (var networkCharacter in Characters.Where(e => e.ID != ca.ID))
+                new CharacterAction().Pack(networkCharacter.Client.Writer, ca.ID, ca.Action);
         }
     }
 }
