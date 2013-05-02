@@ -90,6 +90,8 @@ namespace GameClient.Menus
         {
             var gs = (GameStartDatas) data;
             Global.GameEngine.SceneManager = new Renderable.Environments.NetworkEnvironment(s).GetScene(s);
+            GameEngine.SoundCenter.PlayWithStatus("music1");
+            GameEngine.DisplayStack.Push(GameEngine.SceneManager);
         }
     }
 }
