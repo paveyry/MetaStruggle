@@ -237,10 +237,6 @@ namespace GameClient.Characters
                 _jumppos = 0;
                 pendingAnim.Add(Animation.Jump);
             }
-<<<<<<< HEAD
-           
-=======
->>>>>>> modif sauts et collisions
 
             if (CollideWithSomeone())
             {

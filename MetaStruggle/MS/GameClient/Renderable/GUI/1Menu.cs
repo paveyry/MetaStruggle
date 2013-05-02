@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GameClient.Renderable.GUI.Elements;
+using GameClient.Renderable.GUI.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,33 +10,33 @@ namespace GameClient.Renderable.GUI
 {
     public class Menu1 : Layout.IBasicLayout
     {
-        private readonly List<Element> _elements;
+        private readonly List<Item> _items;
         private Texture2D Background;
 
         public Menu1(Texture2D background)
         {
             Background = background;
-            _elements=new List<Element>();
+            _items=new List<Item>();
         }
 
-        public void Add(Element e)
+        public void Add(Item item)
         {
-            _elements.Add(e);
+            _items.Add(item);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             DrawBackground(spriteBatch);
-            foreach (var element in _elements)
-                element.DrawElement(gameTime, spriteBatch);
+            foreach (var item in _items)
+                item.DrawItem(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
         public void Update(GameTime gameTime)
         {
-            foreach (var element in _elements)
-                element.UpdateElement(gameTime);
+            foreach (var item in _items)
+                item.UpdateItem(gameTime);
         }
 
         void DrawBackground(SpriteBatch spriteBatch)

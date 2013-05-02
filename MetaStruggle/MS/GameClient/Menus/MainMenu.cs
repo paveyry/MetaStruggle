@@ -5,7 +5,7 @@ using System.Text;
 using GameClient.Global;
 using GameClient.Lang;
 using GameClient.Renderable.GUI;
-using GameClient.Renderable.GUI.Elements;
+using GameClient.Renderable.GUI.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -26,6 +26,7 @@ namespace GameClient.Menus
         {
             Menu1 test = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
             test.Add(new Textbox(new Rectangle(0,0,400,4), RessourceProvider.Fonts["HUD"] ));
+            test.Add(new Button(new Rectangle(50, 10, 50, 50),"test", RessourceProvider.Fonts["HUD"], Color.White, Color.Black, () => GameEngine.DisplayStack.Pop()));
             var buttons = new List<MenuButton>
                 {
                     new MenuButton("play", Play),

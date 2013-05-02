@@ -2,16 +2,9 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <GameName>MetaStruggle</GameName>
   <Language>fr_FR</Language>
-<<<<<<< HEAD
   <ResolutionWidth>800</ResolutionWidth>
   <ResolutionHeight>600</ResolutionHeight>
-  <VolumeMusic>0</VolumeMusic>
-  <VolumeEffect>0</VolumeEffect>
-=======
-  <ResolutionWidth>1680</ResolutionWidth>
-  <ResolutionHeight>1050</ResolutionHeight>
   <VolumeMusic>40</VolumeMusic>
   <VolumeEffect>100</VolumeEffect>
->>>>>>> modif sauts et collisions
   <FullScreen>false</FullScreen>
 </Config>
