@@ -35,7 +35,7 @@ namespace GameClient.Renderable.GUI
 
         public void Update(GameTime gameTime)
         {
-            foreach (var item in Items)
+            foreach (var item in Items.GetRange(0, Items.Count))
                 item.UpdateItem(gameTime);
         }
 
