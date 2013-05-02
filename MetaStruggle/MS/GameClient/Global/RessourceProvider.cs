@@ -23,8 +23,8 @@ namespace GameClient.Global
         
         public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
         
-        public static Dictionary<string, Cursor> Cursors = new Dictionary<string, Cursor>(); 
-
+        public static Dictionary<string, Texture2D> Cursors = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, Texture2D> Buttons = new Dictionary<string, Texture2D>(); 
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
 
 
@@ -39,8 +39,8 @@ namespace GameClient.Global
 
             LoadFonts(content);
 
-            LoadCursors();
-
+            LoadCursors(content);
+            LoadButtons(content);
             LoadVideos(content);
         }
 
@@ -227,9 +227,14 @@ namespace GameClient.Global
             Fonts.Add("HUDlittle", content.Load<SpriteFont>("Fonts\\HUDlittle"));
         }
 
-        static void LoadCursors()
+        static void LoadCursors(ContentManager content)
         {
+            Cursors.Add("Textbox", content.Load<Texture2D>("Cursors\\Textbox"));
+        }
 
+        static void LoadButtons(ContentManager content)
+        {
+            Buttons.Add("TextboxMulti", content.Load<Texture2D>("Buttons\\TextboxMulti"));
         }
 
         static void LoadVideos(ContentManager content)

@@ -25,8 +25,9 @@ namespace GameClient.Menus
         public Menu CreateMainMenu()
         {
             Menu1 test = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
-            test.Add(new Textbox(new Rectangle(0,0,400,4), RessourceProvider.Fonts["HUD"] ));
-            test.Add(new Button(new Rectangle(50, 10, 50, 50),"test", RessourceProvider.Fonts["HUD"], Color.White, Color.Black, () => GameEngine.DisplayStack.Pop()));
+            //test.Add(new Textbox("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["Textbox"], RessourceProvider.Fonts["HUD"], Color.White));
+            test.Add(new ButtonSelector("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White, Color.DarkRed));
+            //test.Add(new Button(new Rectangle(50, 10, 50, 50),"test", RessourceProvider.Fonts["HUD"], Color.White, Color.Black, () => GameEngine.DisplayStack.Pop()));
             var buttons = new List<MenuButton>
                 {
                     new MenuButton("play", Play),

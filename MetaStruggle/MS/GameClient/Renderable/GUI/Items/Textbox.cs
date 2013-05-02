@@ -7,29 +7,34 @@ namespace GameClient.Renderable.GUI.Items
 {
     public class Textbox : Item
     {
-        private SpriteFont Font;
-        private Color ColorText;
-        public string Text;
-        private string _displayText;
+        private SpriteFont Font { get; set; }
+        private Color ColorText { get; set; }
+        public string Text { get; private set; }
+        private string DisplayText { get; set; }
+        private Texture2D Cursor { get; set; }
+        private Texture2D TextboxButton { get; set; }
         private int _displayPos;
         private int _displayLength;
-        private int actualPos;
-        private bool isSelect;
+        private int _actualPos;
+        private bool _isSelect;
+        private Vector2 _charLength;
 
         private bool _CapsLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock); } }
         private bool _NumLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock); } }
 
-        public Textbox(Rectangle rectangle, SpriteFont font)
+        public Textbox(string text, Rectangle rectangle, Texture2D textboxButton, SpriteFont font, Color colorText)
             : base(rectangle)
         {
             Font = font;
-            ColorText = Color.White;
-            isSelect = true;
-
-            Text = "";
-            actualPos = Text.Length;
+            ColorText = colorText;
+            _isSelect = false;
+            Cursor = RessourceProvider.Cursors["Textbox"];
+            TextboxButton = textboxButton;
+            Text = text;
+            _actualPos = Text.Length;
             _displayLength = CalculateLengthMax('m');
-            _displayText = Text.Length > _displayLength ? Text.Substring(actualPos - _displayLength, _displayLength) : Text;
+            _charLength = Font.MeasureString("m");
+            DisplayText = Text.Length > _displayLength ? Text.Substring(_actualPos - _displayLength, _displayLength) : Text;
         }
 
         private int CalculateLengthMax(char c)
@@ -43,39 +48,47 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(Font, _displayText, Position, ColorText);
+            spriteBatch.Draw(TextboxButton, ElementRectangle, Color.White);
+            spriteBatch.Draw(Cursor, new Rectangle((int)((_actualPos - _displayPos)*_charLength.X), ElementRectangle.Location.Y,1,(int)_charLength.Y),ColorText );
+            spriteBatch.DrawString(Font, DisplayText, Position, ColorText);
         }
 
         public override void UpdateItem(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime.Ticks % 4 != 0)
+            var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
+            if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+                _isSelect = ElementRectangle.Intersects(mouse);
+            if (!_isSelect || gameTime.TotalGameTime.Ticks % 4 != 0)
                 return;
             KeyboardState ks = GameEngine.KeyboardState;
             foreach (var keyse in ks.GetPressedKeys())
             {
                 char c = GetChar(keyse);
                 if (c != '\0')
-                    Text = Text.Substring(0, actualPos) +
-                           ((ks.IsKeyDown(Keys.LeftShift) || ks.IsKeyDown(Keys.RightShift)) ? GetInverse(c) : c) +
-                           Text.Substring(actualPos, Text.Length - actualPos++);
-                else if (keyse == Keys.Back && Text.Length > 0 && actualPos > 0)
-                    Text = Text.Substring(0, actualPos - 1) + Text.Substring(actualPos, Text.Length - actualPos--);
-                else if (keyse == Keys.Left && actualPos > 0)
-                    actualPos--;
-                else if (keyse == Keys.Right && actualPos < Text.Length)
-                    actualPos++;
+                    Text = Text.Substring(0, _actualPos) +
+                           ((ks.IsKeyDown(Keys.LeftShift) || ks.IsKeyDown(Keys.RightShift)) ? GetInverseChar(c) : c) +
+                           Text.Substring(_actualPos, Text.Length - _actualPos++);
+                else if (keyse == Keys.Back && Text.Length > 0 && _actualPos > 0)
+                    Text = Text.Substring(0, _actualPos - 1) + Text.Substring(_actualPos, Text.Length - _actualPos--);
+                else if (keyse == Keys.Left && _actualPos > 0)
+                    _actualPos--;
+                else if (keyse == Keys.Right && _actualPos < Text.Length)
+                    _actualPos++;
+                else if (keyse == Keys.End)
+                    _actualPos = Text.Length;
+                else if (keyse == Keys.Escape || keyse == Keys.Enter)
+                    _isSelect = false;
                 UpdateDisplayText();
             }
-
         }
 
         private void UpdateDisplayText()
         {
-            if (actualPos >= _displayPos && actualPos <= _displayLength && _displayLength < Text.Length)
+            if (_actualPos >= _displayPos && _actualPos <= _displayLength && _displayLength < Text.Length)
                 return;
-            _displayText = _displayLength < Text.Length
-                               ? Text.Substring(actualPos < _displayPos ? actualPos : actualPos - _displayLength, _displayLength)
-                               : Text.Substring(0, Text.Length);
+            DisplayText = _displayLength < Text.Length
+                               ? Text.Substring( _displayPos = ((_actualPos < _displayPos) ? _actualPos : _actualPos - _displayLength), _displayLength)
+                               : Text.Substring(_displayPos = 0, Text.Length);
         }
 
         private char GetChar(Keys key)
@@ -98,7 +111,7 @@ namespace GameClient.Renderable.GUI.Items
             }
         }
 
-        private char GetInverse(char c)
+        private char GetInverseChar(char c)
         {
             return char.IsUpper(c) ? char.ToLower(c) : char.ToUpper(c);
         }

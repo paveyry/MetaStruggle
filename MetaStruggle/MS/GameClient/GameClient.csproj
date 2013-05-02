@@ -148,6 +148,7 @@
     <Compile Include="Renderable\Environments\Environment1.cs" />
     <Compile Include="Renderable\GUI\Cinematic.cs" />
     <Compile Include="Renderable\GUI\Items\Button.cs" />
+    <Compile Include="Renderable\GUI\Items\ButtonSelector.cs" />
     <Compile Include="Renderable\GUI\Items\Item.cs" />
     <Compile Include="Renderable\GUI\ListButtons.cs" />
     <Compile Include="Renderable\GUI\Menu.cs" />
