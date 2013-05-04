@@ -196,6 +196,7 @@ namespace GameClient.Menus
 
         void Return()
         {
+            System.Threading.Thread.Sleep(200);
             if (_graphics.PreferredBackBufferHeight != _height || _graphics.PreferredBackBufferWidth != _width ||
                 _graphics.IsFullScreen != GameEngine.Config.FullScreen)
             {

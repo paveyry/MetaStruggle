@@ -216,6 +216,7 @@
     <EmbeddedResource Include="Lang\fr_FR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>fr_FR.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
