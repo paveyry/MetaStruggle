@@ -13,7 +13,8 @@ namespace GameClient.Renderable.GUI.Items
         private List<ImageButton> imageButtons;
         private int _actualResolutionWidth;
         private readonly int HeightFont;
-        public ImageButton Selected;
+        private ImageButton Selected;
+        public string NameSelected { get { return Selected.Text; } }
 
         public ListImageButton(Rectangle rectangle, Dictionary<string, Texture2D> items, int divCoef,
             SpriteFont font, Color colorNormal, Color colorSelected)
@@ -44,8 +45,8 @@ namespace GameClient.Renderable.GUI.Items
         {
             _actualResolutionWidth = GameEngine.Config.ResolutionWidth;
 
-            int x = (int)Position.X;
-            int y = (int)Position.Y;
+            int x = ItemRectangle.X;
+            int y = ItemRectangle.Y;
             foreach (var item in imageButtons)
             {
                 int width = item.ItemRectangle.Width;
@@ -54,7 +55,7 @@ namespace GameClient.Renderable.GUI.Items
                 x += width + 5;
                 if (x + width > _actualResolutionWidth)
                 {
-                    x = (int)Position.X;
+                    x = ItemRectangle.X;
                     y += height + HeightFont;
                 }
             }
@@ -79,6 +80,7 @@ namespace GameClient.Renderable.GUI.Items
                     Selected.IsSelect = false;
                 Selected = imageButton;
             }
+            base.UpdateItem(gameTime);
         }
     }
 }

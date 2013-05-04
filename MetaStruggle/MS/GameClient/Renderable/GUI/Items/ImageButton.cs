@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI.Items
 {
-    public class ImageButton : Item
+    internal class ImageButton : Item
     {
         public string Text { get; set; }
         SpriteFont Font { get; set; }
@@ -25,7 +25,6 @@ namespace GameClient.Renderable.GUI.Items
             Text = text;
             Image = image;
             Font = font;
-            ItemRectangle = rectangle;
             ColorNormal = colorNormal;
             ColorSelected = colorSelected;
         }

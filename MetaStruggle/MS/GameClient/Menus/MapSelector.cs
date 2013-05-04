@@ -30,9 +30,9 @@ namespace GameClient.Menus
             int x = 50, y = 50;
             Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
 
-            characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(x, y, 1500, 1500), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
+            characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 1500, 1500), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
 
-            characterSelector.Add("ok",new Button(new Rectangle(400, 450, 50, 50), "OK", RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ButtonOk));
+            characterSelector.Add("ok",new Button("OK",Item.PosOnScreen.DownRight, new Rectangle(20,20,50,50),ButtonOk ));
             Menu = characterSelector;
             return characterSelector;
         }
@@ -43,7 +43,7 @@ namespace GameClient.Menus
             string perso = "";
             var listImageButton = Menu.Items["ListCharacters"] as ListImageButton;
             if (listImageButton != null)
-                perso = listImageButton.Selected.Text;
+                perso = listImageButton.NameSelected;
 
             GameEngine.DisplayStack.Pop();
         }
