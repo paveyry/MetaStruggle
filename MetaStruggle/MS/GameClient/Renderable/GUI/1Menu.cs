@@ -10,18 +10,18 @@ namespace GameClient.Renderable.GUI
 {
     public class Menu1 : Layout.IBasicLayout
     {
-        public readonly List<Item> Items;
+        public Dictionary<string,Item> Items;
         private Texture2D Background;
 
         public Menu1(Texture2D background)
         {
             Background = background;
-            Items=new List<Item>();
+            Items=new Dictionary<string, Item>();
         }
 
-        public void Add(Item item)
+        public void Add(string key,Item item)
         {
-            Items.Add(item);
+            Items.Add(key,item);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -29,14 +29,14 @@ namespace GameClient.Renderable.GUI
             spriteBatch.Begin();
             DrawBackground(spriteBatch);
             foreach (var item in Items)
-                item.DrawItem(gameTime, spriteBatch);
+                item.Value.DrawItem(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
         public void Update(GameTime gameTime)
         {
-            foreach (var item in Items.GetRange(0, Items.Count))
-                item.UpdateItem(gameTime);
+            for (int i = 0; i < Items.Values.Count; i++)
+                Items.Values.ElementAt(i).UpdateItem(gameTime);
         }
 
         void DrawBackground(SpriteBatch spriteBatch)

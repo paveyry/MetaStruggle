@@ -12,12 +12,12 @@ namespace GameClient.Renderable.GUI.Items
     {
         public delegate void Event();
 
-        public Rectangle ElementRectangle;
-        public Vector2 Position { get { return new Vector2(ElementRectangle.Location.X, ElementRectangle.Y); } }
+        public Rectangle ItemRectangle;
+        public Vector2 Position { get { return new Vector2(ItemRectangle.Location.X, ItemRectangle.Y); } }
 
         public Item(Rectangle rectangle)
         {
-            ElementRectangle = rectangle;
+            ItemRectangle = rectangle;
         }
 
         public virtual void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)

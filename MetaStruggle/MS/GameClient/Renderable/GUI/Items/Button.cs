@@ -41,13 +41,13 @@ namespace GameClient.Renderable.GUI.Items
         public override void UpdateItem(GameTime gameTime)
         {
             var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
-            if (ElementRectangle.Intersects(mouse) && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+            if (ItemRectangle.Intersects(mouse) && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                 OnClick.Invoke();
             if (!_isSelect)
                 IsSelect = _isSelect;
             
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
-                _isSelect = ElementRectangle.Intersects(mouse);
+                _isSelect = ItemRectangle.Intersects(mouse);
             if (_isSelect)
                 IsSelect = _isSelect;
         }

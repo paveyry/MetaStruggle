@@ -41,15 +41,15 @@ namespace GameClient.Renderable.GUI.Items
         {
             string str = "";
             int length;
-            for (length = 0; Font.MeasureString(str).X < ElementRectangle.Width; length++)
+            for (length = 0; Font.MeasureString(str).X < ItemRectangle.Width; length++)
                 str += c;
             return length - 1;
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextboxButton, ElementRectangle, Color.White);
-            spriteBatch.Draw(Cursor, new Rectangle((int)((_actualPos - _displayPos)*_charLength.X + 10), ElementRectangle.Location.Y,1,(int)_charLength.Y),ColorText );
+            spriteBatch.Draw(TextboxButton, ItemRectangle, Color.White);
+            spriteBatch.Draw(Cursor, new Rectangle((int)((_actualPos - _displayPos)*_charLength.X), ItemRectangle.Location.Y,1,(int)_charLength.Y),ColorText );
             spriteBatch.DrawString(Font, DisplayText, Position, ColorText);
         }
 
@@ -57,7 +57,7 @@ namespace GameClient.Renderable.GUI.Items
         {
             var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
-                _isSelect = ElementRectangle.Intersects(mouse);
+                _isSelect = ItemRectangle.Intersects(mouse);
             if (!_isSelect || gameTime.TotalGameTime.Ticks % 4 != 0)
                 return;
             KeyboardState ks = GameEngine.KeyboardState;

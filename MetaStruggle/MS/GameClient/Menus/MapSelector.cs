@@ -26,29 +26,26 @@ namespace GameClient.Menus
 
         public Menu1 Create()
         {
-            Menu1 mapSelector = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            Menu1 characterSelector = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
             int x = 50, y = 50;
-            foreach (var character in RessourceProvider.CharacterFaces)
-            {  
-                mapSelector.Add(new ButtonSelector(character.Key,
-                                                   new Rectangle(x, y, character.Value.Width/5,
-                                                                 character.Value.Height/5), character.Value,
-                                                   RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange));
-                x += character.Value.Width / 5 + 5;
-            }
+            Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
 
-            mapSelector.Add(new Button(new Rectangle(400, 500, 50, 50), "OK", RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ButtonOk));
-            Menu = mapSelector;
-            return mapSelector;
+            characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(x, y, 1500, 1500), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
+
+            characterSelector.Add("ok",new Button(new Rectangle(400, 450, 50, 50), "OK", RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ButtonOk));
+            Menu = characterSelector;
+            return characterSelector;
         }
 
         public void ButtonOk()
         {
             System.Threading.Thread.Sleep(200);
             string perso = "";
-            foreach (ButtonSelector e in from ButtonSelector e in Menu.Items.FindAll(e => e is ButtonSelector) where e.IsSelect select e)
-                perso = e.Text;
-            GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
+            var listImageButton = Menu.Items["ListCharacters"] as ListImageButton;
+            if (listImageButton != null)
+                perso = listImageButton.Selected.Text;
+
+            GameEngine.DisplayStack.Pop();
         }
     }
 }

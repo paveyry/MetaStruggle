@@ -49,7 +49,7 @@ namespace GameClient.Menus
             int y = 100, x = 50;
             foreach (var server in servers)
             {
-                menu.Add(new Button(new Rectangle(x, y, 500, 20), server, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => { }));
+                menu.Add(server,new Button(new Rectangle(x, y, 500, 20), server, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => { }));
                 y += 35;
             }
         }
@@ -57,8 +57,8 @@ namespace GameClient.Menus
         public Menu1 Create()
         {
             menu = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
-            menu.Add( new Textbox("", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White));
-            menu.Add(new Button(new Rectangle(400, 500, 50, 50), "OK", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange,() => Play()));
+            menu.Add("textbox", new Textbox("", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White));
+            menu.Add("ok",new Button(new Rectangle(400, 500, 50, 50), "OK", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange,() => Play()));
             return menu;
         }
 
@@ -76,10 +76,10 @@ namespace GameClient.Menus
             System.Threading.Thread.Sleep(200);
             string server = "";
 
-            foreach (Textbox e in from Textbox e in menu.Items.FindAll(e => e is Textbox) where true select e)
-                PlayerName = e.Text;
-            foreach (Button e in from Button e in menu.Items.FindAll(e => e is Button) where e.IsSelect && e.Name != "OK" select e)
-                server = e.Name;
+            //foreach (Textbox e in from Textbox e in menu.Items.FindAll(e => e is Textbox) where true select e)
+            //    PlayerName = e.Text;
+            //foreach (Button e in from Button e in menu.Items.FindAll(e => e is Button) where e.IsSelect && e.Name != "OK" select e)
+            //    server = e.Name;
 
             server = server.Substring(1, server.Length - 2);
             var t = server.Split(':');
@@ -89,7 +89,7 @@ namespace GameClient.Menus
             GameEngine.EventManager.Register("Network.Game.GameStart", GameBegin);
 
             Client c = new Client(t[0], int.Parse(t[1]), Global.GameEngine.EventManager, p.Parse);
-            menu.Add(new Button(new Rectangle(400, 400, 50, 50), "Player waiting...", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange, () => {}));
+            menu.Add("text",new Button(new Rectangle(400, 400, 50, 50), "Player waiting...", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange, () => {}));
             new JoinLobby().Pack(c.Writer, PlayerName, PersoName);
 
             //GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
