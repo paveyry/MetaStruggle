@@ -33,7 +33,7 @@ namespace Master
                 }
         }
 
-        static void InitServer(EventManager ev, short port)
+        static void InitServer(EventManager ev, ushort port)
         {
             var p = new Parser();
             p.PacketNotFound += (pck) => Console.WriteLine("Packet inconnu [ID={0}]", pck.Header.ID);

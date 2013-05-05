@@ -19,9 +19,9 @@ namespace GameServer
         private string _map;
         private byte _maxPlayers;
         private const string MasterServerHost = "metastruggle.eu";
-        private const short MasterServerPort = 5555;
+        private const ushort MasterServerPort = 5555;
 
-        public GameHost(short port, string map, byte maxplayers)
+        public GameHost(ushort port, string map, byte maxplayers)
         {
             _parser = new Parser();
             _em = new EventManager();

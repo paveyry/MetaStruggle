@@ -12,7 +12,7 @@ namespace GameServer
         {
             Console.WriteLine("MetaStruggle Game Server\n");
 
-            short port = GetPort();
+            ushort port = GetPort();
             string map = GetMap();
             byte max = GetMaxPlayer();
 
@@ -30,16 +30,16 @@ namespace GameServer
             }
         }
 
-        static short GetPort()
+        static ushort GetPort()
         {
-            short port;
+            ushort port;
             string sport;
 
             do
             {
                 Console.Write("Port: ");
                 sport = Console.ReadLine();
-            } while (!short.TryParse(sport, out port) || port < 0 || port > 65535);
+            } while (!ushort.TryParse(sport, out port) || port < 0 || port > 65535);
 
             return port;
         }

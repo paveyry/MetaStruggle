@@ -26,7 +26,7 @@ namespace Network.Packet.Packets
                                           new MasterServerDatas
                                               {
                                                   IP = client.ToString().Split(':')[0],
-                                                  Port = packet.Reader.ReadInt16(),
+                                                  Port = packet.Reader.ReadUInt16(),
                                                   Map = packet.Reader.ReadString(),
                                                   MaxPlayer = packet.Reader.ReadByte(),
                                                   ConnectedPlayer = packet.Reader.ReadByte()
@@ -44,7 +44,7 @@ namespace Network.Packet.Packets
         public void Pack(Writer w, params object[] datas)
         {
             var p = new Packet(new PacketHeader { ID = ID });
-            p.Writer.Write((short)datas[0]);
+            p.Writer.Write((ushort)datas[0]);
             p.Writer.Write((string)datas[1]);
             p.Writer.Write((byte)datas[2]);
             p.Writer.Write((byte)datas[3]);

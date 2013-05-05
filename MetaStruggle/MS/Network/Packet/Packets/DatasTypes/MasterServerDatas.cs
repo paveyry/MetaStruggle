@@ -9,7 +9,7 @@ namespace Network.Packet.Packets.DatasTypes
     public class MasterServerDatas
     {
         public string IP { get; set; }
-        public short Port { get; set; }
+        public ushort Port { get; set; }
         public string Map { get; set; }
         public byte MaxPlayer { get; set; }
         public byte ConnectedPlayer { get; set; }

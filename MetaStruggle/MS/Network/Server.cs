@@ -13,7 +13,7 @@ namespace Network
         private TcpListener _listener;
         public bool IsRunning { get; set; }
         public List<Client> ConnectedClients { get; set; }
-        public short Port { get; set; }
+        public ushort Port { get; set; }
 
         public delegate void ClientConnectedHandler(Client sender);
         public delegate void ClientDisconnectedHandler(Client sender);
@@ -30,7 +30,7 @@ namespace Network
             _parserMethod = parseMethod;
         }
 
-        public void Start(short port)
+        public void Start(ushort port)
         {
             if (IsRunning)
                 return;

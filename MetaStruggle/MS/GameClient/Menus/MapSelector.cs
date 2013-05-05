@@ -45,7 +45,7 @@ namespace GameClient.Menus
             if (listImageButton != null)
                 perso = listImageButton.NameSelected;
 
-            GameEngine.DisplayStack.Pop();
+            GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
         }
     }
 }

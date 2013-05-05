@@ -23,7 +23,7 @@ namespace Network.Packet.Packets
         public void UnPack(Client client, Packet packet, IEventDispatcher eventDispatcher)
         {
             string ip = client.ToString().Split(':')[0];
-            short port = packet.Reader.ReadInt16();
+            ushort port = packet.Reader.ReadUInt16();
             
             eventDispatcher.ThrowNewEvent(EventID, new MasterServerDatas {IP = ip, Port = port});
         }

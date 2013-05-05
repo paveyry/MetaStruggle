@@ -29,7 +29,7 @@ namespace Network.Packet.Packets
                 list.Add(new MasterServerDatas
                     {
                         IP = packet.Reader.ReadString(),
-                        Port = packet.Reader.ReadInt16(),
+                        Port = packet.Reader.ReadUInt16(),
                         Map = packet.Reader.ReadString(),
                         MaxPlayer = packet.Reader.ReadByte(),
                         ConnectedPlayer = packet.Reader.ReadByte()
