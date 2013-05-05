@@ -76,6 +76,8 @@ namespace GameClient.Renderable.GUI.Items
                     _actualPos++;
                 else if (keyse == Keys.End)
                     _actualPos = Text.Length;
+                else if (keyse == Keys.Pa1)
+                    _actualPos = 0;
                 else if (keyse == Keys.Escape || keyse == Keys.Enter)
                     _isSelect = false;
                 UpdateDisplayText();
@@ -94,13 +96,13 @@ namespace GameClient.Renderable.GUI.Items
 
         private char GetChar(Keys key)
         {
-            string t = key.ToString();
-            if (t.Length == 1)
-                return _CapsLock ? t[0] : char.ToLower(t[0]);
-            if (t.StartsWith("NumPad") && _NumLock)
-                return t[6];
-            if (t[0] == 'D' && (t[1] >= '0' && t[1] <= '9'))
-                return t[1];
+            string str = key.ToString();
+            if (str.Length == 1)
+                return _CapsLock ? str[0] : char.ToLower(str[0]);
+            if (str.StartsWith("NumPad") && _NumLock)
+                return str[6];
+            if (str[0] == 'D' && (str[1] >= '0' && str[1] <= '9'))
+                return str[1];
             switch (key)
             {
                 case Keys.OemPeriod:

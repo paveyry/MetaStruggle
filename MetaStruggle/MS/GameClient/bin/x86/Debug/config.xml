@@ -6,5 +6,5 @@
   <ResolutionHeight>768</ResolutionHeight>
   <VolumeMusic>40</VolumeMusic>
   <VolumeEffect>100</VolumeEffect>
-  <FullScreen>true</FullScreen>
+  <FullScreen>false</FullScreen>
 </Config>

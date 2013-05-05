@@ -18,13 +18,12 @@ namespace GameClient.Renderable.GUI.Items
 
         public ListImageButton(Rectangle rectangle, Dictionary<string, Texture2D> items, int divCoef,
             SpriteFont font, Color colorNormal, Color colorSelected)
-            : base(rectangle)
+            : base(rectangle,true )
         {
             imageButtons = new List<ImageButton>();
             _actualResolutionWidth = GameEngine.Config.ResolutionWidth;
             
-            int x = (int)Position.X;
-            int y = (int)Position.Y;
+            int x = (int)Position.X, y = (int)Position.Y;
             HeightFont = (int)font.MeasureString("A").Y + 3;
             foreach (var item in items)
             {
@@ -33,31 +32,25 @@ namespace GameClient.Renderable.GUI.Items
                 imageButtons.Add(new ImageButton(item.Key,
                     new Rectangle(x, y, width, height) , item.Value, font, colorNormal, colorSelected));
                 x += width + 5;
-                if (x + width > _actualResolutionWidth)
-                {
-                    x = (int) Position.X;
-                    y += height + HeightFont;
-                }
+                if (x + width <= _actualResolutionWidth && x + width <= RealRectangle.X + RealRectangle.Width) 
+                    continue;
+                x = (int) Position.X;
+                y += height + HeightFont;
             }
         }
 
         private void UpdateResolution()
         {
             _actualResolutionWidth = GameEngine.Config.ResolutionWidth;
-
-            int x = ItemRectangle.X;
-            int y = ItemRectangle.Y;
+            int x = ItemRectangle.X, y = ItemRectangle.Y;
             foreach (var item in imageButtons)
             {
-                int width = item.ItemRectangle.Width;
-                int height = item.ItemRectangle.Height;
                 item.ItemRectangle.Location = new Point(x,y);
-                x += width + 5;
-                if (x + width > _actualResolutionWidth)
-                {
-                    x = ItemRectangle.X;
-                    y += height + HeightFont;
-                }
+                x += item.ItemRectangle.Width + 5;
+                if (x + item.ItemRectangle.Width <= _actualResolutionWidth && x + item.ItemRectangle.Width <= RealRectangle.Width)
+                    continue;
+                x = ItemRectangle.X;
+                y += item.ItemRectangle.Height + HeightFont;
             }
         }
 
@@ -74,8 +67,8 @@ namespace GameClient.Renderable.GUI.Items
             foreach (var imageButton in imageButtons)
             {
                 imageButton.UpdateItem(gameTime);
-                if (!imageButton.IsSelect) continue;
-
+                if (!imageButton.IsSelect) 
+                    continue;
                 if (Selected != null && !Selected.Equals(imageButton))
                     Selected.IsSelect = false;
                 Selected = imageButton;

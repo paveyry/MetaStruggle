@@ -30,7 +30,7 @@ namespace GameClient.Menus
             int x = 50, y = 50;
             Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
 
-            characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 1500, 1500), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
+            characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
 
             characterSelector.Add("ok",new Button("OK",Item.PosOnScreen.DownRight, new Rectangle(20,20,50,50),ButtonOk ));
             Menu = characterSelector;
