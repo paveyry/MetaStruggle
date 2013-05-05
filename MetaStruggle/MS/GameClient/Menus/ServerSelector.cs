@@ -42,7 +42,7 @@ namespace GameClient.Menus
         {
             var list = (List<MasterServerDatas>) data;
             foreach (var s in list)
-                servers.Add(s.ToString());
+                servers.Add(string.Format("{0}|{1}:{2}|{3}/{4}", s.Map, s.IP, s.Port, s.ConnectedPlayer, s.MaxPlayer));
             
             c.Disconnect();
 
