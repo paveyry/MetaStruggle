@@ -1,6 +1,7 @@
-liste des choses a regler d'urgence pour ne pas avoir de retard sur la soutenance 3 : 
+Ôªøliste des choses a regler d'urgence pour ne pas avoir de retard sur la soutenance 3 : 
 
-- Faire marcher le rÈseau
+- Faire marcher le r√©seau
 - Faire marcher le menu
-- RÈgler le pb de vitesse (qui empeche de taper correctement) - Note Pour PA => c'est pas encore rÈgler pour la textbox. 
-le pseudo et qui fait quitter le jeu quand on quitte les options car il prend en compte deux clics
+- R√©gler le pb de vitesse (qui empeche de taper correctement) - Note Pour PA => c'est pas encore r√©gler pour la textbox. 
+ 	(Oui je sais j'ai pas fait gaffe en marquant FIXED)
+- [FIXED] Probl√®me du menu qui quitte le jeu en cliquant sur retour
