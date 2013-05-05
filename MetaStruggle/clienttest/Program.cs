@@ -15,7 +15,7 @@ namespace clienttest
             EventManager ev = new EventManager();
             Parser p = new Parser();
             Client c = new Client("127.0.0.1", 1234, ev, p.Parse);
-            new JoinLobby().Pack(c.Writer, "Neo", "Zeus");
+            new JoinLobby().Pack(c.Writer, Console.ReadLine(), "Zeus");
             Console.ReadLine();
         }
     }

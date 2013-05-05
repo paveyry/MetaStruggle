@@ -115,7 +115,8 @@ namespace Network
                 _client.Close();
 
             if (OnDisconnect != null)
-                OnDisconnect.BeginInvoke(this, null, null);
+                foreach (var m in OnDisconnect.GetInvocationList())
+                    m.DynamicInvoke(this);
         }
 
         public override string ToString()

@@ -36,7 +36,7 @@ namespace Network.Packet.Packets
         public void Pack(Writer w, params object[] datas)
         {
             var p = new Packet(new PacketHeader {ID = ID});
-            p.Writer.Write((short) datas[0]);
+            p.Writer.Write((ushort) datas[0]);
 
             p.Write(w);
         }

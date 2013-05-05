@@ -50,7 +50,11 @@ namespace Network
                 try
                 {
                     var c = new Client(_listener.AcceptTcpClient(), _eventDispatcher, _parserMethod,
-                                       cc => ClientConnected.BeginInvoke(cc, null, null));
+                                       cc => 
+                                       {
+                                           if (ClientConnected != null)
+                                               ClientConnected.BeginInvoke(cc, null, null);
+                                       });
                     
                     c.OnDisconnect += OnClientDisconnected;
                     ConnectedClients.Add(c);

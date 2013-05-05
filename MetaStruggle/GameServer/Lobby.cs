@@ -50,6 +50,8 @@ namespace GameServer
                                     playerBasicsDatas.ModelType,
                                     playerBasicsDatas.Client));
 
+            playerBasicsDatas.Client.OnDisconnect += RemovePlayer;
+
             Console.WriteLine("{0} connecté au salon avec {1}", playerBasicsDatas.Name, playerBasicsDatas.ModelType);
 
             UpdateMasterDatas();

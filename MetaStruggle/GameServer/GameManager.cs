@@ -17,10 +17,10 @@ namespace GameServer
 
         public GameManager(IEnumerable<Player> players, string map, EventManager em)
         {
-            RegisterEvents();
-
             Map = map;
             _em = em;
+
+            RegisterEvents();
 
             foreach (var p in players)
                 p.Client.OnDisconnect += c => PlayerDisconnect(p);
