@@ -45,7 +45,6 @@
     <Compile Include="GameManager.cs" />
     <Compile Include="Lobby.cs" />
     <Compile Include="NetworkCharacter.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

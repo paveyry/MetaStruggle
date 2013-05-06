@@ -29,6 +29,10 @@ namespace GameServer
 
             foreach (var networkCharacter in Characters)
             {
+                new GameStart().Pack(networkCharacter.Client.Writer,
+                    Map, 
+                    players);
+
                 new SetCharacterPosition().Pack(networkCharacter.Client.Writer,
                                                 new CharacterPositionDatas
                                                     {

@@ -38,16 +38,16 @@ namespace Network.Packet.Packets
 
         /// <summary>
         /// 0: map
-        /// 1: List players
+        /// 1: Ienumerable players
         /// </summary>
         /// <param name="w"></param>
         /// <param name="datas"></param>
         public void Pack(IO.Writer w, params object[] datas)
         {
             var p = new Packet(new PacketHeader {ID = ID});
-            var players = (List<Player>) datas[1];
+            var players = (IEnumerable<Player>) datas[1];
             p.Writer.Write((string)datas[0]);
-            p.Writer.Write((byte)players.Count);
+            p.Writer.Write((byte)players.Count());
 
             foreach (var player in players)
             {
@@ -55,6 +55,8 @@ namespace Network.Packet.Packets
                 p.Writer.Write(player.Name);
                 p.Writer.Write(player.ModelType);
             }
+
+            p.Write(w);
         }
     }
 }
