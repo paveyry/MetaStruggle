@@ -28,10 +28,15 @@ namespace GameClient.Menus
         {
             Menu1 characterSelector = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
             int x = 50, y = 50;
-            Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
-
-            characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
-
+            //Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
+            Dictionary<string,float> t = new Dictionary<string, float>
+                {
+                    {"field1", 40},
+                    {"field2",40}
+                };
+            
+            //characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
+            characterSelector.Add("nop",new ListLines(t,new List<string[]>{ new []{"1azertyuiopqsdfghjkitemwxcvbnazertyuiopoiuytrsdfghjk1", "1item2"}, new []{"2item1", "2item2"}}, new Rectangle(10,10,80,50), RessourceProvider.Fonts["Menu"],Color.White,Color.DarkOrange ));
             characterSelector.Add("ok",new Button("OK",Item.PosOnScreen.DownRight, new Rectangle(20,20,50,50),ButtonOk ));
             Menu = characterSelector;
             return characterSelector;
@@ -41,11 +46,11 @@ namespace GameClient.Menus
         {
             System.Threading.Thread.Sleep(200);
             string perso = "";
-            var listImageButton = Menu.Items["ListCharacters"] as ListImageButton;
-            if (listImageButton != null)
-                perso = listImageButton.NameSelected;
-
-            GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
+            //var listImageButton = Menu.Items["ListCharacters"] as ListImageButton;
+            //if (listImageButton != null)
+            //    perso = listImageButton.NameSelected;
+            GameEngine.DisplayStack.Pop();
+            //GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
         }
     }
 }

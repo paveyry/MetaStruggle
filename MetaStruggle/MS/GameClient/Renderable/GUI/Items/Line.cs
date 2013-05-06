@@ -7,15 +7,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameClient.Renderable.GUI.Items
 {
-    class ListTexts : Item
+    internal class Line : Item
     {
-        public ListTexts(List<string[]> list, Rectangle abstractRectangle, Color normalColor, Color selectedColor) : base(abstractRectangle, true)
+        SpriteFont Font { get; set; }
+
+
+        public Line(Rectangle rectangle) : base(rectangle)
         {
-            //flemme de continuer aujourd'hui
+            
         }
+
+        
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            base.DrawItem(gameTime, spriteBatch);
         }
 
         public override void UpdateItem(GameTime gameTime)

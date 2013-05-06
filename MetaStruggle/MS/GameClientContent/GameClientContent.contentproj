@@ -272,8 +272,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuBackgrounds\MainMenu.png">
-      <Name>MainMenu</Name>
+    <Compile Include="MenuBackgrounds\tMainMenu.png">
+      <Name>tMainMenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -281,6 +281,13 @@
   <ItemGroup>
     <Compile Include="Buttons\TextboxMulti.png">
       <Name>TextboxMulti</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MenuBackgrounds\MainMenu.png">
+      <Name>MainMenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

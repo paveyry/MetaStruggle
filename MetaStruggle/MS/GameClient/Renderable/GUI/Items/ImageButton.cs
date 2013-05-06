@@ -49,8 +49,7 @@ namespace GameClient.Renderable.GUI.Items
             if (IsSelect)
                 return;
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
-                _isSelect = ItemRectangle.Intersects(mouse);
-            IsSelect = _isSelect;
+                IsSelect = ItemRectangle.Intersects(mouse);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace GameClient.Renderable.GUI.Items
             TopLeft, TopRight, DownRight, DownLeft
         }
 
-        private int Width { get { return GameEngine.Config.ResolutionWidth; } }
-        private int Height { get { return GameEngine.Config.ResolutionHeight; } }
+        internal int Width { get { return GameEngine.Config.ResolutionWidth; } }
+        internal int Height { get { return GameEngine.Config.ResolutionHeight; } }
         public delegate void Event();
         public Rectangle ItemRectangle;
         public Rectangle RealRectangle;
@@ -60,6 +60,11 @@ namespace GameClient.Renderable.GUI.Items
         public virtual void UpdateItem(GameTime gameTime)
         {
             UpdateRectangle();
+        }
+
+        internal virtual void test()
+        {
+            
         }
 
         void UpdateRectangle()

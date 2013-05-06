@@ -41,7 +41,7 @@ namespace GameClient.Menus
         void ReceiveServers(object data)
         {
             var list = (List<MasterServerDatas>) data;
-            foreach (var s in list)
+            foreach (MasterServerDatas s in list)
                 servers.Add(string.Format("{0}|{1}:{2}|{3}/{4}", s.Map, s.IP, s.Port, s.ConnectedPlayer, s.MaxPlayer));
             
             c.Disconnect();

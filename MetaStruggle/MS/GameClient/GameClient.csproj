@@ -154,7 +154,8 @@
     <Compile Include="Renderable\GUI\Items\Button.cs" />
     <Compile Include="Renderable\GUI\Items\ImageButton.cs" />
     <Compile Include="Renderable\GUI\Items\Item.cs" />
-    <Compile Include="Renderable\GUI\Items\List.cs" />
+    <Compile Include="Renderable\GUI\Items\Line.cs" />
+    <Compile Include="Renderable\GUI\Items\ListTexts.cs" />
     <Compile Include="Renderable\GUI\Items\ListImageButton.cs" />
     <Compile Include="Renderable\GUI\Items\SimpleText.cs" />
     <Compile Include="Renderable\GUI\ListButtons.cs" />
