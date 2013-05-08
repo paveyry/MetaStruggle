@@ -2,8 +2,8 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <GameName>MetaStruggle</GameName>
   <Language>en_US</Language>
-  <ResolutionWidth>1600</ResolutionWidth>
-  <ResolutionHeight>900</ResolutionHeight>
+  <ResolutionWidth>1024</ResolutionWidth>
+  <ResolutionHeight>720</ResolutionHeight>
   <VolumeMusic>40</VolumeMusic>
   <VolumeEffect>100</VolumeEffect>
   <FullScreen>false</FullScreen>

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameClient.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI.Items
 {
@@ -25,25 +27,25 @@ namespace GameClient.Renderable.GUI.Items
         public bool IsDrawable;
         string[] Elements { get; set; }
 
-        public Line(Point position, string[] elements, int[] fields, int height, SpriteFont font, Color colorNormal, Color colorSelected, bool isDrawable)
-            : base(new Rectangle(position.X, position.Y, position.X + fields.Sum(), height))
+        public Line(Rectangle rectangle, string[] elements, int[] fields, SpriteFont font, Color colorNormal, Color colorSelected, bool isDrawable)
+            : base(rectangle)
         {
             Fields = fields;
             Elements = elements;
             Cells = new List<SimpleText>();
             IsDrawable = isDrawable;
 
-            int width = position.X;
+            int width = (int)PositionItem.X;
             for (int index = 0; index < Elements.Length; width += Fields[index], index++)
-                Cells.Add(new SimpleText(GetCorrectString(Elements[index], Fields[index], font), new Point(width, position.Y), PosOnScreen.TopLeft, font,
-                                         colorNormal, colorSelected, true));
+                Cells.Add(new SimpleText(GetCorrectString(Elements[index], Fields[index], font), new Point(width, (int)PositionItem.Y),
+                    PosOnScreen.TopLeft, font, colorNormal, colorSelected, true));
         }
 
         public void UpdatePosition(int positionInY)
         {
             foreach (SimpleText simpleText in Cells)
-                simpleText.ItemRectangle.Location = new Point(simpleText.ItemRectangle.X, simpleText.ItemRectangle.Y + positionInY);
-            RealRectangle.Location = new Point(RealRectangle.X, RealRectangle.Y + positionInY);
+                simpleText.ItemRectangle.Y += positionInY;
+            ItemRectangle.Y += positionInY;
         }
 
         string GetCorrectString(string str, int width, SpriteFont font)
@@ -64,16 +66,10 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
-            foreach (var t in Cells)
-            {
-                t.UpdateItem(gameTime);
-                if (t.IsSelect)
-                {
-                    IsSelect = true;
-                    break;
-                }
-                t.IsSelect = false;
-            }
+            if (IsSelect)
+                return;
+            if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+                IsSelect = ItemRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
             //base.UpdateItem(gameTime);
         }
     }

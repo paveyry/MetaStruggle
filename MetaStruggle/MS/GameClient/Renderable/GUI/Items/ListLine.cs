@@ -35,7 +35,7 @@ namespace GameClient.Renderable.GUI.Items
             for (int i = 0; i < RealFieldsWidth.Length; i++)
                 RealFieldsWidth[i] = (int)((FieldsWidthAbstract[i] / 100f) * Width);
 
-            Fields = new Line(new Point((int)Position.X, (int)Position.Y), fields.Keys.ToArray(), RealFieldsWidth, HeigthLine, font, normalColor, selectedColor, true);
+            Fields = new Line(new Rectangle((int) Position.X, (int)Position.Y,RealRectangle.Width,HeigthLine), fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true);
 
             int heigth = (int)Position.Y + HeigthLine;
             int newHeigth = HeigthLine;
@@ -43,12 +43,12 @@ namespace GameClient.Renderable.GUI.Items
             for (int i = 0; i < elements.Count; heigth += HeigthLine, i++)
                 if ((heigth + HeigthLine) < RealRectangle.Height + RealRectangle.Y)
                 {
-                    Elements.Add(new Line(new Point((int)Position.X, heigth), elements[i], RealFieldsWidth, HeigthLine, font, normalColor, selectedColor, true));
+                    Elements.Add(new Line(new Rectangle((int)Position.X, heigth, RealRectangle.Width, HeigthLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, true));
                     newHeigth += HeigthLine;
                     MaxLine++;
                 }
                 else
-                    Elements.Add(new Line(new Point((int)Position.X, heigth), elements[i], RealFieldsWidth, HeigthLine, font, normalColor, selectedColor, false));
+                    Elements.Add(new Line(new Rectangle((int)Position.X, heigth, RealRectangle.Width, HeigthLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, false));
             RealRectangle = new Rectangle(RealRectangle.X, RealRectangle.Y, RealRectangle.Width, newHeigth);
         }
 
