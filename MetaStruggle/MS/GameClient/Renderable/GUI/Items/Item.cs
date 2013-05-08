@@ -59,7 +59,7 @@ namespace GameClient.Renderable.GUI.Items
 
         public virtual void UpdateItem(GameTime gameTime)
         {
-            UpdateRectangle();
+            //UpdateRectangle();
         }
 
         internal virtual void test()

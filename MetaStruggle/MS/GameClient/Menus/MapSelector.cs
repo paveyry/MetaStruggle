@@ -36,7 +36,20 @@ namespace GameClient.Menus
                 };
             
             //characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
-            characterSelector.Add("nop",new ListLines(t,new List<string[]>{ new []{"1azertyuiopqsdfghjkitemwxcvbnazertyuiopoiuytrsdfghjk1", "1item2"}, new []{"2item1", "2item2"}}, new Rectangle(10,10,80,50), RessourceProvider.Fonts["Menu"],Color.White,Color.DarkOrange ));
+            characterSelector.Add("nop",new ListLine(t,new List<string[]>
+                {
+                    new []{"1azertyuiopqsdfghjkitemwxcvbnazertyuiopoiuytrsdfghjk1", "1item2"}, 
+                    new []{"2item1", "2item2"},
+                    new []{"3item","item"},
+                    new []{"4item","item"},
+                    new []{"5item","item"},
+                    new []{"6item","item"},
+                    new []{"7item","item"},
+                    new []{"8item","item"},
+                    new []{"9item","item"},
+                    new []{"10item","item"},
+                }, 
+                new Rectangle(10,10,80,50), RessourceProvider.Fonts["Menu"],Color.White,Color.DarkOrange ));
             characterSelector.Add("ok",new Button("OK",Item.PosOnScreen.DownRight, new Rectangle(20,20,50,50),ButtonOk ));
             Menu = characterSelector;
             return characterSelector;
