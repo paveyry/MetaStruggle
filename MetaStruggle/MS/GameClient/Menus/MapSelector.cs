@@ -29,14 +29,14 @@ namespace GameClient.Menus
             Menu1 characterSelector = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
             int x = 50, y = 50;
             //Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
-            Dictionary<string,float> t = new Dictionary<string, float>
+            Dictionary<string, float> t = new Dictionary<string, float>
                 {
                     {"field1", 40},
                     {"field2",40}
                 };
-            
+
             //characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
-            characterSelector.Add("nop",new ListLine(t,new List<string[]>
+            characterSelector.Add("nop", new ListLine(t, new List<string[]>
                 {
                     new []{"1azertyuiopqsdfghjkitemwxcvbnazertyuiopoiuytrsdfghjk1", "1item2"}, 
                     new []{"2item1", "2item2"},
@@ -48,9 +48,10 @@ namespace GameClient.Menus
                     new []{"8item","item"},
                     new []{"9item","item"},
                     new []{"10item","item"},
-                }, 
-                new Rectangle(10,10,80,50), RessourceProvider.Fonts["Menu"],Color.White,Color.DarkOrange ));
-            characterSelector.Add("ok",new Button("OK",Item.PosOnScreen.DownRight, new Rectangle(20,20,50,50),ButtonOk ));
+                },
+                new Rectangle(10, 10, 80, 50), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange));
+            characterSelector.Add("o", new Textbox("",new Rectangle(10,70,500,20), RessourceProvider.Buttons["TextboxMulti"],RessourceProvider.Fonts["Menu"],Color.White ));
+            characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
             Menu = characterSelector;
             return characterSelector;
         }

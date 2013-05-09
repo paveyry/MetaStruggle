@@ -13,17 +13,18 @@ namespace GameClient.Renderable.GUI.Items
         private string DisplayText { get; set; }
         private Texture2D Cursor { get; set; }
         private Texture2D TextboxButton { get; set; }
-        private int _displayPos;
+        private int _displayPos, _displayPosEnd;
         private int _displayLength;
         private int _actualPos;
         private bool _isSelect;
         private Vector2 _charLength;
+        private int CursorPosition;
 
         private bool _CapsLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock); } }
         private bool _NumLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock); } }
 
         public Textbox(string text, Rectangle rectangle, Texture2D textboxButton, SpriteFont font, Color colorText)
-            : base(rectangle)
+            : base(new Rectangle(rectangle.X,rectangle.Y,rectangle.Width,GetLineHeight(font)))
         {
             Font = font;
             ColorText = colorText;
@@ -49,7 +50,7 @@ namespace GameClient.Renderable.GUI.Items
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(TextboxButton, RealRectangle, Color.White);
-            spriteBatch.Draw(Cursor, new Rectangle((int)((_actualPos - _displayPos)*_charLength.X), RealRectangle.Location.Y,1,(int)_charLength.Y),ColorText );
+            spriteBatch.Draw(Cursor, new Rectangle((int)(CursorPosition + RealRectangle.X), RealRectangle.Y,1,(int)_charLength.Y),ColorText );
             spriteBatch.DrawString(Font, DisplayText, Position, ColorText);
         }
 
@@ -87,11 +88,26 @@ namespace GameClient.Renderable.GUI.Items
 
         private void UpdateDisplayText()
         {
-            if (_actualPos >= _displayPos && _actualPos <= _displayLength && _displayLength < Text.Length)
-                return;
-            DisplayText = _displayLength < Text.Length
-                               ? Text.Substring( _displayPos = ((_actualPos < _displayPos) ? _actualPos : _actualPos - _displayLength), _displayLength)
-                               : Text.Substring(_displayPos = 0, Text.Length);
+            bool isGood = false;
+            do
+            {
+                DisplayText = "";
+                CursorPosition = 0;
+                if (_displayPos >= Text.Length)
+                    _displayPos = 0;
+                for (int i = _displayPos, measure = 0; i < Text.Length; i++)
+                {
+                    measure += (int) Font.MeasureString(Text[i].ToString()).X;
+                    if (measure >= RealRectangle.Width)
+                        break;
+                    DisplayText += Text[i];
+                    if (i != _actualPos - 1 && i != _actualPos) continue;
+                    isGood = true;
+                    CursorPosition = measure;
+                }
+                if (!isGood)
+                    _displayPos += (_displayPos <= _actualPos) ? 1 : -1;
+            } while (!isGood && DisplayText != "");
         }
 
         private char GetChar(Keys key)
@@ -114,9 +130,14 @@ namespace GameClient.Renderable.GUI.Items
             }
         }
 
-        private char GetInverseChar(char c)
+        private static char GetInverseChar(char c)
         {
             return char.IsUpper(c) ? char.ToLower(c) : char.ToUpper(c);
+        }
+
+        private static int GetLineHeight(SpriteFont font)
+        {
+            return (int)font.MeasureString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").Y + 1;
         }
     }
 }
