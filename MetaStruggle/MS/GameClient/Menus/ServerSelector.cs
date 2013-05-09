@@ -22,7 +22,7 @@ namespace GameClient.Menus
         private SpriteBatch s;
         Menu1 menu;
 
-        public ServerSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, string persoName)
+        public ServerSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, string persoName, string playerName)
         {
             s = spriteBatch;
             PersoName = persoName;

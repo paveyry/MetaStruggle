@@ -37,7 +37,7 @@ namespace GameClient.Renderable.GUI.Items
 
             int width = (int)PositionItem.X;
             for (int index = 0; index < Elements.Length; width += Fields[index], index++)
-                Cells.Add(new SimpleText(GetCorrectString(Elements[index], Fields[index], font), new Point(width, (int)PositionItem.Y),
+                Cells.Add(new SimpleText(GetCorrectString(Elements[index], Fields[index], font), null,new Point(width, (int)PositionItem.Y),
                     PosOnScreen.TopLeft, font, colorNormal, colorSelected, true));
         }
 

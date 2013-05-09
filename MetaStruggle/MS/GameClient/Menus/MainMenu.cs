@@ -32,7 +32,7 @@ namespace GameClient.Menus
                 {
                     new MenuButton("play", Play),
                     new MenuButton("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
-                    new MenuButton("Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics).Create())),
+                    new MenuButton("Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
                     new MenuButton("quit", () => Environment.Exit(0))
                 };
 

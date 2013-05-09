@@ -51,8 +51,6 @@ namespace GameClient.Global
             CharacterFaces.Add("Alex", content.Load<Texture2D>("CharacterFaces\\Alex"));
             CharacterFaces.Add("Ares", content.Load<Texture2D>("CharacterFaces\\Ares"));
             CharacterFaces.Add("Ironman", content.Load<Texture2D>("CharacterFaces\\Ironman"));
-            CharacterFaces.Add("j", content.Load<Texture2D>("CharacterFaces\\Ironman"));
-            CharacterFaces.Add("p", content.Load<Texture2D>("CharacterFaces\\Ironman"));
         }
 
         static void LoadMenuBackgrounds(ContentManager content)

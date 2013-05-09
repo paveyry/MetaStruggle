@@ -14,4 +14,7 @@
 	<sounds>Sons</sounds>
 	<soundeffect>Effets : </soundeffect>
 	<music>Musique : </music>
+	<selectPlayer>Selectionnez un Personnage:</selectPlayer>
+	<textboxPlayer>Entrez un nom de joueur:</textboxPlayer>
+	<nextButton>Suivant</nextButton>
 </Language>

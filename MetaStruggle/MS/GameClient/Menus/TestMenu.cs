@@ -11,14 +11,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameClient.Menus
 {
-    public class CharacterSelector
+    public class TestMenu
     {
         private readonly SpriteBatch _spriteBatch;
         private GraphicsDeviceManager _graphics;
         private List<Character> sm;
         private Menu1 Menu;
 
-        public CharacterSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
+        public TestMenu(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
             _spriteBatch = spriteBatch;
             _graphics = graphics;

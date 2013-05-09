@@ -11,25 +11,29 @@ namespace GameClient.Renderable.GUI.Items
 {
     class SimpleText : Item
     {
-        public string Text { get; set; }
+        private string _text { get; set; }
+        public string Text { get { return (_nameFunc != null) ? _nameFunc.Invoke() : _text; } set { _text = value; } }
+        private NameFunc _nameFunc { get; set; }
         public bool IsSelect { get; set; }
         public bool UseItemRectangle { get; set; }
         private SpriteFont Font { get; set; }
         private Color ColorNormal { get; set; }
         private Color ColorSelected { get; set; }
 
-        //temp fix for ListTexts (TO DO)
-        internal SimpleText(string text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected, bool useItemRectangle)
+        internal SimpleText(string text, NameFunc nameFunc,Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected, bool useItemRectangle)
             : base(CreateRectangle(position, font, text), pos)
         {
             Text = text;
             Font = font;
+            _nameFunc = nameFunc; 
             ColorNormal = colorNormal;
             ColorSelected = colorSelected;
             UseItemRectangle = useItemRectangle;
         }
         public SimpleText(string text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal)
-            : this(text, position, pos, font, colorNormal, colorNormal, false) { }
+            : this(text, null,position, pos, font, colorNormal, colorNormal, false) { }
+        public SimpleText(NameFunc text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal) 
+            : this("", text,position, pos, font, colorNormal, colorNormal, false) { }
 
         private static Rectangle CreateRectangle(Point position, SpriteFont font, string text)
         {

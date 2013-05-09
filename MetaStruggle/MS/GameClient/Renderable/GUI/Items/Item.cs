@@ -19,39 +19,25 @@ namespace GameClient.Renderable.GUI.Items
         internal int Width { get { return GameEngine.Config.ResolutionWidth; } }
         internal int Height { get { return GameEngine.Config.ResolutionHeight; } }
         public delegate void Event();
+        public delegate string NameFunc();
         public Rectangle ItemRectangle;
         public Rectangle RealRectangle;
-        //private Rectangle _realRectangle
-        //{
-        //    get
-        //    {
-        //        return new Rectangle((ItemRectangle.Location.X / 100) * GameEngine.Config.ResolutionHeight,
-        //            (ItemRectangle.Location.Y) / 100 * GameEngine.Config.ResolutionWidth,
-        //            (ItemRectangle.Width / 100) * GameEngine.Config.ResolutionHeight,
-        //            (ItemRectangle.Height / 100) * GameEngine.Config.ResolutionWidth);
-        //    }
-        //    set
-        //    {
-        //        ItemRectangle.Location = new Point((value.Location.X / GameEngine.Config.ResolutionHeight) * 100, (value.Location.Y / GameEngine.Config.ResolutionWidth) * 100);
-        //        ItemRectangle.Height = (value.Height / GameEngine.Config.ResolutionHeight) * 100;
-        //        ItemRectangle.Width = (value.Width / GameEngine.Config.ResolutionWidth) * 100;
-        //    }
-        //}
         public Vector2 Position { get { return new Vector2(RealRectangle.Location.X, RealRectangle.Location.Y); } }
         public Vector2 PositionItem {get {return new Vector2(ItemRectangle.Location.X,ItemRectangle.Location.Y);}}
         public PosOnScreen Pos;
-        private bool IsExpandable;
+        public bool IsExpandable;
 
         private Item(Rectangle rectangle, PosOnScreen pos, bool isExpandable)
         {
             IsExpandable = isExpandable;
             ItemRectangle = rectangle;
             Pos = pos;
-            UpdateRectangle();
+            UpdateResolution();
         }
-        public Item(Rectangle rectangle, PosOnScreen pos) : this(rectangle, pos, false) { }
-        public Item(Rectangle rectangle, bool isExpandable) : this(rectangle, PosOnScreen.TopLeft, isExpandable) { }
-        public Item(Rectangle rectangle) : this(rectangle, PosOnScreen.TopLeft) { }
+
+        protected Item(Rectangle rectangle, PosOnScreen pos) : this(rectangle, pos, false) { }
+        protected Item(Rectangle rectangle, bool isExpandable) : this(rectangle, PosOnScreen.TopLeft, isExpandable) { }
+        protected Item(Rectangle rectangle) : this(rectangle, PosOnScreen.TopLeft) { }
 
         public virtual void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -59,15 +45,9 @@ namespace GameClient.Renderable.GUI.Items
 
         public virtual void UpdateItem(GameTime gameTime)
         {
-            //UpdateRectangle();
         }
 
-        internal virtual void test()
-        {
-            
-        }
-
-        void UpdateRectangle()
+        protected virtual void UpdateResolution()
         {
             switch (Pos)
             {

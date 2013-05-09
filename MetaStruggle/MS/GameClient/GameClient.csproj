@@ -135,8 +135,9 @@
       <DependentUpon>fr_FR.resx</DependentUpon>
     </Compile>
     <Compile Include="Lang\LanguageLoader.cs" />
+    <Compile Include="Menus\CharacterSelector.cs" />
     <Compile Include="Menus\MainMenu.cs" />
-    <Compile Include="Menus\MapSelector.cs" />
+    <Compile Include="Menus\TestMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Renderable\GUI\Items\ImageButton.cs" />
     <Compile Include="Renderable\GUI\Items\Item.cs" />
     <Compile Include="Renderable\GUI\Items\Line.cs" />
+    <Compile Include="Renderable\GUI\Items\ListButton.cs" />
     <Compile Include="Renderable\GUI\Items\ListImageButton.cs" />
     <Compile Include="Renderable\GUI\Items\ListLine.cs" />
     <Compile Include="Renderable\GUI\Items\SimpleText.cs" />
