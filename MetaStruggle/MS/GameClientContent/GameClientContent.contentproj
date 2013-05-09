@@ -65,8 +65,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuBackgrounds\MainMenpu.png">
-      <Name>MainMenpu</Name>
+    <Compile Include="MenuBackgrounds\MainMenu-old.png">
+      <Name>MainMenu-old</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -272,8 +272,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuBackgrounds\tMainMenu.png">
-      <Name>tMainMenu</Name>
+    <Compile Include="MenuBackgrounds\MainMenu.png">
+      <Name>MainMenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -286,8 +286,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuBackgrounds\MainMenu.png">
-      <Name>MainMenu</Name>
+    <Compile Include="MenuBackgrounds\fMainMenu.png">
+      <Name>fMainMenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

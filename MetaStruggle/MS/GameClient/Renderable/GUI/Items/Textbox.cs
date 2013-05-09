@@ -13,18 +13,16 @@ namespace GameClient.Renderable.GUI.Items
         private string DisplayText { get; set; }
         private Texture2D Cursor { get; set; }
         private Texture2D TextboxButton { get; set; }
-        private int _displayPos, _displayPosEnd;
-        private int _displayLength;
+        private int _displayPos;
         private int _actualPos;
         private bool _isSelect;
-        private Vector2 _charLength;
-        private int CursorPosition;
+        private float CursorPosition;
 
         private bool _CapsLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock); } }
         private bool _NumLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock); } }
 
         public Textbox(string text, Rectangle rectangle, Texture2D textboxButton, SpriteFont font, Color colorText)
-            : base(new Rectangle(rectangle.X,rectangle.Y,rectangle.Width,GetLineHeight(font)))
+            : base(new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, GetLineHeight(font)))
         {
             Font = font;
             ColorText = colorText;
@@ -33,24 +31,15 @@ namespace GameClient.Renderable.GUI.Items
             TextboxButton = textboxButton;
             Text = text;
             _actualPos = Text.Length;
-            _displayLength = CalculateLengthMax('m');
-            _charLength = Font.MeasureString("m");
-            DisplayText = Text.Length > _displayLength ? Text.Substring(_actualPos - _displayLength, _displayLength) : Text;
-        }
-
-        private int CalculateLengthMax(char c)
-        {
-            string str = "";
-            int length;
-            for (length = 0; Font.MeasureString(str).X < RealRectangle.Width; length++)
-                str += c;
-            return length - 1;
+            UpdateDisplayText();
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
             spriteBatch.Draw(TextboxButton, RealRectangle, Color.White);
-            spriteBatch.Draw(Cursor, new Rectangle((int)(CursorPosition + RealRectangle.X), RealRectangle.Y,1,(int)_charLength.Y),ColorText );
+            if (gameTime.TotalGameTime.Milliseconds/500 % 2 == 0)
+                spriteBatch.Draw(Cursor, new Rectangle((int)CursorPosition + RealRectangle.X, RealRectangle.Y, 1, RealRectangle.Height), ColorText);
             spriteBatch.DrawString(Font, DisplayText, Position, ColorText);
         }
 
@@ -71,6 +60,8 @@ namespace GameClient.Renderable.GUI.Items
                            Text.Substring(_actualPos, Text.Length - _actualPos++);
                 else if (keyse == Keys.Back && Text.Length > 0 && _actualPos > 0)
                     Text = Text.Substring(0, _actualPos - 1) + Text.Substring(_actualPos, Text.Length - _actualPos--);
+                else if (keyse == Keys.Delete && _actualPos < Text.Length - 1)
+                    Text = Text.Substring(0, _actualPos + 1) + Text.Substring(_actualPos + 2, Text.Length - _actualPos - 2);
                 else if (keyse == Keys.Left && _actualPos > 0)
                     _actualPos--;
                 else if (keyse == Keys.Right && _actualPos < Text.Length)
@@ -93,11 +84,12 @@ namespace GameClient.Renderable.GUI.Items
             {
                 DisplayText = "";
                 CursorPosition = 0;
+                float measure = 0;
                 if (_displayPos >= Text.Length)
                     _displayPos = 0;
-                for (int i = _displayPos, measure = 0; i < Text.Length; i++)
+                for (int i = _displayPos; i < Text.Length; i++)
                 {
-                    measure += (int) Font.MeasureString(Text[i].ToString()).X;
+                    measure = Font.MeasureString(DisplayText + Text[i].ToString()).X;
                     if (measure >= RealRectangle.Width)
                         break;
                     DisplayText += Text[i];
