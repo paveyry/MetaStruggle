@@ -17,6 +17,7 @@ namespace GameClient.Renderable.GUI.Items
         private int _actualPos;
         private bool _isSelect;
         private float CursorPosition;
+        double _previousTime;
 
         private bool _CapsLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock); } }
         private bool _NumLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock); } }
@@ -31,6 +32,7 @@ namespace GameClient.Renderable.GUI.Items
             TextboxButton = textboxButton;
             Text = text;
             _actualPos = Text.Length;
+            _previousTime = 0;
             UpdateDisplayText();
         }
 
@@ -38,7 +40,7 @@ namespace GameClient.Renderable.GUI.Items
         {
 
             spriteBatch.Draw(TextboxButton, RealRectangle, Color.White);
-            if (gameTime.TotalGameTime.Milliseconds/500 % 2 == 0)
+            if (_isSelect && gameTime.TotalGameTime.Milliseconds / 500 % 2 == 0)
                 spriteBatch.Draw(Cursor, new Rectangle((int)CursorPosition + RealRectangle.X, RealRectangle.Y, 1, RealRectangle.Height), ColorText);
             spriteBatch.DrawString(Font, DisplayText, Position, ColorText);
         }
@@ -48,31 +50,34 @@ namespace GameClient.Renderable.GUI.Items
             var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                 _isSelect = RealRectangle.Intersects(mouse);
-            if (!_isSelect || gameTime.TotalGameTime.Ticks % 4 != 0)
+            if (!_isSelect || gameTime.TotalGameTime.Ticks % 3 != 0)
                 return;
             KeyboardState ks = GameEngine.KeyboardState;
-            foreach (var keyse in ks.GetPressedKeys())
+            foreach (var key in ks.GetPressedKeys())
             {
-                char c = GetChar(keyse);
+                char c = GetChar(key);
+                if (_actualPos > 0 && Text[_actualPos - 1] == c && (gameTime.TotalGameTime.TotalMilliseconds - _previousTime) < 150)
+                    break;
                 if (c != '\0')
                     Text = Text.Substring(0, _actualPos) +
                            ((ks.IsKeyDown(Keys.LeftShift) || ks.IsKeyDown(Keys.RightShift)) ? GetInverseChar(c) : c) +
                            Text.Substring(_actualPos, Text.Length - _actualPos++);
-                else if (keyse == Keys.Back && Text.Length > 0 && _actualPos > 0)
+                else if (key == Keys.Back && Text.Length > 0 && _actualPos > 0)
                     Text = Text.Substring(0, _actualPos - 1) + Text.Substring(_actualPos, Text.Length - _actualPos--);
-                else if (keyse == Keys.Delete && _actualPos < Text.Length - 1)
-                    Text = Text.Substring(0, _actualPos + 1) + Text.Substring(_actualPos + 2, Text.Length - _actualPos - 2);
-                else if (keyse == Keys.Left && _actualPos > 0)
+                else if (key == Keys.Delete && _actualPos < Text.Length)
+                    Text = Text.Substring(0, _actualPos) + Text.Substring(_actualPos + 1, Text.Length - _actualPos - 1);
+                else if (key == Keys.Left && _actualPos > 0)
                     _actualPos--;
-                else if (keyse == Keys.Right && _actualPos < Text.Length)
+                else if (key == Keys.Right && _actualPos < Text.Length)
                     _actualPos++;
-                else if (keyse == Keys.End)
+                else if (key == Keys.End)
                     _actualPos = Text.Length;
-                else if (keyse == Keys.Pa1)
+                else if (key == Keys.Pa1 || key == Keys.Home)
                     _actualPos = 0;
-                else if (keyse == Keys.Escape || keyse == Keys.Enter)
+                else if (key == Keys.Escape || key == Keys.Enter)
                     _isSelect = false;
                 UpdateDisplayText();
+                _previousTime = gameTime.TotalGameTime.TotalMilliseconds;
             }
             base.UpdateItem(gameTime);
         }
@@ -84,18 +89,17 @@ namespace GameClient.Renderable.GUI.Items
             {
                 DisplayText = "";
                 CursorPosition = 0;
-                float measure = 0;
                 if (_displayPos >= Text.Length)
                     _displayPos = 0;
                 for (int i = _displayPos; i < Text.Length; i++)
                 {
-                    measure = Font.MeasureString(DisplayText + Text[i].ToString()).X;
+                    float measure = Font.MeasureString(DisplayText + Text[i]).X;
                     if (measure >= RealRectangle.Width)
                         break;
                     DisplayText += Text[i];
                     if (i != _actualPos - 1 && i != _actualPos) continue;
                     isGood = true;
-                    CursorPosition = measure;
+                    CursorPosition = (i == _actualPos) ? CursorPosition : measure;
                 }
                 if (!isGood)
                     _displayPos += (_displayPos <= _actualPos) ? 1 : -1;
