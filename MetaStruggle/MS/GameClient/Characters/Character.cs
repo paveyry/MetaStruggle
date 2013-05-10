@@ -295,8 +295,6 @@ namespace GameClient.Characters
                 var c = GetPlayerColliding();
                 if (c != null)
                 {
-                    int mul = 1;
-
                     //c.CollisionEnabled = false;
                     c.Damages += (1 + c.Damages/50) * 0.5f;
                     c.Position += new Vector3((Yaw == _baseYaw ? 1 : -1) * (c.Damages / 5f) , c.Damages/500f, 0);

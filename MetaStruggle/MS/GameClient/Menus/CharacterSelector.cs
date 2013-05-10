@@ -46,6 +46,8 @@ namespace GameClient.Menus
             if (playerNameTextbox.Text == "" || characterSelector.NameSelected == "")
                 return;
 
+            System.Threading.Thread.Sleep(200);
+
             if (OnMulti)
                 GameEngine.DisplayStack.Push( new ServerSelector(_spriteBatch, _graphics, characterSelector.NameSelected,
                     playerNameTextbox.Text).Create());

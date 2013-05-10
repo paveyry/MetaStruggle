@@ -62,7 +62,6 @@ namespace GameClient.SoundEngine
 
         public void Play()
         {
-            int Volume = Player.settings.volume;
             RealLoop = Loop;
             Player.controls.currentPosition = (Player.playState == WMPPlayState.wmppsPlaying) ? 0 : Position;
 

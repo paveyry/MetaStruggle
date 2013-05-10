@@ -25,7 +25,7 @@ namespace GameClient.Renderable.GUI.Items
             }
         }
         public bool IsDrawable;
-        string[] Elements { get; set; }
+        public string[] Elements { get; set; }
 
         public Line(Rectangle rectangle, string[] elements, int[] fields, SpriteFont font, Color colorNormal, Color colorSelected, bool isDrawable)
             : base(rectangle)

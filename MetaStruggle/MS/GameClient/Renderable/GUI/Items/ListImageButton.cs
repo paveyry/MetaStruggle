@@ -39,7 +39,7 @@ namespace GameClient.Renderable.GUI.Items
             }
         }
 
-        private void UpdateResolution()
+        protected void UpdateResolution1()
         {
             _actualResolutionWidth = GameEngine.Config.ResolutionWidth;
             int x = ItemRectangle.X, y = ItemRectangle.Y;

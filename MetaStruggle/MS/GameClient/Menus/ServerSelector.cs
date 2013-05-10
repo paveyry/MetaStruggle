@@ -17,88 +17,75 @@ namespace GameClient.Menus
     {
         private string PersoName;
         private string PlayerName;
-        private List<string> servers;
-        private Client c;
-        private SpriteBatch s;
-        Menu1 menu;
+        private List<string[]> Servers;
+        private Client Client;
+        private SpriteBatch _spriteBatch;
+        Menu1 Menu;
 
         public ServerSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, string persoName, string playerName)
         {
-            s = spriteBatch;
+            _spriteBatch = spriteBatch;
             PersoName = persoName;
-            servers = new List<string>();
-            Global.GameEngine.EventManager.Register("Network.Master.ServerList", ReceiveServers);
-            Parser p = new Parser();
-            c = new Client("metastruggle.eu", 5555, Global.GameEngine.EventManager, p.Parse);
+            PlayerName = playerName;
+            Servers = new List<string[]>();
+            GameEngine.EventManager.Register("Network.Master.ServerList", ReceiveServers);
+            Client = new Client("metastruggle.eu", 5555, GameEngine.EventManager, new Parser().Parse);
             AskList();
-        }
-
-        void AskList()
-        {
-            new MasterServerListRequest().Pack(c.Writer);
-        }
-
-        void ReceiveServers(object data)
-        {
-            var list = (List<MasterServerDatas>) data;
-            foreach (MasterServerDatas s in list)
-                servers.Add(string.Format("{0}|{1}:{2}|{3}/{4}", s.Map, s.IP, s.Port, s.ConnectedPlayer, s.MaxPlayer));
-            
-            c.Disconnect();
-
-            int y = 100, x = 50;
-            foreach (var server in servers)
-            {
-                ////menu.Add(server,new Button(new Rectangle(x, y, 500, 20), server, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => { }));
-                y += 35;
-            }
         }
 
         public Menu1 Create()
         {
-            menu = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
-            menu.Add("textbox", new Textbox("", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White));
-            ////menu.Add("ok",new Button(new Rectangle(400, 500, 50, 50), "OK", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange,() => Play()));
-            return menu;
+            Menu = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
+
+            Menu.Add("NextButton.Item", new Button(() => Lang.Language.GetString("nextButton"), Item.PosOnScreen.DownRight,
+                new Rectangle(30, 30, 100, 100), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, NextButton));
+
+            return Menu;
         }
 
-        public void Play()
-        {
-            if (GameEngine.SceneManager == null)
-                GameEngine.SceneManager = Renderable.Environments.Environment2.GetScene(s);
 
-            GameEngine.SoundCenter.PlayWithStatus("music1");
-            GameEngine.DisplayStack.Push(GameEngine.SceneManager);
-        }
-
-        void ButtonOk()
+        void NextButton()
         {
+
             System.Threading.Thread.Sleep(200);
-            string server = "";
 
-            //foreach (Textbox e in from Textbox e in menu.Items.FindAll(e => e is Textbox) where true select e)
-            //    PlayerName = e.Text;
-            //foreach (Button e in from Button e in menu.Items.FindAll(e => e is Button) where e.IsSelect && e.Name != "OK" select e)
-            //    server = e.Name;
+            var listServer = Menu.Items["ListServer.Item"] as ListLine;
+            if (listServer == null || listServer.Selected == null)
+                return;
 
-            server = server.Substring(1, server.Length - 2);
-            var t = server.Split(':');
+            var serverItem = listServer.Selected[1].Split(':');
 
-            Parser p = new Parser();
-            
             GameEngine.EventManager.Register("Network.Game.GameStart", GameBegin);
 
-            Client c = new Client(t[0], int.Parse(t[1]), Global.GameEngine.EventManager, p.Parse);
+            Client c = new Client(serverItem[0], int.Parse(serverItem[1]), GameEngine.EventManager, new Parser().Parse);
             ////menu.Add("text",new Button(new Rectangle(400, 400, 50, 50), "Player waiting...", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange, () => {}));
             new JoinLobby().Pack(c.Writer, PlayerName, PersoName);
 
             //GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
         }
 
+        void AskList()
+        {
+            new MasterServerListRequest().Pack(Client.Writer);
+        }
+
+        void ReceiveServers(object data)
+        {
+            var listServers = (List<MasterServerDatas>) data;
+            foreach (var s in listServers)
+                Servers.Add(new[] {s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" +s.MaxPlayer});
+            Client.Disconnect();
+
+            Menu.Add("ListServer.Item",new ListLine(new Dictionary<string, float>
+                {
+                    {"Map",26}, {"IP:Port",26}, {"Player", 26}
+                }, Servers,new Rectangle(10,10,80,50), RessourceProvider.Fonts["HUDlittle"],Color.White,Color.DarkOrange ));
+        }
+        
         void GameBegin(object data)
         {
-            var gs = (GameStartDatas) data;
-            Global.GameEngine.SceneManager = new Renderable.Environments.NetworkEnvironment(s).GetScene(s);
+            var gs = (GameStartDatas)data;
+            GameEngine.SceneManager = new Renderable.Environments.NetworkEnvironment(_spriteBatch).GetScene(_spriteBatch);
             GameEngine.SoundCenter.PlayWithStatus("music1");
             GameEngine.DisplayStack.Push(GameEngine.SceneManager);
         }

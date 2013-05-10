@@ -18,7 +18,7 @@ namespace GameClient.Menus
         private List<Character> sm;
         private Menu1 Menu;
 
-        public TestMenu(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
+        public TestMenu(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, bool osef = false)
         {
             _spriteBatch = spriteBatch;
             _graphics = graphics;
@@ -59,7 +59,6 @@ namespace GameClient.Menus
         public void ButtonOk()
         {
             System.Threading.Thread.Sleep(200);
-            string perso = "";
             //var listImageButton = Menu.Items["ListCharacters"] as ListImageButton;
             //if (listImageButton != null)
             //    perso = listImageButton.NameSelected;

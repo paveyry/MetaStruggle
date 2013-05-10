@@ -16,6 +16,7 @@ namespace GameClient.Renderable.GUI.Items
         Line Fields { get; set; }
         List<Line> Elements { get; set; }
         Line LineSelected { get; set; }
+        public string[] Selected { get { return (LineSelected != null) ? LineSelected.Elements : null; } }
 
         int MaxLine { get; set; }
         private int StartPos;
@@ -35,7 +36,7 @@ namespace GameClient.Renderable.GUI.Items
             for (int i = 0; i < RealFieldsWidth.Length; i++)
                 RealFieldsWidth[i] = (int)((FieldsWidthAbstract[i] / 100f) * Width);
 
-            Fields = new Line(new Rectangle((int) Position.X, (int)Position.Y,RealRectangle.Width,HeigthLine), fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true);
+            Fields = new Line(new Rectangle((int)Position.X, (int)Position.Y, RealRectangle.Width, HeigthLine), fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true);
 
             int heigth = (int)Position.Y + HeigthLine;
             int newHeigth = HeigthLine;
@@ -49,7 +50,8 @@ namespace GameClient.Renderable.GUI.Items
                 }
                 else
                     Elements.Add(new Line(new Rectangle((int)Position.X, heigth, RealRectangle.Width, HeigthLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, false));
-            RealRectangle = new Rectangle(RealRectangle.X, RealRectangle.Y, RealRectangle.Width, newHeigth);
+            if ((newHeigth + HeigthLine) > RealRectangle.Height)
+                RealRectangle.Height = newHeigth;
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
