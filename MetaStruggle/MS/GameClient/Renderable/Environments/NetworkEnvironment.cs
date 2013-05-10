@@ -28,13 +28,8 @@ namespace GameClient.Renderable.Environments
                 new Vector3(-5, 5, -30), //Position initiale de la caméra
                 new Vector3(0, 0, 0), //Point visé par la caméra
                 spriteBatch); //SpriteBatch
-<<<<<<< HEAD
-            CreateItems(gs);
-=======
-
             CreateItems(gs);
 
->>>>>>> 644054d6b99a1da7b1056059408bebc89c58ec73
             RegisterEvents();
 
             sm.Camera.FollowsCharacters(sm.Camera, sm.Items.FindAll(e => e is Character));
