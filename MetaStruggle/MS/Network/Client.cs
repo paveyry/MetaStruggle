@@ -86,7 +86,7 @@ namespace Network
                 {
                     if (CheckIfDisconnected()) return;
 
-                    byte[] tempBuffer = Reader.ReadBytes(_client.Available >= BufferSize ? BufferSize : _client.Available);
+                    byte[] tempBuffer = Reader.ReadBytes(header.DataSize - read >= BufferSize ? BufferSize : header.DataSize - read);
                     read += tempBuffer.Length;
                     packet.Writer.Write(tempBuffer);
                 }
