@@ -39,7 +39,7 @@ namespace GameClient.Menus
 
             Menu.Add("NextButton.Item", new Button(() => Lang.Language.GetString("nextButton"), Item.PosOnScreen.DownRight,
                 new Rectangle(30, 30, 100, 100), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, NextButton));
-
+            Menu.Add("return", new Button(() => Lang.Language.GetString("return"),Item.PosOnScreen.TopLeft, new Rectangle(15,70,100,100),RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => GameEngine.DisplayStack.Pop() ));
             return Menu;
         }
 
