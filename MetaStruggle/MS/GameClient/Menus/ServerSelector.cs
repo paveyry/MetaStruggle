@@ -29,6 +29,7 @@ namespace GameClient.Menus
             PlayerName = playerName;
             Servers = new List<string[]>();
             GameEngine.EventManager.Register("Network.Master.ServerList", ReceiveServers);
+            GameEngine.EventManager.Register("Network.Game.GameStart", GameBegin);
             Client = new Client("metastruggle.eu", 5555, GameEngine.EventManager, new Parser().Parse);
             AskList();
         }
@@ -55,11 +56,9 @@ namespace GameClient.Menus
 
             var serverItem = listServer.Selected[1].Split(':');
 
-            GameEngine.EventManager.Register("Network.Game.GameStart", GameBegin);
-
-            Client c = new Client(serverItem[0], int.Parse(serverItem[1]), GameEngine.EventManager, new Parser().Parse);
+            Client = new Client(serverItem[0], int.Parse(serverItem[1]), GameEngine.EventManager, new Parser().Parse);
             ////menu.Add("text",new Button(new Rectangle(400, 400, 50, 50), "Player waiting...", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange, () => {}));
-            new JoinLobby().Pack(c.Writer, PlayerName, PersoName);
+            new JoinLobby().Pack(Client.Writer, PlayerName, PersoName);
 
             //GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
         }
