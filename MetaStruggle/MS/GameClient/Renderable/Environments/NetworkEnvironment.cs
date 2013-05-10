@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameClient.Characters;
+using GameClient.Renderable._3D;
 using GameClient.Renderable.Scene;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,7 +22,7 @@ namespace GameClient.Renderable.Environments
             CurrentCharacterName = currentCharName;
         }
 
-        public NetworkEnvironment(SpriteBatch spriteBatch)
+        public NetworkEnvironment(SpriteBatch spriteBatch, GameStartDatas gs)
         {
             sm = SceneManager.CreateScene(
                 new Vector3(-5, 5, -30), //Position initiale de la caméra
@@ -31,6 +32,20 @@ namespace GameClient.Renderable.Environments
             RegisterEvents();
 
             sm.Camera.FollowsCharacters(sm.Camera, sm.Items.FindAll(e => e is Character));
+        }
+
+        void CreateItems(GameStartDatas gs)
+        {
+            foreach (var p in gs.Players)
+            {
+                Character c = new Character(p.Name, p.ModelType, sm, Vector3.Zero, Vector3.One);
+                c.ID = p.ID;
+                c.Client = p.Client;
+                sm.AddElement(c);
+            }
+
+            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
+                          new Vector3(1f, 1f, 0.8f)));
         }
 
         public SceneManager GetScene(SpriteBatch spriteBatch)

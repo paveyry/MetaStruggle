@@ -21,7 +21,6 @@ namespace GameClient.Renderable.Environments
                     spriteBatch);               //SpriteBatch
 
             //sm.Skybox = new Skybox(Global.RessourceProvider.Videos["Intro"]);
-
             sm.AddElement(new Character("Spiderman", "Spiderman", sm, new Vector3(-5, 10, -17), new Vector3(1), 1.6f));
             sm.AddElement(new Character("Zeus", "Zeus", sm, new Vector3(-12, 10, -17), new Vector3(1)));
             sm.AddElement(new Character("ironMan", "Ironman", sm, new Vector3(-12, 10, -17), new Vector3(1)));
