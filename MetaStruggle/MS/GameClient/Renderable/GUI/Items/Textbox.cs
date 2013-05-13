@@ -18,6 +18,7 @@ namespace GameClient.Renderable.GUI.Items
         private bool _isSelect;
         private float _cursorPosition;
         double _previousTime;
+        private Keys _previousKey;
 
         private bool _CapsLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock); } }
         private bool _NumLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock); } }
@@ -33,7 +34,8 @@ namespace GameClient.Renderable.GUI.Items
             Text = text;
             _actualPos = Text.Length;
             _previousTime = 0;
-            UpdateDisplayText();
+            UpdateDisplayText(false);
+            _previousKey = Keys.Escape;
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
@@ -52,17 +54,22 @@ namespace GameClient.Renderable.GUI.Items
             if (!_isSelect || gameTime.TotalGameTime.Ticks % 3 != 0)
                 return;
             KeyboardState ks = GameEngine.KeyboardState;
-            foreach (var key in ks.GetPressedKeys())
+            foreach (Keys key in ks.GetPressedKeys())
             {
+                var delBack = false;
                 char c = GetChar(key);
-                if (_actualPos > 0 && char.ToLower(Text[_actualPos - 1]) == c && (gameTime.TotalGameTime.TotalMilliseconds - _previousTime) < 150)
+                if (((_actualPos > 0 && char.ToLower(Text[_actualPos - 1]) == char.ToLower(c)) || (key == _previousKey))
+                    && (gameTime.TotalGameTime.TotalMilliseconds - _previousTime) < 150)
                     break;
                 if (c != '\0')
                     Text = Text.Substring(0, _actualPos) +
                            ((ks.IsKeyDown(Keys.LeftShift) || ks.IsKeyDown(Keys.RightShift)) ? GetInverseChar(c) : c) +
                            Text.Substring(_actualPos, Text.Length - _actualPos++);
                 else if (key == Keys.Back && Text.Length > 0 && _actualPos > 0)
+                {
+                    delBack = true;
                     Text = Text.Substring(0, _actualPos - 1) + Text.Substring(_actualPos, Text.Length - _actualPos--);
+                }
                 else if (key == Keys.Delete && _actualPos < Text.Length)
                     Text = Text.Substring(0, _actualPos) + Text.Substring(_actualPos + 1, Text.Length - _actualPos - 1);
                 else if (key == Keys.Left && _actualPos > 0)
@@ -75,15 +82,17 @@ namespace GameClient.Renderable.GUI.Items
                     _actualPos = 0;
                 else if (key == Keys.Escape || key == Keys.Enter)
                     _isSelect = false;
-                UpdateDisplayText();
+                UpdateDisplayText(delBack);
+                _previousKey = key;
                 _previousTime = gameTime.TotalGameTime.TotalMilliseconds;
             }
             base.UpdateItem(gameTime);
         }
 
-        private void UpdateDisplayText()
+        private void UpdateDisplayText(bool delBack)
         {
             bool isGood = false;
+            _displayPos = (delBack) ? Text.Length : _displayPos;
             do
             {
                 DisplayText = "";
@@ -93,8 +102,7 @@ namespace GameClient.Renderable.GUI.Items
                 for (int i = _displayPos; i < Text.Length; i++)
                 {
                     float measure = Font.MeasureString(DisplayText + Text[i]).X;
-                    if (measure >= RealRectangle.Width)
-                        break;
+                    if (measure >= RealRectangle.Width) break;
                     DisplayText += Text[i];
                     if (i != _actualPos - 1 && i != _actualPos) continue;
                     isGood = true;
