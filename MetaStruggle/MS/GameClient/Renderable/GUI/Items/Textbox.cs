@@ -80,7 +80,7 @@ namespace GameClient.Renderable.GUI.Items
                     _actualPos = Text.Length;
                 else if (key == Keys.Pa1 || key == Keys.Home)
                     _actualPos = 0;
-                else if (key == Keys.Escape || key == Keys.Enter)
+                else if (key == Keys.Enter)
                     _isSelect = false;
                 UpdateDisplayText(delBack);
                 _previousKey = key;

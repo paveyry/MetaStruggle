@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using GameClient.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -31,8 +31,8 @@ namespace GameClient.Renderable.GUI
             ImageButtonColor = Color.White;
             OnHoverTextButtonColor = Color.CornflowerBlue;
             OnHoverImageButtonColor = Color.Wheat;
-            _font = Global.RessourceProvider.Fonts["Menu"];
-            
+            _font = RessourceProvider.Fonts["Menu"];
+
             CreateRectangles(buttons);
         }
 
@@ -47,15 +47,15 @@ namespace GameClient.Renderable.GUI
 
                 if (button.DisplayType == MenuButtonDisplayType.Text)
                 {
-                    width = (int) _font.MeasureString(button.DisplayedName).X;
-                    height = (int) _font.MeasureString(button.DisplayedName).Y;
+                    width = (int)_font.MeasureString(button.DisplayedName).X;
+                    height = (int)_font.MeasureString(button.DisplayedName).Y;
                     rec = new Rectangle(ButtonsStart.X, currentY, width, height);
                 }
                 else
                 {
                     width = button.Image.Width;
                     height = button.Image.Height;
-                    rec = new Rectangle(ButtonsStart.X, currentY, (int) (width*button.Scale), (int) (height*button.Scale));
+                    rec = new Rectangle(ButtonsStart.X, currentY, (int)(width * button.Scale), (int)(height * button.Scale));
                 }
 
                 ButtonsRectangles.Add(rec, button);
@@ -65,13 +65,21 @@ namespace GameClient.Renderable.GUI
 
         public void Update(GameTime gameTime)
         {
-            var mouse = new Rectangle(Global.GameEngine.MouseState.X, Global.GameEngine.MouseState.Y, 1, 1);
+            var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
 
-            foreach (var buttonsRectangle in ButtonsRectangles.Where(buttonsRectangle => buttonsRectangle.Key.Intersects(mouse) && Global.GameEngine.MouseState.LeftButton == ButtonState.Pressed).Where(buttonsRectangle => buttonsRectangle.Value.OnClick != null))
+            foreach (var buttonsRectangle in ButtonsRectangles.Where(buttonsRectangle => buttonsRectangle.Key.Intersects(mouse)
+                && GameEngine.MouseState.LeftButton == ButtonState.Pressed).Where(buttonsRectangle => buttonsRectangle.Value.OnClick != null))
             {
                 buttonsRectangle.Value.OnClick.Invoke();
                 break;
             }
+
+            if (!GameEngine.KeyboardState.IsKeyDown(Keys.Escape)) return;
+            System.Threading.Thread.Sleep(200);
+            if (GameEngine.DisplayStack.Count > 1)
+                GameEngine.DisplayStack.Pop();
+            else
+                Environment.Exit(0);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -102,7 +110,7 @@ namespace GameClient.Renderable.GUI
 
         private Color GetButtonColor(Rectangle rec, MenuButton button)
         {
-            var mouse = new Rectangle(Global.GameEngine.MouseState.X, Global.GameEngine.MouseState.Y, 1, 1);
+            var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
 
             if (button.DisplayType == MenuButtonDisplayType.Text)
                 return rec.Intersects(mouse) ? OnHoverTextButtonColor : TextButtonColor;
@@ -112,7 +120,7 @@ namespace GameClient.Renderable.GUI
 
         private Texture2D GetImage(Rectangle rec, MenuButton button)
         {
-            var mouse = new Rectangle(Global.GameEngine.MouseState.X, Global.GameEngine.MouseState.Y, 1, 1);
+            var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
 
             return rec.Intersects(mouse) ? button.ImageOnClick : button.Image;
         }
@@ -120,8 +128,8 @@ namespace GameClient.Renderable.GUI
         void DrawBackground(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Background,
-                 new Rectangle(0, 0, Global.GameEngine.Config.ResolutionWidth,
-                               Global.GameEngine.Config.ResolutionHeight), Color.White);
+                 new Rectangle(0, 0, GameEngine.Config.ResolutionWidth,
+                               GameEngine.Config.ResolutionHeight), Color.White);
         }
     }
 }

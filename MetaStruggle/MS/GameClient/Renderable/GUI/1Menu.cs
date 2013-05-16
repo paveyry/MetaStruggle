@@ -1,25 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using GameClient.Global;
 using GameClient.Renderable.GUI.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI
 {
     public class Menu1 : Layout.IBasicLayout
     {
-        public Dictionary<string,Item> Items;
+        public Dictionary<string, Item> Items;
         private Texture2D Background;
 
         public Menu1(Texture2D background)
         {
             Background = background;
-            Items=new Dictionary<string, Item>();
+            Items = new Dictionary<string, Item>();
         }
 
-        public void Add(string key,Item item)
+        public void Add(string key, Item item)
         {
-            Items.Add(key,item);
+            if (Items.ContainsKey(key))
+                Items["key"] = item;
+            else
+                Items.Add(key, item);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -35,6 +41,13 @@ namespace GameClient.Renderable.GUI
         {
             for (int i = 0; i < Items.Values.Count; i++)
                 Items.Values.ElementAt(i).UpdateItem(gameTime);
+
+            if (!GameEngine.KeyboardState.IsKeyDown(Keys.Escape)) return;
+            System.Threading.Thread.Sleep(200);
+            if (GameEngine.DisplayStack.Count > 1)
+                GameEngine.DisplayStack.Pop();
+            else
+                Environment.Exit(0);
         }
 
         void DrawBackground(SpriteBatch spriteBatch)
