@@ -49,8 +49,8 @@ namespace GameClient.Menus
                     new []{"9item","item"},
                     new []{"10item","item"},
                 },
-                new Rectangle(10, 10, 80, 50), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange));
-            characterSelector.Add("o", new Textbox("",new Rectangle(10,70,500,20), RessourceProvider.Buttons["TextboxMulti"],RessourceProvider.Fonts["Menu"],Color.White ));
+                new Rectangle(10, 10, 80, 50),"ThemeGrey", RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange));
+            characterSelector.Add("o", new Textbox("",new Rectangle(10,70,500,20), "ThemeGrey",RessourceProvider.Fonts["Menu"],Color.White ));
             characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
             Menu = characterSelector;
             return characterSelector;

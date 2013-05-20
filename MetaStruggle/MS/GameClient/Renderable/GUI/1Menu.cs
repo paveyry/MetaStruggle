@@ -31,7 +31,9 @@ namespace GameClient.Renderable.GUI
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            DrawBackground(spriteBatch);
+            spriteBatch.Draw(Background,
+                 new Rectangle(0, 0, GameEngine.Config.ResolutionWidth,
+                               GameEngine.Config.ResolutionHeight), Color.White);
             foreach (var item in Items)
                 item.Value.DrawItem(gameTime, spriteBatch);
             spriteBatch.End();
@@ -48,13 +50,6 @@ namespace GameClient.Renderable.GUI
                 GameEngine.DisplayStack.Pop();
             else
                 Environment.Exit(0);
-        }
-
-        void DrawBackground(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(Background,
-                 new Rectangle(0, 0, Global.GameEngine.Config.ResolutionWidth,
-                               Global.GameEngine.Config.ResolutionHeight), Color.White);
         }
     }
 }

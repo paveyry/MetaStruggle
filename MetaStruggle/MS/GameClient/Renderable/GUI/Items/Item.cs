@@ -71,5 +71,10 @@ namespace GameClient.Renderable.GUI.Items
                     break;
             }
         }
+
+        protected static int GetLineHeight(SpriteFont font)
+        {
+            return (int)font.MeasureString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").Y + 1;
+        }
     }
 }

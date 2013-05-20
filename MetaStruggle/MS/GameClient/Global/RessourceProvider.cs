@@ -14,17 +14,17 @@ namespace GameClient.Global
 {
     public static class RessourceProvider
     {
-        public static Dictionary<string, Texture2D> CharacterFaces = new Dictionary<string, Texture2D>(); 
+        public static Dictionary<string, Texture2D> CharacterFaces = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D> MenuBackgrounds = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D> Skyboxes = new Dictionary<string, Texture2D>();
-        
-        public static Dictionary<string, SkinnedModel> AnimatedModels = new Dictionary<string, SkinnedModel>(); 
+
+        public static Dictionary<string, SkinnedModel> AnimatedModels = new Dictionary<string, SkinnedModel>();
         public static Dictionary<string, Model> StaticModels = new Dictionary<string, Model>();
-        
+
         public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
-        
-        public static Dictionary<string, Texture2D> Cursors = new Dictionary<string, Texture2D>();
-        public static Dictionary<string, Texture2D> Buttons = new Dictionary<string, Texture2D>(); 
+
+        public static Dictionary<string, Cursor> Cursors = new Dictionary<string, Cursor>();
+        public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
 
 
@@ -39,8 +39,8 @@ namespace GameClient.Global
 
             LoadFonts(content);
 
-            LoadCursors(content);
-            LoadButtons(content);
+            //LoadCursors(content);
+            LoadThemes(content);
             LoadVideos(content);
         }
 
@@ -102,7 +102,7 @@ namespace GameClient.Global
         {
             var sm = content.Load<SkinnedModel>("AnimatedModels\\Ironman\\Model");
             var body = content.Load<Texture2D>("AnimatedModels\\Ironman\\texture");
-            
+
             foreach (ModelMesh mesh in sm.Model.Meshes)
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
@@ -229,12 +229,27 @@ namespace GameClient.Global
 
         static void LoadCursors(ContentManager content)
         {
-            Cursors.Add("Textbox", content.Load<Texture2D>("Cursors\\Textbox"));
+            
         }
 
-        static void LoadButtons(ContentManager content)
+        static void LoadThemes(ContentManager content)
         {
-            Buttons.Add("TextboxMulti", content.Load<Texture2D>("Buttons\\TextboxMulti"));
+            var themeGrey = new Dictionary<string, Texture2D>
+                {
+                    {"ListLine.Top", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\Top")},
+                    {"ListLine.Foot", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\Foot")},
+                    {"ListLine.Separator", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\Separator")},
+                    {"ListLine.LeftSide", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\LeftSide")},
+                    {"ListLine.RightSide", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\RightSide")},
+                    {"ListLine.Background", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\Background")},
+
+                    {"Textbox.LeftSide", content.Load<Texture2D>("Themes\\ThemeGrey\\Textbox\\LeftSide")},
+                    {"Textbox.RightSide", content.Load<Texture2D>("Themes\\ThemeGrey\\Textbox\\RightSide")},
+                    {"Textbox.Separator", content.Load<Texture2D>("Themes\\ThemeGrey\\Textbox\\Separator")},
+                    {"Textbox.Background", content.Load<Texture2D>("Themes\\ThemeGrey\\Textbox\\Background")}
+                };
+
+            Themes.Add("ThemeGrey", themeGrey);
         }
 
         static void LoadVideos(ContentManager content)

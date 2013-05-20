@@ -168,6 +168,7 @@
       <Name>HUDlittle</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -265,8 +266,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cursors\Textbox.png">
-      <Name>Textbox</Name>
+    <Compile Include="Themes\ThemeGrey\Textbox\Separator.png">
+      <Name>Separator</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -288,6 +289,70 @@
   <ItemGroup>
     <Compile Include="MenuBackgrounds\fMainMenu.png">
       <Name>fMainMenu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Cursors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\ThemeGrey\Textbox\Background.png">
+      <Name>Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\ThemeGrey\Textbox\LeftSide.png">
+      <Name>LeftSide</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\ThemeGrey\Textbox\RightSide.png">
+      <Name>RightSide</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\ThemeGrey\ListLine\Background.png">
+      <Name>Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\ThemeGrey\ListLine\LeftSide.png">
+      <Name>LeftSide</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\ThemeGrey\ListLine\RightSide.png">
+      <Name>RightSide</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\ThemeGrey\ListLine\Separator.png">
+      <Name>Separator</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\ThemeGrey\ListLine\Top.png">
+      <Name>Top</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\ThemeGrey\ListLine\Foot.png">
+      <Name>Foot</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

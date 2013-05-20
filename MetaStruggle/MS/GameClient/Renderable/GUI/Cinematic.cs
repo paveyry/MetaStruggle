@@ -29,6 +29,7 @@ namespace GameClient.Renderable.GUI
             {
                 Global.GameEngine.DisplayStack.Pop();
                 _player.Stop();
+                System.Threading.Thread.Sleep(200);
                 return;
             }
 
