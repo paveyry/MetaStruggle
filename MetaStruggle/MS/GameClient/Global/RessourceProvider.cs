@@ -234,22 +234,23 @@ namespace GameClient.Global
 
         static void LoadThemes(ContentManager content)
         {
-            var themeGrey = new Dictionary<string, Texture2D>
+            var testTheme = new Dictionary<string, Texture2D>
                 {
-                    {"ListLine.Top", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\Top")},
-                    {"ListLine.Foot", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\Foot")},
-                    {"ListLine.Separator", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\Separator")},
-                    {"ListLine.LeftSide", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\LeftSide")},
-                    {"ListLine.RightSide", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\RightSide")},
-                    {"ListLine.Background", content.Load<Texture2D>("Themes\\ThemeGrey\\ListLine\\Background")},
+                    {"ListLine.Top", content.Load<Texture2D>("Themes\\UglyTestTheme\\ListLine\\Top")},
+                    {"ListLine.Down", content.Load<Texture2D>("Themes\\UglyTestTheme\\ListLine\\Down")},
+                    {"ListLine.Separator", content.Load<Texture2D>("Themes\\UglyTestTheme\\ListLine\\Separator")},
+                    {"ListLine.LeftSide", content.Load<Texture2D>("Themes\\UglyTestTheme\\ListLine\\LeftSide")},
+                    {"ListLine.RightSide", content.Load<Texture2D>("Themes\\UglyTestTheme\\ListLine\\RightSide")},
+                    {"ListLine.Background", content.Load<Texture2D>("Themes\\UglyTestTheme\\ListLine\\Background")},
+                    {"ListLine.Scroll", content.Load<Texture2D>("Themes\\UglyTestTheme\\ListLine\\Scroll")},
 
-                    {"Textbox.LeftSide", content.Load<Texture2D>("Themes\\ThemeGrey\\Textbox\\LeftSide")},
-                    {"Textbox.RightSide", content.Load<Texture2D>("Themes\\ThemeGrey\\Textbox\\RightSide")},
-                    {"Textbox.Separator", content.Load<Texture2D>("Themes\\ThemeGrey\\Textbox\\Separator")},
-                    {"Textbox.Background", content.Load<Texture2D>("Themes\\ThemeGrey\\Textbox\\Background")}
+                    {"Textbox.LeftSide", content.Load<Texture2D>("Themes\\UglyTestTheme\\Textbox\\LeftSide")},
+                    {"Textbox.RightSide", content.Load<Texture2D>("Themes\\UglyTestTheme\\Textbox\\RightSide")},
+                    {"Textbox.Separator", content.Load<Texture2D>("Themes\\UglyTestTheme\\Textbox\\Separator")},
+                    {"Textbox.Background", content.Load<Texture2D>("Themes\\UglyTestTheme\\Textbox\\Background")}
                 };
 
-            Themes.Add("ThemeGrey", themeGrey);
+            Themes.Add("UglyTestTheme", testTheme);
         }
 
         static void LoadVideos(ContentManager content)

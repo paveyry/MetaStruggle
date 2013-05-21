@@ -266,7 +266,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\Textbox\Separator.png">
+    <Compile Include="Themes\UglyTestTheme\Textbox\Separator.png">
       <Name>Separator</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -297,62 +297,69 @@
     <Folder Include="Cursors\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\Textbox\Background.png">
+    <Compile Include="Themes\UglyTestTheme\Textbox\Background.png">
       <Name>Background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\Textbox\LeftSide.png">
+    <Compile Include="Themes\UglyTestTheme\Textbox\LeftSide.png">
       <Name>LeftSide</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Themes\ThemeGrey\Textbox\RightSide.png">
+    <Compile Include="Themes\UglyTestTheme\Textbox\RightSide.png">
       <Name>RightSide</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\ListLine\Background.png">
+    <Compile Include="Themes\UglyTestTheme\ListLine\Background.png">
       <Name>Background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\ListLine\LeftSide.png">
+    <Compile Include="Themes\UglyTestTheme\ListLine\LeftSide.png">
       <Name>LeftSide</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\ListLine\RightSide.png">
+    <Compile Include="Themes\UglyTestTheme\ListLine\RightSide.png">
       <Name>RightSide</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\ListLine\Separator.png">
+    <Compile Include="Themes\UglyTestTheme\ListLine\Separator.png">
       <Name>Separator</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\ListLine\Top.png">
+    <Compile Include="Themes\UglyTestTheme\ListLine\Top.png">
       <Name>Top</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\ThemeGrey\ListLine\Foot.png">
-      <Name>Foot</Name>
+    <Compile Include="Themes\UglyTestTheme\ListLine\Down.png">
+      <Name>Down</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\UglyTestTheme\ListLine\Scroll.png">
+      <Name>Scroll</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

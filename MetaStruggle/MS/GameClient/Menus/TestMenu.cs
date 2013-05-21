@@ -31,8 +31,8 @@ namespace GameClient.Menus
             //Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
             Dictionary<string, float> t = new Dictionary<string, float>
                 {
-                    {"field1", 40},
-                    {"field2",40}
+                    {"field1", 50},
+                    {"field2",50}
                 };
 
             //characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
@@ -48,9 +48,20 @@ namespace GameClient.Menus
                     new []{"8item","item"},
                     new []{"9item","item"},
                     new []{"10item","item"},
+                    new []{"11item","item"},
+                    new []{"12item","item"},
+                    new []{"13item","item"},
+                    new []{"14item","item"},
+                    new []{"15item","item"},
+                    new []{"16item","item"},
+                    new []{"17item","item"},
+                    new []{"18item","item"},
+                    new []{"19item","item"},
+                    new []{"20item","item"},
+                    new []{"21item","item"},
                 },
-                new Rectangle(10, 10, 80, 50),"ThemeGrey", RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange));
-            characterSelector.Add("o", new Textbox("",new Rectangle(10,70,500,20), "ThemeGrey",RessourceProvider.Fonts["Menu"],Color.White ));
+                new Rectangle(10, 10, 80, 50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
+            characterSelector.Add("o", new Textbox("",new Rectangle(10,70,500,20), "UglyTestTheme",RessourceProvider.Fonts["Menu"],Color.White ));
             characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
             Menu = characterSelector;
             return characterSelector;

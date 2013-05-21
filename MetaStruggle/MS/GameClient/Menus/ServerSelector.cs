@@ -78,7 +78,7 @@ namespace GameClient.Menus
             Menu.Add("ListServer.Item",new ListLine(new Dictionary<string, float>
                 {
                     {"Map",26}, {"IP:Port",26}, {"Player", 26}
-                }, Servers,new Rectangle(10,10,80,50),"ThemeGrey", RessourceProvider.Fonts["HUDlittle"],Color.White,Color.DarkOrange ));
+                }, Servers,new Rectangle(10,10,80,50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"],Color.White,Color.DarkOrange ));
         }
         
         void GameBegin(object data)

@@ -11,6 +11,7 @@ namespace GameClient.Renderable.GUI.Items
     public class ListLine : Item
     {
         private Dictionary<string, Texture2D> Theme { get; set; }
+        private Rectangle InternalRectangle;
         float[] FieldsWidthAbstract { get; set; }
         int[] RealFieldsWidth { get; set; }
         Line Fields { get; set; }
@@ -34,36 +35,64 @@ namespace GameClient.Renderable.GUI.Items
             RealFieldsWidth = new int[fields.Values.Count];
             HeightLine = GetLineHeight(font);
             _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
+            InternalRectangle = new Rectangle(RealRectangle.X + Theme["ListLine.LeftSide"].Width, RealRectangle.Y + HeightLine,
+                RealRectangle.Width - (Theme["ListLine.LeftSide"].Width + Theme["ListLine.RightSide"].Width), RealRectangle.Height - (Theme["ListLine.Top"].Height + Theme["ListLine.Down"].Height));
 
             for (int i = 0; i < RealFieldsWidth.Length; i++)
-                RealFieldsWidth[i] = (int)((FieldsWidthAbstract[i] / 100f) * Width);
+                RealFieldsWidth[i] = (int)((FieldsWidthAbstract[i] / 100f) * InternalRectangle.Width);
 
-            Fields = new Line(new Rectangle((int)Position.X, (int)Position.Y, RealRectangle.Width, HeightLine), fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true);
+            Fields = new Line(new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, HeightLine), fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true);
 
-            int heigth = (int)Position.Y + HeightLine;
+            int heigth = InternalRectangle.Y;
             int newHeigth = HeightLine;
             MaxLine = 0;
             for (int i = 0; i < elements.Count; heigth += HeightLine, i++)
-                if ((heigth + HeightLine) < RealRectangle.Height + RealRectangle.Y)
+                if ((heigth + HeightLine) <= InternalRectangle.Height + InternalRectangle.Y)
                 {
-                    Elements.Add(new Line(new Rectangle((int)Position.X, heigth, RealRectangle.Width, HeightLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, true));
+                    Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, true));
                     newHeigth += HeightLine;
                     MaxLine++;
                 }
                 else
-                    Elements.Add(new Line(new Rectangle((int)Position.X, heigth, RealRectangle.Width, HeightLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, true));
-            if ((newHeigth + HeightLine) > RealRectangle.Height)
-                RealRectangle.Height = newHeigth;
-            Ratio = (Elements.Count)/(float)(MaxLine+1);
+                    Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, false));
+            if (newHeigth > InternalRectangle.Height)
+            {
+                InternalRectangle.Height = newHeigth - HeightLine;
+                Ratio = (Elements.Count*HeightLine)/(float) InternalRectangle.Height;
+            }
+            else
+                Ratio = 1;
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Theme["ListLine.LeftSide"], RealRectangle, Color.White);
+            spriteBatch.Draw(Theme["ListLine.Background"], InternalRectangle, Color.White);
+
+            spriteBatch.Draw(Theme["ListLine.LeftSide"], new Rectangle(RealRectangle.X, InternalRectangle.Y,
+                Theme["ListLine.LeftSide"].Width, InternalRectangle.Height), Color.White);
+
+            spriteBatch.Draw(Theme["ListLine.RightSide"], new Rectangle(InternalRectangle.X + InternalRectangle.Width, InternalRectangle.Y,
+                Theme["ListLine.RightSide"].Width, InternalRectangle.Height), Color.White);
+
+            spriteBatch.Draw(Theme["ListLine.Top"], new Rectangle(RealRectangle.X, RealRectangle.Y, RealRectangle.Width, HeightLine), Color.White);
+
+            spriteBatch.Draw(Theme["ListLine.Down"], new Rectangle(RealRectangle.X, InternalRectangle.Y + InternalRectangle.Height,
+                RealRectangle.Width, Theme["ListLine.Down"].Height), Color.White);
+
+            spriteBatch.Draw(Theme["ListLine.Scroll"], new Rectangle(InternalRectangle.X + InternalRectangle.Width,
+                InternalRectangle.Y + (int)(((StartPos) * HeightLine) / (Ratio)),
+                Theme["ListLine.RightSide"].Width, (int)(InternalRectangle.Height / Ratio)), Color.White);
+
+            for (int i = 0, width = InternalRectangle.X + RealFieldsWidth[i]; i < RealFieldsWidth.Length - 1; i++, width += RealFieldsWidth[i])
+                spriteBatch.Draw(Theme["ListLine.Separator"],
+                                 new Rectangle(width - 3, InternalRectangle.Y,
+                                               Theme["ListLine.Separator"].Width, InternalRectangle.Height), Color.White);
+
             Fields.DrawItem(gameTime, spriteBatch);
             foreach (Line element in Elements.Where(element => element.IsDrawable))
                 element.DrawItem(gameTime, spriteBatch);
-            spriteBatch.Draw(Theme["ListLine.LeftSide"], new Rectangle(0,RealRectangle.Y+(int)(((StartPos)*HeightLine)/(Ratio)),20,(int)(((MaxLine+1)*HeightLine)/Ratio)), Color.White);
+
+            
         }
 
         public override void UpdateItem(GameTime gameTime)
