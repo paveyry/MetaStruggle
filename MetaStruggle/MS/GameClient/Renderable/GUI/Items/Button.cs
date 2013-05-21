@@ -8,19 +8,18 @@ namespace GameClient.Renderable.GUI.Items
     public class Button : Item
     {
         #region Fields
-
-        private SpriteFont ButtonFont;
-        private Color ButtonColor;
-        private Color ButonColorSelected;
-        private Texture2D Image;
-        private Texture2D ImageSelected;
-        private bool _drawImageSelected;
-        private Event OnClick;
-        private NameFunc _nameFunc;
-
         public bool IsSelect { get; set; }
-        private string _name;
         public string Name { get { return (_nameFunc != null) ? _nameFunc.Invoke() : _name; } set { _name = value; } }
+        private string _name;
+
+        private SpriteFont Font { get; set; }
+        private Color ButtonColor { get; set; }
+        private Color ButonColorSelected { get; set; }
+        private Texture2D Image { get; set; }
+        private Texture2D ImageSelected { get; set; }
+        private readonly bool _drawImageSelected;
+        private readonly Event _onClick;
+        private NameFunc _nameFunc;
         #endregion
 
         #region Constructors
@@ -32,10 +31,10 @@ namespace GameClient.Renderable.GUI.Items
             Image = image;
             ImageSelected = imageSelected;
             Name = text;
-            ButtonFont = font;
+            Font = font;
             ButtonColor = buttonColor;
             ButonColorSelected = buttonSelected;
-            OnClick = onClick;
+            _onClick = onClick;
             _nameFunc = func;
             _drawImageSelected = drawImageSelected;
             IsSelect = false;
@@ -57,13 +56,13 @@ namespace GameClient.Renderable.GUI.Items
                     spriteBatch.Draw(ImageSelected, RealRectangle, Color.White);
                 else if (Image != null)
                     spriteBatch.Draw(Image, RealRectangle, ButonColorSelected);
-                spriteBatch.DrawString(ButtonFont, Name, Position, ButonColorSelected);
+                spriteBatch.DrawString(Font, Name, Position, ButonColorSelected);
             }
             else
             {
                 if (Image != null)
                     spriteBatch.Draw(Image, RealRectangle, Color.White);
-                spriteBatch.DrawString(ButtonFont, Name, Position, ButtonColor);
+                spriteBatch.DrawString(Font, Name, Position, ButtonColor);
             }
         }
 
@@ -72,7 +71,7 @@ namespace GameClient.Renderable.GUI.Items
             if (RealRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1)))
             {
                 if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
-                    OnClick.Invoke();
+                    _onClick.Invoke();
                 IsSelect = true;
             }
             else
