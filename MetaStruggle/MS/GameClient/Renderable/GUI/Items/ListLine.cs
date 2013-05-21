@@ -26,7 +26,8 @@ namespace GameClient.Renderable.GUI.Items
         int HeightLine { get; set; }
         float Ratio { get; set; }
 
-        public ListLine(Dictionary<string, float> fields, List<string[]> elements, Rectangle abstractRectangle, string theme, SpriteFont font, Color normalColor, Color selectedColor)
+        public ListLine(Dictionary<string, float> fields, List<string[]> elements, Rectangle abstractRectangle, string theme,
+            SpriteFont font, Color normalColor, Color selectedColor)
             : base(abstractRectangle, true)
         {
             Theme = RessourceProvider.Themes[theme];
@@ -36,12 +37,14 @@ namespace GameClient.Renderable.GUI.Items
             HeightLine = GetLineHeight(font);
             _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
             InternalRectangle = new Rectangle(RealRectangle.X + Theme["ListLine.LeftSide"].Width, RealRectangle.Y + HeightLine,
-                RealRectangle.Width - (Theme["ListLine.LeftSide"].Width + Theme["ListLine.RightSide"].Width), RealRectangle.Height - (Theme["ListLine.Top"].Height + Theme["ListLine.Down"].Height));
+                RealRectangle.Width - (Theme["ListLine.LeftSide"].Width + Theme["ListLine.RightSide"].Width), RealRectangle.Height
+                - (Theme["ListLine.Top"].Height + Theme["ListLine.Down"].Height));
 
-            for (int i = 0; i < RealFieldsWidth.Length; i++)
-                RealFieldsWidth[i] = (int)((FieldsWidthAbstract[i] / 100f) * InternalRectangle.Width);
+            for (int i = 0, sum = (int)FieldsWidthAbstract.Sum(); i < RealFieldsWidth.Length; i++)
+                RealFieldsWidth[i] = (int)((FieldsWidthAbstract[i] / sum) * InternalRectangle.Width);
 
-            Fields = new Line(new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, HeightLine), fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true);
+            Fields = new Line(new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, HeightLine),
+                fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true);
 
             int heigth = InternalRectangle.Y;
             int newHeigth = HeightLine;
@@ -49,12 +52,14 @@ namespace GameClient.Renderable.GUI.Items
             for (int i = 0; i < elements.Count; heigth += HeightLine, i++)
                 if ((heigth + HeightLine) <= InternalRectangle.Height + InternalRectangle.Y)
                 {
-                    Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, true));
+                    Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine),
+                        elements[i], RealFieldsWidth, font, normalColor, selectedColor, true));
                     newHeigth += HeightLine;
                     MaxLine++;
                 }
                 else
-                    Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine), elements[i], RealFieldsWidth, font, normalColor, selectedColor, false));
+                    Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine),
+                        elements[i], RealFieldsWidth, font, normalColor, selectedColor, false));
             if (newHeigth > InternalRectangle.Height)
             {
                 InternalRectangle.Height = newHeigth - HeightLine;
@@ -126,7 +131,6 @@ namespace GameClient.Renderable.GUI.Items
                 }
             }
             _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
-            //base.UpdateItem(gameTime); //mettre UpadateResolution en Virtual
         }
     }
 }

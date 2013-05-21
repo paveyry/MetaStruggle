@@ -34,7 +34,7 @@ namespace GameClient.Menus
                     new MenuButton("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
                     new MenuButton("Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
                     new MenuButton("quit", () => Environment.Exit(0)),
-                    new MenuButton("Multi", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
+                    new MenuButton("Test", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
                 };
 
             var main = new Menu("MainMenu", buttons, RessourceProvider.MenuBackgrounds["MainMenu"],
