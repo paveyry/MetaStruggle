@@ -265,14 +265,24 @@ namespace GameClient.Global
         static void LoadInputKeys()
         {
             var tempKeys = new List<Keys>();
-            var keys = GameEngine.Config.Keys.Split(',');
-            if (keys.Length != 5)
-                keys = "Z,Q,D,Space,LeftShift".Split(',');
-            foreach (var key in keys)
+            string[] defaultKeys = Config.GetDefaultConfig().Keys.Split(',');
+            string[] keys = defaultKeys;
+            if (GameEngine.Config.Keys != null)
+            {
+                var temp = GameEngine.Config.Keys.Split(',');
+                if (temp.Length == 5)
+                    keys = temp;
+            }
+            for (int i = 0; i < keys.Length; i++)
             {
                 Keys inputKey;
-                if (Enum.TryParse(key, out inputKey))
+                if (Enum.TryParse(keys[i], out inputKey))
                     tempKeys.Add(inputKey);
+                else
+                {
+                    i = 0;
+                    keys = defaultKeys;
+                }
             }
             InputKeys.Add("attack",tempKeys[0]);
             InputKeys.Add("left", tempKeys[1]);

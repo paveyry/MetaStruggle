@@ -17,15 +17,14 @@ namespace GameClient.Renderable.GUI.Items
 
         private string _text;
         private readonly NameFunc _nameFunc;
-        private readonly bool _useItemRectangle;
-
+        
         private SpriteFont Font { get; set; }
         private Color ColorNormal { get; set; }
         private Color ColorSelected { get; set; }
         #endregion
 
         #region Constructors
-        internal SimpleText(string text, NameFunc nameFunc,Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected, bool useItemRectangle)
+        internal SimpleText(string text, NameFunc nameFunc,Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected)
             : base(CreateRectangle(position, font, text), pos)
         {
             Text = text;
@@ -33,12 +32,11 @@ namespace GameClient.Renderable.GUI.Items
             _nameFunc = nameFunc; 
             ColorNormal = colorNormal;
             ColorSelected = colorSelected;
-            _useItemRectangle = useItemRectangle; //Composante permettant de m'éviter de C/P ce code pour un objet Cell de Line (je fixerai ça si j'ai pas la flemme)
         }
         public SimpleText(string text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal)
-            : this(text, null,position, pos, font, colorNormal, colorNormal, false) { }
+            : this(text, null,position, pos, font, colorNormal, colorNormal) { }
         public SimpleText(NameFunc text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal) 
-            : this("", text,position, pos, font, colorNormal, colorNormal, false) { }
+            : this("", text,position, pos, font, colorNormal, colorNormal) { }
         #endregion
 
         private static Rectangle CreateRectangle(Point position, SpriteFont font, string text)
@@ -49,7 +47,7 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(Font, Text, (_useItemRectangle) ? PositionItem : Position, (IsSelect) ? ColorSelected : ColorNormal);
+            spriteBatch.DrawString(Font, Text, Position, (IsSelect) ? ColorSelected : ColorNormal);
         }
 
         public override void UpdateItem(GameTime gameTime)

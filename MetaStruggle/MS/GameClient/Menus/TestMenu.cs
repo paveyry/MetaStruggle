@@ -28,7 +28,6 @@ namespace GameClient.Menus
         public Menu1 Create()
         {
             Menu1 characterSelector = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
-            int x = 50, y = 50;
             //Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
             Dictionary<string, float> t = new Dictionary<string, float>
                 {

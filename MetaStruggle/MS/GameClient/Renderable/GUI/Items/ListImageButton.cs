@@ -10,7 +10,7 @@ namespace GameClient.Renderable.GUI.Items
 {
     public class ListImageButton : Item
     {
-        private readonly List<ImageButton> ImageButtons;
+        private List<ImageButton> ImageButtons { get; set; }
         private int _actualResolutionWidth;
         private readonly int HeightFont;
         private ImageButton Selected;

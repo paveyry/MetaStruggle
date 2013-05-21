@@ -7,5 +7,5 @@
   <VolumeMusic>100</VolumeMusic>
   <VolumeEffect>100</VolumeEffect>
   <FullScreen>false</FullScreen>
-  <Keys>Z,Q,D,Space,H</Keys>
+  <Keys>Z,Q,D,Space,LeftShift</Keys>
 </Config>

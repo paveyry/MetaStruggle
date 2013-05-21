@@ -12,6 +12,7 @@ namespace GameClient.Renderable.GUI.Items
 {
     internal class Line : Item
     {
+        #region Fields
         int[] Fields { get; set; }
         List<Cell> Cells { get; set; }
         private bool _isSelect;
@@ -25,8 +26,9 @@ namespace GameClient.Renderable.GUI.Items
                     cell.IsSelect = value;
             }
         }
-        public bool IsDrawable;
-        public string[] Elements { get; set; }
+        public bool IsDrawable { get; set; }
+        internal string[] Elements { get; set; }
+        #endregion
 
         public Line(Rectangle rectangle, string[] elements, int[] fields, SpriteFont font, Color colorNormal,
             Color colorSelected, bool isDrawable, bool isNormal)
@@ -37,7 +39,7 @@ namespace GameClient.Renderable.GUI.Items
             Cells = new List<Cell>();
             IsDrawable = isDrawable;
 
-            int width = (int)PositionItem.X;
+            var width = (int)PositionItem.X;
             if (isNormal)
                 AddClassicCell(font, colorNormal, colorSelected, ref width, 0);
             else

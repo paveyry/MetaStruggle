@@ -20,7 +20,7 @@ namespace GameClient.Renderable.GUI.Items
         public string[] Selected { get { return (LineSelected != null) ? LineSelected.Elements : null; } }
 
         int MaxLine { get; set; }
-        private int StartPos;
+        private int StartPos { get; set; }
         private int EndPos { get { return StartPos + MaxLine; } set { StartPos = value - MaxLine; } }
         private int _oldWheelValue;
         int HeightLine { get; set; }
