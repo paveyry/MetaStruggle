@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using XNAnimation;
 
@@ -23,10 +24,11 @@ namespace GameClient.Global
 
         public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
 
-        public static Dictionary<string, Cursor> Cursors = new Dictionary<string, Cursor>();
+        //public static Dictionary<string, Cursor> Cursors = new Dictionary<string, Cursor>();
         public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
 
+        public static Dictionary<string, Keys> InputKeys = new Dictionary<string, Keys>();
 
         public static void Fill(ContentManager content)
         {
@@ -42,6 +44,7 @@ namespace GameClient.Global
             //LoadCursors(content);
             LoadThemes(content);
             LoadVideos(content);
+            LoadInputKeys();
         }
 
         static void LoadCharacterFaces(ContentManager content)
@@ -229,7 +232,7 @@ namespace GameClient.Global
 
         static void LoadCursors(ContentManager content)
         {
-            
+
         }
 
         static void LoadThemes(ContentManager content)
@@ -256,6 +259,26 @@ namespace GameClient.Global
         static void LoadVideos(ContentManager content)
         {
             Videos.Add("Intro", content.Load<Video>("Videos\\Intro"));
+        }
+
+
+        static void LoadInputKeys()
+        {
+            var tempKeys = new List<Keys>();
+            var keys = GameEngine.Config.Keys.Split(',');
+            if (keys.Length != 5)
+                keys = "Z,Q,D,Space,LeftShift".Split(',');
+            foreach (var key in keys)
+            {
+                Keys inputKey;
+                if (Enum.TryParse(key, out inputKey))
+                    tempKeys.Add(inputKey);
+            }
+            InputKeys.Add("attack",tempKeys[0]);
+            InputKeys.Add("left", tempKeys[1]);
+            InputKeys.Add("right", tempKeys[2]);
+            InputKeys.Add("jump", tempKeys[3]);
+            InputKeys.Add("run", tempKeys[4]);
         }
     }
 }

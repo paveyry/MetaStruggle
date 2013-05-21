@@ -8,6 +8,7 @@ using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Menus
 {
@@ -38,29 +39,13 @@ namespace GameClient.Menus
             //characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
             characterSelector.Add("nop", new ListLine(t, new List<string[]>
                 {
-                    new []{"1azertyuiopqsdfghjkitemwxcvbnazertyuiopoiuytrsdfghjk1", "1item2"}, 
-                    new []{"2item1", "2item2"},
-                    new []{"3item","item"},
-                    new []{"4item","item"},
-                    new []{"5item","item"},
-                    new []{"6item","item"},
-                    new []{"7item","item"},
-                    new []{"8item","item"},
-                    new []{"9item","item"},
-                    new []{"10item","item"},
-                    new []{"11item","item"},
-                    new []{"12item","item"},
-                    new []{"13item","item"},
-                    new []{"14item","item"},
-                    new []{"15item","item"},
-                    new []{"16item","item"},
-                    new []{"17item","item"},
-                    new []{"18item","item"},
-                    new []{"19item","item"},
-                    new []{"20item","item"},
-                    new []{"21item","item"},
+                    new []{"1azertyuiopqsdfghjkitemwxcvbnazertyuiopoiuytrsdfghjk1", "attack"}, 
+                    new []{"2item1", "left"},
+                    new []{"3item","right"},
+                    new []{"4item","jump"},
+                    new []{"5item","run"},
                 },
-                new Rectangle(10, 10, 80, 50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
+                new Rectangle(10, 10, 80, 50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, false));
             characterSelector.Add("o", new Textbox("",new Rectangle(10,70,500,20), "UglyTestTheme",RessourceProvider.Fonts["Menu"],Color.White ));
             characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
             Menu = characterSelector;
@@ -73,6 +58,11 @@ namespace GameClient.Menus
             //var listImageButton = Menu.Items["ListCharacters"] as ListImageButton;
             //if (listImageButton != null)
             //    perso = listImageButton.NameSelected;
+            GameEngine.Config.Keys = "";
+            for (int i = 0; i < RessourceProvider.InputKeys.Values.Count - 1; i++)
+                GameEngine.Config.Keys += RessourceProvider.InputKeys.Values.ElementAt(i).ToString() + ",";
+            GameEngine.Config.Keys +=
+                RessourceProvider.InputKeys.Values.ElementAt(RessourceProvider.InputKeys.Values.Count - 1).ToString();
             GameEngine.DisplayStack.Pop();
             //GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
         }

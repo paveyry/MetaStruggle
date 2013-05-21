@@ -1,8 +1,8 @@
 TO DO (Menu)
 1 - Correct Width Button
 2 - Make the differences between ItemRectangle and InternalRectangle (everywhere!)
-3 - Fix UpdateResolution
-4 - Create Item : Cell (linked to 3)
+3 - Fix UpdateResolution (linked to 2)
+4 - (DONE) Create Item : Cell
 5 - Add a Theme possibility for ListImage
 6 - Continue to clean and improve the code (almost done...).
 (Bonus)

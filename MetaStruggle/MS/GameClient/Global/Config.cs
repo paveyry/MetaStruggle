@@ -28,6 +28,7 @@ namespace GameClient.Global
         public int VolumeMusic { get; set; }
         public int VolumeEffect { get; set; }
         public bool FullScreen { get; set; }
+        public string Keys { get; set; }
 
         public static Config GetDefaultConfig()
         {
@@ -39,7 +40,8 @@ namespace GameClient.Global
                     ResolutionHeight = 600,
                     VolumeMusic = 100,
                     VolumeEffect = 100,
-                    FullScreen = false
+                    FullScreen = false,
+                    Keys = "Z,Q,D,Space,LeftShift"
                 };
         }
 

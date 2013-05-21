@@ -10,7 +10,7 @@ namespace GameClient.Renderable.GUI.Items
 {
     public class ListImageButton : Item
     {
-        private List<ImageButton> imageButtons;
+        private readonly List<ImageButton> ImageButtons;
         private int _actualResolutionWidth;
         private readonly int HeightFont;
         private ImageButton Selected;
@@ -20,7 +20,7 @@ namespace GameClient.Renderable.GUI.Items
             Color colorNormal, Color colorSelected, int divCoef = 5)
             : base(rectangle, true)
         {
-            imageButtons = new List<ImageButton>();
+            ImageButtons = new List<ImageButton>();
             _actualResolutionWidth = GameEngine.Config.ResolutionWidth;
 
             int x = (int)Position.X, y = (int)Position.Y;
@@ -29,7 +29,7 @@ namespace GameClient.Renderable.GUI.Items
             {
                 int width = item.Value.Width / divCoef;
                 int height = item.Value.Height / divCoef;
-                imageButtons.Add(new ImageButton(item.Key,
+                ImageButtons.Add(new ImageButton(item.Key,
                     new Rectangle(x, y, width, height), item.Value, font, colorNormal, colorSelected));
                 x += width + 5;
                 if (x + width <= _actualResolutionWidth && x + width <= RealRectangle.X + RealRectangle.Width)
@@ -43,7 +43,7 @@ namespace GameClient.Renderable.GUI.Items
         {
             _actualResolutionWidth = GameEngine.Config.ResolutionWidth;
             int x = ItemRectangle.X, y = ItemRectangle.Y;
-            foreach (var item in imageButtons)
+            foreach (var item in ImageButtons)
             {
                 item.ItemRectangle.Location = new Point(x, y);
                 x += item.ItemRectangle.Width + 5;
@@ -56,7 +56,7 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            foreach (var imageButton in imageButtons)
+            foreach (var imageButton in ImageButtons)
                 imageButton.DrawItem(gameTime, spriteBatch);
         }
 
@@ -64,7 +64,7 @@ namespace GameClient.Renderable.GUI.Items
         {
             if (_actualResolutionWidth != GameEngine.Config.ResolutionWidth)
                 UpdateResolution();
-            foreach (var imageButton in imageButtons)
+            foreach (var imageButton in ImageButtons)
             {
                 imageButton.UpdateItem(gameTime);
                 if (!imageButton.IsSelect)

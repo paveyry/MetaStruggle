@@ -27,7 +27,7 @@ namespace GameClient.Renderable.GUI.Items
         float Ratio { get; set; }
 
         public ListLine(Dictionary<string, float> fields, List<string[]> elements, Rectangle abstractRectangle, string theme,
-            SpriteFont font, Color normalColor, Color selectedColor)
+            SpriteFont font, Color normalColor, Color selectedColor, bool isNormal = true)
             : base(abstractRectangle, true)
         {
             Theme = RessourceProvider.Themes[theme];
@@ -44,7 +44,7 @@ namespace GameClient.Renderable.GUI.Items
                 RealFieldsWidth[i] = (int)((FieldsWidthAbstract[i] / sum) * InternalRectangle.Width);
 
             Fields = new Line(new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, HeightLine),
-                fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true);
+                fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true, true);
 
             int heigth = InternalRectangle.Y;
             int newHeigth = HeightLine;
@@ -53,13 +53,13 @@ namespace GameClient.Renderable.GUI.Items
                 if ((heigth + HeightLine) <= InternalRectangle.Height + InternalRectangle.Y)
                 {
                     Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine),
-                        elements[i], RealFieldsWidth, font, normalColor, selectedColor, true));
+                        elements[i], RealFieldsWidth, font, normalColor, selectedColor, true, isNormal));
                     newHeigth += HeightLine;
                     MaxLine++;
                 }
                 else
                     Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine),
-                        elements[i], RealFieldsWidth, font, normalColor, selectedColor, false));
+                        elements[i], RealFieldsWidth, font, normalColor, selectedColor, false, isNormal));
             if (newHeigth > InternalRectangle.Height)
             {
                 InternalRectangle.Height = newHeigth - HeightLine;

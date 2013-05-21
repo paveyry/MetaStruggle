@@ -11,13 +11,17 @@ namespace GameClient.IO
     {
         public static Global.Config LoadFile(string configFileName)
         {
-            if (!File.Exists(configFileName))
+            try
+            {
+                var xs = new XmlSerializer(typeof (Global.Config));
+
+                using (var sr = new StreamReader(configFileName))
+                    return xs.Deserialize(sr) as Global.Config;
+            }
+            catch (Exception)
+            {
                 return Global.Config.GetDefaultConfig();
-
-            var xs = new XmlSerializer(typeof(Global.Config));
-
-            using (var sr = new StreamReader(configFileName))
-                return xs.Deserialize(sr) as Global.Config;
+            }            
         }
 
         public static void SaveFile(string configFileName, Global.Config config)
