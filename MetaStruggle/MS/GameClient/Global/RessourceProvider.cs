@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 //using System.Windows.Forms;
+using GameClient.Global.InputManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -28,7 +29,7 @@ namespace GameClient.Global
         public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
 
-        public static Dictionary<string, Keys> InputKeys = new Dictionary<string, Keys>();
+        public static Dictionary<string, UniversalKeys> InputKeys = new Dictionary<string, UniversalKeys>();
 
         public static void Fill(ContentManager content)
         {
@@ -264,7 +265,7 @@ namespace GameClient.Global
 
         static void LoadInputKeys()
         {
-            var tempKeys = new List<Keys>();
+            var tempKeys = new List<UniversalKeys>();
             string[] defaultKeys = Config.GetDefaultConfig().Keys.Split(',');
             string[] keys = defaultKeys;
             if (GameEngine.Config.Keys != null)
@@ -275,14 +276,14 @@ namespace GameClient.Global
             }
             for (int i = 0; i < keys.Length; i++)
             {
-                Keys inputKey;
-                if (Enum.TryParse(keys[i], out inputKey))
-                    tempKeys.Add(inputKey);
-                else
-                {
-                    i = 0;
-                    keys = defaultKeys;
-                }
+                tempKeys.Add( new UniversalKeys(keys[i]));
+                //if (Enum.TryParse(keys[i], out inputKey))
+                //    tempKeys.Add(inputKey);
+                //else
+                //{
+                //    i = 0;
+                //    keys = defaultKeys;
+                //}
             }
             InputKeys.Add("attack",tempKeys[0]);
             InputKeys.Add("left", tempKeys[1]);

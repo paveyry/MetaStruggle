@@ -12,24 +12,31 @@ namespace GameClient.Renderable.GUI.Items.Cells
     class KeySelectorCell : Cell
     {      
         private readonly string _keyToModify;
+        private double _startMilliseconds;
 
         public KeySelectorCell(NameFunc text, string keyToModify, Point position, PosOnScreen pos, SpriteFont font,
                                Color colorNormal, Color colorSelected)
             : base(text, position, pos, font, colorNormal, colorSelected)
         {
             _keyToModify = keyToModify;
+            _startMilliseconds = -1;
         }
 
         public override void UpdateItem(GameTime gameTime)
         {
             if (IsSelect)
             {
-                var keys = GameEngine.KeyboardState.GetPressedKeys();
-                if (keys.Length >= 1)
+                if (_startMilliseconds < 0)
+                    _startMilliseconds = gameTime.TotalGameTime.TotalMilliseconds;
+                if (_startMilliseconds>0 && gameTime.TotalGameTime.TotalMilliseconds - _startMilliseconds < 200)
+                    return;
+                var keys = Global.InputManager.InputDevice.GetPressedKeys();
+                if (keys.Count >= 1)
                 {
-                    foreach (var key in keys)
-                        RessourceProvider.InputKeys[_keyToModify] = key;
+                    if (keys.Count > 0)
+                        RessourceProvider.InputKeys[_keyToModify] = keys.First();
                     IsSelect = false;
+                    _startMilliseconds = -1;
                 }
                 return;
             }

@@ -28,6 +28,9 @@ namespace GameClient.Renderable.GUI.Items
         }
         public bool IsDrawable { get; set; }
         internal string[] Elements { get; set; }
+
+        private bool _isNormal;
+        private double _oldGameTime;
         #endregion
 
         public Line(Rectangle rectangle, string[] elements, int[] fields, SpriteFont font, Color colorNormal,
@@ -38,6 +41,8 @@ namespace GameClient.Renderable.GUI.Items
             Elements = elements;
             Cells = new List<Cell>();
             IsDrawable = isDrawable;
+            _oldGameTime = -1;
+            _isNormal = isNormal;
 
             var width = (int)PositionItem.X;
             if (isNormal)
@@ -46,12 +51,12 @@ namespace GameClient.Renderable.GUI.Items
             {
                 AddClassicCell(font, colorNormal, colorSelected, ref width, 1);
                 Cells.Add(new KeySelectorCell(() => RessourceProvider.InputKeys[elements[elements.Length - 1]].ToString(),
-                                elements[elements.Length - 1],new Point(width, (int)PositionItem.Y),
+                                elements[elements.Length - 1], new Point(width, (int)PositionItem.Y),
                                 PosOnScreen.TopLeft, font, colorNormal, colorSelected));
             }
         }
 
-        void AddClassicCell(SpriteFont font, Color colorNormal, Color colorSelected,ref int width, int length)
+        void AddClassicCell(SpriteFont font, Color colorNormal, Color colorSelected, ref int width, int length)
         {
 
             for (int i = 0; i < Elements.Length - length; width += Fields[i], i++)
@@ -93,15 +98,17 @@ namespace GameClient.Renderable.GUI.Items
         public override void UpdateItem(GameTime gameTime)
         {
             foreach (var cell in Cells)
-            {  
+            {
                 cell.UpdateItem(gameTime);
-                if (!cell.IsSelect)
-                    IsSelect = false;
+                if (!cell.IsSelect != IsSelect) continue;
+                IsSelect = false;
+                _oldGameTime = gameTime.TotalGameTime.TotalMilliseconds;
             }
-            if (IsSelect)
+            if (IsSelect || (_oldGameTime > 0 && gameTime.TotalGameTime.TotalMilliseconds - _oldGameTime < 150))
                 return;
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                 IsSelect = ItemRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
+            _oldGameTime = -1;
         }
     }
 }

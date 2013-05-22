@@ -23,6 +23,7 @@ namespace GameClient.Global
         public static EventManager EventManager { get; set; }
         public static KeyboardState KeyboardState { get; set; }
         public static MouseState MouseState { get; set; }
+        public static GamePadState GamePadState { get; set; }
 
 
         public static void InitializeEngine(ContentManager content, GraphicsDeviceManager graphics)

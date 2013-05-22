@@ -75,7 +75,7 @@ namespace GameClient.Characters
                     Attack(gameTime);
                     pendingAnim.Add(Animation.Attack);
                 }
-                if (ks.IsKeyDown(Keys.Space) && !_jumping && CollideWithMap)
+                if (Global.InputManager.InputDevice.UniversalKeysIsDown("Mouse.RightButton") && !_jumping && CollideWithMap)
                 {
                     Jump(gameTime);
                     pendingAnim.Add(Animation.Jump);

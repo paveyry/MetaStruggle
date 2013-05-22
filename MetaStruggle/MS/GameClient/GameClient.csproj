@@ -121,6 +121,7 @@
     <Compile Include="CollisionEngine\RenderBoundingObjects\BoundingSphereRenderer.cs" />
     <Compile Include="Global\Config.cs" />
     <Compile Include="Global\GameEngine.cs" />
+    <Compile Include="Global\InputManager\InputDevice.cs" />
     <Compile Include="Global\RessourceProvider.cs" />
     <Compile Include="IO\ConfigSerialization.cs" />
     <Compile Include="Lang\Language.cs" />

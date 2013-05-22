@@ -65,8 +65,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuBackgrounds\MainMenu-old.png">
-      <Name>MainMenu-old</Name>
+    <Compile Include="MenuBackgrounds\MainMenu-s2.png">
+      <Name>MainMenu-s2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -273,8 +273,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuBackgrounds\MainMenu.png">
-      <Name>MainMenu</Name>
+    <Compile Include="MenuBackgrounds\MainMenu-s3.png">
+      <Name>MainMenu-s3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -282,13 +282,6 @@
   <ItemGroup>
     <Compile Include="Buttons\TextboxMulti.png">
       <Name>TextboxMulti</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="MenuBackgrounds\fMainMenu.png">
-      <Name>fMainMenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -360,6 +353,13 @@
   <ItemGroup>
     <Compile Include="Themes\UglyTestTheme\ListLine\Scroll.png">
       <Name>Scroll</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MenuBackgrounds\MainMenu.png">
+      <Name>MainMenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
