@@ -28,13 +28,12 @@ namespace GameClient.Renderable.GUI.Items.Cells
             {
                 if (_startMilliseconds < 0)
                     _startMilliseconds = gameTime.TotalGameTime.TotalMilliseconds;
-                if (_startMilliseconds>0 && gameTime.TotalGameTime.TotalMilliseconds - _startMilliseconds < 200)
+                if (_startMilliseconds > 0 && gameTime.TotalGameTime.TotalMilliseconds - _startMilliseconds < 200)
                     return;
-                var keys = Global.InputManager.InputDevice.GetPressedKeys();
+                var keys = GameEngine.InputDevice.GetPressedKeys(1);
                 if (keys.Count >= 1)
                 {
-                    if (keys.Count > 0)
-                        RessourceProvider.InputKeys[_keyToModify] = keys.First();
+                    RessourceProvider.InputKeys[_keyToModify] = keys.First();
                     IsSelect = false;
                     _startMilliseconds = -1;
                 }

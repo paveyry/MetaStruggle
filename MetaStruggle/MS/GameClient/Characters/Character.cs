@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameClient.CollisionEngine;
 using GameClient.Global;
+using GameClient.Global.InputManager;
 using GameClient.Renderable.Scene;
 using GameClient.Renderable._3D;
 using Microsoft.Xna.Framework;
@@ -13,9 +14,20 @@ using Network.Packet.Packets.DatasTypes;
 
 namespace GameClient.Characters
 {
+
+    enum Movement
+    {
+        Right,
+        Left,
+        Jump,
+        Attack,
+        SpecialAttack
+    }
     public class Character : AnimatedModel3D
     {
+        #region Fields
         public byte ID { get; set; }
+        public byte PlayerNb { get; set; }
         private readonly float _baseYaw;
         public bool _jumping;
         public double _jumppos;
@@ -32,18 +44,20 @@ namespace GameClient.Characters
 
         public BoundingObjectModel BoundingObject { get; set; }
         public float Length, Width;
-
+        
         public bool CollideWithMap
         {
             get { return Position.Y < 0.1 && Position.Y > -0.1 && Position.X < 12.58 && Position.X > -23.91; }
         }
+        #endregion
 
-        public Character(string playerName, string nameCharacter, SceneManager scene, Vector3 position, Vector3 scale
+        public Character(string playerName, string nameCharacter,byte playerNb,SceneManager scene, Vector3 position, Vector3 scale
             ,float speed = 1f, float length = 1.8f, float weidth = 1.2f )
             : base(nameCharacter, scene, position, scale, speed)
         {
             Playing = true;
             ID = 0;
+            PlayerNb = playerNb;
             PlayerName = playerName;
             Face = RessourceProvider.CharacterFaces[nameCharacter];
             Pitch = -MathHelper.PiOver2;
@@ -60,33 +74,31 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
-            KeyboardState ks = GameEngine.KeyboardState;
-
             var pendingAnim = new List<Animation>();
 
-            if (Playing && ModelName != "Alex")
+            if (Playing)
             {
                 #region ManageKeyboard
                 if (CurrentAnimation != Animation.Jump)
                     pendingAnim.Add(Animation.Default);
 
-                if (ks.IsKeyDown(Keys.Z))
+                if (GetKey(Movement.Attack).IsPressed())
                 {
                     Attack(gameTime);
                     pendingAnim.Add(Animation.Attack);
                 }
-                if (Global.InputManager.InputDevice.UniversalKeysIsDown("Mouse.RightButton") && !_jumping && CollideWithMap)
+                if (GetKey(Movement.Jump).IsPressed() && !_jumping && CollideWithMap)
                 {
                     Jump(gameTime);
                     pendingAnim.Add(Animation.Jump);
                     GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
                 }
-                if (ks.IsKeyDown(Keys.Right))
+                if (GetKey(Movement.Right).IsPressed())
                 {
                     MoveRight(gameTime);
                     pendingAnim.Add(Animation.Run);
                 }
-                if (ks.IsKeyDown(Keys.Left))
+                if (GetKey(Movement.Left).IsPressed())
                 {
                     MoveLeft(gameTime);
                     pendingAnim.Add(Animation.Run);
@@ -97,30 +109,30 @@ namespace GameClient.Characters
             
             #region tests
 
-            if (Client == null && ModelName == "Alex")
-            {
-                if (ks.IsKeyDown(Keys.NumPad7))
-                {
-                    Attack(gameTime);
-                    pendingAnim.Add(Animation.Attack);
-                }
-                if (ks.IsKeyDown(Keys.NumPad0) && !_jumping && CollideWithMap)
-                {
-                    Jump(gameTime);
-                    pendingAnim.Add(Animation.Jump);
-                    GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
-                }
-                if (ks.IsKeyDown(Keys.NumPad6))
-                {
-                    MoveRight(gameTime);
-                    pendingAnim.Add(Animation.Run);
-                }
-                if (ks.IsKeyDown(Keys.NumPad4))
-                {
-                    MoveLeft(gameTime);
-                    pendingAnim.Add(Animation.Run);
-                }
-            }
+            //if (Client == null && ModelName == "Alex")
+            //{
+            //    if (ks.IsKeyDown(Keys.NumPad7))
+            //    {
+            //        Attack(gameTime);
+            //        pendingAnim.Add(Animation.Attack);
+            //    }
+            //    if (ks.IsKeyDown(Keys.NumPad0) && !_jumping && CollideWithMap)
+            //    {
+            //        Jump(gameTime);
+            //        pendingAnim.Add(Animation.Jump);
+            //        GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
+            //    }
+            //    if (ks.IsKeyDown(Keys.NumPad6))
+            //    {
+            //        MoveRight(gameTime);
+            //        pendingAnim.Add(Animation.Run);
+            //    }
+            //    if (ks.IsKeyDown(Keys.NumPad4))
+            //    {
+            //        MoveLeft(gameTime);
+            //        pendingAnim.Add(Animation.Run);
+            //    }
+            //}
 
             #endregion
             
@@ -218,6 +230,11 @@ namespace GameClient.Characters
                 if (Client != null)
                     new CharacterAction().Pack(Client.Writer, ID, 0);
             }
+        }
+
+        UniversalKeys GetKey(Movement movement)
+        {
+            return RessourceProvider.InputKeys[movement.ToString() + "." + PlayerNb];
         }
 
         #region Movements

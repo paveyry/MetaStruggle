@@ -262,34 +262,20 @@ namespace GameClient.Global
             Videos.Add("Intro", content.Load<Video>("Videos\\Intro"));
         }
 
-
         static void LoadInputKeys()
         {
-            var tempKeys = new List<UniversalKeys>();
-            string[] defaultKeys = Config.GetDefaultConfig().Keys.Split(',');
-            string[] keys = defaultKeys;
-            if (GameEngine.Config.Keys != null)
-            {
-                var temp = GameEngine.Config.Keys.Split(',');
-                if (temp.Length == 5)
-                    keys = temp;
-            }
-            for (int i = 0; i < keys.Length; i++)
-            {
-                tempKeys.Add( new UniversalKeys(keys[i]));
-                //if (Enum.TryParse(keys[i], out inputKey))
-                //    tempKeys.Add(inputKey);
-                //else
-                //{
-                //    i = 0;
-                //    keys = defaultKeys;
-                //}
-            }
-            InputKeys.Add("attack",tempKeys[0]);
-            InputKeys.Add("left", tempKeys[1]);
-            InputKeys.Add("right", tempKeys[2]);
-            InputKeys.Add("jump", tempKeys[3]);
-            InputKeys.Add("run", tempKeys[4]);
+            var keys = GameEngine.Config.Keys;
+            var enumMovement = Enum.GetValues(typeof(Characters.Movement));
+            for (int i = 0; i < 4; i++)
+                if (keys.Length > i)
+                {
+                    var defaultKeys = keys[i].Split(',').ToList();
+                    for (int j = 0; j < enumMovement.Length; j++)
+                        InputKeys.Add(enumMovement.GetValue(j) + "." + i, new UniversalKeys(defaultKeys[j]));
+                }
+                else
+                    for (int j = 0; j < enumMovement.Length; j++)
+                        InputKeys.Add(enumMovement.GetValue(j) + "." + i, new UniversalKeys("Keyboard.Escape"));
         }
     }
 }

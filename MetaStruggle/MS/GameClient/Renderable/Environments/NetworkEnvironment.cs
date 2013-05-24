@@ -39,7 +39,7 @@ namespace GameClient.Renderable.Environments
         {
             foreach (var p in gs.Players)
             {
-                Character c = new Character(p.Name, p.ModelType, sm, Vector3.Zero, Vector3.One);
+                Character c = new Character(p.Name, p.ModelType, 0,sm, Vector3.Zero, Vector3.One);
                 c.ID = p.ID;
                 c.Client = p.Client;
                 sm.AddElement(c);
@@ -73,7 +73,7 @@ namespace GameClient.Renderable.Environments
             var gs = (GameStartDatas) data;
 
             foreach (var p in gs.Players)
-                sm.AddElement(new Character(p.Name, p.ModelType, sm, new Vector3(0,0,-17), new Vector3(1), (p.ModelType == "Spiderman" || p.ModelType == "Alex") ? 1.6f : 1) {ID = p.ID, Playing = p.Name == CurrentCharacterName, Client = p.Client});
+                sm.AddElement(new Character(p.Name, p.ModelType, 0,sm, new Vector3(0,0,-17), new Vector3(1), (p.ModelType == "Spiderman" || p.ModelType == "Alex") ? 1.6f : 1) {ID = p.ID, Playing = p.Name == CurrentCharacterName, Client = p.Client});
         }
     }
 }
