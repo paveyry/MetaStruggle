@@ -163,6 +163,7 @@
     <Compile Include="Renderable\GUI\Items\ListButton.cs" />
     <Compile Include="Renderable\GUI\Items\ListImageButton.cs" />
     <Compile Include="Renderable\GUI\Items\ListLine.cs" />
+    <Compile Include="Renderable\GUI\Items\MenuButton.cs" />
     <Compile Include="Renderable\GUI\Items\SimpleText.cs" />
     <Compile Include="Renderable\GUI\ListButtons.cs" />
     <Compile Include="Renderable\GUI\Menu.cs" />
