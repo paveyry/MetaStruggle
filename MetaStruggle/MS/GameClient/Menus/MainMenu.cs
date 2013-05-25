@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameClient.Global;
-using GameClient.Lang;
+using GameClient.Language;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items;
 using Microsoft.Xna.Framework;
@@ -28,13 +28,13 @@ namespace GameClient.Menus
             //test.Add(new Textbox("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["Textbox"], RessourceProvider.Fonts["HUD"], Color.White));
             //test.Add(new ButtonSelector("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White, Color.DarkRed));
             //test.Add(new Button(new Rectangle(50, 10, 50, 50),"test", RessourceProvider.Fonts["HUD"], Color.White, Color.Black, () => GameEngine.DisplayStack.Pop()));
-            var buttons = new List<MenuButton>
+            var buttons = new List<MenuButton1>
                 {
-                    new MenuButton("play", Play),
-                    new MenuButton("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
-                    new MenuButton("Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
-                    new MenuButton("quit", () => Environment.Exit(0)),
-                    new MenuButton("Test", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
+                    new MenuButton1("play", Play),
+                    new MenuButton1("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
+                    new MenuButton1("Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
+                    new MenuButton1("quit", () => Environment.Exit(0)),
+                    new MenuButton1("Test", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
                 };
 
             var main = new Menu("MainMenu", buttons, RessourceProvider.MenuBackgrounds["MainMenu"],

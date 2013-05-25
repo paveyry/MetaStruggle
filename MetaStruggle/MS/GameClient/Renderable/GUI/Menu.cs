@@ -18,10 +18,10 @@ namespace GameClient.Renderable.GUI
         public Color OnHoverTextButtonColor { get; set; }
         public Color OnHoverImageButtonColor { get; set; }
         public int ButtonsSpacing { get; set; }
-        public Dictionary<Rectangle, MenuButton> ButtonsRectangles { get; set; }
+        public Dictionary<Rectangle, MenuButton1> ButtonsRectangles { get; set; }
         readonly SpriteFont _font;
 
-        public Menu(string id, IEnumerable<MenuButton> buttons, Texture2D background, Point buttonsStart)
+        public Menu(string id, IEnumerable<MenuButton1> buttons, Texture2D background, Point buttonsStart)
         {
             Id = id;
             Background = background;
@@ -36,11 +36,11 @@ namespace GameClient.Renderable.GUI
             CreateRectangles(buttons);
         }
 
-        public void CreateRectangles(IEnumerable<MenuButton> buttons)
+        public void CreateRectangles(IEnumerable<MenuButton1> buttons)
         {
             int currentY = ButtonsStart.Y;
-            ButtonsRectangles = new Dictionary<Rectangle, MenuButton>();
-            foreach (MenuButton button in buttons)
+            ButtonsRectangles = new Dictionary<Rectangle, MenuButton1>();
+            foreach (MenuButton1 button in buttons)
             {
                 int width, height;
                 Rectangle rec;
@@ -108,7 +108,7 @@ namespace GameClient.Renderable.GUI
                 }
         }
 
-        private Color GetButtonColor(Rectangle rec, MenuButton button)
+        private Color GetButtonColor(Rectangle rec, MenuButton1 button)
         {
             var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
 
@@ -118,7 +118,7 @@ namespace GameClient.Renderable.GUI
             return rec.Intersects(mouse) ? OnHoverImageButtonColor : ImageButtonColor;
         }
 
-        private Texture2D GetImage(Rectangle rec, MenuButton button)
+        private Texture2D GetImage(Rectangle rec, MenuButton1 button)
         {
             var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
 

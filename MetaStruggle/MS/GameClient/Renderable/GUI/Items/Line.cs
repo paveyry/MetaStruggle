@@ -60,14 +60,14 @@ namespace GameClient.Renderable.GUI.Items
         {
 
             for (int i = 0; i < Elements.Length - length; width += Fields[i], i++)
-                if (Lang.Language.GetString(Elements[i]) == Elements[i])
+                if (GameEngine.LangCenter.GetString(Elements[i]) == Elements[i])
                     Cells.Add(new ClassicCell(GetCorrectString(Elements[i], Fields[i], font),
                                               new Point(width, (int)PositionItem.Y),
                                               PosOnScreen.TopLeft, font, colorNormal, colorSelected));
                 else
                     Cells.Add(
                         new ClassicCell(
-                            () => GetCorrectString(Lang.Language.GetString(Elements[i]), Fields[i], font),
+                            () => GetCorrectString(GameEngine.LangCenter.GetString(Elements[i]), Fields[i], font),
                             new Point(width, (int)PositionItem.Y),
                             PosOnScreen.TopLeft, font, colorNormal, colorSelected));
         }

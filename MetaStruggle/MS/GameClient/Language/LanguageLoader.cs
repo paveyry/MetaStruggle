@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Xml;
 using System.IO;
+using GameClient.Global;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameClient.Lang
+namespace GameClient.Language
 {
     public class LanguageLoader
     {
@@ -50,29 +51,40 @@ namespace GameClient.Lang
         private string GetNameFile(string dir)
         {
             var str = dir.Split('.');
-            if ((str.Length == 2 && str[1] == "click") || str.Length == 1)
+            if ((str.Length == 2 && str[1] == "c") || str.Length == 1)
                 return str[0];
             return "";
         }
 
         #region GetLanguage
-        public Texture2D GetImage(string language, string id, bool isNormal)
+        private Texture2D GetImage(string language, string id, bool isNormal)
         {
             if (_languageImage.ContainsKey(language) && _languageImage[language].ContainsKey(id))
             {
-                if (isNormal || !_languageImage[language].ContainsKey(id + ".click"))
+                if (isNormal || !_languageImage[language].ContainsKey(id + ".c"))
                     return _languageImage[language][id];
-                return _languageImage[language][id + ".click"];
+                return _languageImage[language][id + ".c"];
             }
 
             return null;
         }
 
-        public string GetString(string language, string id)
+        public Texture2D GetImage(string key, bool isNormal)
+        {
+            return GameEngine.LangCenter.GetImage(GameEngine.Config.Language, key, isNormal);
+        }
+
+        private string GetString(string language, string id)
         {
             if (_languageText.ContainsKey(language) && _languageText[language].ContainsKey(id))
                 return _languageText[language][id];
             return null;
+        }
+
+        public string GetString(string key)
+        {
+            string value = GameEngine.LangCenter.GetString(GameEngine.Config.Language, key);
+            return (string.IsNullOrEmpty(value)) ? key : value;
         }
         #endregion
     }

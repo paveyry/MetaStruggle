@@ -24,15 +24,15 @@ namespace GameClient.Menus
         {
             Menu = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
 
-            Menu.Add("CharacterSelector.Text", new SimpleText(() => Lang.Language.GetString("selectPlayer"), new Point(15,5),
+            Menu.Add("CharacterSelector.Text", new SimpleText(() => GameEngine.LangCenter.GetString("selectPlayer"), new Point(15, 5),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"],Color.White ));
             Menu.Add("CharacterSelector.Item",new ListImageButton(new Rectangle(15,15,70,45), RessourceProvider.CharacterFaces,
                 RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
-            Menu.Add("PlayerName.Text", new SimpleText(() => Lang.Language.GetString("textboxPlayer"), new Point(15, 60),
+            Menu.Add("PlayerName.Text", new SimpleText(() => GameEngine.LangCenter.GetString("textboxPlayer"), new Point(15, 60),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,70,200,0), "UglyTestTheme",
                 RessourceProvider.Fonts["Menu"], Color.White));
-            Menu.Add("NextButton.Item", new Button(() => Lang.Language.GetString("nextButton"), Item.PosOnScreen.DownRight, 
+            Menu.Add("NextButton.Item", new Button(() => GameEngine.LangCenter.GetString("nextButton"), Item.PosOnScreen.DownRight, 
                 new Rectangle(30,30,100,100), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, NextButton));
 
             return Menu;

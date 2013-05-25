@@ -12,10 +12,10 @@ namespace GameClient.Renderable.GUI
     {
         public Point ButtonsStart { get; set; }
         public int ButtonsSpacing { get; set; }
-        private Dictionary<Rectangle, MenuButton> ButtonsRectangles { get; set; }
+        private Dictionary<Rectangle, MenuButton1> ButtonsRectangles { get; set; }
         private readonly SpriteFont _font;
 
-        public ListButtons(IEnumerable<MenuButton> buttons, Point buttonsStart)
+        public ListButtons(IEnumerable<MenuButton1> buttons, Point buttonsStart)
         {
             ButtonsStart = buttonsStart;
             ButtonsSpacing = 20;
@@ -23,11 +23,11 @@ namespace GameClient.Renderable.GUI
             CreateRectangles(buttons);
         }
 
-        void CreateRectangles(IEnumerable<MenuButton> buttons)
+        void CreateRectangles(IEnumerable<MenuButton1> buttons)
         {
             int currentY = ButtonsStart.Y;
-            ButtonsRectangles = new Dictionary<Rectangle, MenuButton>();
-            foreach (MenuButton button in buttons)
+            ButtonsRectangles = new Dictionary<Rectangle, MenuButton1>();
+            foreach (MenuButton1 button in buttons)
             {
                 int width, height;
                 Rectangle rec;

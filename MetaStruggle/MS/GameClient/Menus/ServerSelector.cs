@@ -38,9 +38,9 @@ namespace GameClient.Menus
         {
             Menu = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
 
-            Menu.Add("NextButton.Item", new Button(() => Lang.Language.GetString("nextButton"), Item.PosOnScreen.DownRight,
+            Menu.Add("NextButton.Item", new Button(() => GameEngine.LangCenter.GetString("nextButton"), Item.PosOnScreen.DownRight,
                 new Rectangle(30, 30, 100, 100), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, NextButton));
-            Menu.Add("return", new Button(() => Lang.Language.GetString("return"),Item.PosOnScreen.TopLeft, new Rectangle(15,70,100,100),RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => GameEngine.DisplayStack.Pop() ));
+            Menu.Add("return", new Button(() => GameEngine.LangCenter.GetString("return"), Item.PosOnScreen.TopLeft, new Rectangle(15, 70, 100, 100), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
             return Menu;
         }
 

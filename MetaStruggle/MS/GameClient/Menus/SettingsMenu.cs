@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameClient.Global;
-using GameClient.Lang;
+using GameClient.Language;
 using GameClient.Renderable.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,7 +28,7 @@ namespace GameClient.Menus
         private int _width = GameEngine.Config.ResolutionWidth;
         private int _height = GameEngine.Config.ResolutionHeight;
 
-        private string GetFullscreen { get { return (GameEngine.Config.FullScreen) ? Language.GetString("on") : Language.GetString("off"); } }
+        private string GetFullscreen { get { return (GameEngine.Config.FullScreen) ? GameEngine.LangCenter.GetString("on") : GameEngine.LangCenter.GetString("off"); } }
         private string GetResolution { get { return _width + "x" + _height; } }
 
         public Dictionary<string, int[]> Resolution = new Dictionary<string, int[]>
@@ -51,12 +51,12 @@ namespace GameClient.Menus
         public Menu MenuSettings()
         {
             System.Threading.Thread.Sleep(200);
-            var buttons = new List<MenuButton>
+            var buttons = new List<MenuButton1>
                               {
-                                  new MenuButton("language", ChangeLanguage),
-                                  new MenuButton("graphics", () => GameEngine.DisplayStack.Push(MenuGraphics())),
-                                  new MenuButton("sounds", () => GameEngine.DisplayStack.Push(MenuSounds())),
-                                  new MenuButton("back", Return)
+                                  new MenuButton1("language", ChangeLanguage),
+                                  new MenuButton1("graphics", () => GameEngine.DisplayStack.Push(MenuGraphics())),
+                                  new MenuButton1("sounds", () => GameEngine.DisplayStack.Push(MenuSounds())),
+                                  new MenuButton1("back", Return)
                               };
 
             Id = MenuType.Settings;
@@ -68,11 +68,11 @@ namespace GameClient.Menus
         public Menu MenuGraphics()
         {
             System.Threading.Thread.Sleep(200);
-            var buttons = new List<MenuButton>
+            var buttons = new List<MenuButton1>
                               {
-                                  new MenuButton("fullscreen", GetFullscreen, SetFullScreen),
-                                  new MenuButton("resolution", GetResolution, ChangeResolution),
-                                  new MenuButton("back", Return)
+                                  new MenuButton1("fullscreen", GetFullscreen, SetFullScreen),
+                                  new MenuButton1("resolution", GetResolution, ChangeResolution),
+                                  new MenuButton1("back", Return)
                               };
 
             Id = MenuType.Graphics;
@@ -84,11 +84,11 @@ namespace GameClient.Menus
         public Menu MenuSounds()
         {
             System.Threading.Thread.Sleep(200);
-            var buttons = new List<MenuButton>
+            var buttons = new List<MenuButton1>
                               {
-                                  new MenuButton("soundeffect", GetVolume(false), () => ChangeSound(false)),
-                                  new MenuButton("music", GetVolume(true), () => ChangeSound(true)),
-                                  new MenuButton("back", Return)
+                                  new MenuButton1("soundeffect", GetVolume(false), () => ChangeSound(false)),
+                                  new MenuButton1("music", GetVolume(true), () => ChangeSound(true)),
+                                  new MenuButton1("back", Return)
                               };
 
             Id = MenuType.Sounds;

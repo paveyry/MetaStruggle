@@ -127,7 +127,7 @@ namespace GameClient.Renderable.GUI.Items
                     _cursorPosition = (i == _actualPos) ? _cursorPosition : measure;
                 }
                 if (!isGood)
-                    _displayPos += (_displayPos <= _actualPos) ? 1 : -1; //Oui j'ai la flemme d'écrire plus, pour optimiser ça...
+                    _displayPos += (_displayPos <= _actualPos) ? 1 : -1;
             } while (!isGood && _displayText != "");
         }
 

@@ -125,18 +125,17 @@
     <Compile Include="Global\InputManager\UniversalKeys.cs" />
     <Compile Include="Global\RessourceProvider.cs" />
     <Compile Include="IO\ConfigSerialization.cs" />
-    <Compile Include="Lang\Language.cs" />
-    <Compile Include="Lang\en_US.Designer.cs">
+    <Compile Include="Language\en_US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>en_US.resx</DependentUpon>
     </Compile>
-    <Compile Include="Lang\fr_FR.Designer.cs">
+    <Compile Include="Language\fr_FR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>fr_FR.resx</DependentUpon>
     </Compile>
-    <Compile Include="Lang\LanguageLoader.cs" />
+    <Compile Include="Language\LanguageLoader.cs" />
     <Compile Include="Menus\CharacterSelector.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\TestMenu.cs" />
@@ -219,11 +218,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Lang\en_US.resx">
+    <EmbeddedResource Include="Language\en_US.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>en_US.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Lang\fr_FR.resx">
+    <EmbeddedResource Include="Language\fr_FR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>fr_FR.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>

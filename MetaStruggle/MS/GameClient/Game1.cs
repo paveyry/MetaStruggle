@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GameClient.Lang;
+using GameClient.Language;
 using GameClient.Menus;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.Scene;
