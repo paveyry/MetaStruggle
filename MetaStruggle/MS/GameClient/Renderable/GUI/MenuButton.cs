@@ -32,10 +32,10 @@ namespace GameClient.Renderable.GUI
             Scale = scale;
         }
         
-        public MenuButton1(string nameId, ClickEventHandler onClick) : this(nameId, "",  0.1f, onClick) {}
+        public MenuButton1(string nameId, ClickEventHandler onClick) : this(nameId, "",  0.5f, onClick) {}
 
         public MenuButton1(string nameId,float scale , ClickEventHandler onClick) : this(nameId, "",  scale, onClick) {}
 
-        public MenuButton1(string nameId, string particularString, ClickEventHandler onClick) : this(nameId, particularString, 0.1f, onClick) {}
+        public MenuButton1(string nameId, string particularString, ClickEventHandler onClick) : this(nameId, particularString, 0.5f, onClick) {}
     }
 }

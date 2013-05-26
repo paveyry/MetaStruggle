@@ -18,6 +18,8 @@ namespace GameClient.Renderable.GUI.Items
 
         internal int Width { get { return GameEngine.Config.ResolutionWidth; } }
         internal int Height { get { return GameEngine.Config.ResolutionHeight; } }
+        internal int ActualWidth { get; private set; }
+        internal int ActualHeight { get; private set; }
         public delegate void Event();
         public delegate string NameFunc();
         public Rectangle ItemRectangle;
@@ -32,7 +34,9 @@ namespace GameClient.Renderable.GUI.Items
             IsExpandable = isExpandable;
             ItemRectangle = rectangle;
             Pos = pos;
-            UpdateResolution();
+            ActualHeight = Height;
+            ActualWidth = Width;
+            SetRectangles();
         }
 
         protected Item(Rectangle rectangle, PosOnScreen pos) : this(rectangle, pos, false) { }
@@ -41,20 +45,31 @@ namespace GameClient.Renderable.GUI.Items
 
         public virtual void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
         }
 
         public virtual void UpdateItem(GameTime gameTime)
         {
+            if (ActualHeight == Height && ActualWidth == Width) return;
+
+            UpdateResolution();
+            ActualWidth = Width;
+            ActualHeight = Height;
         }
 
         protected virtual void UpdateResolution()
+        {
+            SetRectangles();
+        }
+
+        private void SetRectangles()
         {
             switch (Pos)
             {
                 case PosOnScreen.TopLeft:
                     RealRectangle = IsExpandable ? new Rectangle((int)((ItemRectangle.Location.X / 100f) * Width), (int)((ItemRectangle.Location.Y / 100f) * Height),
                         (int)((ItemRectangle.Width / 100f) * Width), (int)((ItemRectangle.Height / 100f) * Height))
-                        : new Rectangle((int)((ItemRectangle.Location.X / 100f) * Width),(int) ((ItemRectangle.Location.Y / 100f) * Height),
+                        : new Rectangle((int)((ItemRectangle.Location.X / 100f) * Width), (int)((ItemRectangle.Location.Y / 100f) * Height),
                             ItemRectangle.Width, ItemRectangle.Height);
                     break;
                 case PosOnScreen.TopRight:

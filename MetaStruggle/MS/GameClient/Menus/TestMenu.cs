@@ -35,33 +35,43 @@ namespace GameClient.Menus
                     {"field2",50}
                 };
 
+            #region 
+
             //characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
-            characterSelector.Add("nop", new ListLine(t, new List<string[]>
-                {
-                    new []{"0 Right.", "Right.0"}, 
-                    new []{"0 Left.", "Left.0"},
-                    new []{"0 Jump.","Jump.0"},
-                    new []{"0 Attack.","Attack.0"},
-                    new []{"0 SpecialAttack.","SpecialAttack.0"},
-                    new []{"1 Right.", "Right.1"}, 
-                    new []{"1 Left.", "Left.1"},
-                    new []{"1 Jump.","Jump.1"},
-                    new []{"1 Attack.","Attack.1"},
-                    new []{"1 SpecialAttack.","SpecialAttack.1"},
-                    new []{"2 Right.2", "Right.2"}, 
-                    new []{"2 Left.2", "Left.2"},
-                    new []{"2 Jump.2","Jump.2"},
-                    new []{"2 Attack.2","Attack.2"},
-                    new []{"2 SpecialAttack.2","SpecialAttack.2"},
-                    new []{"3 Right.3", "Right.3"}, 
-                    new []{"3 Left.3", "Left.3"},
-                    new []{"3 Jump.3","Jump.3"},
-                    new []{"3 Attack.3","Attack.3"},
-                    new []{"3 SpecialAttack.3","SpecialAttack.3"},
-                },
-                new Rectangle(10, 10, 80, 50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, false));
-            characterSelector.Add("o", new Textbox("",new Rectangle(10,70,500,20), "UglyTestTheme",RessourceProvider.Fonts["Menu"],Color.White ));
-            characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
+            //characterSelector.Add("nop", new ListLine(t, new List<string[]>
+            //    {
+            //        new []{"0 Right.", "Right.0"}, 
+            //        new []{"0 Left.", "Left.0"},
+            //        new []{"0 Jump.","Jump.0"},
+            //        new []{"0 Attack.","Attack.0"},
+            //        new []{"0 SpecialAttack.","SpecialAttack.0"},
+            //        new []{"1 Right.", "Right.1"}, 
+            //        new []{"1 Left.", "Left.1"},
+            //        new []{"1 Jump.","Jump.1"},
+            //        new []{"1 Attack.","Attack.1"},
+            //        new []{"1 SpecialAttack.","SpecialAttack.1"},
+            //        new []{"2 Right.2", "Right.2"}, 
+            //        new []{"2 Left.2", "Left.2"},
+            //        new []{"2 Jump.2","Jump.2"},
+            //        new []{"2 Attack.2","Attack.2"},
+            //        new []{"2 SpecialAttack.2","SpecialAttack.2"},
+            //        new []{"3 Right.3", "Right.3"}, 
+            //        new []{"3 Left.3", "Left.3"},
+            //        new []{"3 Jump.3","Jump.3"},
+            //        new []{"3 Attack.3","Attack.3"},
+            //        new []{"3 SpecialAttack.3","SpecialAttack.3"},
+            //    },
+            //    new Rectangle(10, 10, 80, 50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, false));
+
+            #endregion
+
+            List<PartialButton> partialButtons = new List<PartialButton> { new PartialButton("play", () => GameEngine.DisplayStack.Pop()),
+                new PartialButton("multi", () => GameEngine.DisplayStack.Pop())
+            };
+            characterSelector.Add("t", new ListMenuButton(new Vector2(50, 50), 20, partialButtons, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListMenuButton.StatusListButton.Horizontal));
+            //characterSelector.Add("o", new Textbox("", new Rectangle(10, 70, 500, 20), "UglyTestTheme", RessourceProvider.Fonts["Menu"], Color.White));
+            //characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
+            //characterSelector.Add("test", new MenuButton("play", new Vector2(50, 50), RessourceProvider.Fonts["Menu"], () => GameEngine.DisplayStack.Pop()));
             Menu = characterSelector;
             return characterSelector;
         }
@@ -72,7 +82,7 @@ namespace GameClient.Menus
             //var listImageButton = Menu.Items["ListCharacters"] as ListImageButton;
             //if (listImageButton != null)
             //    perso = listImageButton.NameSelected;
-            GameEngine.Config.ApplyInput();
+            //GameEngine.Config.ApplyInput();
             GameEngine.DisplayStack.Pop();
             //GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
         }

@@ -5,11 +5,19 @@ using System.Text;
 using GameClient.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI.Items
 {
-    class MenuButton : Item
+    public class MenuButton : Item
     {
+        public enum StatusMenuButton
+        {
+            None,
+            Vertical,
+            Horizontal
+        }
+
         public delegate Texture2D TextureFunc(bool isSelect);
 
         public string Id { get; set; }
@@ -20,65 +28,83 @@ namespace GameClient.Renderable.GUI.Items
         private Color ColorNormal { get; set; }
         private Color ColorSelected { get; set; }
         private Event OnClick { get; set; }
-        private Vector2 MiddlePos { get; set; }
-        private Rectangle SelectedRectangle
+        public Vector2 MiddlePos { get; set; }
+        public Vector2 DimRectangles
         {
             get
             {
-                var select = Image.Invoke(true);
-                return GetRectangle(select.Width, select.Height);
+                return new Vector2(Math.Max(SelectedRectangle.Width, NormalRectangle.Width), Math.Max(SelectedRectangle.Height, NormalRectangle.Height));
             }
         }
-        private Rectangle NormalRectangle
-        {
-            get
-            {
-                var select = Image.Invoke(false);
-                return GetRectangle(select.Width, select.Height);
-            }
-        }
+        private Rectangle SelectedRectangle { get; set; }
+        private Rectangle NormalRectangle { get; set; }
+        private StatusMenuButton Status { get; set; }
 
-        public MenuButton(string id, Vector2 pos, NameFunc text, TextureFunc image, SpriteFont font, Color normal, Color selected, Event onClick)
+        public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, NameFunc text, TextureFunc image, SpriteFont font, Color normal, Color selected, Event onClick)
             : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0))
         {
             Id = id;
-            MiddlePos = pos;
+            MiddlePos = (abstractPos) ? Position : pos;
+            Status = status;
             Text = text;
             Image = image;
             Font = font;
             ColorNormal = normal;
             ColorSelected = selected;
             OnClick = onClick;
-
+            UpdateRectangles();
         }
-        public MenuButton(string id, Vector2 pos, SpriteFont font, Color normal, Color selected, Event onClick)
-            : this(id, pos, () => GameEngine.LangCenter.GetString(id), (isSelect) => GameEngine.LangCenter.GetImage(id, isSelect), font, normal, selected, onClick) { }
-        public MenuButton(string id, Vector2 pos, SpriteFont font, Event onClick) : this(id, pos, font, Color.White, Color.White, onClick) { }
+        public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, SpriteFont font, Color normal, Color selected, Event onClick)
+            : this(id, pos, status,abstractPos, () => GameEngine.LangCenter.GetString(id), (isSelect) => GameEngine.LangCenter.GetImage(id, !isSelect), font, normal, selected, onClick) { }
+        public MenuButton(string id, Vector2 pos, SpriteFont font, Event onClick) : this(id, pos, StatusMenuButton.None,true, font, Color.White, Color.DarkOrange, onClick) { }
 
-        public Rectangle GetRectangle(int width, int height)
+        private Rectangle GetRectangle(bool status)
         {
-            if (Image != null)
-                return new Rectangle((int)(MiddlePos.X - width / 2f), (int)(MiddlePos.Y - height / 2f), width, height);
-            var selectText = Font.MeasureString(Text.Invoke());
-            return GetRectangle((int)selectText.X, (int)selectText.Y);
+            var image = Image.Invoke(status);
+            var text = Font.MeasureString(Text.Invoke());
+            switch (Status)
+            {
+                case StatusMenuButton.Vertical:
+                    return image != null
+                        ? new Rectangle((int)(MiddlePos.X - image.Width / 2f), (int)(MiddlePos.Y), image.Width, image.Height)
+                        : new Rectangle((int)(MiddlePos.X - text.X / 2f), (int)(MiddlePos.Y), (int)text.X, (int)text.Y);
+
+                case StatusMenuButton.Horizontal:
+                    return image != null
+                        ? new Rectangle((int)(MiddlePos.X), (int)(MiddlePos.Y - image.Height / 2f), image.Width, image.Height)
+                        : new Rectangle((int)(MiddlePos.X), (int)(MiddlePos.Y - text.Y / 2f), (int)text.X, (int)text.Y);
+                default:
+                    return image != null
+                        ? new Rectangle((int)(MiddlePos.X - image.Width / 2f), (int)(MiddlePos.Y - image.Height / 2f), image.Width, image.Height)
+                        : new Rectangle((int)(MiddlePos.X - text.X / 2f), (int)(MiddlePos.Y - text.Y / 2f), (int)text.X, (int)text.Y);
+            }
+        }
+
+        private void UpdateRectangles()
+        {
+            NormalRectangle = GetRectangle(false);
+            SelectedRectangle = GetRectangle(true);
+        }
+
+        protected override void UpdateResolution()
+        {
+            UpdateRectangles();
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (Image != null)
-                if (IsSelect)
-                    spriteBatch.Draw(Image.Invoke(IsSelect), NormalRectangle, ColorNormal);
-                else
-                    spriteBatch.Draw(Image.Invoke(IsSelect), SelectedRectangle, ColorSelected);
+            if (Image.Invoke(IsSelect) != null)
+                spriteBatch.Draw(Image.Invoke(IsSelect), (IsSelect) ? SelectedRectangle : NormalRectangle, ColorNormal);
             else
-            {
-                var temp = SelectedRectangle.Location;
-                spriteBatch.DrawString(Font, Text.Invoke(), new Vector2(temp.X, temp.Y), (IsSelect) ? ColorSelected : ColorNormal);
-            }
+                spriteBatch.DrawString(Font, Text.Invoke(), new Vector2(NormalRectangle.Location.X, NormalRectangle.Location.Y),
+                                       (IsSelect) ? ColorSelected : ColorNormal);
         }
 
         public override void UpdateItem(GameTime gameTime)
         {
+            IsSelect = NormalRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
+            if (IsSelect && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+                OnClick.Invoke();
             base.UpdateItem(gameTime);
         }
     }
