@@ -55,8 +55,10 @@ namespace GameClient.Renderable.GUI.Items
             UpdateRectangles();
         }
         public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, SpriteFont font, Color normal, Color selected, Event onClick)
-            : this(id, pos, status,abstractPos, () => GameEngine.LangCenter.GetString(id), (isSelect) => GameEngine.LangCenter.GetImage(id, !isSelect), font, normal, selected, onClick) { }
-        public MenuButton(string id, Vector2 pos, SpriteFont font, Event onClick) : this(id, pos, StatusMenuButton.None,true, font, Color.White, Color.DarkOrange, onClick) { }
+            : this(id, pos, status,abstractPos, () => GameEngine.LangCenter.GetString(id), 
+            (isSelect) => GameEngine.LangCenter.GetImage(id, !isSelect), font, normal, selected, onClick) { }
+        public MenuButton(string id, Vector2 pos, SpriteFont font,Color normal,Color selected, Event onClick) 
+            : this(id, pos, StatusMenuButton.None,true, font, normal, selected, onClick) { }
 
         private Rectangle GetRectangle(bool status)
         {
@@ -75,8 +77,8 @@ namespace GameClient.Renderable.GUI.Items
                         : new Rectangle((int)(MiddlePos.X), (int)(MiddlePos.Y - text.Y / 2f), (int)text.X, (int)text.Y);
                 default:
                     return image != null
-                        ? new Rectangle((int)(MiddlePos.X - image.Width / 2f), (int)(MiddlePos.Y - image.Height / 2f), image.Width, image.Height)
-                        : new Rectangle((int)(MiddlePos.X - text.X / 2f), (int)(MiddlePos.Y - text.Y / 2f), (int)text.X, (int)text.Y);
+                        ? new Rectangle((int)(MiddlePos.X), (int)(MiddlePos.Y), image.Width, image.Height)
+                        : new Rectangle((int)(MiddlePos.X), (int)(MiddlePos.Y), (int)text.X, (int)text.Y);
             }
         }
 

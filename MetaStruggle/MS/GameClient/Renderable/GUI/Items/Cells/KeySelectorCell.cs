@@ -9,12 +9,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI.Items.Cells
 {
-    class KeySelectorCell : Cell
+    internal class KeySelectorCell : Cell
     {      
         private readonly string _keyToModify;
         private double _startMilliseconds;
 
-        public KeySelectorCell(NameFunc text, string keyToModify, Point position, PosOnScreen pos, SpriteFont font,
+        internal  KeySelectorCell(NameFunc text, string keyToModify, Point position, PosOnScreen pos, SpriteFont font,
                                Color colorNormal, Color colorSelected)
             : base(text, position, pos, font, colorNormal, colorSelected)
         {

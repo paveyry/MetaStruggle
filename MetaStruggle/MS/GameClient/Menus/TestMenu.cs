@@ -70,7 +70,8 @@ namespace GameClient.Menus
                 new PartialButton("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
                 new PartialButton("quit", () => GameEngine.DisplayStack.Pop())
             };
-            characterSelector.Add("t", new ListMenuButton(new Vector2(50, 50), 20, partialButtons, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListMenuButton.StatusListButton.Vertical));
+            characterSelector.Add("t", new ListMenuButton(new Vector2(50, 50), 20, partialButtons, 
+                RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListMenuButton.StatusListButton.Vertical));
             //characterSelector.Add("o", new Textbox("", new Rectangle(10, 70, 500, 20), "UglyTestTheme", RessourceProvider.Fonts["Menu"], Color.White));
             //characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
             //characterSelector.Add("test", new MenuButton("play", new Vector2(50, 50), RessourceProvider.Fonts["Menu"], () => GameEngine.DisplayStack.Pop()));
