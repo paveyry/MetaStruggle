@@ -57,7 +57,7 @@ namespace GameClient.Renderable.GUI.Items
             ActualHeight = Height;
         }
 
-        protected virtual void UpdateResolution()
+        internal virtual void UpdateResolution()
         {
             SetRectangles();
         }

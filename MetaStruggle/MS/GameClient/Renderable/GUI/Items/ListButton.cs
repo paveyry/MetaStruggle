@@ -15,6 +15,7 @@ namespace GameClient.Renderable.GUI.Items
         }
         private List<MenuButton> Buttons { get; set; }
         private int Interval { get; set; }
+        private StatusListButton Status { get; set; }
 
         public ListMenuButton(Vector2 pos, int interval,IEnumerable<PartialButton> partialButtons, SpriteFont font, Color colorNormal, Color colorSelected, StatusListButton statusMenu)
             : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0))
@@ -23,6 +24,7 @@ namespace GameClient.Renderable.GUI.Items
             Enum.TryParse(statusMenu.ToString(), out statusButtons);
             Buttons = new List<MenuButton>();
             Interval = interval;
+            Status = statusMenu;
             
             Vector2 posButton = Position;
             foreach (var partialButton in partialButtons)
@@ -50,9 +52,19 @@ namespace GameClient.Renderable.GUI.Items
             base.UpdateItem(gameTime);
         }
 
-        protected override void UpdateResolution()
+        internal override void UpdateResolution()
         {
             base.UpdateResolution();
+            Vector2 posButton = Position;
+            foreach (var menuButton in Buttons)
+            {
+                menuButton.MiddlePos = posButton;
+                menuButton.UpdateRectangles();
+                if (Status == StatusListButton.Vertical)
+                    posButton.Y += menuButton.DimRectangles.Y + Interval;
+                else
+                    posButton.X += menuButton.DimRectangles.X + Interval;
+            }
         }
     }
 

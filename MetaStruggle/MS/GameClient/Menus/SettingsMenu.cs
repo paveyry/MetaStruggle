@@ -207,6 +207,9 @@ namespace GameClient.Menus
             GameEngine.SoundCenter.VolumeMusic = GameEngine.Config.VolumeMusic;
             GameEngine.SoundCenter.VolumeEffect = GameEngine.Config.VolumeEffect;
 
+            foreach (Menu1 e in GameEngine.DisplayStack.OfType<Menu1>())
+                e.UpdateResolution();
+
             GameEngine.DisplayStack.Pop();
             GameEngine.DisplayStack.Pop();
             GameEngine.DisplayStack.Push(Id == MenuType.Settings ? new MainMenu(_spriteBatch, _graphics).CreateMainMenu() : MenuSettings());

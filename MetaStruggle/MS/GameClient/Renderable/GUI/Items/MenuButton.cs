@@ -80,15 +80,10 @@ namespace GameClient.Renderable.GUI.Items
             }
         }
 
-        private void UpdateRectangles()
+        internal void UpdateRectangles()
         {
             NormalRectangle = GetRectangle(false);
             SelectedRectangle = GetRectangle(true);
-        }
-
-        protected override void UpdateResolution()
-        {
-            UpdateRectangles();
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
@@ -104,7 +99,10 @@ namespace GameClient.Renderable.GUI.Items
         {
             IsSelect = NormalRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
             if (IsSelect && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+            {
                 OnClick.Invoke();
+                IsSelect = false;
+            }
             base.UpdateItem(gameTime);
         }
     }

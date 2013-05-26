@@ -11,8 +11,8 @@ namespace GameClient.Renderable.GUI
 {
     public class Menu1 : Layout.IBasicLayout
     {
-        public Dictionary<string, Item> Items;
-        private Texture2D Background;
+        public Dictionary<string, Item> Items { get; set; }
+        private Texture2D Background { get; set; }
 
         public Menu1(Texture2D background)
         {
@@ -28,11 +28,16 @@ namespace GameClient.Renderable.GUI
                 Items.Add(key, item);
         }
 
+        public void UpdateResolution()
+        {
+            foreach (var item in Items)
+                item.Value.UpdateResolution();
+        }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(Background,
-                 new Rectangle(0, 0, GameEngine.Config.ResolutionWidth,
+            spriteBatch.Draw(Background, new Rectangle(0, 0, GameEngine.Config.ResolutionWidth,
                                GameEngine.Config.ResolutionHeight), Color.White);
             foreach (var item in Items)
                 item.Value.DrawItem(gameTime, spriteBatch);
