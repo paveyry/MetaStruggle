@@ -40,8 +40,8 @@ namespace GameClient.Renderable.GUI.Items
         private Rectangle NormalRectangle { get; set; }
         private StatusMenuButton Status { get; set; }
 
-        public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, NameFunc text, TextureFunc image, SpriteFont font, Color normal, Color selected, Event onClick)
-            : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0))
+        public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, NameFunc text, TextureFunc image, SpriteFont font, Color normal, Color selected, Event onClick, bool isDrawable = true)
+            : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0),isDrawable)
         {
             Id = id;
             MiddlePos = (abstractPos) ? Position : pos;
@@ -54,11 +54,11 @@ namespace GameClient.Renderable.GUI.Items
             OnClick = onClick;
             UpdateRectangles();
         }
-        public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, SpriteFont font, Color normal, Color selected, Event onClick)
+        public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, SpriteFont font, Color normal, Color selected, Event onClick, bool isDrawable = true)
             : this(id, pos, status,abstractPos, () => GameEngine.LangCenter.GetString(id), 
-            (isSelect) => GameEngine.LangCenter.GetImage(id, !isSelect), font, normal, selected, onClick) { }
-        public MenuButton(string id, Vector2 pos, SpriteFont font,Color normal,Color selected, Event onClick) 
-            : this(id, pos, StatusMenuButton.None,true, font, normal, selected, onClick) { }
+            (isSelect) => GameEngine.LangCenter.GetImage(id, !isSelect), font, normal, selected, onClick, isDrawable) { }
+        public MenuButton(string id, Vector2 pos, SpriteFont font, Color normal, Color selected, Event onClick, bool isDrawable = true) 
+            : this(id, pos, StatusMenuButton.None,true, font, normal, selected, onClick, isDrawable) { }
 
         private Rectangle GetRectangle(bool status)
         {
@@ -90,6 +90,8 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (!IsDrawable)
+                return;
             if (Image.Invoke(IsSelect) != null)
                 spriteBatch.Draw(Image.Invoke(IsSelect), (IsSelect) ? SelectedRectangle : NormalRectangle, ColorNormal);
             else
@@ -99,6 +101,8 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            if (!IsDrawable)
+                return;
             IsSelect = NormalRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
             if (IsSelect && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
             {

@@ -24,8 +24,8 @@ namespace GameClient.Renderable.GUI.Items
         #endregion
 
         #region Constructors
-        internal SimpleText(string text, NameFunc nameFunc,Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected)
-            : base(CreateRectangle(position, font, text), pos)
+        internal SimpleText(string text, NameFunc nameFunc,Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected, bool isDrawable = true)
+            : base(CreateRectangle(position, font, text), pos, isDrawable)
         {
             Text = text;
             Font = font;
@@ -47,11 +47,15 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (!IsDrawable)
+                return;
             spriteBatch.DrawString(Font, Text, Position, (IsSelect) ? ColorSelected : ColorNormal);
         }
 
         public override void UpdateItem(GameTime gameTime)
         {
+            if (!IsDrawable)
+                return;
             var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
             if (IsSelect)
                 return;

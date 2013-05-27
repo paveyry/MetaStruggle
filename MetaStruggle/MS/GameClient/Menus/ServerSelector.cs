@@ -20,7 +20,7 @@ namespace GameClient.Menus
         private List<string[]> Servers;
         private Client Client;
         private SpriteBatch _spriteBatch;
-        Menu1 Menu;
+        Menu Menu;
 
         public ServerSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, string persoName, string playerName)
         {
@@ -34,9 +34,9 @@ namespace GameClient.Menus
             AskList();
         }
 
-        public Menu1 Create()
+        public Menu Create()
         {
-            Menu = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            Menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
 
 
             Menu.Add("NextButton.Item", new MenuButton("NextButton", new Vector2(70, 70), RessourceProvider.Fonts["Menu"], Color.White,
@@ -52,7 +52,7 @@ namespace GameClient.Menus
 
             System.Threading.Thread.Sleep(200);
 
-            var listServer = Menu.Items["ListServer.Item"] as ListLine;
+            var listServer = Menu.Items["ListServer.Item"] as ListLines;
             if (listServer == null || listServer.Selected == null)
                 return;
 
@@ -77,7 +77,7 @@ namespace GameClient.Menus
                 Servers.Add(new[] {s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" +s.MaxPlayer});
             Client.Disconnect();
 
-            Menu.Add("ListServer.Item",new ListLine(new Dictionary<string, float>
+            Menu.Add("ListServer.Item",new ListLines(new Dictionary<string, float>
                 {
                     {"Map",18}, {"IP:Port",11}, {"Player", 3}
                 }, Servers,new Rectangle(10,10,80,50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"],Color.White,Color.DarkOrange ));

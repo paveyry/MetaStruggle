@@ -17,7 +17,7 @@ namespace GameClient.Menus
         private readonly SpriteBatch _spriteBatch;
         private GraphicsDeviceManager _graphics;
         private List<Character> sm;
-        private Menu1 Menu;
+        private Menu Menu;
 
         public TestMenu(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, bool osef = false)
         {
@@ -25,9 +25,9 @@ namespace GameClient.Menus
             _graphics = graphics;
         }
 
-        public Menu1 Create()
+        public Menu Create()
         {
-            Menu1 characterSelector = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            Menu characterSelector = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
             //Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
             Dictionary<string, float> t = new Dictionary<string, float>
                 {
@@ -66,12 +66,12 @@ namespace GameClient.Menus
             #endregion
 
             List<PartialButton> partialButtons = new List<PartialButton> { 
-                new PartialButton("play", () => {}),
+                new PartialButton("play", () => (Menu.Items["t"] as ListButtons).IsDrawable = false),
                 new PartialButton("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
                 new PartialButton("quit", () => GameEngine.DisplayStack.Pop())
             };
-            characterSelector.Add("t", new ListMenuButton(new Vector2(50, 50), 20, partialButtons, 
-                RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListMenuButton.StatusListButton.Vertical));
+            characterSelector.Add("t", new ListButtons(new Vector2(50, 50), 20, partialButtons, 
+                RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Vertical));
             //characterSelector.Add("o", new Textbox("", new Rectangle(10, 70, 500, 20), "UglyTestTheme", RessourceProvider.Fonts["Menu"], Color.White));
             //characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
             //characterSelector.Add("test", new MenuButton("play", new Vector2(50, 50), RessourceProvider.Fonts["Menu"], () => GameEngine.DisplayStack.Pop()));

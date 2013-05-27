@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<back>Back</back>
-	<fullscreen>Fullscreen : </fullscreen>
-	<language>English</language>
-	<off>Off</off>
-	<on>On</on>
-	<option>Settings</option>
-	<play>Play</play>
-	<quit>Quit</quit>
-	<resolution>Resolution : </resolution>
-	<respawn>Respawn in </respawn>
-	<graphics>Graphics</graphics>
-	<sounds>Sounds</sounds>
-	<soundeffect>Effects : </soundeffect>
-	<music>Musics : </music>
-	<selectPlayer>Select a Character:</selectPlayer>
-	<textboxPlayer>Enter a Player Name:</textboxPlayer>
-	<nextButton>Next</nextButton>
+	<Menu.Back>Back</Menu.Back>
+	<Menu.Next>Next</Menu.Next>
+	<MainMenu.SoloPlay>Single Player</MainMenu.SoloPlay>
+	<MainMenu.Multi>Multiplayer</MainMenu.Multi>
+	<MainMenu.Settings>Settings</MainMenu.Settings>
+	<MainMenu.Quit>Exit</MainMenu.Quit>
+	<MenuMulti.Local>Local Game</MenuMulti.Local>
+	<MenuMulti.Online>Online Game</MenuMulti.Online>
+	<MenuSettings.Language>English</MenuSettings.Language>
+	<MenuSettings.Controls>Controls</MenuSettings.Controls>
+	<MenuSettings.Graphics>Graphics</MenuSettings.Graphics>
+	<MenuSettings.Sounds>Sounds</MenuSettings.Sounds>
+	<MenuGraphisms.Fullscreen>Fullscreen : </MenuGraphisms.Fullscreen>
+	<MenuGraphisms.Resolution>Resolution : </MenuGraphisms.Resolution>
+	<MenuSounds.Musics>Musics : </MenuSounds.Musics>
+	<MenuSounds.Effects>Effects : </MenuSounds.Effects>
+	<Text.Off>Off</Text.Off>
+	<Text.On>On</Text.On>
+	<Text.Respawn>Respawn in </Text.Respawn>
+	<Text.SelectPlayer>Select a Character:</Text.SelectPlayer>
+	<Text.TextboxPlayer>Enter a Player Name:</Text.TextboxPlayer>
 </Language>

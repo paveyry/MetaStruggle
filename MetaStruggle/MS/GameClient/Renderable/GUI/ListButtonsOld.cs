@@ -8,14 +8,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI
 {
-    class ListButtons
+    class ListButtonsOld
     {
         public Point ButtonsStart { get; set; }
         public int ButtonsSpacing { get; set; }
         private Dictionary<Rectangle, MenuButton1> ButtonsRectangles { get; set; }
         private readonly SpriteFont _font;
 
-        public ListButtons(IEnumerable<MenuButton1> buttons, Point buttonsStart)
+        public ListButtonsOld(IEnumerable<MenuButton1> buttons, Point buttonsStart)
         {
             ButtonsStart = buttonsStart;
             ButtonsSpacing = 20;

@@ -26,7 +26,6 @@ namespace GameClient.Renderable.GUI.Items
                     cell.IsSelect = value;
             }
         }
-        public bool IsDrawable { get; set; }
         internal string[] Elements { get; set; }
 
         private bool _isNormal;
@@ -35,12 +34,11 @@ namespace GameClient.Renderable.GUI.Items
 
         public Line(Rectangle rectangle, string[] elements, int[] fields, SpriteFont font, Color colorNormal,
             Color colorSelected, bool isDrawable, bool isNormal)
-            : base(rectangle)
+            : base(rectangle, isDrawable)
         {
             Fields = fields;
             Elements = elements;
             Cells = new List<Cell>();
-            IsDrawable = isDrawable;
             _oldGameTime = -1;
             _isNormal = isNormal;
 
@@ -92,7 +90,6 @@ namespace GameClient.Renderable.GUI.Items
         {
             foreach (var cell in Cells)
                 cell.DrawItem(gameTime, spriteBatch);
-            base.DrawItem(gameTime, spriteBatch);
         }
 
         public override void UpdateItem(GameTime gameTime)

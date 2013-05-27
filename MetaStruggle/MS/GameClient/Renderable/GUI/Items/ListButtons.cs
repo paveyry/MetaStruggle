@@ -7,30 +7,30 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameClient.Renderable.GUI.Items
 {
-    public class ListMenuButton : Item
+    public class ListButtons : Item
     {
-        public enum StatusListButton
+        public enum StatusListButtons
         {
             Horizontal, Vertical
         }
         private List<MenuButton> Buttons { get; set; }
         private int Interval { get; set; }
-        private StatusListButton Status { get; set; }
+        private StatusListButtons Status { get; set; }
 
-        public ListMenuButton(Vector2 pos, int interval,IEnumerable<PartialButton> partialButtons, SpriteFont font, Color colorNormal, Color colorSelected, StatusListButton statusMenu)
-            : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0))
+        public ListButtons(Vector2 pos, int interval,IEnumerable<PartialButton> partialButtons, SpriteFont font, Color colorNormal, Color colorSelected, StatusListButtons statusMenu, bool isDrawable = true)
+            : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0), isDrawable)
         {
             MenuButton.StatusMenuButton statusButtons;
             Enum.TryParse(statusMenu.ToString(), out statusButtons);
             Buttons = new List<MenuButton>();
             Interval = interval;
             Status = statusMenu;
-            
+
             Vector2 posButton = Position;
             foreach (var partialButton in partialButtons)
             {
                 var button = new MenuButton(partialButton.ID, posButton, statusButtons, false, font, colorNormal, colorSelected, partialButton.OnClick);
-                if (statusMenu == StatusListButton.Vertical)
+                if (statusMenu == StatusListButtons.Vertical)
                     posButton.Y += button.DimRectangles.Y + interval;
                 else
                     posButton.X += button.DimRectangles.X + interval;
@@ -40,6 +40,8 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (!IsDrawable)
+                return;
             foreach (var menuButton in Buttons)
                 menuButton.DrawItem(gameTime, spriteBatch);
             base.DrawItem(gameTime, spriteBatch);
@@ -47,9 +49,17 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            if (!IsDrawable)
+                return;
             foreach (var menuButton in Buttons)
                 menuButton.UpdateItem(gameTime);
             base.UpdateItem(gameTime);
+        }
+
+        public void UpdateRectangles()
+        {
+            foreach (var menuButton in Buttons)
+                menuButton.UpdateRectangles();
         }
 
         internal override void UpdateResolution()
@@ -60,7 +70,7 @@ namespace GameClient.Renderable.GUI.Items
             {
                 menuButton.MiddlePos = posButton;
                 menuButton.UpdateRectangles();
-                if (Status == StatusListButton.Vertical)
+                if (Status == StatusListButtons.Vertical)
                     posButton.Y += menuButton.DimRectangles.Y + Interval;
                 else
                     posButton.X += menuButton.DimRectangles.X + Interval;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.IO;
@@ -50,10 +51,16 @@ namespace GameClient.Language
 
         private string GetNameFile(string dir)
         {
-            var str = dir.Split('.');
-            if ((str.Length == 2 && str[1] == "c") || str.Length == 1)
-                return str[0];
-            return "";
+            var strArr = dir.Split('.');
+            int sub = (strArr[strArr.Length - 1] == "c") ? 1 : 0;
+            string value = "";
+            for (int i = 0; i < strArr.Length - sub; i++)
+            {
+                value += strArr[i];
+                if (i != strArr.Length - sub - 1)
+                    value += ".";
+            }
+            return value;
         }
 
         #region GetLanguage

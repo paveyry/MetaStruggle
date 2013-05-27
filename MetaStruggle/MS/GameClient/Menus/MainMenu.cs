@@ -14,7 +14,8 @@ namespace GameClient.Menus
     class MainMenu
     {
         private readonly SpriteBatch _spriteBatch;
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
+        private Menu Menu { get; set; }
 
         public MainMenu(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
@@ -24,24 +25,20 @@ namespace GameClient.Menus
 
         public Menu CreateMainMenu()
         {
-            //Menu1 test = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
-            //test.Add(new Textbox("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["Textbox"], RessourceProvider.Fonts["HUD"], Color.White));
-            //test.Add(new ButtonSelector("test", new Rectangle(0, 0, 400, 50), RessourceProvider.Buttons["TextboxMulti"], RessourceProvider.Fonts["HUD"], Color.White, Color.DarkRed));
-            //test.Add(new Button(new Rectangle(50, 10, 50, 50),"test", RessourceProvider.Fonts["HUD"], Color.White, Color.Black, () => GameEngine.DisplayStack.Pop()));
-            var buttons = new List<MenuButton1>
+            var menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            var buttons = new List<PartialButton>
                 {
-                    new MenuButton1("play", Play),
-                    new MenuButton1("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
-                    new MenuButton1("Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
-                    new MenuButton1("quit", () => Environment.Exit(0)),
-                    new MenuButton1("Test", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
+                    new PartialButton("MainMenu.SoloPlay", Play),
+                    new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
+                    new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
+                    new PartialButton("MainMenu.Quit", () => Environment.Exit(0)),
+                    new PartialButton("Test", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
                 };
 
-            var main = new Menu("MainMenu", buttons, RessourceProvider.MenuBackgrounds["MainMenu"],
-                                new Point((int)((GameEngine.Config.ResolutionWidth / 2) - RessourceProvider.Fonts["Menu"].MeasureString(buttons[0].DisplayedName).X / 2),
-                                          (int)(GameEngine.Config.ResolutionHeight) / 2));
-
-            return main;
+            menu.Add("Buttons.Item", new ListButtons(new Vector2(50,44),20,buttons,RessourceProvider.Fonts["Menu"],
+                Color.White,Color.DarkOrange,ListButtons.StatusListButtons.Vertical));
+            Menu = menu;
+            return menu;
         }
 
          public void Play()

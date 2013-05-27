@@ -8,7 +8,7 @@ namespace GameClient.Menus
 {
     class CharacterSelector
     {
-        private Menu1 Menu;
+        private Menu Menu;
         private SpriteBatch _spriteBatch;
         private GraphicsDeviceManager _graphics;
         private bool OnMulti { get; set; }
@@ -20,19 +20,19 @@ namespace GameClient.Menus
             OnMulti = onMulti;
         }
 
-        public Menu1 Create()
+        public Menu Create()
         {
-            Menu = new Menu1(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            Menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
 
-            Menu.Add("CharacterSelector.Text", new SimpleText(() => GameEngine.LangCenter.GetString("selectPlayer"), new Point(15, 5),
+            Menu.Add("CharacterSelector.Text", new SimpleText(() => GameEngine.LangCenter.GetString("Text.SelectPlayer"), new Point(15, 5),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"],Color.White ));
-            Menu.Add("CharacterSelector.Item",new ListImageButton(new Rectangle(15,15,70,45), RessourceProvider.CharacterFaces,
+            Menu.Add("CharacterSelector.Item", new ListImageButtons(new Rectangle(15, 15, 70, 45), RessourceProvider.CharacterFaces, "UglyTestTheme",
                 RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
-            Menu.Add("PlayerName.Text", new SimpleText(() => GameEngine.LangCenter.GetString("textboxPlayer"), new Point(15, 60),
+            Menu.Add("PlayerName.Text", new SimpleText(() => GameEngine.LangCenter.GetString("Text.TextboxPlayer"), new Point(15, 60),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,70,200,0), "UglyTestTheme",
                 RessourceProvider.Fonts["Menu"], Color.White));
-            Menu.Add("NextButton.Item", new MenuButton("NextButton", new Vector2(70, 70), RessourceProvider.Fonts["Menu"], Color.White,
+            Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 70), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));
 
             return Menu;
@@ -41,7 +41,7 @@ namespace GameClient.Menus
         void NextButton()
         {
             Textbox playerNameTextbox = Menu.Items["PlayerName.Item"] as Textbox;
-            ListImageButton characterSelector = Menu.Items["CharacterSelector.Item"] as ListImageButton;
+            ListImageButtons characterSelector = Menu.Items["CharacterSelector.Item"] as ListImageButtons;
 
             if (playerNameTextbox.Text == "" || characterSelector.NameSelected == "")
                 return;

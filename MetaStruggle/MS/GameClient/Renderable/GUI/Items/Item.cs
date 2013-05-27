@@ -28,9 +28,11 @@ namespace GameClient.Renderable.GUI.Items
         public Vector2 PositionItem {get {return new Vector2(ItemRectangle.Location.X,ItemRectangle.Location.Y);}}
         public PosOnScreen Pos;
         public bool IsExpandable;
+        public bool IsDrawable { get; set; }
 
-        private Item(Rectangle rectangle, PosOnScreen pos, bool isExpandable)
+        private Item(Rectangle rectangle, PosOnScreen pos, bool isExpandable, bool isDrawable = true)
         {
+            IsDrawable = isDrawable;
             IsExpandable = isExpandable;
             ItemRectangle = rectangle;
             Pos = pos;
@@ -39,9 +41,9 @@ namespace GameClient.Renderable.GUI.Items
             SetRectangles();
         }
 
-        protected Item(Rectangle rectangle, PosOnScreen pos) : this(rectangle, pos, false) { }
-        protected Item(Rectangle rectangle, bool isExpandable) : this(rectangle, PosOnScreen.TopLeft, isExpandable) { }
-        protected Item(Rectangle rectangle) : this(rectangle, PosOnScreen.TopLeft) { }
+        protected Item(Rectangle rectangle, PosOnScreen pos, bool isDrawable = true) : this(rectangle, pos, false, isDrawable) { }
+        protected Item(Rectangle rectangle, bool isExpandable, bool isDrawable = true) : this(rectangle, PosOnScreen.TopLeft, isExpandable, isDrawable) { }
+        protected Item(Rectangle rectangle, bool isDrawable = true) : this(rectangle, PosOnScreen.TopLeft, isDrawable) { }
 
         public virtual void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {

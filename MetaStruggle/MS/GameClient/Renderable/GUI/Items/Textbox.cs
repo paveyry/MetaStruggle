@@ -32,14 +32,15 @@ namespace GameClient.Renderable.GUI.Items
         #endregion
         #endregion
 
-        public Textbox(string text, Rectangle rectangle, string theme, SpriteFont font, Color colorText)
-            : base(new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, GetLineHeight(font)))
+        public Textbox(string text, Rectangle rectangle, string theme, SpriteFont font, Color colorText, bool isDrawable = true)
+            : base(new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, GetLineHeight(font)),isDrawable)
         {
+            Text = text;
             Theme = RessourceProvider.Themes[theme];
             Font = font;
             ColorText = colorText;
+
             _isSelect = false;
-            Text = text;
             _actualPos = Text.Length;
             _previousTime = 0;
             _previousKey = Keys.Escape;
@@ -52,7 +53,8 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
+            if (!IsDrawable)
+                return;
             spriteBatch.Draw(Theme["Textbox.Background"], InternalRectangle, Color.White);
             spriteBatch.Draw(Theme["Textbox.LeftSide"], new Rectangle(RealRectangle.X, RealRectangle.Y, Theme["Textbox.LeftSide"].Width,
                 RealRectangle.Height), Color.White);
@@ -67,6 +69,8 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            if (!IsDrawable)
+                return;
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                 _isSelect = RealRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
             if (!_isSelect || gameTime.TotalGameTime.Ticks % 3 != 0)

@@ -4,6 +4,7 @@ using System.Linq;
 using GameClient.Global;
 using GameClient.Language;
 using GameClient.Renderable.GUI;
+using GameClient.Renderable.GUI.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -18,6 +19,7 @@ namespace GameClient.Menus
             Graphics
         }
         private MenuType Id { get; set; }
+        private Menu Menu { get; set; }
 
         private readonly SpriteBatch _spriteBatch;
         private readonly GraphicsDeviceManager _graphics;
@@ -28,7 +30,7 @@ namespace GameClient.Menus
         private int _width = GameEngine.Config.ResolutionWidth;
         private int _height = GameEngine.Config.ResolutionHeight;
 
-        private string GetFullscreen { get { return (GameEngine.Config.FullScreen) ? GameEngine.LangCenter.GetString("on") : GameEngine.LangCenter.GetString("off"); } }
+        private string GetFullscreen { get { return (GameEngine.Config.FullScreen) ? GameEngine.LangCenter.GetString("Text.On") : GameEngine.LangCenter.GetString("Text.Off"); } }
         private string GetResolution { get { return _width + "x" + _height; } }
 
         public Dictionary<string, int[]> Resolution = new Dictionary<string, int[]>
@@ -51,48 +53,51 @@ namespace GameClient.Menus
         public Menu MenuSettings()
         {
             System.Threading.Thread.Sleep(200);
-            var buttons = new List<MenuButton1>
+            var menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            var buttons = new List<PartialButton>
                               {
-                                  new MenuButton1("language", ChangeLanguage),
-                                  new MenuButton1("graphics", () => GameEngine.DisplayStack.Push(MenuGraphics())),
-                                  new MenuButton1("sounds", () => GameEngine.DisplayStack.Push(MenuSounds())),
-                                  new MenuButton1("back", Return)
+                                  new PartialButton("MenuSettings.Language", ChangeLanguage),
+                                  new PartialButton("MenuSettings.Graphics", () => GameEngine.DisplayStack.Push(MenuGraphics())),
+                                  new PartialButton("MenuSettings.Sounds", () => GameEngine.DisplayStack.Push(MenuSounds())),
+                                  new PartialButton("Menu.Back", Return)
                               };
 
             Id = MenuType.Settings;
-            return new Menu("Option", buttons, RessourceProvider.MenuBackgrounds["MainMenu"],
-                                new Point((int)((GameEngine.Config.ResolutionWidth / 2) - RessourceProvider.Fonts["Menu"].MeasureString(buttons[0].DisplayedName).X / 2),
-                                          (int)(GameEngine.Config.ResolutionHeight) / 2));
+            menu.Add("Buttons.Item",new ListButtons(new Vector2(50,44),20,buttons,RessourceProvider.Fonts["Menu"],
+                Color.White,Color.DarkOrange,ListButtons.StatusListButtons.Vertical ));
+            Menu = menu;
+            return menu;
         }
 
-        public Menu MenuGraphics()
+        public MenuOld MenuGraphics()
         {
             System.Threading.Thread.Sleep(200);
+            Id = MenuType.Graphics;
             var buttons = new List<MenuButton1>
                               {
-                                  new MenuButton1("fullscreen", GetFullscreen, SetFullScreen),
-                                  new MenuButton1("resolution", GetResolution, ChangeResolution),
-                                  new MenuButton1("back", Return)
+                                  new MenuButton1("MenuGraphisms.Fullscreen", GetFullscreen, SetFullScreen),
+                                  new MenuButton1("MenuGraphisms.Resolution", GetResolution, ChangeResolution),
+                                  new MenuButton1("Menu.Back", Return)
                               };
 
-            Id = MenuType.Graphics;
-            return new Menu("Graphics", buttons, RessourceProvider.MenuBackgrounds["MainMenu"],
+
+            return new MenuOld("Graphics", buttons, RessourceProvider.MenuBackgrounds["MainMenu"],
                                 new Point((int)((GameEngine.Config.ResolutionWidth / 2) - RessourceProvider.Fonts["Menu"].MeasureString(buttons[0].DisplayedName).X / 2),
                                           (int)(GameEngine.Config.ResolutionHeight) / 2));
         }
 
-        public Menu MenuSounds()
+        public MenuOld MenuSounds()
         {
             System.Threading.Thread.Sleep(200);
             var buttons = new List<MenuButton1>
                               {
-                                  new MenuButton1("soundeffect", GetVolume(false), () => ChangeSound(false)),
-                                  new MenuButton1("music", GetVolume(true), () => ChangeSound(true)),
-                                  new MenuButton1("back", Return)
+                                  new MenuButton1("MenuSounds.Effects", GetVolume(false), () => ChangeSound(false)),
+                                  new MenuButton1("MenuSounds.Musics", GetVolume(true), () => ChangeSound(true)),
+                                  new MenuButton1("Menu.Back", Return)
                               };
 
             Id = MenuType.Sounds;
-            return new Menu("sound", buttons, RessourceProvider.MenuBackgrounds["MainMenu"],
+            return new MenuOld("sound", buttons, RessourceProvider.MenuBackgrounds["MainMenu"],
                                 new Point((int)((GameEngine.Config.ResolutionWidth / 2) - RessourceProvider.Fonts["Menu"].MeasureString(buttons[0].DisplayedName).X / 2),
                                           (int)(GameEngine.Config.ResolutionHeight) / 2));
         }
@@ -110,7 +115,13 @@ namespace GameClient.Menus
                 index++;
             }
             GameEngine.Config.Language = GameEngine.LangCenter.LanguageAvailable[index % GameEngine.LangCenter.LanguageAvailable.Length];
-            ReactualizeOption();
+            foreach (var menu in GameEngine.DisplayStack.OfType<Menu>())
+            {
+                foreach (var listButton in menu.Items.Values.OfType<ListButtons>())
+                    listButton.UpdateRectangles();
+                foreach (var menubutton in menu.Items.Values.OfType<MenuButton>())
+                    menubutton.UpdateRectangles();
+            }
         }
         #endregion
 
@@ -207,12 +218,14 @@ namespace GameClient.Menus
             GameEngine.SoundCenter.VolumeMusic = GameEngine.Config.VolumeMusic;
             GameEngine.SoundCenter.VolumeEffect = GameEngine.Config.VolumeEffect;
 
-            foreach (Menu1 e in GameEngine.DisplayStack.OfType<Menu1>())
+            foreach (Menu e in GameEngine.DisplayStack.OfType<Menu>())
                 e.UpdateResolution();
 
             GameEngine.DisplayStack.Pop();
             GameEngine.DisplayStack.Pop();
-            GameEngine.DisplayStack.Push(Id == MenuType.Settings ? new MainMenu(_spriteBatch, _graphics).CreateMainMenu() : MenuSettings());
+            GameEngine.DisplayStack.Push(Id == MenuType.Settings
+                                             ? new MainMenu(_spriteBatch, _graphics).CreateMainMenu()
+                                             : MenuSettings());
         }
 
     }
