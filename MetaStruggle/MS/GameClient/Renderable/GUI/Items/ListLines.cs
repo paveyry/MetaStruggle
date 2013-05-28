@@ -104,8 +104,10 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            base.UpdateItem(gameTime);
             if (!IsDrawable)
                 return;
+
             foreach (Line element in Elements.Where(element => element.IsDrawable))
             {
                 element.UpdateItem(gameTime);
@@ -135,7 +137,6 @@ namespace GameClient.Renderable.GUI.Items
                 }
             }
             _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
-            base.UpdateItem(gameTime);
         }
     }
 }

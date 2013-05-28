@@ -69,8 +69,10 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            base.UpdateItem(gameTime);
             if (!IsDrawable)
                 return;
+
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                 _isSelect = RealRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
             if (!_isSelect || gameTime.TotalGameTime.Ticks % 3 != 0)
@@ -108,7 +110,6 @@ namespace GameClient.Renderable.GUI.Items
                 _previousKey = key;
                 _previousTime = gameTime.TotalGameTime.TotalMilliseconds;
             }
-            base.UpdateItem(gameTime);
         }
 
         private void UpdateDisplayText(bool delBack)

@@ -246,6 +246,9 @@ namespace GameClient.Global
         {
             return new Dictionary<string, Texture2D>
                 {
+                    {"CheckBox.Selected", content.Load<Texture2D>("Themes\\" +themeName + "\\CheckBox\\Selected")},
+                    {"CheckBox.Normal", content.Load<Texture2D>("Themes\\" +themeName + "\\CheckBox\\Normal")},
+
                     {"ListImageButtons.Top", content.Load<Texture2D>("Themes\\" +themeName + "\\ListImageButtons\\Top")},
                     {"ListImageButtons.Down", content.Load<Texture2D>("Themes\\" +themeName + "\\ListImageButtons\\Down")},
                     {"ListImageButtons.LeftSide", content.Load<Texture2D>("Themes\\" +themeName + "\\ListImageButtons\\LeftSide")},
@@ -259,6 +262,14 @@ namespace GameClient.Global
                     {"ListLines.RightSide", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\RightSide")},
                     {"ListLines.Background", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\Background")},
                     {"ListLines.Scroll", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\Scroll")},
+
+                    {"Slider.Top", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\Top")},
+                    {"Slider.Down", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\Down")},
+                    {"Slider.LeftSide", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\LeftSide")},
+                    {"Slider.RightSide", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\RightSide")},
+                    {"Slider.Cursor", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\Cursor")},
+                    {"Slider.BackgroundSelected", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\BackgroundSelected")},
+                    {"Slider.BackgroundNormal", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\BackgroundNormal")},
 
                     {"Textbox.LeftSide", content.Load<Texture2D>("Themes\\" +themeName + "\\Textbox\\LeftSide")},
                     {"Textbox.RightSide", content.Load<Texture2D>("Themes\\" +themeName + "\\Textbox\\RightSide")},

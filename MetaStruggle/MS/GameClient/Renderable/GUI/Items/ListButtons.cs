@@ -49,11 +49,11 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            base.UpdateItem(gameTime);
             if (!IsDrawable)
                 return;
             foreach (var menuButton in Buttons)
                 menuButton.UpdateItem(gameTime);
-            base.UpdateItem(gameTime);
         }
 
         public void UpdateRectangles()

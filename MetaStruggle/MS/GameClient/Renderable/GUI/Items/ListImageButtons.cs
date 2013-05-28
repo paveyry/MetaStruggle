@@ -84,8 +84,10 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            base.UpdateItem(gameTime);
             if (!IsDrawable)
                 return;
+
             foreach (var imageButton in ImageButtons)
             {
                 imageButton.UpdateItem(gameTime);
@@ -95,7 +97,6 @@ namespace GameClient.Renderable.GUI.Items
                     Selected.IsSelect = false;
                 Selected = imageButton;
             }
-            base.UpdateItem(gameTime);
         }
     }
 }

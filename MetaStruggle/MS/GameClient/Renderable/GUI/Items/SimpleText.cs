@@ -54,6 +54,7 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            base.UpdateItem(gameTime);
             if (!IsDrawable)
                 return;
             var mouse = new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1);
@@ -61,7 +62,6 @@ namespace GameClient.Renderable.GUI.Items
                 return;
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                 IsSelect = ItemRectangle.Intersects(mouse);
-            base.UpdateItem(gameTime);
         }
     }
 }

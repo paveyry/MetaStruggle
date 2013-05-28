@@ -28,53 +28,61 @@ namespace GameClient.Menus
         public Menu Create()
         {
             Menu characterSelector = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
-            //Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
-            Dictionary<string, float> t = new Dictionary<string, float>
-                {
-                    {"field1", 50},
-                    {"field2",50}
-                };
 
-            #region
+            #region tests
 
-            //characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
-            //characterSelector.Add("nop", new ListLine(t, new List<string[]>
+//Dictionary<string,Texture2D> imageButtons = new Dictionary<string, Texture2D>();
+            //Dictionary<string, float> t = new Dictionary<string, float>
             //    {
-            //        new []{"0 Right.", "Right.0"}, 
-            //        new []{"0 Left.", "Left.0"},
-            //        new []{"0 Jump.","Jump.0"},
-            //        new []{"0 Attack.","Attack.0"},
-            //        new []{"0 SpecialAttack.","SpecialAttack.0"},
-            //        new []{"1 Right.", "Right.1"}, 
-            //        new []{"1 Left.", "Left.1"},
-            //        new []{"1 Jump.","Jump.1"},
-            //        new []{"1 Attack.","Attack.1"},
-            //        new []{"1 SpecialAttack.","SpecialAttack.1"},
-            //        new []{"2 Right.2", "Right.2"}, 
-            //        new []{"2 Left.2", "Left.2"},
-            //        new []{"2 Jump.2","Jump.2"},
-            //        new []{"2 Attack.2","Attack.2"},
-            //        new []{"2 SpecialAttack.2","SpecialAttack.2"},
-            //        new []{"3 Right.3", "Right.3"}, 
-            //        new []{"3 Left.3", "Left.3"},
-            //        new []{"3 Jump.3","Jump.3"},
-            //        new []{"3 Attack.3","Attack.3"},
-            //        new []{"3 SpecialAttack.3","SpecialAttack.3"},
-            //    },
-            //    new Rectangle(10, 10, 80, 50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, false));
+            //        {"field1", 50},
+            //        {"field2",50}
+            //    };
+
+            //#region
+
+            ////characterSelector.Add("ListCharacters", new ListImageButton(new Rectangle(20, 20, 60, 60), RessourceProvider.CharacterFaces, 5, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
+            ////characterSelector.Add("nop", new ListLine(t, new List<string[]>
+            ////    {
+            ////        new []{"0 Right.", "Right.0"}, 
+            ////        new []{"0 Left.", "Left.0"},
+            ////        new []{"0 Jump.","Jump.0"},
+            ////        new []{"0 Attack.","Attack.0"},
+            ////        new []{"0 SpecialAttack.","SpecialAttack.0"},
+            ////        new []{"1 Right.", "Right.1"}, 
+            ////        new []{"1 Left.", "Left.1"},
+            ////        new []{"1 Jump.","Jump.1"},
+            ////        new []{"1 Attack.","Attack.1"},
+            ////        new []{"1 SpecialAttack.","SpecialAttack.1"},
+            ////        new []{"2 Right.2", "Right.2"}, 
+            ////        new []{"2 Left.2", "Left.2"},
+            ////        new []{"2 Jump.2","Jump.2"},
+            ////        new []{"2 Attack.2","Attack.2"},
+            ////        new []{"2 SpecialAttack.2","SpecialAttack.2"},
+            ////        new []{"3 Right.3", "Right.3"}, 
+            ////        new []{"3 Left.3", "Left.3"},
+            ////        new []{"3 Jump.3","Jump.3"},
+            ////        new []{"3 Attack.3","Attack.3"},
+            ////        new []{"3 SpecialAttack.3","SpecialAttack.3"},
+            ////    },
+            ////    new Rectangle(10, 10, 80, 50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, false));
+
+            //#endregion
+
+            //List<PartialButton> partialButtons = new List<PartialButton> { 
+            //    new PartialButton("play", () => (Menu.Items["t"] as ListButtons).IsDrawable = false),
+            //    new PartialButton("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
+            //    new PartialButton("quit", () => GameEngine.DisplayStack.Pop())
+            //};
+            //characterSelector.Add("t", new ListButtons(new Vector2(50, 50), 20, partialButtons, 
+            //    RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Vertical));
+            ////characterSelector.Add("o", new Textbox("", new Rectangle(10, 70, 500, 20), "UglyTestTheme", RessourceProvider.Fonts["Menu"], Color.White));
+            ////characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
+            ////characterSelector.Add("test", new MenuButton("play", new Vector2(50, 50), RessourceProvider.Fonts["Menu"], () => GameEngine.DisplayStack.Pop()));
 
             #endregion
 
-            List<PartialButton> partialButtons = new List<PartialButton> { 
-                new PartialButton("play", () => (Menu.Items["t"] as ListButtons).IsDrawable = false),
-                new PartialButton("option", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
-                new PartialButton("quit", () => GameEngine.DisplayStack.Pop())
-            };
-            characterSelector.Add("t", new ListButtons(new Vector2(50, 50), 20, partialButtons, 
-                RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Vertical));
-            //characterSelector.Add("o", new Textbox("", new Rectangle(10, 70, 500, 20), "UglyTestTheme", RessourceProvider.Fonts["Menu"], Color.White));
-            //characterSelector.Add("ok", new Button("OK", Item.PosOnScreen.DownRight, new Rectangle(20, 20, 50, 50), ButtonOk));
-            //characterSelector.Add("test", new MenuButton("play", new Vector2(50, 50), RessourceProvider.Fonts["Menu"], () => GameEngine.DisplayStack.Pop()));
+            //characterSelector.Add("checkbox", new CheckBox(new Vector2(70,70), "UglyTestTheme",true));
+            characterSelector.Add("Slider", new Slider(new Rectangle(50, 50, 400, 40), 40, -27, 70, "UglyTestTheme"));
             Menu = characterSelector;
             return characterSelector;
         }

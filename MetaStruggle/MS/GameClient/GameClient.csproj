@@ -156,6 +156,7 @@
     <Compile Include="Renderable\GUI\Items\Cells\Cell.cs" />
     <Compile Include="Renderable\GUI\Items\Cells\ClassicCell.cs" />
     <Compile Include="Renderable\GUI\Items\Cells\KeySelectorCell.cs" />
+    <Compile Include="Renderable\GUI\Items\CheckBox.cs" />
     <Compile Include="Renderable\GUI\Items\ImageButton.cs" />
     <Compile Include="Renderable\GUI\Items\Item.cs" />
     <Compile Include="Renderable\GUI\Items\Line.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Renderable\GUI\Items\ListLines.cs" />
     <Compile Include="Renderable\GUI\Items\MenuButton.cs" />
     <Compile Include="Renderable\GUI\Items\SimpleText.cs" />
+    <Compile Include="Renderable\GUI\Items\Slider.cs" />
     <Compile Include="Renderable\GUI\ListButtonsOld.cs" />
     <Compile Include="Renderable\GUI\MenuOld.cs" />
     <Compile Include="Renderable\GUI\Menu.cs" />

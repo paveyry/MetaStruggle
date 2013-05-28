@@ -6,6 +6,6 @@ TO DO (Menu)
 5  - (DONE) Add a Theme possibility for ListImage
 6  - Continue to clean and improve the code (almost done...).
 7  - (DONE) Replace ListButtons by a new one
-8  - Create CheckBox
+8  - (DONE) Create CheckBox
 9  - Create ComboBox
-10 - Create Slider
+10 - (DONE) Create Slider

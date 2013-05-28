@@ -101,6 +101,7 @@ namespace GameClient.Renderable.GUI.Items
 
         public override void UpdateItem(GameTime gameTime)
         {
+            base.UpdateItem(gameTime);
             if (!IsDrawable)
                 return;
             IsSelect = NormalRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
@@ -109,7 +110,6 @@ namespace GameClient.Renderable.GUI.Items
                 OnClick.Invoke();
                 IsSelect = false;
             }
-            base.UpdateItem(gameTime);
         }
     }
 }
