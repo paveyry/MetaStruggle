@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.IO;
-using GameClient.Global;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameClient.Language
+namespace GameClient.Global
 {
     public class LanguageLoader
     {
@@ -64,7 +62,7 @@ namespace GameClient.Language
         }
 
         #region GetLanguage
-        private Texture2D GetImage(string language, string id, bool isNormal)
+        public Texture2D GetImage(string language, string id, bool isNormal)
         {
             if (_languageImage.ContainsKey(language) && _languageImage[language].ContainsKey(id))
             {
@@ -81,7 +79,7 @@ namespace GameClient.Language
             return GameEngine.LangCenter.GetImage(GameEngine.Config.Language, key, isNormal);
         }
 
-        private string GetString(string language, string id)
+        public string GetString(string language, string id)
         {
             if (_languageText.ContainsKey(language) && _languageText[language].ContainsKey(id))
                 return _languageText[language][id];

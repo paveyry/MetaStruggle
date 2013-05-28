@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameClient.Global.InputManager;
-using GameClient.Language;
 using GameClient.Renderable.Layout;
 using GameClient.SoundEngine;
 using Microsoft.Xna.Framework;

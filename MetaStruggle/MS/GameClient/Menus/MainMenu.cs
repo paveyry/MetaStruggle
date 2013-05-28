@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameClient.Global;
-using GameClient.Language;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items;
 using Microsoft.Xna.Framework;

@@ -82,7 +82,7 @@ namespace GameClient.Menus
             #endregion
 
             //characterSelector.Add("checkbox", new CheckBox(new Vector2(70,70), "UglyTestTheme",true));
-            characterSelector.Add("Slider", new Slider(new Rectangle(50, 50, 400, 40), 40, -27, 70, "UglyTestTheme"));
+            characterSelector.Add("Slider", new Slider(new Rectangle(50, 50, 400, 10), 50, 0, 100, "UglyTestTheme"));
             Menu = characterSelector;
             return characterSelector;
         }
