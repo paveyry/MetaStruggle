@@ -66,9 +66,9 @@ namespace GameClient.Renderable.GUI.Items
         public MenuButton(string id, Vector2 pos, SpriteFont font, Color normal, Color selected, Event onClick, bool isDrawable = true) 
             : this(id, pos, StatusMenuButton.None,true, font, normal, selected, onClick, isDrawable) { }
 
-        private Rectangle GetRectangle(bool status)
+        private Rectangle GetRectangle(bool isSelected)
         {
-            var image = Image.Invoke(status);
+            var image = Image.Invoke(isSelected);
             var text = Font.MeasureString(Text.Invoke());
             var ratio = Ratio.Invoke();
             switch (Status)
@@ -77,7 +77,6 @@ namespace GameClient.Renderable.GUI.Items
                     return image != null
                         ? new Rectangle((int)(MiddlePos.X - (image.Width*ratio) / 2f), (int)(MiddlePos.Y), (int)(image.Width * ratio), (int)(image.Height * ratio))
                         : new Rectangle((int)(MiddlePos.X - text.X / 2f), (int)(MiddlePos.Y), (int)text.X, (int)text.Y);
-
                 case StatusMenuButton.Horizontal:
                     return image != null
                         ? new Rectangle((int)(MiddlePos.X), (int)(MiddlePos.Y - (image.Height*ratio) / 2f), (int)(image.Width * ratio), (int)(image.Height * ratio))
