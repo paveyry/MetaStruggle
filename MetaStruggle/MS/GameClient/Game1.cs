@@ -36,7 +36,7 @@ namespace GameClient
             Window.Title = GameEngine.Config.GameName;
             GameEngine.DisplayStack.Push(new MainMenu(_spriteBatch, _graphics).CreateMainMenu());
             GameEngine.DisplayStack.Push(new Cinematic(RessourceProvider.Videos["Intro"]));
-
+            
             base.Initialize();
         }
 

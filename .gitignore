@@ -8,7 +8,7 @@
 *.cachefile
 *.*.suo
 *.suo
-*.dll
+
 *.vsp
 *.psess
 .*
