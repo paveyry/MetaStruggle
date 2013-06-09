@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameClient.Global;
-using GameClient.Renderable.GUI.Items.Cells;
+using GameClient.Renderable.GUI.Items.ListItems.Lines.Cells1;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI.Items
 {
-    internal class Line : Item
+    internal class Line1 : Item
     {
         #region Fields
         int[] Fields { get; set; }
@@ -32,7 +32,7 @@ namespace GameClient.Renderable.GUI.Items
         private double _oldGameTime;
         #endregion
 
-        public Line(Rectangle rectangle, string[] elements, int[] fields, SpriteFont font, Color colorNormal,
+        public Line1(Rectangle rectangle, string[] elements, int[] fields, SpriteFont font, Color colorNormal,
             Color colorSelected, bool isDrawable, bool isNormal)
             : base(rectangle, isDrawable)
         {

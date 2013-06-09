@@ -8,15 +8,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameClient.Renderable.GUI.Items
 {
-    public class ListLines : Item
+    public class ListLines1 : Item
     {
         private Dictionary<string, Texture2D> Theme { get; set; }
         private Rectangle InternalRectangle;
         float[] FieldsWidthAbstract { get; set; }
         int[] RealFieldsWidth { get; set; }
-        Line Fields { get; set; }
-        List<Line> Elements { get; set; }
-        Line LineSelected { get; set; }
+        Line1 Fields { get; set; }
+        List<Line1> Elements { get; set; }
+        Line1 LineSelected { get; set; }
         public string[] Selected { get { return (LineSelected != null) ? LineSelected.Elements : null; } }
 
         int MaxLine { get; set; }
@@ -26,12 +26,12 @@ namespace GameClient.Renderable.GUI.Items
         int HeightLine { get; set; }
         float Ratio { get; set; }
 
-        public ListLines(Dictionary<string, float> fields, List<string[]> elements, Rectangle abstractRectangle, string theme,
+        public ListLines1(Dictionary<string, float> fields, List<string[]> elements, Rectangle abstractRectangle, string theme,
             SpriteFont font, Color normalColor, Color selectedColor, bool isNormal = true, bool isDrawable = true)
             : base(abstractRectangle, true,isDrawable)
         {
             Theme = RessourceProvider.Themes[theme];
-            Elements = new List<Line>();
+            Elements = new List<Line1>();
             FieldsWidthAbstract = fields.Values.ToArray();
             RealFieldsWidth = new int[fields.Values.Count];
             HeightLine = GetLineHeight(font);
@@ -43,7 +43,7 @@ namespace GameClient.Renderable.GUI.Items
             for (int i = 0, sum = (int)FieldsWidthAbstract.Sum(); i < RealFieldsWidth.Length; i++)
                 RealFieldsWidth[i] = (int)((FieldsWidthAbstract[i] / sum) * InternalRectangle.Width);
 
-            Fields = new Line(new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, HeightLine),
+            Fields = new Line1(new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, HeightLine),
                 fields.Keys.ToArray(), RealFieldsWidth, font, normalColor, selectedColor, true, true);
 
             int heigth = InternalRectangle.Y;
@@ -52,13 +52,13 @@ namespace GameClient.Renderable.GUI.Items
             for (int i = 0; i < elements.Count; heigth += HeightLine, i++)
                 if ((heigth + HeightLine) <= InternalRectangle.Height + InternalRectangle.Y)
                 {
-                    Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine),
+                    Elements.Add(new Line1(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine),
                         elements[i], RealFieldsWidth, font, normalColor, selectedColor, true, isNormal));
                     newHeigth += HeightLine;
                     MaxLine++;
                 }
                 else
-                    Elements.Add(new Line(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine),
+                    Elements.Add(new Line1(new Rectangle(InternalRectangle.X, heigth, InternalRectangle.Width, HeightLine),
                         elements[i], RealFieldsWidth, font, normalColor, selectedColor, false, isNormal));
             if (newHeigth > InternalRectangle.Height)
             {
@@ -96,7 +96,7 @@ namespace GameClient.Renderable.GUI.Items
                                                Theme["ListLines.Separator"].Width, InternalRectangle.Height), Color.White);
 
             Fields.DrawItem(gameTime, spriteBatch);
-            foreach (Line element in Elements.Where(element => element.IsDrawable))
+            foreach (Line1 element in Elements.Where(element => element.IsDrawable))
                 element.DrawItem(gameTime, spriteBatch);
 
             
@@ -108,7 +108,7 @@ namespace GameClient.Renderable.GUI.Items
             if (!IsDrawable)
                 return;
 
-            foreach (Line element in Elements.Where(element => element.IsDrawable))
+            foreach (Line1 element in Elements.Where(element => element.IsDrawable))
             {
                 element.UpdateItem(gameTime);
                 if (!element.IsSelect || element.Equals(LineSelected))

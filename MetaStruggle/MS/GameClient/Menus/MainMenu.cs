@@ -5,6 +5,7 @@ using System.Text;
 using GameClient.Global;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items;
+using GameClient.Renderable.GUI.Items.ListItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

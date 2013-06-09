@@ -52,7 +52,7 @@ namespace GameClient.Menus
 
             System.Threading.Thread.Sleep(200);
 
-            var listServer = Menu.Items["ListServer.Item"] as ListLines;
+            var listServer = Menu.Items["ListServer.Item"] as ListLines1;
             if (listServer == null || listServer.Selected == null)
                 return;
 
@@ -77,7 +77,7 @@ namespace GameClient.Menus
                 Servers.Add(new[] {s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" +s.MaxPlayer});
             Client.Disconnect();
 
-            Menu.Add("ListServer.Item",new ListLines(new Dictionary<string, float>
+            Menu.Add("ListServer.Item",new ListLines1(new Dictionary<string, float>
                 {
                     {"Map",18}, {"IP:Port",11}, {"Player", 3}
                 }, Servers,new Rectangle(10,10,80,50),"UglyTestTheme", RessourceProvider.Fonts["HUDlittle"],Color.White,Color.DarkOrange ));
