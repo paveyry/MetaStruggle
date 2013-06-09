@@ -86,7 +86,7 @@ namespace GameClient.Characters
                     MoveRight(gameTime);
                     pendingAnim.Add(Animation.Run);
                 }
-                if (ks.IsKeyDown(Keys.Left))
+                else if (ks.IsKeyDown(Keys.Left))
                 {
                     MoveLeft(gameTime);
                     pendingAnim.Add(Animation.Run);
