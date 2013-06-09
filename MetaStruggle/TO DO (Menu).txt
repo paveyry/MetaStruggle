@@ -9,3 +9,4 @@ TO DO (Menu)
 8  - (DONE) Create CheckBox
 9  - Create ComboBox
 10 - (DONE) Create Slider
+11 - Faire un fuckin' menu pause

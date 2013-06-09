@@ -77,7 +77,7 @@ namespace GameClient.CollisionEngine.RenderBoundingObjects
                       sphereResolution);
             }
         }
-
+        
         public static void Render(BoundingSphere sphere, GraphicsDevice graphicsDevice, Matrix view, Matrix projection, Color color)
         {
             if (vertBuffer == null)
