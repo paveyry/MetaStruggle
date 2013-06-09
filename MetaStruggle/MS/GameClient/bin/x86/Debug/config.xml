@@ -4,7 +4,13 @@
   <Language>fr_FR</Language>
   <ResolutionWidth>800</ResolutionWidth>
   <ResolutionHeight>600</ResolutionHeight>
-  <VolumeMusic>40</VolumeMusic>
+  <VolumeMusic>100</VolumeMusic>
   <VolumeEffect>100</VolumeEffect>
   <FullScreen>false</FullScreen>
+  <Keys>
+    <string>Keyboard.P,Keyboard.Q,Keyboard.D,Mouse.RightButton,Keyboard.LeftShift</string>
+    <string>Keyboard.Escape,Keyboard.Escape,Keyboard.Escape,Keyboard.Escape,Keyboard.Escape</string>
+    <string>Keyboard.Escape,Keyboard.Space,Keyboard.Escape,Mouse.LeftButton,Keyboard.Space</string>
+    <string>Keyboard.Escape,Mouse.LeftButton,Mouse.RightButton,Keyboard.Escape,Mouse.RightButton</string>
+  </Keys>
 </Config>

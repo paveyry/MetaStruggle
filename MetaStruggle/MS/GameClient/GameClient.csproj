@@ -65,6 +65,9 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DPSFAsDrawableGameComponent">
+      <HintPath>.\DPSFAsDrawableGameComponent.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
@@ -121,20 +124,11 @@
     <Compile Include="CollisionEngine\RenderBoundingObjects\BoundingSphereRenderer.cs" />
     <Compile Include="Global\Config.cs" />
     <Compile Include="Global\GameEngine.cs" />
+    <Compile Include="Global\InputManager\InputDevice.cs" />
+    <Compile Include="Global\InputManager\UniversalKeys.cs" />
     <Compile Include="Global\RessourceProvider.cs" />
     <Compile Include="IO\ConfigSerialization.cs" />
-    <Compile Include="Lang\Language.cs" />
-    <Compile Include="Lang\en_US.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>en_US.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Lang\fr_FR.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>fr_FR.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Lang\LanguageLoader.cs" />
+    <Compile Include="Global\LanguageLoader.cs" />
     <Compile Include="Menus\CharacterSelector.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\TestMenu.cs" />
@@ -152,17 +146,22 @@
     <Compile Include="Renderable\Environments\Environment1.cs" />
     <Compile Include="Renderable\Environments\NetworkEnvironment.cs" />
     <Compile Include="Renderable\GUI\Cinematic.cs" />
-    <Compile Include="Renderable\GUI\Items\Button.cs" />
+    <Compile Include="Renderable\GUI\Items\Cells\Cell.cs" />
+    <Compile Include="Renderable\GUI\Items\Cells\ClassicCell.cs" />
+    <Compile Include="Renderable\GUI\Items\Cells\KeySelectorCell.cs" />
+    <Compile Include="Renderable\GUI\Items\CheckBox.cs" />
     <Compile Include="Renderable\GUI\Items\ImageButton.cs" />
     <Compile Include="Renderable\GUI\Items\Item.cs" />
     <Compile Include="Renderable\GUI\Items\Line.cs" />
-    <Compile Include="Renderable\GUI\Items\ListButton.cs" />
-    <Compile Include="Renderable\GUI\Items\ListImageButton.cs" />
-    <Compile Include="Renderable\GUI\Items\ListLine.cs" />
+    <Compile Include="Renderable\GUI\Items\ListButtons.cs" />
+    <Compile Include="Renderable\GUI\Items\ListImageButtons.cs" />
+    <Compile Include="Renderable\GUI\Items\ListLines.cs" />
+    <Compile Include="Renderable\GUI\Items\MenuButton.cs" />
     <Compile Include="Renderable\GUI\Items\SimpleText.cs" />
-    <Compile Include="Renderable\GUI\ListButtons.cs" />
+    <Compile Include="Renderable\GUI\Items\Slider.cs" />
+    <Compile Include="Renderable\GUI\ListButtonsOld.cs" />
+    <Compile Include="Renderable\GUI\MenuOld.cs" />
     <Compile Include="Renderable\GUI\Menu.cs" />
-    <Compile Include="Renderable\GUI\1Menu.cs" />
     <Compile Include="Renderable\GUI\MenuButton.cs" />
     <Compile Include="Renderable\GUI\MenuButtonDisplayType.cs" />
     <Compile Include="Renderable\GUI\Items\Textbox.cs" />
@@ -212,17 +211,6 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Lang\en_US.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>en_US.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Lang\fr_FR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>fr_FR.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

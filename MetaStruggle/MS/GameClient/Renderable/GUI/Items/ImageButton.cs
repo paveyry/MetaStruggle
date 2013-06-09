@@ -11,13 +11,14 @@ namespace GameClient.Renderable.GUI.Items
 {
     internal class ImageButton : Item
     {
+        #region Fields
         public string Text { get; set; }
         SpriteFont Font { get; set; }
         Texture2D Image { get; set; }
         Color ColorNormal { get; set; }
         Color ColorSelected { get; set; }
-        bool _isSelect { get; set; }
         public bool IsSelect { get; set; }
+        #endregion
 
         public ImageButton(string text, Rectangle rectangle, Texture2D image, SpriteFont font, Color colorNormal, Color colorSelected)
             : base(rectangle)

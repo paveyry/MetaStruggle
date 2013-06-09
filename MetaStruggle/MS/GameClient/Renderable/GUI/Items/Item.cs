@@ -18,6 +18,8 @@ namespace GameClient.Renderable.GUI.Items
 
         internal int Width { get { return GameEngine.Config.ResolutionWidth; } }
         internal int Height { get { return GameEngine.Config.ResolutionHeight; } }
+        internal int ActualWidth { get; private set; }
+        internal int ActualHeight { get; private set; }
         public delegate void Event();
         public delegate string NameFunc();
         public Rectangle ItemRectangle;
@@ -26,35 +28,50 @@ namespace GameClient.Renderable.GUI.Items
         public Vector2 PositionItem {get {return new Vector2(ItemRectangle.Location.X,ItemRectangle.Location.Y);}}
         public PosOnScreen Pos;
         public bool IsExpandable;
+        public bool IsDrawable { get; set; }
 
-        private Item(Rectangle rectangle, PosOnScreen pos, bool isExpandable)
+        private Item(Rectangle rectangle, PosOnScreen pos, bool isExpandable, bool isDrawable = true)
         {
+            IsDrawable = isDrawable;
             IsExpandable = isExpandable;
             ItemRectangle = rectangle;
             Pos = pos;
-            UpdateResolution();
+            ActualHeight = Height;
+            ActualWidth = Width;
+            SetRectangles();
         }
 
-        protected Item(Rectangle rectangle, PosOnScreen pos) : this(rectangle, pos, false) { }
-        protected Item(Rectangle rectangle, bool isExpandable) : this(rectangle, PosOnScreen.TopLeft, isExpandable) { }
-        protected Item(Rectangle rectangle) : this(rectangle, PosOnScreen.TopLeft) { }
+        protected Item(Rectangle rectangle, PosOnScreen pos, bool isDrawable = true) : this(rectangle, pos, false, isDrawable) { }
+        protected Item(Rectangle rectangle, bool isExpandable, bool isDrawable = true) : this(rectangle, PosOnScreen.TopLeft, isExpandable, isDrawable) { }
+        protected Item(Rectangle rectangle, bool isDrawable = true) : this(rectangle, PosOnScreen.TopLeft, isDrawable) { }
 
         public virtual void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
         }
 
         public virtual void UpdateItem(GameTime gameTime)
         {
+            if (ActualHeight == Height && ActualWidth == Width) return;
+
+            UpdateResolution();
+            ActualWidth = Width;
+            ActualHeight = Height;
         }
 
-        protected virtual void UpdateResolution()
+        internal virtual void UpdateResolution()
+        {
+            SetRectangles();
+        }
+
+        private void SetRectangles()
         {
             switch (Pos)
             {
                 case PosOnScreen.TopLeft:
                     RealRectangle = IsExpandable ? new Rectangle((int)((ItemRectangle.Location.X / 100f) * Width), (int)((ItemRectangle.Location.Y / 100f) * Height),
                         (int)((ItemRectangle.Width / 100f) * Width), (int)((ItemRectangle.Height / 100f) * Height))
-                        : new Rectangle((int)((ItemRectangle.Location.X / 100f) * Width),(int) ((ItemRectangle.Location.Y / 100f) * Height),
+                        : new Rectangle((int)((ItemRectangle.Location.X / 100f) * Width), (int)((ItemRectangle.Location.Y / 100f) * Height),
                             ItemRectangle.Width, ItemRectangle.Height);
                     break;
                 case PosOnScreen.TopRight:
@@ -70,6 +87,11 @@ namespace GameClient.Renderable.GUI.Items
                             ItemRectangle.Width, ItemRectangle.Height);
                     break;
             }
+        }
+
+        protected static int GetLineHeight(SpriteFont font)
+        {
+            return (int)font.MeasureString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").Y + 1;
         }
     }
 }

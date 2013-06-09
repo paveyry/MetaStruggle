@@ -38,7 +38,7 @@ namespace GameClient.Renderable.Scene
 
                 if (character.IsDead)
                     spriteBatch.DrawString(RessourceProvider.Fonts["HUDlittle"],
-                                           Lang.Language.GetString("respawn") +
+                                           GameEngine.LangCenter.GetString("Text.Respawn") +
                                            ((int) (5 - (DateTime.Now - character.DeathDate).TotalSeconds)),
                                            new Vector2(x + addCoordonate, height + addCoordonate), Color.DarkOrange);
                 else

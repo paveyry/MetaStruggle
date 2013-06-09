@@ -1,4 +1,5 @@
-﻿using GameClient.Global;
+﻿using System.Collections.Generic;
+using GameClient.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -7,48 +8,71 @@ namespace GameClient.Renderable.GUI.Items
 {
     public class Textbox : Item
     {
+        #region Fields
+        private Rectangle InternalRectangle { get; set; }
+
+        #region ThemeElementFields
+        private Dictionary<string, Texture2D> Theme { get; set; }
         private SpriteFont Font { get; set; }
         private Color ColorText { get; set; }
         public string Text { get; private set; }
-        private string DisplayText { get; set; }
-        private Texture2D Cursor { get; set; }
-        private Texture2D TextboxButton { get; set; }
+        #endregion
+
+        #region TextboxElementFields
+        private bool _isSelect;
+        private string _displayText;
         private int _displayPos;
         private int _actualPos;
-        private bool _isSelect;
         private float _cursorPosition;
         double _previousTime;
         private Keys _previousKey;
 
         private bool _CapsLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock); } }
         private bool _NumLock { get { return System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock); } }
+        #endregion
+        #endregion
 
-        public Textbox(string text, Rectangle rectangle, Texture2D textboxButton, SpriteFont font, Color colorText)
-            : base(new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, GetLineHeight(font)))
+        public Textbox(string text, Rectangle rectangle, string theme, SpriteFont font, Color colorText, bool isDrawable = true)
+            : base(new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, GetLineHeight(font)),isDrawable)
         {
+            Text = text;
+            Theme = RessourceProvider.Themes[theme];
             Font = font;
             ColorText = colorText;
+
             _isSelect = false;
-            Cursor = RessourceProvider.Cursors["Textbox"];
-            TextboxButton = textboxButton;
-            Text = text;
             _actualPos = Text.Length;
             _previousTime = 0;
-            UpdateDisplayText(false);
             _previousKey = Keys.Escape;
+
+            InternalRectangle = new Rectangle(RealRectangle.X + Theme["Textbox.LeftSide"].Width, RealRectangle.Y,
+                RealRectangle.Width - (Theme["Textbox.LeftSide"].Width + Theme["Textbox.RightSide"].Width), RealRectangle.Height);
+
+            UpdateDisplayText(false);
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
-            spriteBatch.Draw(TextboxButton, RealRectangle, Color.White);
+            if (!IsDrawable)
+                return;
+            spriteBatch.Draw(Theme["Textbox.Background"], InternalRectangle, Color.White);
+            spriteBatch.Draw(Theme["Textbox.LeftSide"], new Rectangle(RealRectangle.X, RealRectangle.Y, Theme["Textbox.LeftSide"].Width,
+                RealRectangle.Height), Color.White);
+            spriteBatch.Draw(Theme["Textbox.RightSide"], new Rectangle(InternalRectangle.X + InternalRectangle.Width, RealRectangle.Y, 
+                Theme["Textbox.RightSide"].Width, RealRectangle.Height), Color.White);
             if (_isSelect && gameTime.TotalGameTime.Milliseconds / 500 % 2 == 0)
-                spriteBatch.Draw(Cursor, new Rectangle((int)_cursorPosition + RealRectangle.X, RealRectangle.Y, 1, RealRectangle.Height), ColorText);
-            spriteBatch.DrawString(Font, DisplayText, Position, ColorText);
+                spriteBatch.Draw(Theme["Textbox.Separator"], new Rectangle((int)_cursorPosition + InternalRectangle.X, InternalRectangle.Y,
+                    1, InternalRectangle.Height), ColorText);
+
+            spriteBatch.DrawString(Font, _displayText, new Vector2(InternalRectangle.X,InternalRectangle.Y), ColorText);
         }
 
         public override void UpdateItem(GameTime gameTime)
         {
+            base.UpdateItem(gameTime);
+            if (!IsDrawable)
+                return;
+
             if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                 _isSelect = RealRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
             if (!_isSelect || gameTime.TotalGameTime.Ticks % 3 != 0)
@@ -80,13 +104,12 @@ namespace GameClient.Renderable.GUI.Items
                     _actualPos = Text.Length;
                 else if (key == Keys.Pa1 || key == Keys.Home)
                     _actualPos = 0;
-                else if (key == Keys.Escape || key == Keys.Enter)
+                else if (key == Keys.Enter)
                     _isSelect = false;
                 UpdateDisplayText(delBack);
                 _previousKey = key;
                 _previousTime = gameTime.TotalGameTime.TotalMilliseconds;
             }
-            base.UpdateItem(gameTime);
         }
 
         private void UpdateDisplayText(bool delBack)
@@ -95,22 +118,22 @@ namespace GameClient.Renderable.GUI.Items
             _displayPos = (delBack) ? Text.Length : _displayPos;
             do
             {
-                DisplayText = "";
+                _displayText = "";
                 _cursorPosition = 0;
                 if (_displayPos >= Text.Length)
                     _displayPos = 0;
                 for (int i = _displayPos; i < Text.Length; i++)
                 {
-                    float measure = Font.MeasureString(DisplayText + Text[i]).X;
-                    if (measure >= RealRectangle.Width) break;
-                    DisplayText += Text[i];
+                    float measure = Font.MeasureString(_displayText + Text[i]).X;
+                    if (measure >= InternalRectangle.Width) break;
+                    _displayText += Text[i];
                     if (i != _actualPos - 1 && i != _actualPos) continue;
                     isGood = true;
                     _cursorPosition = (i == _actualPos) ? _cursorPosition : measure;
                 }
                 if (!isGood)
                     _displayPos += (_displayPos <= _actualPos) ? 1 : -1;
-            } while (!isGood && DisplayText != "");
+            } while (!isGood && _displayText != "");
         }
 
         private char GetChar(Keys key)
@@ -136,11 +159,6 @@ namespace GameClient.Renderable.GUI.Items
         private static char GetInverseChar(char c)
         {
             return char.IsUpper(c) ? char.ToLower(c) : char.ToUpper(c);
-        }
-
-        private static int GetLineHeight(SpriteFont font)
-        {
-            return (int)font.MeasureString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").Y + 1;
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GameClient.Lang;
+using GameClient.Global.InputManager;
 using GameClient.Renderable.Layout;
 using GameClient.SoundEngine;
 using Microsoft.Xna.Framework;
@@ -23,6 +23,8 @@ namespace GameClient.Global
         public static EventManager EventManager { get; set; }
         public static KeyboardState KeyboardState { get; set; }
         public static MouseState MouseState { get; set; }
+        public static GamePadState[] GamePadState { get; set; }
+        public static InputDevice InputDevice { get; set; }
 
 
         public static void InitializeEngine(ContentManager content, GraphicsDeviceManager graphics)
@@ -33,12 +35,18 @@ namespace GameClient.Global
             RessourceProvider.Fill(content);
             SoundCenter = SoundCenter.Instance;
             DisplayStack = new Stack<IBasicLayout>();
+            InputDevice = new InputDevice();
         }
 
         public static void UpdateEngine()
         {
             KeyboardState = Keyboard.GetState();
             MouseState = Mouse.GetState();
+            GamePadState = new GamePadState[4];
+            GamePadState[0] = GamePad.GetState(PlayerIndex.One);
+            GamePadState[1] = GamePad.GetState(PlayerIndex.Two);
+            GamePadState[2] = GamePad.GetState(PlayerIndex.Three);
+            GamePadState[3] = GamePad.GetState(PlayerIndex.Four);
         }
 
         public static void SaveDatas()

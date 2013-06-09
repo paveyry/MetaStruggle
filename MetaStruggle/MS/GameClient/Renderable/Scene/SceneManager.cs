@@ -43,6 +43,7 @@ namespace GameClient.Renderable.Scene
             {
                 GameEngine.SoundCenter.PlayWithStatus();
                 GameEngine.DisplayStack.Pop();
+                System.Threading.Thread.Sleep(200);
                 return;
             }
 

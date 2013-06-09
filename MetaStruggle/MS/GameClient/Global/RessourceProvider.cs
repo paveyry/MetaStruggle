@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+//using System.Windows.Forms;
+using GameClient.Global.InputManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using XNAnimation;
 
@@ -14,19 +16,20 @@ namespace GameClient.Global
 {
     public static class RessourceProvider
     {
-        public static Dictionary<string, Texture2D> CharacterFaces = new Dictionary<string, Texture2D>(); 
+        public static Dictionary<string, Texture2D> CharacterFaces = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D> MenuBackgrounds = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D> Skyboxes = new Dictionary<string, Texture2D>();
-        
-        public static Dictionary<string, SkinnedModel> AnimatedModels = new Dictionary<string, SkinnedModel>(); 
+
+        public static Dictionary<string, SkinnedModel> AnimatedModels = new Dictionary<string, SkinnedModel>();
         public static Dictionary<string, Model> StaticModels = new Dictionary<string, Model>();
-        
+
         public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
-        
-        public static Dictionary<string, Texture2D> Cursors = new Dictionary<string, Texture2D>();
-        public static Dictionary<string, Texture2D> Buttons = new Dictionary<string, Texture2D>(); 
+
+        //public static Dictionary<string, Cursor> Cursors = new Dictionary<string, Cursor>();
+        public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
 
+        public static Dictionary<string, UniversalKeys> InputKeys = new Dictionary<string, UniversalKeys>();
 
         public static void Fill(ContentManager content)
         {
@@ -39,9 +42,10 @@ namespace GameClient.Global
 
             LoadFonts(content);
 
-            LoadCursors(content);
-            LoadButtons(content);
+            //LoadCursors(content);
+            LoadThemes(content);
             LoadVideos(content);
+            LoadInputKeys();
         }
 
         static void LoadCharacterFaces(ContentManager content)
@@ -51,11 +55,15 @@ namespace GameClient.Global
             CharacterFaces.Add("Alex", content.Load<Texture2D>("CharacterFaces\\Alex"));
             CharacterFaces.Add("Ares", content.Load<Texture2D>("CharacterFaces\\Ares"));
             CharacterFaces.Add("Ironman", content.Load<Texture2D>("CharacterFaces\\Ironman"));
+            CharacterFaces.Add("i", content.Load<Texture2D>("CharacterFaces\\Ironman"));
+            CharacterFaces.Add("ii", content.Load<Texture2D>("CharacterFaces\\Ironman"));
+            CharacterFaces.Add("iii", content.Load<Texture2D>("CharacterFaces\\Ironman"));
         }
 
         static void LoadMenuBackgrounds(ContentManager content)
         {
             MenuBackgrounds.Add("MainMenu", content.Load<Texture2D>("MenuBackgrounds\\MainMenu"));
+            MenuBackgrounds.Add("SimpleMenu", content.Load<Texture2D>("MenuBackgrounds\\SimpleMenu"));
         }
 
         static void LoadSkyboxes(ContentManager content)
@@ -97,12 +105,11 @@ namespace GameClient.Global
 
             return sm;
         }
-
         static SkinnedModel GetIronman(ContentManager content)
         {
             var sm = content.Load<SkinnedModel>("AnimatedModels\\Ironman\\Model");
             var body = content.Load<Texture2D>("AnimatedModels\\Ironman\\texture");
-            
+
             foreach (ModelMesh mesh in sm.Model.Meshes)
             {
                 foreach (SkinnedEffect effect in mesh.Effects)
@@ -118,7 +125,6 @@ namespace GameClient.Global
 
             return sm;
         }
-
         static SkinnedModel GetDwarf(ContentManager content)
         {
             var sm = content.Load<SkinnedModel>("AnimatedModels\\Dwarf\\Model");
@@ -229,17 +235,68 @@ namespace GameClient.Global
 
         static void LoadCursors(ContentManager content)
         {
-            Cursors.Add("Textbox", content.Load<Texture2D>("Cursors\\Textbox"));
+
         }
 
-        static void LoadButtons(ContentManager content)
+        static void LoadThemes(ContentManager content)
         {
-            Buttons.Add("TextboxMulti", content.Load<Texture2D>("Buttons\\TextboxMulti"));
+            Themes.Add("UglyTestTheme", CreateTheme("UglyTestTheme",content));
+        }
+        private static Dictionary<string, Texture2D> CreateTheme(string themeName, ContentManager content)
+        {
+            return new Dictionary<string, Texture2D>
+                {
+                    {"CheckBox.Selected", content.Load<Texture2D>("Themes\\" +themeName + "\\CheckBox\\Selected")},
+                    {"CheckBox.Normal", content.Load<Texture2D>("Themes\\" +themeName + "\\CheckBox\\Normal")},
+
+                    {"ListImageButtons.Top", content.Load<Texture2D>("Themes\\" +themeName + "\\ListImageButtons\\Top")},
+                    {"ListImageButtons.Down", content.Load<Texture2D>("Themes\\" +themeName + "\\ListImageButtons\\Down")},
+                    {"ListImageButtons.LeftSide", content.Load<Texture2D>("Themes\\" +themeName + "\\ListImageButtons\\LeftSide")},
+                    {"ListImageButtons.RightSide", content.Load<Texture2D>("Themes\\" +themeName + "\\ListImageButtons\\RightSide")},
+                    {"ListImageButtons.Background", content.Load<Texture2D>("Themes\\" +themeName + "\\ListImageButtons\\Background")},
+
+                    {"ListLines.Top", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\Top")},
+                    {"ListLines.Down", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\Down")},
+                    {"ListLines.Separator", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\Separator")},
+                    {"ListLines.LeftSide", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\LeftSide")},
+                    {"ListLines.RightSide", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\RightSide")},
+                    {"ListLines.Background", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\Background")},
+                    {"ListLines.Scroll", content.Load<Texture2D>("Themes\\" +themeName + "\\ListLines\\Scroll")},
+
+                    {"Slider.Top", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\Top")},
+                    {"Slider.Down", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\Down")},
+                    {"Slider.LeftSide", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\LeftSide")},
+                    {"Slider.RightSide", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\RightSide")},
+                    {"Slider.Cursor", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\Cursor")},
+                    {"Slider.BackgroundSelected", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\BackgroundSelected")},
+                    {"Slider.BackgroundNormal", content.Load<Texture2D>("Themes\\" +themeName + "\\Slider\\BackgroundNormal")},
+
+                    {"Textbox.LeftSide", content.Load<Texture2D>("Themes\\" +themeName + "\\Textbox\\LeftSide")},
+                    {"Textbox.RightSide", content.Load<Texture2D>("Themes\\" +themeName + "\\Textbox\\RightSide")},
+                    {"Textbox.Separator", content.Load<Texture2D>("Themes\\" +themeName + "\\Textbox\\Separator")},
+                    {"Textbox.Background", content.Load<Texture2D>("Themes\\" +themeName + "\\Textbox\\Background")}
+                };
         }
 
         static void LoadVideos(ContentManager content)
         {
             Videos.Add("Intro", content.Load<Video>("Videos\\Intro"));
+        }
+
+        static void LoadInputKeys()
+        {
+            var keys = GameEngine.Config.Keys;
+            var enumMovement = Enum.GetValues(typeof(Characters.Movement));
+            for (int i = 0; i < 4; i++)
+                if (keys.Length > i)
+                {
+                    var defaultKeys = keys[i].Split(',').ToList();
+                    for (int j = 0; j < enumMovement.Length; j++)
+                        InputKeys.Add(enumMovement.GetValue(j) + "." + i, new UniversalKeys(defaultKeys[j]));
+                }
+                else
+                    for (int j = 0; j < enumMovement.Length; j++)
+                        InputKeys.Add(enumMovement.GetValue(j) + "." + i, new UniversalKeys("Keyboard.Escape"));
         }
     }
 }

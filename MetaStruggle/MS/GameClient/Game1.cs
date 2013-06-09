@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GameClient.Lang;
 using GameClient.Menus;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.Scene;
@@ -37,7 +36,7 @@ namespace GameClient
             Window.Title = GameEngine.Config.GameName;
             GameEngine.DisplayStack.Push(new MainMenu(_spriteBatch, _graphics).CreateMainMenu());
             GameEngine.DisplayStack.Push(new Cinematic(RessourceProvider.Videos["Intro"]));
-
+            
             base.Initialize();
         }
 

@@ -28,6 +28,7 @@ namespace GameClient.Global
         public int VolumeMusic { get; set; }
         public int VolumeEffect { get; set; }
         public bool FullScreen { get; set; }
+        public string[] Keys { get; set; }
 
         public static Config GetDefaultConfig()
         {
@@ -39,7 +40,8 @@ namespace GameClient.Global
                     ResolutionHeight = 600,
                     VolumeMusic = 100,
                     VolumeEffect = 100,
-                    FullScreen = false
+                    FullScreen = false,
+                    Keys = new [] { "Keyboard.P,Keyboard.Q,Keyboard.D,Mouse.RightButton,Keyboard.LeftShift" }
                 };
         }
 
@@ -53,6 +55,20 @@ namespace GameClient.Global
             graphics.PreferMultiSampling = true;
             graphics.GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None };
             graphics.ApplyChanges();
+            ApplyInput();
+        }
+
+        public void ApplyInput()
+        {
+            GameEngine.Config.Keys = new string[4];
+            int nbMove = RessourceProvider.InputKeys.Count / GameEngine.Config.Keys.Length;
+            for (int i = 0, j = 0; i < GameEngine.Config.Keys.Length; i++)
+                for (int start = j; j < RessourceProvider.InputKeys.Count && j - start < nbMove; j++)
+                {
+                    GameEngine.Config.Keys[i] += RessourceProvider.InputKeys.ElementAt(j).Value.ToString();
+                    if (j - start != nbMove - 1)
+                        GameEngine.Config.Keys[i] += ",";
+                }
         }
     }
 }
