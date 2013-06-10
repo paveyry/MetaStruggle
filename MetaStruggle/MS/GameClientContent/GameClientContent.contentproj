@@ -290,25 +290,6 @@
     <Folder Include="Cursors\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\UglyTestTheme\Textbox\Background.png">
-      <Name>Background</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Themes\UglyTestTheme\Textbox\LeftSide.png">
-      <Name>LeftSide</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Themes\UglyTestTheme\Textbox\RightSide.png">
-      <Name>RightSide</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Themes\UglyTestTheme\ListLines\Background.png">
       <Name>Background</Name>
       <Importer>TextureImporter</Importer>
@@ -451,6 +432,27 @@
     </Compile>
     <Compile Include="Themes\UglyTestTheme\Slider\Top.png">
       <Name>Top</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\UglyTestTheme\Textbox\Background.png">
+      <Name>Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\UglyTestTheme\Textbox\LeftSide.png">
+      <Name>LeftSide</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\UglyTestTheme\Textbox\RightSide.png">
+      <Name>RightSide</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

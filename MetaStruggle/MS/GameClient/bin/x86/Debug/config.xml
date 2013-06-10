@@ -2,10 +2,17 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <GameName>MetaStruggle</GameName>
   <Language>fr_FR</Language>
+<<<<<<< HEAD
   <ResolutionWidth>800</ResolutionWidth>
   <ResolutionHeight>600</ResolutionHeight>
   <VolumeMusic>100</VolumeMusic>
   <VolumeEffect>100</VolumeEffect>
+=======
+  <ResolutionWidth>1680</ResolutionWidth>
+  <ResolutionHeight>1050</ResolutionHeight>
+  <VolumeMusic>0</VolumeMusic>
+  <VolumeEffect>10</VolumeEffect>
+>>>>>>> fa27e06876df72210f9bf462d604d54cd8850e3d
   <FullScreen>false</FullScreen>
   <Keys>
     <string>Keyboard.P,Keyboard.Q,Keyboard.D,Mouse.RightButton,Keyboard.LeftShift</string>

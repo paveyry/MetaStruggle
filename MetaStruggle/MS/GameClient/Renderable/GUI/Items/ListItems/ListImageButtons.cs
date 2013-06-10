@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using GameClient.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameClient.Renderable.GUI.Items
+namespace GameClient.Renderable.GUI.Items.ListItems
 {
     public class ListImageButtons : Item
     {
@@ -77,7 +74,7 @@ namespace GameClient.Renderable.GUI.Items
                 Theme["ListImageButtons.LeftSide"].Width, InternalRectangle.Height), Color.White);
             spriteBatch.Draw(Theme["ListImageButtons.RightSide"], new Rectangle(InternalRectangle.X + InternalRectangle.Width,
                 InternalRectangle.Y, Theme["ListImageButtons.RightSide"].Width, InternalRectangle.Height), Color.White);
-            spriteBatch.Draw(Theme["ListImageButtons.Background"], InternalRectangle, Color.White);
+            spriteBatch.Draw(Theme["ListImageButtons.Background"], InternalRectangle, new Color(255,255,255,100));
             foreach (var imageButton in ImageButtons)
                 imageButton.DrawItem(gameTime, spriteBatch);
         }

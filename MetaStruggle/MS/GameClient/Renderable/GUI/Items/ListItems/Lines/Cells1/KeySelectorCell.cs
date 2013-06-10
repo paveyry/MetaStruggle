@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using GameClient.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
-namespace GameClient.Renderable.GUI.Items.Cells
+namespace GameClient.Renderable.GUI.Items.ListItems.Lines.Cells1
 {
     internal class KeySelectorCell : Cell
     {      

@@ -4,6 +4,7 @@ using System.Linq;
 using GameClient.Global;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items;
+using GameClient.Renderable.GUI.Items.ListItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -221,10 +222,10 @@ namespace GameClient.Menus
                 e.UpdateResolution();
 
             GameEngine.DisplayStack.Pop();
-            GameEngine.DisplayStack.Pop();
-            GameEngine.DisplayStack.Push(Id == MenuType.Settings
-                                             ? new MainMenu(_spriteBatch, _graphics).CreateMainMenu()
-                                             : MenuSettings());
+            //GameEngine.DisplayStack.Pop();
+            ////GameEngine.DisplayStack.Push(Id == MenuType.Settings
+            //                                 ? new MainMenu(_spriteBatch, _graphics).CreateMainMenu()
+            //                                 : MenuSettings());
         }
 
     }
