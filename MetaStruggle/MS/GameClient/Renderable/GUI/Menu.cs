@@ -53,8 +53,8 @@ namespace GameClient.Renderable.GUI
             System.Threading.Thread.Sleep(200);
             if (GameEngine.DisplayStack.Count > 1)
                 GameEngine.DisplayStack.Pop();
-            else
-                Environment.Exit(0);
+            //else
+            //    Environment.Exit(0);
         }
     }
 }
