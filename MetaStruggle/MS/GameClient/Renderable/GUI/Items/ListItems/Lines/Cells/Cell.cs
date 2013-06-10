@@ -41,10 +41,10 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines.Cells
         {
         }
 
-        public void UpdateRectangle(Rectangle rectangle, SpriteFont font)
+        public void UpdateRectangle(Rectangle rectangle)
         {
             InternalRectangle = rectangle;
-            Text = (() => GetCorrectString(Text.Invoke(), InternalRectangle.Width, font));
+            displayText = (() => GetCorrectString(Text.Invoke(), InternalRectangle.Width, Font));
 
         }
 

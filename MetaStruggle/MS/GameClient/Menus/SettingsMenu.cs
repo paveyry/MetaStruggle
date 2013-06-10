@@ -222,10 +222,10 @@ namespace GameClient.Menus
                 e.UpdateResolution();
 
             GameEngine.DisplayStack.Pop();
-            GameEngine.DisplayStack.Pop();
-            GameEngine.DisplayStack.Push(Id == MenuType.Settings
-                                             ? new MainMenu(_spriteBatch, _graphics).CreateMainMenu()
-                                             : MenuSettings());
+            //GameEngine.DisplayStack.Pop();
+            ////GameEngine.DisplayStack.Push(Id == MenuType.Settings
+            //                                 ? new MainMenu(_spriteBatch, _graphics).CreateMainMenu()
+            //                                 : MenuSettings());
         }
 
     }

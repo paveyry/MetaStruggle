@@ -23,8 +23,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines.Cells1
             ColorNormal = colorNormal;
             ColorSelected = colorSelected;
         }
-
-
+        
         private static Rectangle CreateRectangle(Point position, SpriteFont font, NameFunc text)
         {
             var value = font.MeasureString(text.Invoke());

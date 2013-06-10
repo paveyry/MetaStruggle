@@ -146,6 +146,7 @@
     <Compile Include="Renderable\Environments\Environment1.cs" />
     <Compile Include="Renderable\Environments\NetworkEnvironment.cs" />
     <Compile Include="Renderable\GUI\Cinematic.cs" />
+    <Compile Include="Renderable\GUI\Items\ListItems\ClassicList.cs" />
     <Compile Include="Renderable\GUI\Items\ListItems\Lines\Cells1\Cell.cs" />
     <Compile Include="Renderable\GUI\Items\ListItems\Lines\Cells1\ClassicCell.cs" />
     <Compile Include="Renderable\GUI\Items\ListItems\Lines\Cells1\KeySelectorCell.cs" />

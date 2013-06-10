@@ -6,6 +6,7 @@ using GameClient.Characters;
 using GameClient.Global;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items;
+using GameClient.Renderable.GUI.Items.ListItems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -81,8 +82,15 @@ namespace GameClient.Menus
 
             #endregion
 
+            var t = new[]
+                {new[] {"test1", "test", "test"}, new[] {"test2", "test", "test"}, new[] {"test3", "test", "test"},
+                new[] {"test4", "test", "test"}, new[] {"test5", "test", "test"}, new[] {"test6", "test", "test"},
+                new[] {"test7", "test", "test"}, new[] {"test8", "test", "test"}, new[] {"test9", "test", "test"}};
+
+            characterSelector.Add("lol", new ClassicList(new Rectangle(20, 20, 50, 50), t, new[] { "1", "2", "3" }, new[] { 5, 10, 5 }, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, "UglyTestTheme"));
+            characterSelector.Add("e", new MenuButton("e", new Vector2(0, 0), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch, _graphics).MenuSettings())));
             //characterSelector.Add("checkbox", new CheckBox(new Vector2(70,70), "UglyTestTheme",true));
-            characterSelector.Add("Slider", new Slider(new Rectangle(50, 50, 400, 10), 50, 0, 100, "UglyTestTheme"));
+            //characterSelector.Add("Slider", new Slider(new Rectangle(50, 50, 400, 10), 50, 0, 100, "UglyTestTheme"));
             Menu = characterSelector;
             return characterSelector;
         }

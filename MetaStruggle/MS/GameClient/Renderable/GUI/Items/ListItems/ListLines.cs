@@ -32,13 +32,14 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             _cursor = 0;
             _heightLine = heightLine;
             _heightField = heightField;
+            _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
 
             Theme = new Dictionary<string, Texture2D>();
             foreach (var kvp in RessourceProvider.Themes[theme].Where(kvp => kvp.Key.StartsWith(themeItem)))
-                Theme.Add(kvp.Key.Substring(themeItem.Length), kvp.Value);
+                Theme.Add(kvp.Key.Substring(themeItem.Length + 1), kvp.Value);
 
             CreateInternalRectangle();
-            CreateLines(_cursor);
+            CreateLines();
         }
 
         protected ListLines(Rectangle abstractRectangle, List<Line> lines, Line field, int heightLine, string theme, string themeItem, bool isDrawable = true)
@@ -50,12 +51,12 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         void CreateInternalRectangle()
         {
             InternalRectangle = new Rectangle(RealRectangle.X + Theme["LeftSide"].Width, RealRectangle.Y + _heightField,
-                RealRectangle.Height - _heightField - Theme["Down"].Height, RealRectangle.Width - Theme["LeftSide"].Width - Theme["RightSide"].Width);
+                RealRectangle.Width - Theme["LeftSide"].Width - Theme["RightSide"].Width, RealRectangle.Height - _heightField - Theme["Down"].Height);
         }
 
-        void CreateLines(int cursor)
+        void CreateLines()
         {
-            for (int i = cursor - 1, posInY = RealRectangle.Y; i >= 0; i--) //Lines before cursor
+            for (int i = _cursor - 1, posInY = RealRectangle.Y; i >= 0; i--) //Lines before cursor
             {
                 posInY -= _heightLine;
                 Lines[i].InternalRectangle = new Rectangle(InternalRectangle.X, posInY, InternalRectangle.Width, _heightLine);
@@ -63,19 +64,19 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             }
 
             Field.InternalRectangle = new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, _heightField);
-            Field.IsDrawable = true;
-
+            
+            _maxLines = Lines.Count;
             bool isOutOfLimits = false;
-            for (int i = cursor, posInY = InternalRectangle.Y; i < Lines.Count; i++)
+            for (int i = _cursor, posInY = InternalRectangle.Y; i < Lines.Count; i++)
             {
                 Lines[i].InternalRectangle = new Rectangle(InternalRectangle.X, posInY, InternalRectangle.Width, _heightLine);
                 posInY += _heightLine;
 
-                Lines[i].IsDrawable = posInY <= InternalRectangle.Y + InternalRectangle.Height;
+                Lines[i].IsDrawable = posInY  <= InternalRectangle.Y + InternalRectangle.Height;
                 if (Lines[i].IsDrawable || isOutOfLimits) continue;
 
                 HeightInternalRectangle = posInY - _heightLine - InternalRectangle.Y; //Update InternalRectangle if Lines are out of the limits
-                _maxLines = i - 1;
+                _maxLines = i;
                 isOutOfLimits = true;
             }
         }
@@ -84,13 +85,15 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         {
             base.UpdateResolution();
             CreateInternalRectangle();
-            CreateLines(_cursor);
+            CreateLines();
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!IsDrawable)
                 return;
+            spriteBatch.Draw(Theme["Down"], RealRectangle, Color.White);
+            spriteBatch.Draw(Theme["Top"], InternalRectangle, Color.White);
 
             Field.DrawItem(gameTime, spriteBatch);
             foreach (var line in Lines.Where(line => line.IsDrawable))
@@ -113,24 +116,25 @@ namespace GameClient.Renderable.GUI.Items.ListItems
                 LineSelected = line;
             }
 
-            if (GameEngine.MouseState.ScrollWheelValue != _oldWheelValue && _cursor > 0)
+
+            int tempHeightLine = 0;
+            if (_cursor + _maxLines < Lines.Count && GameEngine.MouseState.ScrollWheelValue < _oldWheelValue)
             {
-                int tempHeightLine = _heightLine;
-
-                if (_cursor + _maxLines < Lines.Count && GameEngine.MouseState.ScrollWheelValue < _oldWheelValue)
-                {
-                    _cursor++;
-                    tempHeightLine = -tempHeightLine;
-                }
-                else
-                    _cursor--;
-
-                for (int i = 0; i < Lines.Count; i++)
-                {
-                    Lines[i].IsDrawable = (i >= _cursor && i < _cursor + _maxLines);
-                    Lines[i].PosYInternalRectangle += tempHeightLine;
-                }
+                _cursor++;
+                tempHeightLine = -_heightLine;
             }
+            else if (_cursor > 0 && GameEngine.MouseState.ScrollWheelValue > _oldWheelValue)
+            {
+                _cursor--;
+                tempHeightLine = _heightLine;
+            }
+
+            for (int i = 0; i < Lines.Count && tempHeightLine != 0; i++)
+            {
+                Lines[i].IsDrawable = (i >= _cursor && i < _cursor + _maxLines);
+                Lines[i].PosYInternalRectangle += tempHeightLine;
+            }
+
             _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
         }
     }
