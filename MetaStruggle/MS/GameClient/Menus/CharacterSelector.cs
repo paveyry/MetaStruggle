@@ -23,17 +23,16 @@ namespace GameClient.Menus
 
         public Menu Create()
         {
-            Menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
-
-            Menu.Add("CharacterSelector.Text", new SimpleText(() => GameEngine.LangCenter.GetString("Text.SelectPlayer"), new Point(15, 5),
+            Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
+            Menu.Add("CharacterSelector.Text", new SimpleText(() => GameEngine.LangCenter.GetString("Text.SelectPlayer"), new Point(15, 15),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"],Color.White ));
-            Menu.Add("CharacterSelector.Item", new ListImageButtons(new Rectangle(15, 15, 70, 45), RessourceProvider.CharacterFaces, "UglyTestTheme",
+            Menu.Add("CharacterSelector.Item", new ListImageButtons(new Rectangle(15, 22, 70, 45), RessourceProvider.CharacterFaces, "UglyTestTheme",
                 RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
-            Menu.Add("PlayerName.Text", new SimpleText(() => GameEngine.LangCenter.GetString("Text.TextboxPlayer"), new Point(15, 60),
+            Menu.Add("PlayerName.Text", new SimpleText(() => GameEngine.LangCenter.GetString("Text.TextboxPlayer"), new Point(15, 75),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"], Color.White));
-            Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,70,200,0), "UglyTestTheme",
+            Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,82,200,0), "UglyTestTheme",
                 RessourceProvider.Fonts["Menu"], Color.White));
-            Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 70), RessourceProvider.Fonts["Menu"], Color.White,
+            Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 82), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));
 
             return Menu;

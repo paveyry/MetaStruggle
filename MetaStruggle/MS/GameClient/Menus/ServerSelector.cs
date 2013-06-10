@@ -39,9 +39,9 @@ namespace GameClient.Menus
             Menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
 
 
-            Menu.Add("NextButton.Item", new MenuButton("NextButton", new Vector2(70, 70), RessourceProvider.Fonts["Menu"], Color.White,
+            Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 70), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));
-            Menu.Add("return", new MenuButton("return", new Vector2(15, 70), RessourceProvider.Fonts["Menu"], Color.White, 
+            Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(15, 70), RessourceProvider.Fonts["Menu"], Color.White, 
                 Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
             return Menu;
         }
