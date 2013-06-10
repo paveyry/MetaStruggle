@@ -13,7 +13,6 @@ namespace Master
     {
         static readonly List<MasterServerDatas> Servers = new List<MasterServerDatas>();
         private static Server _s;
-        private static System.Threading.Timer _tmr;
 
         static void Main(string[] args)
         {
@@ -26,7 +25,7 @@ namespace Master
 
             InitServer(em, 5555);
 
-            _tmr = new Timer(Ping, null, 5000, 5000);
+            new Task(Ping).Start();
 
             while (true)
                 switch (Console.ReadLine())
@@ -104,27 +103,23 @@ namespace Master
             new Network.Packet.Packets.MasterServerList().Pack(((Client) data).Writer, Servers);
         }
 
-        static void Ping(object useless)
+        static void Ping()
         {
-            Console.WriteLine("=== ping des serveurs ===");
-
-            foreach (var masterServerDatase in Servers.GetRange(0, Servers.Count))
+            while (true)
             {
-                Client c = null;
+                Console.WriteLine("=== ping des serveurs ===");
 
-                try
+                foreach (var masterServerDatase in Servers.GetRange(0, Servers.Count))
                 {
-                    c = new Client(masterServerDatase.IP, masterServerDatase.Port, new EventManager(), new Parser().Parse);
-                }
-                catch (Exception e)
-                {
-                    RemoveServer(masterServerDatase);
-                }
-                finally
-                {
-                    if(c != null && c.Connected)
+                    var c = new Client(masterServerDatase.IP, masterServerDatase.Port, new EventManager(),
+                                       new Parser().Parse);
+                    if (!c.Connected)
+                        RemoveServer(masterServerDatase);
+                    else
                         c.Disconnect();
                 }
+
+                Thread.Sleep(5000);
             }
         }
     }
