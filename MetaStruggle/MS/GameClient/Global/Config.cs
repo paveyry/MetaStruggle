@@ -41,7 +41,7 @@ namespace GameClient.Global
                     VolumeMusic = 100,
                     VolumeEffect = 100,
                     FullScreen = false,
-                    Keys = new [] { "Keyboard.P,Keyboard.Q,Keyboard.D,Mouse.RightButton,Keyboard.LeftShift" }
+                    Keys = new [] { "Keyboard.Q,Keyboard.D,Keyboard.Z,Keyboard.Space,Keyboard.A" }
                 };
         }
 
