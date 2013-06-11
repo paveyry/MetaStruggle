@@ -153,6 +153,7 @@
     <Compile Include="Renderable\GUI\Items\Item.cs" />
     <Compile Include="Renderable\GUI\Items\ListItems\Lines\Cells\Cell.cs" />
     <Compile Include="Renderable\GUI\Items\ListItems\Lines\ClassicLine.cs" />
+    <Compile Include="Renderable\GUI\Items\ListItems\Lines\ILine.cs" />
     <Compile Include="Renderable\GUI\Items\ListItems\Lines\KeySelectorLine.cs" />
     <Compile Include="Renderable\GUI\Items\ListItems\Lines\Line.cs" />
     <Compile Include="Renderable\GUI\Items\ListItems\ListButtons.cs" />

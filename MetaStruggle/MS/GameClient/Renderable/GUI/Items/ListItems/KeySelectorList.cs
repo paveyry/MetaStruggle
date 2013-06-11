@@ -17,10 +17,10 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         {
         }
 
-        static List<Line> CreateKeySelectorLines(IEnumerable<string[]> elements, int[] fieldsWidth,
+        static List<ILine> CreateKeySelectorLines(IEnumerable<string[]> elements, int[] fieldsWidth,
             int indexKey, SpriteFont font, Color colorNormal, Color colorSelected)
         {
-            return elements.Select(stringse => new KeySelectorLine(stringse.ToList(), indexKey, fieldsWidth, font, colorNormal, colorSelected)).Cast<Line>().ToList();
+            return elements.Select(stringse => new KeySelectorLine(stringse.ToList(), indexKey, fieldsWidth, font, colorNormal, colorSelected)).Cast<ILine>().ToList();
         }
     }
 }

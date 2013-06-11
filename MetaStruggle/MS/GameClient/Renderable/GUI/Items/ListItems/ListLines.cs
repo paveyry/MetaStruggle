@@ -9,7 +9,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
 {
     abstract class ListLines : Item
     {
-        internal List<Line> Lines { get; set; }
+        internal List<ILine> Lines { get; set; }
         Line Field { get; set; }
         public Line LineSelected { get; set; }
         internal Dictionary<string, Texture2D> Theme { get; set; }
@@ -22,7 +22,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         private readonly int _heightField;
         private int _oldWheelValue;
 
-        protected ListLines(Rectangle abstractRectangle, List<Line> lines, Line field, int heightLine, int heightField, string theme, string themeItem, bool isDrawable = true)
+        protected ListLines(Rectangle abstractRectangle, List<ILine> lines, Line field, int heightLine, int heightField, string theme, string themeItem, bool isDrawable = true)
             : base(abstractRectangle, true, isDrawable)
         {
             Lines = lines;
@@ -43,7 +43,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             CreateLines();
         }
 
-        protected ListLines(Rectangle abstractRectangle, List<Line> lines, Line field, int heightLine, string theme, string themeItem, bool isDrawable = true)
+        protected ListLines(Rectangle abstractRectangle, List<ILine> lines, Line field, int heightLine, string theme, string themeItem, bool isDrawable = true)
             : this(abstractRectangle, lines, field, heightLine, heightLine, theme, themeItem, isDrawable)
         {
 

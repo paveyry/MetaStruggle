@@ -18,9 +18,9 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         {
         }
 
-        static List<Line> CreateLines(IEnumerable<string[]> element, int[] fieldsWidth, SpriteFont font, Color colorNormal, Color colorSelected)
+        static List<ILine> CreateLines(IEnumerable<string[]> element, int[] fieldsWidth, SpriteFont font, Color colorNormal, Color colorSelected)
         {
-            return element.Select(stringse => CreateClassicLine(stringse, fieldsWidth, font, colorNormal, colorSelected)).ToList();
+            return element.Select(stringse => CreateClassicLine(stringse, fieldsWidth, font, colorNormal, colorSelected)).Cast<ILine>().ToList();
         }
     }
 }

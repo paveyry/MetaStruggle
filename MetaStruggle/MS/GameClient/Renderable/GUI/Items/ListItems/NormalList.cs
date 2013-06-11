@@ -11,7 +11,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
     class NormalList : ListLines
     {
 
-        public NormalList(Rectangle abstractRectangle, List<Line> lines, Dictionary<string, int> field,
+        public NormalList(Rectangle abstractRectangle, List<ILine> lines, Dictionary<string, int> field,
             SpriteFont font, Color colorNormal, string theme, bool isDrawable = true) 
             : base(abstractRectangle,lines,
             CreateClassicLine(field.Keys.ToArray(), field.Values.ToArray(), font, colorNormal, colorNormal), GetLineHeight(font), theme, "ListLines", isDrawable)
@@ -27,9 +27,9 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         {
             base.DrawItem(gameTime, spriteBatch);
 
-            for (int index = 1; index < Lines.First().Cells.Count; index++)
+            for (int index = 1; index < (Lines.First()as Line).Cells.Count; index++)
                 spriteBatch.Draw(Theme["Separator"],
-                                 new Rectangle(Lines.First().Cells[index].InternalRectangle.X, InternalRectangle.Y,
+                                 new Rectangle((Lines.First() as Line).Cells[index].InternalRectangle.X, InternalRectangle.Y,
                                                Theme["Separator"].Width, InternalRectangle.Height), Color.White);
         }
     }

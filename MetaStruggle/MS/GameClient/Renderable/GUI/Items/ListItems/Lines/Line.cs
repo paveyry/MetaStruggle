@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI.Items.ListItems.Lines
 {
-    internal abstract class Line : Item
+    internal abstract class Line : Item,ILine
     {
         public Rectangle InternalRectangle
         {
