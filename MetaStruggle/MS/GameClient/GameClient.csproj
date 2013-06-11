@@ -135,6 +135,7 @@
     <Compile Include="Menus\TestMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
     <Compile Include="Menus\SettingsMenu1.cs" />
+    <Compile Include="Particules\Particle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
