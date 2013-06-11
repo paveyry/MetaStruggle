@@ -11,13 +11,13 @@ namespace GameClient.Renderable.Layout
             var e = Peek();
             base.Pop();
             if (!(e is Menu) && Peek() is Menu)
-                GameEngine.SoundCenter.Play("music1.old");
+                GameEngine.SoundCenter.Play("Main Title");
         }
 
         new public void Push(T e)
         {
             if (!(e is Menu) && Count > 0 && Peek() is Menu)
-                GameEngine.SoundCenter.Stop("music1.old");
+                GameEngine.SoundCenter.Stop("Main Title");
             base.Push(e);
         }
     }
