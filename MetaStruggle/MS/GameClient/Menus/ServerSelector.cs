@@ -37,7 +37,7 @@ namespace GameClient.Menus
 
         public Menu Create()
         {
-            Menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
 
 
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 70), RessourceProvider.Fonts["Menu"], Color.White,

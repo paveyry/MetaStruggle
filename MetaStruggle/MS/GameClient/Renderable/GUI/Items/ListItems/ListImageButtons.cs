@@ -74,7 +74,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
                 Theme["ListImageButtons.LeftSide"].Width, InternalRectangle.Height), Color.White);
             spriteBatch.Draw(Theme["ListImageButtons.RightSide"], new Rectangle(InternalRectangle.X + InternalRectangle.Width,
                 InternalRectangle.Y, Theme["ListImageButtons.RightSide"].Width, InternalRectangle.Height), Color.White);
-            spriteBatch.Draw(Theme["ListImageButtons.Background"], InternalRectangle, new Color(255,255,255,100));
+            spriteBatch.Draw(Theme["ListImageButtons.Background"], InternalRectangle, new Color(255,255,255,135));
             foreach (var imageButton in ImageButtons)
                 imageButton.DrawItem(gameTime, spriteBatch);
         }

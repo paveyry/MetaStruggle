@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Network;
 using Network.Packet.Packets.DatasTypes;
@@ -12,6 +13,7 @@ namespace Master
     {
         static readonly List<MasterServerDatas> Servers = new List<MasterServerDatas>();
         private static Server _s;
+
         static void Main(string[] args)
         {
             PrintTitle();
@@ -22,6 +24,8 @@ namespace Master
             em.Register("Network.Master.ServerListRequest", SendServerList);
 
             InitServer(em, 5555);
+
+            new Task(Ping).Start();
 
             while (true)
                 switch (Console.ReadLine())
@@ -97,6 +101,26 @@ namespace Master
         static void SendServerList(object data)
         {
             new Network.Packet.Packets.MasterServerList().Pack(((Client) data).Writer, Servers);
+        }
+
+        static void Ping()
+        {
+            while (true)
+            {
+                Console.WriteLine("=== ping des serveurs ===");
+
+                foreach (var masterServerDatase in Servers.GetRange(0, Servers.Count))
+                {
+                    var c = new Client(masterServerDatase.IP, masterServerDatase.Port, new EventManager(),
+                                       new Parser().Parse);
+                    if (!c.Connected)
+                        RemoveServer(masterServerDatase);
+                    else
+                        c.Disconnect();
+                }
+
+                Thread.Sleep(5000);
+            }
         }
     }
 }

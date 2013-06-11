@@ -30,7 +30,7 @@ namespace GameClient.Menus
                 RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
             Menu.Add("PlayerName.Text", new SimpleText(() => GameEngine.LangCenter.GetString("Text.TextboxPlayer"), new Point(15, 75),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"], Color.White));
-            Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,82,200,0), "UglyTestTheme",
+            Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,82,300,0), "UglyTestTheme",
                 RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 82), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));

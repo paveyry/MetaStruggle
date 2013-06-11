@@ -51,7 +51,7 @@ namespace GameClient.Characters
         }
         #endregion
 
-        public Character(string playerName, string nameCharacter,byte playerNb,SceneManager scene, Vector3 position, Vector3 scale
+        public Character(string playerName, string nameCharacter, byte playerNb, SceneManager scene, Vector3 position, Vector3 scale
             ,float speed = 1f, float length = 1.8f, float weidth = 1.2f )
             : base(nameCharacter, scene, position, scale, speed)
         {
@@ -106,38 +106,8 @@ namespace GameClient.Characters
                     MoveLeft(gameTime);
                     pendingAnim.Add(Animation.Run);
                 }
-
                 #endregion
             }
-            
-            #region tests
-
-            //if (Client == null && ModelName == "Alex")
-            //{
-            //    if (ks.IsKeyDown(Keys.NumPad7))
-            //    {
-            //        Attack(gameTime);
-            //        pendingAnim.Add(Animation.Attack);
-            //    }
-            //    if (ks.IsKeyDown(Keys.NumPad0) && !_jumping && CollideWithMap)
-            //    {
-            //        Jump(gameTime);
-            //        pendingAnim.Add(Animation.Jump);
-            //        GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
-            //    }
-            //    if (ks.IsKeyDown(Keys.NumPad6))
-            //    {
-            //        MoveRight(gameTime);
-            //        pendingAnim.Add(Animation.Run);
-            //    }
-            //    if (ks.IsKeyDown(Keys.NumPad4))
-            //    {
-            //        MoveLeft(gameTime);
-            //        pendingAnim.Add(Animation.Run);
-            //    }
-            //}
-
-            #endregion
             
             #region Death
             if (!IsDead && Position.Y < -10)
@@ -145,7 +115,6 @@ namespace GameClient.Characters
                 IsDead = true;
                 DeathDate = DateTime.Now;
                 GameEngine.EventManager.ThrowNewEvent("Character.Die", this);
-                //jumping = true;
             }
 
             if (IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)
@@ -159,9 +128,7 @@ namespace GameClient.Characters
 
             #region Jump
             if (_jumping)
-            {
                 UpdateJump(gameTime, pendingAnim);
-            }
 
             if (!CollideWithMap && !_jumping)
             {
@@ -175,11 +142,6 @@ namespace GameClient.Characters
             if (CollideWithMap && CurrentAnimation != Animation.Default)
                 pendingAnim.Add(Animation.Default);
 
-            if (!CollideWithMap && CurrentAnimation != Animation.Attack)
-            {
-                //CollisionEnabled = false;
-            }
-
             CollisionEnabled = false;
 
             SetPriorityAnimation(pendingAnim);
@@ -191,8 +153,6 @@ namespace GameClient.Characters
 
                 if (c != null && c.Yaw == Yaw)
                     mul = -mul;
-
-                //CollisionEnabled = false;
 
                 Position += new Vector3(mul * (Yaw == _baseYaw ? new Random().Next(0, 1000) / 1000f : -new Random().Next(0, 1000) / 1000f), 0, 0);
             }
@@ -206,33 +166,13 @@ namespace GameClient.Characters
         void SetPriorityAnimation(ICollection<Animation> pendingAnim)
         {
             if (pendingAnim.Contains(Animation.Attack))
-            {
                 SetAnimation(Animation.Attack);
-
-                if (Client != null)
-                    new CharacterAction().Pack(Client.Writer, ID, 3);
-            }
             else if (pendingAnim.Contains(Animation.Jump))
-            {
                 SetAnimation(Animation.Jump);
-
-                if (Client != null)
-                    new CharacterAction().Pack(Client.Writer, ID, 0);
-            }
             else if (pendingAnim.Contains(Animation.Run) && !_jumping)
-            {
                 SetAnimation(Animation.Run);
-
-                if (Client != null)
-                    new CharacterAction().Pack(Client.Writer, ID, Yaw == _baseYaw ? 1 : 2);
-            }
             else if (pendingAnim.Count != 0 && !_jumping)
-            {
                 SetAnimation(Animation.Default);
-
-                if (Client != null)
-                    new CharacterAction().Pack(Client.Writer, ID, 0);
-            }
         }
 
         UniversalKeys GetKey(Movement movement)
@@ -315,7 +255,6 @@ namespace GameClient.Characters
                 var c = GetPlayerColliding();
                 if (c != null)
                 {
-                    //c.CollisionEnabled = false;
                     c.Damages += (1 + c.Damages/50) * 0.5f;
                     c.Position += new Vector3((Yaw == _baseYaw ? 1 : -1) * (c.Damages / 5f) , c.Damages/500f, 0);
                     c.SetAnimation(Animation.Jump);
