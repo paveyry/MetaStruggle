@@ -9,13 +9,14 @@ namespace GameClient.Renderable.GUI.Items.ListItems
 {
     abstract class ListLines : Item
     {
-        List<Line> Lines { get; set; }
+        internal List<Line> Lines { get; set; }
         Line Field { get; set; }
-        Line LineSelected { get; set; }
-        Dictionary<string, Texture2D> Theme { get; set; }
-        Rectangle InternalRectangle { get; set; }
+        public Line LineSelected { get; set; }
+        internal Dictionary<string, Texture2D> Theme { get; set; }
+        internal Rectangle InternalRectangle { get; set; }
         private int HeightInternalRectangle { set { InternalRectangle = new Rectangle(InternalRectangle.X, InternalRectangle.Y, InternalRectangle.Width, value); } }
         private int _cursor;
+        private float _ratio = 1f;
         private int _maxLines;
         private readonly int _heightLine;
         private readonly int _heightField;
@@ -78,7 +79,9 @@ namespace GameClient.Renderable.GUI.Items.ListItems
                 HeightInternalRectangle = posInY - _heightLine - InternalRectangle.Y; //Update InternalRectangle if Lines are out of the limits
                 _maxLines = i;
                 isOutOfLimits = true;
+                _ratio = (Lines.Count*_heightLine)/(float) InternalRectangle.Height;
             }
+
         }
 
         internal override void UpdateResolution()
@@ -92,13 +95,22 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         {
             if (!IsDrawable)
                 return;
-            spriteBatch.Draw(Theme["Down"], RealRectangle, Color.White);
-            spriteBatch.Draw(Theme["Top"], InternalRectangle, Color.White);
+            spriteBatch.Draw(Theme["Background"], InternalRectangle, Color.White);
+            spriteBatch.Draw(Theme["LeftSide"], new Rectangle(RealRectangle.X, InternalRectangle.Y,
+                Theme["LeftSide"].Width, InternalRectangle.Height), Color.White);
+            spriteBatch.Draw(Theme["RightSide"], new Rectangle(InternalRectangle.X + InternalRectangle.Width, InternalRectangle.Y,
+                Theme["RightSide"].Width, InternalRectangle.Height), Color.White);
+            spriteBatch.Draw(Theme["Top"], new Rectangle(RealRectangle.X, RealRectangle.Y, RealRectangle.Width, _heightLine), Color.White);
+            spriteBatch.Draw(Theme["Down"], new Rectangle(RealRectangle.X, InternalRectangle.Y + InternalRectangle.Height,
+                RealRectangle.Width, Theme["Down"].Height), Color.White);
+            spriteBatch.Draw(Theme["Scroll"], new Rectangle(InternalRectangle.X + InternalRectangle.Width,
+                InternalRectangle.Y + (int)(((_cursor) * _heightLine) / (_ratio)),
+                Theme["RightSide"].Width, (int)(InternalRectangle.Height / _ratio)), Color.White);
 
             Field.DrawItem(gameTime, spriteBatch);
             foreach (var line in Lines.Where(line => line.IsDrawable))
                 line.DrawItem(gameTime, spriteBatch);
-        }//
+        }
 
         public override void UpdateItem(GameTime gameTime)
         {
@@ -106,7 +118,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             if (!IsDrawable)
                 return;
 
-            foreach (var line in Lines.Where(line => line.IsDrawable))
+            foreach (Line line in Lines.Where(line => line.IsDrawable))
             {
                 line.UpdateItem(gameTime);
                 if (!line.IsSelect || line.Equals(LineSelected))

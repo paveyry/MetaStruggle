@@ -38,11 +38,13 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines
                     cell.IsSelect = value;
             }
         }
+        int[] Fields { get; set; }
 
-        protected Line(List<Cell> cells, bool isDrawable = true)
+        protected Line(List<Cell> cells,int[] fields, bool isDrawable = true)
             : base(new Rectangle(), isDrawable)
         {
             Cells = cells;
+            Fields = fields;
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
@@ -61,10 +63,19 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines
 
             IsSelect = (InternalRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1))
                 && GameEngine.MouseState.LeftButton == ButtonState.Pressed) || IsSelect;
+
+            foreach (var cell in Cells)
+                cell.UpdateCell(gameTime);
         }
 
         public virtual void UpdateCells()
         {
+            for (int i = 0, posOnX = InternalRectangle.X, sum = Fields.Sum(); i < Cells.Count; i++)
+            {
+                int width = (int)((Fields[i] / (float)sum) * InternalRectangle.Width);
+                Cells[i].UpdateRectangle(new Rectangle(posOnX, InternalRectangle.Y, width, InternalRectangle.Height));
+                posOnX += width;
+            }
         }
     }
 }
