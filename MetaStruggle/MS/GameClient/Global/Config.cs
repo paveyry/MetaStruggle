@@ -17,12 +17,12 @@ namespace GameClient.Global
         public string Language { get; set; }
         public int ResolutionWidth
         {
-            get { return (SettingsMenu.PrimaryWidth >= _tempWidth) ? _tempWidth : SettingsMenu.PrimaryWidth ; }
+            get { return (SettingsMenu1.PrimaryWidth >= _tempWidth) ? _tempWidth : SettingsMenu1.PrimaryWidth ; }
             set { _tempWidth = value; }
         }
         public int ResolutionHeight
         {
-            get { return (SettingsMenu.PrimaryHeight >= _tempHeight) ? _tempHeight : SettingsMenu.PrimaryHeight ; }
+            get { return (SettingsMenu1.PrimaryHeight >= _tempHeight) ? _tempHeight : SettingsMenu1.PrimaryHeight ; }
             set { _tempHeight = value; }
         }
         public int VolumeMusic { get; set; }

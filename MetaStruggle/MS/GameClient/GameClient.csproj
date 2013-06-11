@@ -131,9 +131,10 @@
     <Compile Include="Global\LanguageLoader.cs" />
     <Compile Include="Menus\CharacterSelector.cs" />
     <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Menus\TestMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
-    <Compile Include="Menus\SettingsMenu.cs" />
+    <Compile Include="Menus\SettingsMenu1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Renderable\GUI\MenuButtonDisplayType.cs" />
     <Compile Include="Renderable\GUI\Items\Textbox.cs" />
     <Compile Include="Renderable\Layout\IBasicLayout.cs" />
+    <Compile Include="Renderable\Layout\LayoutStack.cs" />
     <Compile Include="Renderable\Scene\Camera3D.cs" />
     <Compile Include="Renderable\Scene\HUD.cs" />
     <Compile Include="Renderable\Scene\SceneManager.cs" />

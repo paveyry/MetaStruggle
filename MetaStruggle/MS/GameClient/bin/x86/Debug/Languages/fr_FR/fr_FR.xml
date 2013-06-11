@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<Menu.Back>Retour</Menu.Back>
 	<Menu.Next>Suivant</Menu.Next>
@@ -12,8 +12,8 @@
 	<MenuSettings.Controls>Commandes</MenuSettings.Controls>
 	<MenuSettings.Graphics>Graphismes</MenuSettings.Graphics>
 	<MenuSettings.Sounds>Sons</MenuSettings.Sounds>
-	<MenuGraphisms.Fullscreen>Plein Écran : </MenuGraphisms.Fullscreen>
-	<MenuGraphisms.Resolution>Résolution : </MenuGraphisms.Resolution>
+	<MenuGraphics.Fullscreen>Plein Écran : </MenuGraphics.Fullscreen>
+	<MenuGraphics.Resolution>Résolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musiques : </MenuSounds.Musics>
 	<MenuSounds.Effects>Effets : </MenuSounds.Effects>
 	<Text.Off>Non</Text.Off>

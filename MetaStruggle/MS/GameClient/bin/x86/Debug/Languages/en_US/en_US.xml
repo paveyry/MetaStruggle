@@ -12,8 +12,8 @@
 	<MenuSettings.Controls>Controls</MenuSettings.Controls>
 	<MenuSettings.Graphics>Graphics</MenuSettings.Graphics>
 	<MenuSettings.Sounds>Sounds</MenuSettings.Sounds>
-	<MenuGraphisms.Fullscreen>Fullscreen : </MenuGraphisms.Fullscreen>
-	<MenuGraphisms.Resolution>Resolution : </MenuGraphisms.Resolution>
+	<MenuGraphics.Fullscreen>Fullscreen : </MenuGraphics.Fullscreen>
+	<MenuGraphics.Resolution>Resolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musics : </MenuSounds.Musics>
 	<MenuSounds.Effects>Effects : </MenuSounds.Effects>
 	<Text.Off>Off</Text.Off>

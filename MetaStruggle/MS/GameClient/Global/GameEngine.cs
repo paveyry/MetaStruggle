@@ -16,7 +16,7 @@ namespace GameClient.Global
     public static class GameEngine
     {
         public static Config Config { get; set; }
-        public static Stack<IBasicLayout> DisplayStack { get; set; }
+        public static LayoutStack<IBasicLayout> DisplayStack { get; set; }
         public static SceneManager SceneManager { get; set; }
         public static SoundCenter SoundCenter { get; set; }
         public static LanguageLoader LangCenter { get; set; }
@@ -34,7 +34,7 @@ namespace GameClient.Global
             LangCenter = new LanguageLoader(graphics.GraphicsDevice);
             RessourceProvider.Fill(content);
             SoundCenter = SoundCenter.Instance;
-            DisplayStack = new Stack<IBasicLayout>();
+            DisplayStack = new LayoutStack<IBasicLayout>();
             InputDevice = new InputDevice();
         }
 
