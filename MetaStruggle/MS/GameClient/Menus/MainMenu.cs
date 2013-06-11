@@ -30,7 +30,7 @@ namespace GameClient.Menus
                 {
                     new PartialButton("MainMenu.SoloPlay", Play),
                     new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
-                    new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu1(_spriteBatch,_graphics).MenuSettings())),
+                    new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
                     new PartialButton("MainMenu.Quit", () => Environment.Exit(0)),
                     new PartialButton("Test", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
                 };
