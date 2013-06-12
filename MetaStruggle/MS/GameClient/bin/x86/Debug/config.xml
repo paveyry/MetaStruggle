@@ -4,7 +4,11 @@
   <Language>fr_FR</Language>
   <ResolutionWidth>800</ResolutionWidth>
   <ResolutionHeight>600</ResolutionHeight>
+<<<<<<< HEAD
   <VolumeMusic>100</VolumeMusic>
+=======
+  <VolumeMusic>0</VolumeMusic>
+>>>>>>> 4e1b01f4f81c2b1daa2495611cb573de46bfe61e
   <VolumeEffect>100</VolumeEffect>
   <FullScreen>false</FullScreen>
   <Keys>

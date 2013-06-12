@@ -10,6 +10,7 @@ namespace GameClient.Renderable.Layout
         {
             var e = Peek();
             base.Pop();
+
             if (!(e is Menu) && Peek() is Menu)
                 GameEngine.SoundCenter.Play("Main Title");
         }

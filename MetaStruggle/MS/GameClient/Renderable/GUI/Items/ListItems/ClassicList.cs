@@ -10,7 +10,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
 {
     class ClassicList : NormalList
     {
-        public string[] Selected { get { return (LineSelected as ClassicLine).Elements; } }
+        public string[] Selected { get { return (LineSelected.Equals(Field))? null: (LineSelected as ClassicLine).Elements; } }
         public ClassicList(Rectangle abstractRectangle, IEnumerable<string[]> element,Dictionary<string,int> field,
             SpriteFont font, Color colorNormal, Color colorSelected, string theme, bool isDrawable = true)
             : base(abstractRectangle, CreateLines(element, field.Values.ToArray(),font,colorNormal,colorSelected),

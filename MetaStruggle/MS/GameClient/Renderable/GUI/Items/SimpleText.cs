@@ -13,7 +13,7 @@ namespace GameClient.Renderable.GUI.Items
     {
         #region Fields
         public bool IsSelect { get; set; }
-        public string Text { get { return (_nameFunc != null) ? _nameFunc.Invoke() : _text; } set { _text = value; } }
+        public string Text { get { return _nameFunc.Invoke(); } }
 
         private string _text;
         private readonly NameFunc _nameFunc;
@@ -24,19 +24,18 @@ namespace GameClient.Renderable.GUI.Items
         #endregion
 
         #region Constructors
-        internal SimpleText(string text, NameFunc nameFunc,Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected, bool isDrawable = true)
-            : base(CreateRectangle(position, font, text), pos, isDrawable)
+        internal SimpleText(NameFunc nameFunc,Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected, bool isDrawable = true)
+            : base(CreateRectangle(position, font, nameFunc.Invoke()), pos, isDrawable)
         {
-            Text = text;
             Font = font;
             _nameFunc = nameFunc; 
             ColorNormal = colorNormal;
             ColorSelected = colorSelected;
         }
         public SimpleText(string text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal)
-            : this(text, null,position, pos, font, colorNormal, colorNormal) { }
+            : this(() => GameEngine.LangCenter.GetString(text), position, pos, font, colorNormal, colorNormal) { }
         public SimpleText(NameFunc text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal) 
-            : this("", text,position, pos, font, colorNormal, colorNormal) { }
+            : this(text,position, pos, font, colorNormal, colorNormal) { }
         #endregion
 
         private static Rectangle CreateRectangle(Point position, SpriteFont font, string text)

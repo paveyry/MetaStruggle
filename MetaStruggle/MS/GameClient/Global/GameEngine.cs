@@ -26,6 +26,8 @@ namespace GameClient.Global
         public static GamePadState[] GamePadState { get; set; }
         public static InputDevice InputDevice { get; set; }
 
+        public static int PrimaryHeightOfWindows { get; set; }
+        public static int PrimaryWidthOfWindows { get; set; }
 
         public static void InitializeEngine(ContentManager content, GraphicsDeviceManager graphics)
         {
@@ -36,6 +38,9 @@ namespace GameClient.Global
             SoundCenter = SoundCenter.Instance;
             DisplayStack = new LayoutStack<IBasicLayout>();
             InputDevice = new InputDevice();
+
+            PrimaryHeightOfWindows = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+            PrimaryWidthOfWindows = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
         }
 
         public static void UpdateEngine()
