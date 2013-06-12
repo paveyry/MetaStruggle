@@ -46,7 +46,7 @@ namespace GameServer
 
         static string GetMap()
         {
-            string[] availableMaps = new [] {"MapDesert", "tardis map", "tree map"};
+            string[] availableMaps = new [] {"MapDesert", "MapTardis", "MapMinecraft"};
             string schoice;
             int choice;
 

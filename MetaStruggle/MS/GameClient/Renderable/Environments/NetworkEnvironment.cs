@@ -37,11 +37,12 @@ namespace GameClient.Renderable.Environments
 
         void CreateItems(GameStartDatas gs)
         {
-            foreach (var p in gs.Players)
+            foreach (var c in gs.Players.Select(p => new Character(p.Name, p.ModelType, 0,sm, new Vector3(0,0,-17), Vector3.One)
+                {
+                    ID = p.ID,
+                    Client = p.Client
+                }))
             {
-                Character c = new Character(p.Name, p.ModelType, 0,sm, Vector3.Zero, Vector3.One);
-                c.ID = p.ID;
-                c.Client = p.Client;
                 sm.AddElement(c);
             }
 

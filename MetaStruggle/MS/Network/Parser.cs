@@ -28,7 +28,7 @@ namespace Network
             _packets.Add(8, new GameStart());
             _packets.Add(9, new RemovePlayer());
             _packets.Add(12, new SetCharacterPosition());
-        }
+        }   
 
         public void Parse(Client client, Packet.Packet packet, IEventDispatcher eventDispatcher)
         {
