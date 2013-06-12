@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameClient.Renderable.GUI.Items.ListItems.Lines
 {
-    internal abstract class Line : Item,ILine
+    internal abstract class Line : Item, ILine
     {
         public Rectangle InternalRectangle
         {
@@ -40,7 +40,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines
         }
         int[] Fields { get; set; }
 
-        protected Line(List<Cell> cells,int[] fields, bool isDrawable = true)
+        protected Line(List<Cell> cells, int[] fields, bool isDrawable = true)
             : base(new Rectangle(), isDrawable)
         {
             Cells = cells;
@@ -65,7 +65,11 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines
                 && GameEngine.MouseState.LeftButton == ButtonState.Pressed) || IsSelect;
 
             foreach (var cell in Cells)
+            {
                 cell.UpdateCell(gameTime);
+                if (!cell.IsSelect)
+                    IsSelect = false;
+            }
         }
 
         public virtual void UpdateCells()

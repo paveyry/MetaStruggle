@@ -6,9 +6,9 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines.Cells
     class Cell
     {
         public delegate string NameFunc();
-        public delegate void Event(Rectangle internalRectangle, GameTime gameTime, double _oldTime);
+        public delegate bool EventSelect(Rectangle internalRectangle, GameTime gameTime, double _oldTime);
 
-        private Event OnClick { get; set; }
+        private EventSelect OnClick { get; set; }
         private NameFunc Text { get; set; }
         public bool IsSelect { get; set; }
         public Rectangle InternalRectangle { get; private set; }
@@ -18,9 +18,9 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines.Cells
         Color ColorSelected { get; set; }
         private double _oldMilliSeconds;
 
-        public Cell(NameFunc text, Event onClick, SpriteFont font, Color colorNormal, Color colorSelected)
+        public Cell(NameFunc text, EventSelect onClick, SpriteFont font, Color colorNormal, Color colorSelected)
         {
-            OnClick = onClick ?? (( a, b,c) => { });
+            OnClick = onClick ?? (( a, b,c) => true);
             Text = text;
             Font = font;
             ColorNormal = colorNormal;
@@ -36,7 +36,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems.Lines.Cells
         public void UpdateCell(GameTime gameTime)
         {
             if (IsSelect)
-                OnClick.Invoke(InternalRectangle, gameTime, _oldMilliSeconds);
+                IsSelect = OnClick.Invoke(InternalRectangle, gameTime, _oldMilliSeconds);
             else
                 _oldMilliSeconds = gameTime.TotalGameTime.TotalMilliseconds;        
         }

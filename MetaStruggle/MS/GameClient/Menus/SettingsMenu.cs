@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameClient.Global;
+using GameClient.Global.InputManager;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items;
 using GameClient.Renderable.GUI.Items.ListItems;
@@ -16,6 +17,7 @@ namespace GameClient.Menus
         Menu Menu { get; set; }
         private SpriteBatch _spriteBatch;
         private GraphicsDeviceManager _graphics;
+        private Dictionary<string, UniversalKeys> _keys;
 
         public SettingsMenu(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
@@ -30,6 +32,7 @@ namespace GameClient.Menus
             var buttons = new List<PartialButton>
                               {
                                   new PartialButton("MenuSettings.Language", ChangeLanguage),
+                                  new PartialButton("MenuSettings.Controls", () => GameEngine.DisplayStack.Push(MenuControls())),
                                   new PartialButton("MenuSettings.Graphics", () => GameEngine.DisplayStack.Push(MenuGraphics())),
                                   new PartialButton("MenuSettings.Sounds", () => GameEngine.DisplayStack.Push(MenuSounds())),
                                   new PartialButton("Menu.Back", () => GameEngine.DisplayStack.Pop())
@@ -66,7 +69,7 @@ namespace GameClient.Menus
         {
             System.Threading.Thread.Sleep(200);
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
-            Menu.Add("Graphics.Text.Fullscreen", new SimpleText("MenuGraphics.Fullscreen", new Point(20, 20), Item.PosOnScreen.TopLeft,
+            Menu.Add("Graphics.Text.Fullscreen", new SimpleText("MenuGraphics.Fullscreen", new Vector2(20, 20), Item.PosOnScreen.TopLeft,
                 RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("Graphics.Checkbox.Fullscreen", new CheckBox(new Vector2(72, 20), "UglyTestTheme", GameEngine.Config.FullScreen));
             Menu.Add("Graphics.ClassicList.Resolution", new ClassicList(new Rectangle(20, 40, 60, 30), CreateResolutions(),
@@ -132,11 +135,11 @@ namespace GameClient.Menus
             System.Threading.Thread.Sleep(200);
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
 
-            Menu.Add("Sounds.Text.Musics", new SimpleText("MenuSounds.Musics", new Point(10, 20), Item.PosOnScreen.TopLeft,
+            Menu.Add("Sounds.Text.Musics", new SimpleText("MenuSounds.Musics", new Vector2(10, 20), Item.PosOnScreen.TopLeft,
                 RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("Sounds.Item.Musics", new Slider(new Rectangle(60, 21, 280, 20),
                 GameEngine.Config.VolumeMusic, "UglyTestTheme", RessourceProvider.Fonts["HUDlittle"]));
-            Menu.Add("Sounds.Text.Effects", new SimpleText("MenuSounds.Effects", new Point(10, 40), Item.PosOnScreen.TopLeft,
+            Menu.Add("Sounds.Text.Effects", new SimpleText("MenuSounds.Effects", new Vector2(10, 40), Item.PosOnScreen.TopLeft,
                 RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("Sounds.Item.Effects", new Slider(new Rectangle(60, 41, 280, 20),
                 GameEngine.Config.VolumeEffect, "UglyTestTheme", RessourceProvider.Fonts["HUDlittle"]));
@@ -152,6 +155,57 @@ namespace GameClient.Menus
             GameEngine.Config.VolumeMusic = (Menu.Items["Sounds.Item.Musics"] as Slider).Value;
             GameEngine.Config.VolumeEffect = (Menu.Items["Sounds.Item.Effects"] as Slider).Value;
             GameEngine.Config.ApplySound();
+        }
+        #endregion
+
+        #region Controls
+        public Menu MenuControls()
+        {
+            System.Threading.Thread.Sleep(200);
+            Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
+
+            var keys = RessourceProvider.InputKeys.ToDictionary(e => e.Key, e => e.Value);
+
+            Menu.Add("Controls.ButtonsPlayer.Item", new ListButtons(new Vector2(10, 10), 0, new List<PartialButton>
+                {
+                    new PartialButton("Controls.Pl1",() => HideKeySelectorsPlayers(0)),
+                    new PartialButton("Controls.Pl2",() => HideKeySelectorsPlayers(1)),
+                    new PartialButton("Controls.Pl3",() => HideKeySelectorsPlayers(2)),
+                    new PartialButton("Controls.Pl4",() => HideKeySelectorsPlayers(3)),
+                }, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Horizontal));
+
+            for (int i = 0; i < 4; i++)
+                CreateKeySelectorList(i,keys);
+
+            Menu.Add("OkButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(80, 80), RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange,() => ApplyButtonControls(keys)));
+            Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+
+            return Menu;
+        }
+
+        void CreateKeySelectorList(int player,Dictionary<string,UniversalKeys> keys)
+        {
+            Menu.Add("Controls.KeySelector.Pl" + player,
+                new KeySelectorList(new Rectangle(20, 40, 60, 30),
+                    (from object movement in Enum.GetValues(typeof(Characters.Movement))
+                     select movement.ToString() into movementStr
+                     select new[] { "Controls." + movementStr, movementStr + "." + player }),keys, player,
+                    new Dictionary<string, int> { { "Text.Controls.Movement", 50 }, { "Text.Controls.Keys", 50 } },
+                    RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange, "UglyTestTheme", player == 0));
+        }
+
+        void HideKeySelectorsPlayers(int playerSelected)
+        {
+            foreach (var kvp in Menu.Items.Where(kvp => kvp.Key.StartsWith("Controls.KeySelector.Pl")))
+                kvp.Value.IsDrawable = kvp.Key.EndsWith(playerSelected.ToString());
+        }
+
+        void ApplyButtonControls(Dictionary<string,UniversalKeys> keys)
+        {
+            RessourceProvider.InputKeys = keys;
+            GameEngine.Config.ApplyInput();
         }
         #endregion
 

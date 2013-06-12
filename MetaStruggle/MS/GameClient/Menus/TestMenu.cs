@@ -87,10 +87,10 @@ namespace GameClient.Menus
                 new[] {"test4", "Attack.0"}, new[] {"test5", "SpecialAttack.0"}};
 
             //characterSelector.Add("lol", new ClassicList(new Rectangle(20, 20, 50, 50), t, new[] { "1", "2", "3" }, new[] { 5, 10, 5 }, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, "UglyTestTheme"));
-            characterSelector.Add("fuckit", new KeySelectorList(new Rectangle(20, 20, 70, 70), t, 1, new Dictionary<string, int>( ) { {"1",5}, {"2",5} },
-                RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, "UglyTestTheme"));
-            characterSelector.Add("e", new MenuButton("e", new Vector2(0, 0), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => GameEngine.DisplayStack.Push(new SettingsMenu1(_spriteBatch, _graphics).MenuSettings())));
-            //characterSelector.Add("checkbox", new CheckBox(new Vector2(70,70), "UglyTestTheme",true));
+            //characterSelector.Add("fuckit", new KeySelectorList(new Rectangle(20, 20, 70, 70), t, 2, new Dictionary<string, int>( ) { {"1",5}, {"2",5} },
+            //    RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, "UglyTestTheme"));
+            //characterSelector.Add("e", new MenuButton("e", new Vector2(0, 0), RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, () => GameEngine.DisplayStack.Push(new SettingsMenu1(_spriteBatch, _graphics).MenuSettings())));
+            ////characterSelector.Add("checkbox", new CheckBox(new Vector2(70,70), "UglyTestTheme",true));
             //characterSelector.Add("Slider", new Slider(new Rectangle(50, 50, 400, 10), 50, 0, 100, "UglyTestTheme"));
             Menu = characterSelector;
             return characterSelector;

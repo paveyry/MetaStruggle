@@ -24,7 +24,7 @@ namespace GameClient.Renderable.GUI.Items
         #endregion
 
         #region Constructors
-        internal SimpleText(NameFunc nameFunc,Point position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected, bool isDrawable = true)
+        internal SimpleText(NameFunc nameFunc,Vector2 position, PosOnScreen pos, SpriteFont font, Color colorNormal, Color colorSelected, bool isDrawable = true)
             : base(CreateRectangle(position, font, nameFunc.Invoke()), pos, isDrawable)
         {
             Font = font;
@@ -32,16 +32,16 @@ namespace GameClient.Renderable.GUI.Items
             ColorNormal = colorNormal;
             ColorSelected = colorSelected;
         }
-        public SimpleText(string text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal)
+        public SimpleText(string text, Vector2 position, PosOnScreen pos, SpriteFont font, Color colorNormal)
             : this(() => GameEngine.LangCenter.GetString(text), position, pos, font, colorNormal, colorNormal) { }
-        public SimpleText(NameFunc text, Point position, PosOnScreen pos, SpriteFont font, Color colorNormal) 
+        public SimpleText(NameFunc text, Vector2 position, PosOnScreen pos, SpriteFont font, Color colorNormal) 
             : this(text,position, pos, font, colorNormal, colorNormal) { }
         #endregion
 
-        private static Rectangle CreateRectangle(Point position, SpriteFont font, string text)
+        private static Rectangle CreateRectangle(Vector2 position, SpriteFont font, string text)
         {
             var value = font.MeasureString(text);
-            return new Rectangle(position.X, position.Y, (int)value.X + 1, (int)value.Y + 1);
+            return new Rectangle((int)position.X, (int)position.Y, (int)value.X + 1, (int)value.Y + 1);
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
