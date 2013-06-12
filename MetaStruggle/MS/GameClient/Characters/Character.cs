@@ -86,6 +86,11 @@ namespace GameClient.Characters
                 if (CurrentAnimation != Animation.Jump)
                     pendingAnim.Add(Animation.Default);
 
+                if (GetKey(Movement.SpecialAttack).IsPressed())
+                {
+                    Attack(gameTime);
+                    pendingAnim.Add(Animation.SpecialAttack);
+                }
                 if (GetKey(Movement.Attack).IsPressed())
                 {
                     Attack(gameTime);
@@ -174,7 +179,9 @@ namespace GameClient.Characters
 
         void SetPriorityAnimation(ICollection<Animation> pendingAnim)
         {
-            if (pendingAnim.Contains(Animation.Attack))
+            if (pendingAnim.Contains(Animation.SpecialAttack))
+                SetAnimation(Animation.SpecialAttack);
+            else if (pendingAnim.Contains(Animation.Attack))
                 SetAnimation(Animation.Attack);
             else if (pendingAnim.Contains(Animation.Jump))
                 SetAnimation(Animation.Jump);

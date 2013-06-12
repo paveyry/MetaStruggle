@@ -150,13 +150,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimatedModels\Spiderman\Spiderman.fbx">
-      <Name>Spiderman</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="CharacterFaces\Spiderman.png">
       <Name>Spiderman</Name>
       <Importer>TextureImporter</Importer>
@@ -186,13 +179,6 @@
       <Name>nis_alex_body_dm</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AnimatedModels\Alex\AlexMercer.fbx">
-      <Name>AlexMercer</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -455,6 +441,20 @@
       <Name>RightSide</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimatedModels\Alex\AlexMercer.fbx">
+      <Name>AlexMercer</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimatedModels\Spiderman\Spiderman.fbx">
+      <Name>Spiderman</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

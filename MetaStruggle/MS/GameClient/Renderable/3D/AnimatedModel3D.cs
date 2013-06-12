@@ -154,6 +154,7 @@ namespace GameClient.Renderable._3D
         Default = 1,
         Run,
         Jump,
-        Attack
+        Attack,
+        SpecialAttack
     }
 }
