@@ -13,6 +13,8 @@
 .*
 # DIR
 XNAnim*.dll
+Network.dll
+MetaStruggle/MS/GameClient/bin/x86/Debug/config.xml
 */_ReSharper.*/
 MetaStruggle/MS/GameClient/bin/x86/Debug/Content
 MetaStruggle/MS/GameClientContent/bin/
