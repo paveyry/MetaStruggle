@@ -22,5 +22,16 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         {
             return element.Select(stringse => CreateClassicLine(stringse, fieldsWidth, font, colorNormal, colorSelected)).Cast<ILine>().ToList();
         }
+
+        public void SetSelectedLine(string[] elements)
+        {
+            foreach (var line in Lines.OfType<ClassicLine>().Where(line => elements.SequenceEqual(line.Elements)))
+            {
+                LineSelected.IsSelect = false;
+                LineSelected = line;
+                LineSelected.IsSelect = true;
+                break;
+            }
+        }
     }
 }

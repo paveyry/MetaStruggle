@@ -38,14 +38,17 @@ namespace GameClient.Renderable.GUI.Items
 
         private Dictionary<string, Texture2D> Theme { get; set; }
         private Rectangle InternalRectangle { get; set; }
+        private SpriteFont Font { get; set; }
         #endregion
 
-        public Slider(Rectangle rectangle, int value, int min, int max, string theme, bool isDrawable = true)
+        public Slider(Rectangle rectangle, int value, int min, int max, string theme,SpriteFont font, bool isDrawable = true)
             : base(rectangle, isDrawable)
         {
             Min = Math.Min(min,max);
             Max = Math.Max(min,max);
             Theme = RessourceProvider.Themes[theme];
+            Font = font;
+
             InternalRectangle = new Rectangle(RealRectangle.X + Theme["Slider.LeftSide"].Width, RealRectangle.Y
                 + Theme["Slider.Top"].Height, RealRectangle.Width - (Theme["Slider.LeftSide"].Width + Theme["Slider.RightSide"].Width),
                 RealRectangle.Height - (Theme["Slider.Top"].Height + Theme["Slider.Down"].Height));
@@ -53,8 +56,8 @@ namespace GameClient.Renderable.GUI.Items
 
             _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
         }
-        public Slider(Rectangle rectangle, int value, string theme, bool isDrawable = true)
-            : this(rectangle, value, 0, 100, theme, isDrawable)
+        public Slider(Rectangle rectangle, int value, string theme,SpriteFont font, bool isDrawable = true)
+            : this(rectangle, value, 0, 100, theme, font,isDrawable)
         {
         }
 
@@ -62,9 +65,10 @@ namespace GameClient.Renderable.GUI.Items
         {
             if (!IsDrawable)
                 return;
-            spriteBatch.DrawString(RessourceProvider.Fonts["Menu"], Value.ToString(), new Vector2(0, 0), Color.White);
+            spriteBatch.DrawString(Font, Value.ToString(), new Vector2(RealRectangle.X+RealRectangle.Width, RealRectangle.Y), Color.White);
 
-            spriteBatch.Draw(Theme["Slider.Top"], new Rectangle(RealRectangle.X, RealRectangle.Y, RealRectangle.Width, Theme["Slider.Top"].Height), Color.White);
+            spriteBatch.Draw(Theme["Slider.Top"], new Rectangle(RealRectangle.X, RealRectangle.Y, RealRectangle.Width,
+                Theme["Slider.Top"].Height), Color.White);
             spriteBatch.Draw(Theme["Slider.Down"], new Rectangle(RealRectangle.X, InternalRectangle.Y
                 + InternalRectangle.Height, RealRectangle.Width, Theme["Slider.Down"].Height), Color.White);
             spriteBatch.Draw(Theme["Slider.LeftSide"], new Rectangle(RealRectangle.X, InternalRectangle.Y,
@@ -89,16 +93,11 @@ namespace GameClient.Renderable.GUI.Items
             {
                 if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
                     ValuePos = GameEngine.MouseState.X - InternalRectangle.X;
+                int abstractValue = Value - Min, tenOfTotal = (Max - Min) / 10;
                 if (GameEngine.MouseState.ScrollWheelValue > _oldWheelValue && Value < Max)
-                {
-                    int abstractValue = Value - Min, tenOfTotal = (Max - Min) / 10;
-                    Value = (abstractValue - abstractValue % tenOfTotal) + tenOfTotal + Min;
-                }
-                if (GameEngine.MouseState.ScrollWheelValue < _oldWheelValue && Value > Min)
-                {
-                    int abstractValue = Value - Min, tenOfTotal = (Max - Min) / 10;
-                    Value = (abstractValue + ((tenOfTotal - abstractValue % tenOfTotal) % tenOfTotal)) - tenOfTotal + Min;
-                }
+                    Value = (abstractValue - abstractValue%tenOfTotal) + tenOfTotal + Min;
+                else if (GameEngine.MouseState.ScrollWheelValue < _oldWheelValue && Value > Min)
+                    Value = (abstractValue + ((tenOfTotal - abstractValue%tenOfTotal)%tenOfTotal)) - tenOfTotal + Min;
             }
             _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
         }

@@ -31,12 +31,12 @@ namespace GameClient.Menus
                               {
                                   new PartialButton("MenuSettings.Language", ChangeLanguage),
                                   new PartialButton("MenuSettings.Graphics", () => GameEngine.DisplayStack.Push(MenuGraphics())),
-                                  //new PartialButton("MenuSettings.Sounds", () => GameEngine.DisplayStack.Push(MenuSounds())),
-                                  //new PartialButton("Menu.Back", Return)
+                                  new PartialButton("MenuSettings.Sounds", () => GameEngine.DisplayStack.Push(MenuSounds())),
+                                  new PartialButton("Menu.Back", () => GameEngine.DisplayStack.Pop())
                               };
 
-            Menu.Add("Buttons.Item",new ListButtons(new Vector2(50,44),20,buttons,RessourceProvider.Fonts["Menu"],
-                Color.White,Color.DarkOrange,ListButtons.StatusListButtons.Vertical ));
+            Menu.Add("Buttons.Item", new ListButtons(new Vector2(50, 44), 20, buttons, RessourceProvider.Fonts["Menu"],
+                Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Vertical));
             return Menu;
         }
 
@@ -61,20 +61,31 @@ namespace GameClient.Menus
             }
         }
 
+        #region Graphics
         public Menu MenuGraphics()
         {
             System.Threading.Thread.Sleep(200);
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
-            Menu.Add("Graphics.Text.Fullscreen", new SimpleText("MenuGraphics.Fullscreen", new Point(10, 10), Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"],Color.White));
-            Menu.Add("Graphics.Checkbox.Fullscreen", new CheckBox(new Vector2(20,10),"UglyTestTheme",GameEngine.Config.FullScreen));
-
-            Menu.Add("Graphics.ClassicList.Resolution", new ClassicList(new Rectangle(40, 30, 40, 40), CreateElementsForPlayer(),
-                new Dictionary<string, int>(){ {"MenuGraphics.Resolution", 100} }, RessourceProvider.Fonts["Menu"], Color.White,
+            Menu.Add("Graphics.Text.Fullscreen", new SimpleText("MenuGraphics.Fullscreen", new Point(20, 20), Item.PosOnScreen.TopLeft,
+                RessourceProvider.Fonts["Menu"], Color.White));
+            Menu.Add("Graphics.Checkbox.Fullscreen", new CheckBox(new Vector2(72, 20), "UglyTestTheme", GameEngine.Config.FullScreen));
+            Menu.Add("Graphics.ClassicList.Resolution", new ClassicList(new Rectangle(20, 40, 60, 30), CreateResolutions(),
+                new Dictionary<string, int> { { "MenuGraphics.Resolution", 100 } }, RessourceProvider.Fonts["HUDlittle"], Color.White,
                 Color.DarkOrange, "UglyTestTheme"));
+            Menu.Add("OkButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(80, 80), RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange, ApplyButtonGraphics));
+            Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+
+            (Menu.Items["Graphics.ClassicList.Resolution"] as ClassicList).SetSelectedLine(new[]
+                {
+                    GameEngine.Config.ResolutionWidth + "x" + GameEngine.Config.ResolutionHeight
+                });
+
             return Menu;
         }
 
-        private List<string[]> CreateElementsForPlayer()
+        private List<string[]> CreateResolutions()
         {
             var value = new List<string[]>();
             var resolution = new List<string>()
@@ -90,13 +101,59 @@ namespace GameClient.Menus
             foreach (var str in resolution)
             {
                 var resStr = str.Split('x');
-                var res = new[] {int.Parse(resStr[0]), int.Parse(resStr[1])};
+                var res = new[] { int.Parse(resStr[0]), int.Parse(resStr[1]) };
                 if (GameEngine.PrimaryWidthOfWindows > res[0] && GameEngine.PrimaryHeightOfWindows > res[1])
-                    value.Add(new[] {str});
+                    value.Add(new[] { str });
             }
             if (!resolution.Contains(GameEngine.PrimaryWidthOfWindows + "x" + GameEngine.PrimaryHeightOfWindows))
-                value.Add(new [] {GameEngine.PrimaryWidthOfWindows + "x" + GameEngine.PrimaryHeightOfWindows});
+                value.Add(new[] { GameEngine.PrimaryWidthOfWindows + "x" + GameEngine.PrimaryHeightOfWindows });
             return value;
-        } 
+        }
+
+        void ApplyButtonGraphics()
+        {
+            var resSelected = (Menu.Items["Graphics.ClassicList.Resolution"] as ClassicList).Selected;
+            if (resSelected != null)
+            {
+                var res = resSelected[0].Split('x');
+                GameEngine.Config.ResolutionWidth = int.Parse(res[0]);
+                GameEngine.Config.ResolutionHeight = int.Parse(res[1]);
+            }
+            GameEngine.Config.FullScreen = (Menu.Items["Graphics.Checkbox.Fullscreen"] as CheckBox).IsSelect;
+            GameEngine.Config.ApplyGraphics(_graphics);
+            foreach (Menu menu in GameEngine.DisplayStack.OfType<Menu>())
+                menu.UpdateResolution();
+        }
+        #endregion
+
+        #region Sounds
+        public Menu MenuSounds()
+        {
+            System.Threading.Thread.Sleep(200);
+            Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
+
+            Menu.Add("Sounds.Text.Musics", new SimpleText("MenuSounds.Musics", new Point(10, 20), Item.PosOnScreen.TopLeft,
+                RessourceProvider.Fonts["Menu"], Color.White));
+            Menu.Add("Sounds.Item.Musics", new Slider(new Rectangle(60, 21, 280, 20),
+                GameEngine.Config.VolumeMusic, "UglyTestTheme", RessourceProvider.Fonts["HUDlittle"]));
+            Menu.Add("Sounds.Text.Effects", new SimpleText("MenuSounds.Effects", new Point(10, 40), Item.PosOnScreen.TopLeft,
+                RessourceProvider.Fonts["Menu"], Color.White));
+            Menu.Add("Sounds.Item.Effects", new Slider(new Rectangle(60, 41, 280, 20),
+                GameEngine.Config.VolumeEffect, "UglyTestTheme", RessourceProvider.Fonts["HUDlittle"]));
+            Menu.Add("OkButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(80, 80), RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange, ApplyButtonSounds));
+            Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+            return Menu;
+        }
+
+        void ApplyButtonSounds()
+        {
+            GameEngine.Config.VolumeMusic = (Menu.Items["Sounds.Item.Musics"] as Slider).Value;
+            GameEngine.Config.VolumeEffect = (Menu.Items["Sounds.Item.Effects"] as Slider).Value;
+            GameEngine.Config.ApplySound();
+        }
+        #endregion
+
     }
 }

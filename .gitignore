@@ -8,11 +8,11 @@
 *.cachefile
 *.*.suo
 *.suo
-
 *.vsp
 *.psess
 .*
 # DIR
+XNAnim*.dll
 */_ReSharper.*/
 MetaStruggle/MS/GameClient/bin/x86/Debug/Content
 MetaStruggle/MS/GameClientContent/bin/

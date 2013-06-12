@@ -41,6 +41,7 @@ namespace GameClient.Renderable.GUI.Items
         private Rectangle SelectedRectangle { get; set; }
         private Rectangle NormalRectangle { get; set; }
         private StatusMenuButton Status { get; set; }
+        private bool AbstractPos { get; set; }
 
         public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, NameFunc text, TextureFunc image,
             RatioFunc ratioFunc,SpriteFont font, Color normal, Color selected, Event onClick, bool isDrawable = true)
@@ -49,6 +50,7 @@ namespace GameClient.Renderable.GUI.Items
             Id = id;
             MiddlePos = (abstractPos) ? Position : pos;
             Status = status;
+            AbstractPos = abstractPos;
             Text = text;
             Image = image;
             Ratio = ratioFunc;
@@ -90,6 +92,8 @@ namespace GameClient.Renderable.GUI.Items
 
         internal void UpdateRectangles()
         {
+            if (AbstractPos)
+                MiddlePos = Position;
             NormalRectangle = GetRectangle(false);
             SelectedRectangle = GetRectangle(true);
         }
@@ -116,6 +120,12 @@ namespace GameClient.Renderable.GUI.Items
                 OnClick.Invoke();
                 IsSelect = false;
             }
+        }
+
+        internal override void UpdateResolution()
+        {
+            base.UpdateResolution();
+            UpdateRectangles();
         }
     }
 }

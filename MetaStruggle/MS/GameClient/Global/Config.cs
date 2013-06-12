@@ -10,21 +10,10 @@ namespace GameClient.Global
 {
     public class Config
     {
-        private int _tempWidth;
-        private int _tempHeight;
-
         public string GameName { get; set; }
         public string Language { get; set; }
-        public int ResolutionWidth
-        {
-            get { return (SettingsMenu1.PrimaryWidth >= _tempWidth) ? _tempWidth : SettingsMenu1.PrimaryWidth ; }
-            set { _tempWidth = value; }
-        }
-        public int ResolutionHeight
-        {
-            get { return (SettingsMenu1.PrimaryHeight >= _tempHeight) ? _tempHeight : SettingsMenu1.PrimaryHeight ; }
-            set { _tempHeight = value; }
-        }
+        public int ResolutionWidth { get; set; }
+        public int ResolutionHeight { get; set; }
         public int VolumeMusic { get; set; }
         public int VolumeEffect { get; set; }
         public bool FullScreen { get; set; }
@@ -47,15 +36,25 @@ namespace GameClient.Global
 
         public void ApplyConfig(GraphicsDeviceManager graphics)
         {
-            GameEngine.SoundCenter.VolumeMusic = GameEngine.Config.VolumeMusic;
-            GameEngine.SoundCenter.VolumeEffect = GameEngine.Config.VolumeEffect;
+            ApplyGraphics(graphics);
+            ApplySound();
+            ApplyInput();
+        }
+
+        public void ApplyGraphics(GraphicsDeviceManager graphics)
+        {
             graphics.PreferredBackBufferWidth = GameEngine.Config.ResolutionWidth;
             graphics.PreferredBackBufferHeight = GameEngine.Config.ResolutionHeight;
-            graphics.IsFullScreen = GameEngine.Config.FullScreen;
             graphics.PreferMultiSampling = true;
             graphics.GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None };
+            graphics.IsFullScreen = GameEngine.Config.FullScreen;
             graphics.ApplyChanges();
-            ApplyInput();
+        }
+
+        public void ApplySound()
+        {
+            GameEngine.SoundCenter.VolumeMusic = GameEngine.Config.VolumeMusic;
+            GameEngine.SoundCenter.VolumeEffect = GameEngine.Config.VolumeEffect;
         }
 
         public void ApplyInput()

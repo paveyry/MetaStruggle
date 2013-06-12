@@ -12,6 +12,7 @@
 	<MenuSettings.Controls>Controls</MenuSettings.Controls>
 	<MenuSettings.Graphics>Graphics</MenuSettings.Graphics>
 	<MenuSettings.Sounds>Sounds</MenuSettings.Sounds>
+	<MenuSettings.Apply>Apply</MenuSettings.Apply>
 	<MenuGraphics.Fullscreen>Fullscreen : </MenuGraphics.Fullscreen>
 	<MenuGraphics.Resolution>Resolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musics : </MenuSounds.Musics>
