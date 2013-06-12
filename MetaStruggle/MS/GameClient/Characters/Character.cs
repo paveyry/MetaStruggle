@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Network;
 using Network.Packet.Packets;
 using Network.Packet.Packets.DatasTypes;
+using DPSF;
 
 namespace GameClient.Characters
 {
@@ -42,7 +43,7 @@ namespace GameClient.Characters
         public bool Playing { get; set; }
 
         //********
-        private byte sync_rate = 5;
+        public byte SyncRate = 10;
         public Vector3? F1 = null, F2 = null, dI;
         //********
 
@@ -159,7 +160,7 @@ namespace GameClient.Characters
                 Position += new Vector3(mul * (Yaw == _baseYaw ? new Random().Next(0, 1000) / 1000f : -new Random().Next(0, 1000) / 1000f), 0, 0);
             }
 
-            if(Playing && Client != null && count % sync_rate == 0)
+            if(Playing && Client != null && count % SyncRate == 0)
                 new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas(){ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw});
 
             if (!Playing && dI.HasValue)
@@ -170,7 +171,7 @@ namespace GameClient.Characters
             base.Update(gameTime);
         }
 
-        private int count = 0;
+        private int count;
 
         void SetPriorityAnimation(ICollection<Animation> pendingAnim)
         {

@@ -76,7 +76,7 @@ namespace GameClient.Renderable.Environments
                     c.Position = c.F1.Value;
 
                 if (c.F1 != null && c.F2 != null)
-                    c.dI = new Vector3(c.F2.Value.X - c.F1.Value.X, c.F2.Value.Y - c.F1.Value.Y, 0);
+                    c.dI = new Vector3((c.F2.Value.X - c.F1.Value.X)/(c.SyncRate + 1), (c.F2.Value.Y - c.F1.Value.Y)/(c.SyncRate), 0);
             }
             else
                 c.Position = new Vector3(cp.X, cp.Y, -17);
