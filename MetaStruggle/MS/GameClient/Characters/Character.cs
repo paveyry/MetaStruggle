@@ -14,7 +14,6 @@ using Network.Packet.Packets.DatasTypes;
 
 namespace GameClient.Characters
 {
-
     enum Movement
     {
         Left,
@@ -41,6 +40,11 @@ namespace GameClient.Characters
         public Texture2D Face;
         public bool CollisionEnabled { get; set; }
         public bool Playing { get; set; }
+
+        //********
+        private byte sync_rate = 5;
+        public Vector3? F1 = null, F2 = null, dI;
+        //********
 
         public BoundingObjectModel BoundingObject { get; set; }
         public float Length, Width;
@@ -155,8 +159,11 @@ namespace GameClient.Characters
                 Position += new Vector3(mul * (Yaw == _baseYaw ? new Random().Next(0, 1000) / 1000f : -new Random().Next(0, 1000) / 1000f), 0, 0);
             }
 
-            if(Playing && Client != null && count % 5 == 0)
+            if(Playing && Client != null && count % sync_rate == 0)
                 new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas(){ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw});
+
+            if (!Playing && dI.HasValue)
+                Position += dI.Value;
 
             count = (count + 1)%60;
 
