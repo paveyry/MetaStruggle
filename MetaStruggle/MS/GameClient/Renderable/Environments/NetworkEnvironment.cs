@@ -16,21 +16,22 @@ namespace GameClient.Renderable.Environments
     {
         private SceneManager sm;
         public string CurrentCharacterName { get; set; }
+        public Client Client { get; set; }
 
-        public NetworkEnvironment(string currentCharName)
+        public NetworkEnvironment(SpriteBatch spriteBatch, GameStartDatas gs, Client client, string currentchar)
         {
-            CurrentCharacterName = currentCharName;
-        }
+            RegisterEvents();
+            CurrentCharacterName = currentchar;
 
-        public NetworkEnvironment(SpriteBatch spriteBatch, GameStartDatas gs)
-        {
             sm = SceneManager.CreateScene(
                 new Vector3(-5, 5, -30), //Position initiale de la caméra
                 new Vector3(0, 0, 0), //Point visé par la caméra
                 spriteBatch); //SpriteBatch
-            CreateItems(gs);
 
-            RegisterEvents();
+            Client = client;
+
+            GameStart(gs);
+            //CreateItems(gs);
 
             sm.Camera.FollowsCharacters(sm.Camera, sm.Items.FindAll(e => e is Character));
         }
@@ -79,8 +80,11 @@ namespace GameClient.Renderable.Environments
                     {
                         ID = p.ID,
                         Playing = p.Name == CurrentCharacterName,
-                        Client = p.Client
+                        Client = p.Name == CurrentCharacterName ? Client : null
                     });
+
+            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
+                                      new Vector3(1f, 1f, 0.8f)));
         }
     }
 }

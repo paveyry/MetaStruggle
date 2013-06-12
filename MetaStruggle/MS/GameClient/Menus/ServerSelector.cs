@@ -86,7 +86,7 @@ namespace GameClient.Menus
         void GameBegin(object data)
         {
             var gs = (GameStartDatas)data;
-            GameEngine.SceneManager = new Renderable.Environments.NetworkEnvironment(_spriteBatch, gs).GetScene(_spriteBatch);
+            GameEngine.SceneManager = new Renderable.Environments.NetworkEnvironment(_spriteBatch, gs, Client, PlayerName).GetScene(_spriteBatch);
             GameEngine.SoundCenter.PlayWithStatus("tardisbattlefield");
             GameEngine.DisplayStack.Push(GameEngine.SceneManager);
         }

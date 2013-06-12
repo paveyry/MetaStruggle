@@ -17,10 +17,10 @@ namespace GameClient.Characters
 
     enum Movement
     {
-        Right,
         Left,
-        Jump,
+        Right,
         Attack,
+        Jump,
         SpecialAttack
     }
     public class Character : AnimatedModel3D
@@ -99,8 +99,6 @@ namespace GameClient.Characters
                     pendingAnim.Add(Animation.Run);
                 }
 
-                else if (GameEngine.KeyboardState.IsKeyDown(Keys.Left))
-
                 if (GetKey(Movement.Left).IsPressed())
                 {
                     MoveLeft(gameTime);
@@ -157,11 +155,15 @@ namespace GameClient.Characters
                 Position += new Vector3(mul * (Yaw == _baseYaw ? new Random().Next(0, 1000) / 1000f : -new Random().Next(0, 1000) / 1000f), 0, 0);
             }
 
-            if(Playing && Client != null)
+            if(Playing && Client != null && count % 5 == 0)
                 new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas(){ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw});
+
+            count = (count + 1)%60;
 
             base.Update(gameTime);
         }
+
+        private int count = 0;
 
         void SetPriorityAnimation(ICollection<Animation> pendingAnim)
         {
