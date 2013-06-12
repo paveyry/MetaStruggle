@@ -17,14 +17,14 @@ namespace GameClient.Menus
         Menu Menu { get; set; }
         private SpriteBatch _spriteBatch;
         private GraphicsDeviceManager _graphics;
-        private Dictionary<string, UniversalKeys> _keys;
-
+        
         public SettingsMenu(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
             _spriteBatch = spriteBatch;
             _graphics = graphics;
         }
-
+        
+        #region Settings
         public Menu MenuSettings()
         {
             System.Threading.Thread.Sleep(200);
@@ -55,6 +55,7 @@ namespace GameClient.Menus
                 index++;
             }
             GameEngine.Config.Language = GameEngine.LangCenter.LanguageAvailable[index % GameEngine.LangCenter.LanguageAvailable.Length];
+
             foreach (var menu in GameEngine.DisplayStack.OfType<Menu>())
             {
                 foreach (var listButton in menu.Items.Values.OfType<ListButtons>())
@@ -63,6 +64,7 @@ namespace GameClient.Menus
                     menubutton.UpdateRectangles();
             }
         }
+        #endregion
 
         #region Graphics
         public Menu MenuGraphics()
