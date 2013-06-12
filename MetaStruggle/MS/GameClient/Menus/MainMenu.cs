@@ -32,7 +32,7 @@ namespace GameClient.Menus
                     new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
                     new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch,_graphics).MenuSettings())),
                     new PartialButton("MainMenu.Quit", () => Environment.Exit(0)),
-                    new PartialButton("Test", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
+                    //new PartialButton("Test", () => GameEngine.DisplayStack.Push(new TestMenu(_spriteBatch,_graphics, true).Create())),
                 };
 
             menu.Add("Buttons.Item", new ListButtons(new Vector2(50,44),20,buttons,RessourceProvider.Fonts["Menu"],
