@@ -9,8 +9,8 @@ namespace GameClient.Renderable.GUI.Items.ListItems
 {
     abstract class ListLines : Item
     {
-        internal List<ILine> Lines { get; set; }
-        Line Field { get; set; }
+        protected List<ILine> Lines { get; set; }
+        protected Line Field { get; set; }
         public Line LineSelected { get; set; }
         internal Dictionary<string, Texture2D> Theme { get; set; }
         internal Rectangle InternalRectangle { get; set; }

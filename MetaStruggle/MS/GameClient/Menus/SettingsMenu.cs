@@ -68,8 +68,9 @@ namespace GameClient.Menus
             Menu.Add("Graphics.Text.Fullscreen", new SimpleText("MenuGraphics.Fullscreen", new Point(10, 10), Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"],Color.White));
             Menu.Add("Graphics.Checkbox.Fullscreen", new CheckBox(new Vector2(20,10),"UglyTestTheme",GameEngine.Config.FullScreen));
 
-            Menu.Add("Graphics.Text.Resolution", new SimpleText("MenuGraphics.Resolution", new Point(10,30), Item.PosOnScreen.TopLeft,RessourceProvider.Fonts["Menu"],Color.White ));
-            Menu.Add("Graphics.ClassicList.Resolution", new ClassicList(new Rectangle(40, 30, 40, 40), CreateElementsForPlayer(), new Dictionary<string, int>(){ {"MenuGraphics.Resolution", 100} }, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, "UglyTestTheme"));
+            Menu.Add("Graphics.ClassicList.Resolution", new ClassicList(new Rectangle(40, 30, 40, 40), CreateElementsForPlayer(),
+                new Dictionary<string, int>(){ {"MenuGraphics.Resolution", 100} }, RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange, "UglyTestTheme"));
             return Menu;
         }
 
@@ -91,9 +92,7 @@ namespace GameClient.Menus
                 var resStr = str.Split('x');
                 var res = new[] {int.Parse(resStr[0]), int.Parse(resStr[1])};
                 if (GameEngine.PrimaryWidthOfWindows > res[0] && GameEngine.PrimaryHeightOfWindows > res[1])
-                {
                     value.Add(new[] {str});
-                }
             }
             if (!resolution.Contains(GameEngine.PrimaryWidthOfWindows + "x" + GameEngine.PrimaryHeightOfWindows))
                 value.Add(new [] {GameEngine.PrimaryWidthOfWindows + "x" + GameEngine.PrimaryHeightOfWindows});
