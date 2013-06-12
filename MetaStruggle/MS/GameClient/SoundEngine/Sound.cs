@@ -29,7 +29,7 @@ namespace GameClient.SoundEngine
 
         protected Sound(string path, bool loop)
         {
-            Player = new WindowsMediaPlayer {URL = path};
+            Player = new WindowsMediaPlayer { URL = path };
             Player.settings.enableErrorDialogs = true;
             Position = 0;
             Loop = loop;
@@ -39,23 +39,8 @@ namespace GameClient.SoundEngine
 
         public void PlayStateChange(int state)
         {
-            if ((WMPPlayState) state == WMPPlayState.wmppsStopped && RealLoop)
+            if ((WMPPlayState)state == WMPPlayState.wmppsStopped && RealLoop)
                 Play();
-            switch ((WMPPlayState) state)
-            {
-                case WMPPlayState.wmppsPaused:
-                    PlayerStatus = Status.Pause;
-                    break;
-                case WMPPlayState.wmppsPlaying:
-                    PlayerStatus = Status.Play;
-                    break;
-                case WMPPlayState.wmppsStopped:
-                    PlayerStatus = Status.Stop;
-                    break;
-                default:
-                    PlayerStatus = Status.Undefined;
-                    break;
-            }
         }
 
         #region BasicPlayer
@@ -63,14 +48,20 @@ namespace GameClient.SoundEngine
         public void Play()
         {
             RealLoop = Loop;
-            Player.controls.currentPosition = (Player.playState == WMPPlayState.wmppsPlaying) ? 0 : Position;
+            if (PlayerStatus == Status.Pause)
+            {
+                Player.controls.currentPosition = Position;
+                Position = 0;
+            }
 
+            PlayerStatus = Status.Play;
             Player.controls.play();
         }
 
         public void Pause()
         {
             Position = Player.controls.currentPosition;
+            PlayerStatus = Status.Pause;
             Player.controls.pause();
         }
 
@@ -78,6 +69,7 @@ namespace GameClient.SoundEngine
         {
             RealLoop = false;
             Position = 0;
+            PlayerStatus = Status.Stop;
             Player.controls.stop();
         }
 

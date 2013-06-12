@@ -17,6 +17,17 @@
 	<MenuGraphics.Resolution>Résolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musiques : </MenuSounds.Musics>
 	<MenuSounds.Effects>Effets : </MenuSounds.Effects>
+	<Controls.Pl1>Joueur Un</Controls.Pl1>
+	<Controls.Pl2>Joueur Deux</Controls.Pl2>
+	<Controls.Pl3>Joueur Trois</Controls.Pl3>
+	<Controls.Pl4>Joueur Quatre</Controls.Pl4>
+	<Controls.Movements>Mouvements</Controls.Movements>
+	<Controls.Keys>Touches</Controls.Keys>
+	<Controls.Left>Gauche</Controls.Left>
+	<Controls.Right>Droite</Controls.Right>
+	<Controls.Attack>Attaque</Controls.Attack>
+	<Controls.Jump>Saut</Controls.Jump>
+	<Controls.SpecialAttack>Attaque Spéciale</Controls.SpecialAttack>
 	<Text.Off>Non</Text.Off>
 	<Text.On>Oui</Text.On>
 	<Text.Respawn>Respawn dans </Text.Respawn>

@@ -43,9 +43,10 @@ namespace GameClient.Renderable.GUI.Items
         private StatusMenuButton Status { get; set; }
         private bool AbstractPos { get; set; }
 
-        public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, NameFunc text, TextureFunc image,
-            RatioFunc ratioFunc,SpriteFont font, Color normal, Color selected, Event onClick, bool isDrawable = true)
-            : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0),isDrawable)
+        internal MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, NameFunc text, TextureFunc image,
+            RatioFunc ratioFunc, SpriteFont font, Color normal, Color selected, Event onClick,
+            PosOnScreen posOnScreen = PosOnScreen.TopLeft, bool isDrawable = true)
+            : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0),posOnScreen,isDrawable)
         {
             Id = id;
             MiddlePos = (abstractPos) ? Position : pos;
@@ -60,13 +61,14 @@ namespace GameClient.Renderable.GUI.Items
             OnClick = onClick;
             UpdateRectangles();
         }
-        public MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, SpriteFont font,
-            Color normal, Color selected, Event onClick, bool isDrawable = true)
-            : this(id, pos, status,abstractPos, () => GameEngine.LangCenter.GetString(id), 
+        public MenuButton(string id, Vector2 pos, StatusMenuButton status,bool abstractPos, SpriteFont font,
+            Color normal, Color selected, Event onClick,PosOnScreen posOnScreen = PosOnScreen.TopLeft, bool isDrawable = true)
+            : this(id, pos, status, abstractPos, () => GameEngine.LangCenter.GetString(id), 
             (isSelect) => GameEngine.LangCenter.GetImage(id, !isSelect),() => GameEngine.Config.ResolutionWidth/1920f
-            , font, normal, selected, onClick, isDrawable) { }
-        public MenuButton(string id, Vector2 pos, SpriteFont font, Color normal, Color selected, Event onClick, bool isDrawable = true) 
-            : this(id, pos, StatusMenuButton.None,true, font, normal, selected, onClick, isDrawable) { }
+            , font, normal, selected, onClick, posOnScreen,isDrawable) { }
+        public MenuButton(string id, Vector2 pos, SpriteFont font, Color normal, Color selected, Event onClick,
+            PosOnScreen posOnScreen = PosOnScreen.TopLeft, bool isDrawable = true) 
+            : this(id, pos, StatusMenuButton.None,true, font, normal, selected, onClick,posOnScreen, isDrawable) { }
 
         private Rectangle GetRectangle(bool isSelected)
         {

@@ -168,7 +168,7 @@ namespace GameClient.Menus
 
             var keys = RessourceProvider.InputKeys.ToDictionary(e => e.Key, e => e.Value);
 
-            Menu.Add("Controls.ButtonsPlayer.Item", new ListButtons(new Vector2(10, 10), 0, new List<PartialButton>
+            Menu.Add("Controls.ButtonsPlayer.Item", new ListButtons(new Vector2(10, 20), 0, new List<PartialButton>
                 {
                     new PartialButton("Controls.Pl1",() => HideKeySelectorsPlayers(0)),
                     new PartialButton("Controls.Pl2",() => HideKeySelectorsPlayers(1)),
@@ -190,11 +190,11 @@ namespace GameClient.Menus
         void CreateKeySelectorList(int player,Dictionary<string,UniversalKeys> keys)
         {
             Menu.Add("Controls.KeySelector.Pl" + player,
-                new KeySelectorList(new Rectangle(20, 40, 60, 30),
+                new KeySelectorList(new Rectangle(10, 30, 80, 50),
                     (from object movement in Enum.GetValues(typeof(Characters.Movement))
                      select movement.ToString() into movementStr
                      select new[] { "Controls." + movementStr, movementStr + "." + player }),keys, player,
-                    new Dictionary<string, int> { { "Text.Controls.Movement", 50 }, { "Text.Controls.Keys", 50 } },
+                    new Dictionary<string, int> { { "Controls.Movements", 50 }, { "Controls.Keys", 50 } },
                     RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange, "UglyTestTheme", player == 0));
         }
 

@@ -17,6 +17,17 @@
 	<MenuGraphics.Resolution>Resolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musics : </MenuSounds.Musics>
 	<MenuSounds.Effects>Effects : </MenuSounds.Effects>
+	<Controls.Pl1>Player One</Controls.Pl1>
+	<Controls.Pl2>Player Two</Controls.Pl2>
+	<Controls.Pl3>Player Three</Controls.Pl3>
+	<Controls.Pl4>Player Four</Controls.Pl4>
+	<Controls.Movements>Movements</Controls.Movements>
+	<Controls.Keys>Keys</Controls.Keys>
+	<Controls.Left>Left</Controls.Left>
+	<Controls.Right>Right</Controls.Right>
+	<Controls.Attack>Attack</Controls.Attack>
+	<Controls.Jump>Jump</Controls.Jump>
+	<Controls.SpecialAttack>Special Attack</Controls.SpecialAttack>
 	<Text.Off>Off</Text.Off>
 	<Text.On>On</Text.On>
 	<Text.Respawn>Respawn in </Text.Respawn>
