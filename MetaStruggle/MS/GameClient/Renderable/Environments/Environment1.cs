@@ -26,7 +26,7 @@ namespace GameClient.Renderable.Environments
             sm.AddElement(new Character("Ironman", "Ironman", 1,sm, new Vector3(-12, 10, -17), new Vector3(1)));
             sm.AddElement(new Character("Alex", "Alex", 0,sm, new Vector3(-8, 10, -17), new Vector3(1), 1.6f));
             //sm.AddElement(new Character("Ares", "Ares", sm, new Vector3(-3, 10, -17), new Vector3(1)));
-            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapTardis"], new Vector3(10, 0, 0),
+            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapDesert"], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
             //sm.AddElement(new AnimatedModel3D("Dwarf",sm, new Vector3(-9, 0, -10), new Vector3(0.04f)) { Speed = 0.5f });
 

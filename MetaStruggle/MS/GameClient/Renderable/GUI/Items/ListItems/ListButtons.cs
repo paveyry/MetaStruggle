@@ -11,31 +11,33 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         {
             Horizontal, Vertical
         }
-        private List<MenuButton> Buttons { get; set; }
+        public List<MenuButton> Buttons { get; set; }
+        private MenuButton ButtonSelected { get; set; }
         private int Interval { get; set; }
         private StatusListButtons Status { get; set; }
+        private bool NormalSelect { get; set; }
 
-        public ListButtons(Vector2 pos, int interval,IEnumerable<PartialButton> partialButtons, SpriteFont font,
-            Color colorNormal, Color colorSelected, StatusListButtons statusMenu,bool NormalSelect = true, bool isDrawable = true)
+        public ListButtons(Vector2 pos, int interval, IEnumerable<PartialButton> partialButtons, SpriteFont font,
+            Color colorNormal, Color colorSelected, StatusListButtons statusMenu, bool normalSelect = true, bool isDrawable = true)
             : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0), isDrawable)
         {
             MenuButton.StatusMenuButton statusButtons;
             Enum.TryParse(statusMenu.ToString(), out statusButtons);
-            Buttons = new List<MenuButton>();
+
             Interval = interval;
             Status = statusMenu;
+            NormalSelect = normalSelect;
 
-            Vector2 posButton = Position;
+            Buttons = new List<MenuButton>();
             foreach (var partialButton in partialButtons)
+                Buttons.Add(new MenuButton(partialButton.ID, new Vector2(0, 0), statusButtons, false, font, colorNormal,
+                                           colorSelected, partialButton.OnClick, normalSelect));
+            if (!NormalSelect)
             {
-                var button = new MenuButton(partialButton.ID, posButton, statusButtons, false, font, colorNormal,
-                    colorSelected, partialButton.OnClick, NormalSelect);
-                if (statusMenu == StatusListButtons.Vertical)
-                    posButton.Y += button.DimRectangles.Y + interval;
-                else
-                    posButton.X += button.DimRectangles.X + interval;
-                Buttons.Add(button);
+                ButtonSelected = Buttons[0];
+                ButtonSelected.IsSelect = true;
             }
+            UpdateResolution();
         }
 
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
@@ -52,8 +54,19 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             base.UpdateItem(gameTime);
             if (!IsDrawable)
                 return;
-            foreach (var menuButton in Buttons)
-                menuButton.UpdateItem(gameTime);
+            if (NormalSelect)
+                foreach (var menuButton in Buttons)
+                    menuButton.UpdateItem(gameTime);
+            else
+            {
+                foreach (var menuButton in Buttons)
+                {
+                    menuButton.UpdateItem(gameTime);
+                    if (!menuButton.IsSelect || menuButton.Equals(ButtonSelected)) continue;
+                    ButtonSelected.IsSelect = false;
+                    ButtonSelected = menuButton;
+                }
+            }
         }
 
         public void UpdateRectangles()
