@@ -24,6 +24,7 @@ namespace GameClient.Renderable.GUI.Items
         public string Id { get; set; }
         public NameFunc Text { get; set; }
         public bool IsSelect { get; set; }
+        private bool NormalSelect { get; set; }
         private TextureFunc Image { get; set; }
         private RatioFunc Ratio { get; set; }
         private SpriteFont Font { get; set; }
@@ -44,7 +45,7 @@ namespace GameClient.Renderable.GUI.Items
         private bool AbstractPos { get; set; }
 
         internal MenuButton(string id, Vector2 pos, StatusMenuButton status, bool abstractPos, NameFunc text, TextureFunc image,
-            RatioFunc ratioFunc, SpriteFont font, Color normal, Color selected, Event onClick,
+            RatioFunc ratioFunc, SpriteFont font, Color normal, Color selected, Event onClick, bool normalSelect = true,
             PosOnScreen posOnScreen = PosOnScreen.TopLeft, bool isDrawable = true)
             : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0),posOnScreen,isDrawable)
         {
@@ -59,16 +60,18 @@ namespace GameClient.Renderable.GUI.Items
             ColorNormal = normal;
             ColorSelected = selected;
             OnClick = onClick;
+            NormalSelect = normalSelect;
             UpdateRectangles();
         }
         public MenuButton(string id, Vector2 pos, StatusMenuButton status,bool abstractPos, SpriteFont font,
-            Color normal, Color selected, Event onClick,PosOnScreen posOnScreen = PosOnScreen.TopLeft, bool isDrawable = true)
+            Color normal, Color selected, Event onClick, bool normalSelect = true, PosOnScreen posOnScreen = PosOnScreen.TopLeft,
+            bool isDrawable = true)
             : this(id, pos, status, abstractPos, () => GameEngine.LangCenter.GetString(id), 
             (isSelect) => GameEngine.LangCenter.GetImage(id, !isSelect),() => GameEngine.Config.ResolutionWidth/1920f
-            , font, normal, selected, onClick, posOnScreen,isDrawable) { }
-        public MenuButton(string id, Vector2 pos, SpriteFont font, Color normal, Color selected, Event onClick,
+            , font, normal, selected, onClick, normalSelect,posOnScreen,isDrawable) { }
+        public MenuButton(string id, Vector2 pos, SpriteFont font, Color normal, Color selected, Event onClick, bool normalSelect = true,
             PosOnScreen posOnScreen = PosOnScreen.TopLeft, bool isDrawable = true) 
-            : this(id, pos, StatusMenuButton.None,true, font, normal, selected, onClick,posOnScreen, isDrawable) { }
+            : this(id, pos, StatusMenuButton.None,true, font, normal, selected, onClick,normalSelect,posOnScreen, isDrawable) { }
 
         private Rectangle GetRectangle(bool isSelected)
         {
@@ -116,11 +119,23 @@ namespace GameClient.Renderable.GUI.Items
             base.UpdateItem(gameTime);
             if (!IsDrawable)
                 return;
-            IsSelect = NormalRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
-            if (IsSelect && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+            var tempSelect = NormalRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1));
+            if (NormalSelect)
             {
-                OnClick.Invoke();
-                IsSelect = false;
+                IsSelect = tempSelect;
+                if (IsSelect && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+                {
+                    OnClick.Invoke();
+                    IsSelect = false;
+                }
+            }
+            else
+            {
+                tempSelect &= GameEngine.MouseState.LeftButton == ButtonState.Pressed;
+                if (!IsSelect || GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+                    IsSelect = tempSelect;
+                if (IsSelect && tempSelect)
+                    OnClick.Invoke();
             }
         }
 

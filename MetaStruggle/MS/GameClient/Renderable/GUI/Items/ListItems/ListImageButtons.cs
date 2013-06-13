@@ -15,7 +15,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         private readonly int _heightFont;
         
         public ListImageButtons(Rectangle rectangle, Dictionary<string, Texture2D> items, string themeName, SpriteFont font,
-            Color colorNormal, Color colorSelected,int divCoef = 5, bool isDrawable = true)
+            int divCoef = 5, bool isDrawable = true)
             : base(rectangle, true, isDrawable)
         {
             ImageButtons = new List<ImageButton>();
@@ -31,7 +31,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
                 int width = item.Value.Width / divCoef;
                 int height = item.Value.Height / divCoef;
                 ImageButtons.Add(new ImageButton(item.Key,
-                    new Rectangle(x, y, width, height), item.Value, font, colorNormal, colorSelected));
+                    new Rectangle(x, y, width, height), item.Value, font));
                 x += width + 5;
                 if (x + width <= Width && x + width <= InternalRectangle.X + InternalRectangle.Width)
                     continue;
@@ -49,15 +49,15 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             InternalRectangle = new Rectangle(RealRectangle.X + Theme["ListImageButtons.LeftSide"].Width, RealRectangle.Y + Theme["ListImageButtons.Top"].Height,
                 RealRectangle.Width - (Theme["ListImageButtons.LeftSide"].Width + Theme["ListImageButtons.RightSide"].Width),
                 RealRectangle.Height - (Theme["ListImageButtons.Top"].Height + Theme["ListImageButtons.Down"].Height));
-            int x = ItemRectangle.X, y = ItemRectangle.Y;
+            int x = InternalRectangle.X, y = InternalRectangle.Y;
 
             foreach (var item in ImageButtons)
             {
                 item.ItemRectangle.Location = new Point(x, y);
                 x += item.ItemRectangle.Width + 5;
-                if (x + item.ItemRectangle.Width <= Width && x + item.ItemRectangle.Width <= RealRectangle.Width)
+                if (x + item.ItemRectangle.Width <= Width && x + item.ItemRectangle.Width <= InternalRectangle.X + InternalRectangle.Width)
                     continue;
-                x = ItemRectangle.X;
+                x = InternalRectangle.X;
                 y += item.ItemRectangle.Height + _heightFont;
             }
         }

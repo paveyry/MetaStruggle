@@ -28,7 +28,7 @@ namespace GameClient.Menus
             Menu.Add("CharacterSelector.Text", new SimpleText("Text.SelectPlayer", new Vector2(15, 15), 
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"],Color.White ));
             Menu.Add("CharacterSelector.Item", new ListImageButtons(new Rectangle(15, 22, 70, 45), RessourceProvider.CharacterFaces, "UglyTestTheme",
-                RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange));
+                RessourceProvider.Fonts["HUDlittle"]));
             Menu.Add("PlayerName.Text", new SimpleText("Text.TextboxPlayer", new Vector2(15, 75), 
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,82,300,0), "UglyTestTheme",
@@ -41,6 +41,8 @@ namespace GameClient.Menus
 
         void NextButton()
         {
+            //GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch, _graphics).MenuGraphics());
+            //return;
             Textbox playerNameTextbox = Menu.Items["PlayerName.Item"] as Textbox;
             ListImageButtons characterSelector = Menu.Items["CharacterSelector.Item"] as ListImageButtons;
 

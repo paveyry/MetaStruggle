@@ -15,7 +15,8 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         private int Interval { get; set; }
         private StatusListButtons Status { get; set; }
 
-        public ListButtons(Vector2 pos, int interval,IEnumerable<PartialButton> partialButtons, SpriteFont font, Color colorNormal, Color colorSelected, StatusListButtons statusMenu, bool isDrawable = true)
+        public ListButtons(Vector2 pos, int interval,IEnumerable<PartialButton> partialButtons, SpriteFont font,
+            Color colorNormal, Color colorSelected, StatusListButtons statusMenu,bool NormalSelect = true, bool isDrawable = true)
             : base(new Rectangle((int)pos.X, (int)pos.Y, 0, 0), isDrawable)
         {
             MenuButton.StatusMenuButton statusButtons;
@@ -27,7 +28,8 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             Vector2 posButton = Position;
             foreach (var partialButton in partialButtons)
             {
-                var button = new MenuButton(partialButton.ID, posButton, statusButtons, false, font, colorNormal, colorSelected, partialButton.OnClick);
+                var button = new MenuButton(partialButton.ID, posButton, statusButtons, false, font, colorNormal,
+                    colorSelected, partialButton.OnClick, NormalSelect);
                 if (statusMenu == StatusListButtons.Vertical)
                     posButton.Y += button.DimRectangles.Y + interval;
                 else

@@ -77,7 +77,7 @@ namespace GameClient.Menus
             Menu.Add("Graphics.ClassicList.Resolution", new ClassicList(new Rectangle(20, 40, 60, 30), CreateResolutions(),
                 new Dictionary<string, int> { { "MenuGraphics.Resolution", 100 } }, RessourceProvider.Fonts["HUDlittle"], Color.White,
                 Color.DarkOrange, "UglyTestTheme"));
-            Menu.Add("OkButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(80, 80), RessourceProvider.Fonts["Menu"], Color.White,
+            Menu.Add("ApplyButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(70, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, ApplyButtonGraphics));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
@@ -145,7 +145,7 @@ namespace GameClient.Menus
                 RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("Sounds.Item.Effects", new Slider(new Rectangle(60, 41, 280, 20),
                 GameEngine.Config.VolumeEffect, "UglyTestTheme", RessourceProvider.Fonts["HUDlittle"]));
-            Menu.Add("OkButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(80, 80), RessourceProvider.Fonts["Menu"], Color.White,
+            Menu.Add("ApplyButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(70, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, ApplyButtonSounds));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
@@ -174,12 +174,12 @@ namespace GameClient.Menus
                     new PartialButton("Controls.Pl2",() => HideKeySelectorsPlayers(1)),
                     new PartialButton("Controls.Pl3",() => HideKeySelectorsPlayers(2)),
                     new PartialButton("Controls.Pl4",() => HideKeySelectorsPlayers(3)),
-                }, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Horizontal));
+                }, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Horizontal, false));
 
             for (int i = 0; i < 4; i++)
                 CreateKeySelectorList(i,keys);
 
-            Menu.Add("OkButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(80, 80), RessourceProvider.Fonts["Menu"], Color.White,
+            Menu.Add("ApplyButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(70, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange,() => ApplyButtonControls(keys)));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
