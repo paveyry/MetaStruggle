@@ -107,7 +107,7 @@ namespace GameClient.Menus
             {
                 var resStr = str.Split('x');
                 var res = new[] { int.Parse(resStr[0]), int.Parse(resStr[1]) };
-                if (GameEngine.PrimaryWidthOfWindows > res[0] && GameEngine.PrimaryHeightOfWindows > res[1])
+                if (GameEngine.PrimaryWidthOfWindows >= res[0] && GameEngine.PrimaryHeightOfWindows >= res[1])
                     value.Add(new[] { str });
             }
             if (!resolution.Contains(GameEngine.PrimaryWidthOfWindows + "x" + GameEngine.PrimaryHeightOfWindows))
