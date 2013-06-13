@@ -16,7 +16,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
         internal Rectangle InternalRectangle { get; set; }
         private int HeightInternalRectangle { set { InternalRectangle = new Rectangle(InternalRectangle.X, InternalRectangle.Y, InternalRectangle.Width, value); } }
         private int _cursor;
-        private float _ratio = 1f;
+        private float _ratio;
         private int _maxLines;
         private readonly int _heightLine;
         private readonly int _heightField;
@@ -67,6 +67,7 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             Field.InternalRectangle = new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, _heightField);
             
             _maxLines = Lines.Count;
+            _ratio = 1f;
             bool isOutOfLimits = false;
             for (int i = _cursor, posInY = InternalRectangle.Y; i < Lines.Count; i++)
             {
