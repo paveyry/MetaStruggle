@@ -123,16 +123,14 @@ namespace GameClient.Renderable.GUI.Items
             if (NormalSelect)
             {
                 IsSelect = tempSelect;
-                if (IsSelect && GameEngine.MouseState.LeftButton == ButtonState.Pressed)
-                {
-                    OnClick.Invoke();
-                    IsSelect = false;
-                }
+                if (!IsSelect || GameEngine.MouseState.LeftButton != ButtonState.Pressed) return;
+                OnClick.Invoke();
+                IsSelect = false;
             }
             else
             {
                 tempSelect &= GameEngine.MouseState.LeftButton == ButtonState.Pressed;
-                if (!IsSelect || GameEngine.MouseState.LeftButton == ButtonState.Pressed)
+                if (!IsSelect)
                     IsSelect = tempSelect;
                 if (IsSelect && tempSelect)
                     OnClick.Invoke();
