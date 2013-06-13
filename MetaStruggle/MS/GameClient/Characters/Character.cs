@@ -190,6 +190,12 @@ namespace GameClient.Characters
                 SetAnimation(Animation.Run);
             else if (pendingAnim.Count != 0 && !_jumping)
                 SetAnimation(Animation.Default);
+
+            if (ModelName == "Spiderman")
+                if(CurrentAnimation == Animation.SpecialAttack)
+                    AnimationController.Speed = 2f;
+                else
+                    AnimationController.Speed = 1.6f;
         }
 
         UniversalKeys GetKey(Movement movement)

@@ -444,10 +444,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimatedModels\Alex\AlexMercer.fbx">
-      <Name>AlexMercer</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
+    <Compile Include="CharacterFaces\Greyscale.fx">
+      <Name>Greyscale</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -458,10 +458,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterFaces\Greyscale.fx">
-      <Name>Greyscale</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+    <Compile Include="AnimatedModels\Alex\AlexMercer.fbx">
+      <Name>AlexMercer</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
