@@ -21,12 +21,13 @@ namespace GameClient.Renderable.Environments
                     spriteBatch);               //SpriteBatch
 
             //sm.Skybox = new Skybox(Global.RessourceProvider.Videos["Intro"]);
-            sm.AddElement(new Character("Spiderman", "Spiderman", 2,sm, new Vector3(-5, 10, -17), new Vector3(1), 1.6f));
-            sm.AddElement(new Character("Zeus", "Zeus", 0,sm, new Vector3(-12, 10, -17), new Vector3(1)));
-            sm.AddElement(new Character("Ironman", "Ironman", 1,sm, new Vector3(-12, 10, -17), new Vector3(1)));
-            sm.AddElement(new Character("Alex", "Alex", 3,sm, new Vector3(-8, 10, -17), new Vector3(1), 1.6f));
+            sm.AddElement(new Character("Spiderman", "Spiderman", 3,sm, new Vector3(-5, 5, -17), new Vector3(1), 1.6f));
+            sm.AddElement(new Character("Zeus", "Zeus", 2,sm, new Vector3(-12, 5, -17), new Vector3(1)));
+            sm.AddElement(new Character("ironMan", "Ironman", 1,sm, new Vector3(-12, 5, -17), new Vector3(1)));
+            sm.AddElement(new Character("Alex", "Alex", 0,sm, new Vector3(-8, 5, -17), new Vector3(1), 1.6f));
+
             //sm.AddElement(new Character("Ares", "Ares", sm, new Vector3(-3, 10, -17), new Vector3(1)));
-            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapDesert"], new Vector3(10, 0, 0),
+            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapTardis"], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
             //sm.AddElement(new AnimatedModel3D("Dwarf",sm, new Vector3(-9, 0, -10), new Vector3(0.04f)) { Speed = 0.5f });
 

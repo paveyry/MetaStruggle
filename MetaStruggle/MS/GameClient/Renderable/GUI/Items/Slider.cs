@@ -61,6 +61,14 @@ namespace GameClient.Renderable.GUI.Items
         {
         }
 
+        internal override void UpdateResolution()
+        {
+            base.UpdateResolution();
+            InternalRectangle = new Rectangle(RealRectangle.X + Theme["Slider.LeftSide"].Width, RealRectangle.Y
+                + Theme["Slider.Top"].Height, RealRectangle.Width - (Theme["Slider.LeftSide"].Width + Theme["Slider.RightSide"].Width),
+                RealRectangle.Height - (Theme["Slider.Top"].Height + Theme["Slider.Down"].Height));
+        }
+
         public override void DrawItem(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!IsDrawable)

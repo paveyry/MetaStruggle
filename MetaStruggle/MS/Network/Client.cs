@@ -13,6 +13,7 @@ namespace Network
     public class Client
     {
         public bool Connected { get; set; }
+        public TcpClient BaseClient { get { return _client; } }
         private readonly TcpClient _client;
         private const int BufferSize = 4096;
         private readonly IEventDispatcher _eventDispatcher;
@@ -37,6 +38,7 @@ namespace Network
         {
             _client = client;
             Connected = true;
+            _client.NoDelay = true;
             _eventDispatcher = eventDispatcher;
             _parseMethod = parseMethod;
             _networkInfos = _client.Client.RemoteEndPoint.ToString();
@@ -54,6 +56,7 @@ namespace Network
                 _client = new TcpClient(ip, port);
 
                 Connected = true;
+                _client.NoDelay = true;
                 _eventDispatcher = eventDispatcher;
                 _parseMethod = parseMethod;
                 _networkInfos = _client.Client.RemoteEndPoint.ToString();

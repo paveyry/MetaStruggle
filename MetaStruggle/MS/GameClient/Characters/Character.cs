@@ -29,35 +29,35 @@ namespace GameClient.Characters
         public byte ID { get; set; }
         public byte PlayerNb { get; set; }
         private readonly float _baseYaw;
-        public bool _jumping;
-        public double _jumppos;
         private readonly Vector3 _spawnPosition;
         public Client Client { get; set; }
-
         public bool IsDead;
         public DateTime DeathDate;
         public float Damages = 0;
         public string PlayerName;
         public Texture2D Face;
-        public bool CollisionEnabled { get; set; }
+
+        //****PHYSIQUE****
+        private const float LatteralSpeed = 0.005f;
+        private readonly Vector3 _latteralMove;
+        public Vector3 Speed;
+        private readonly Vector3 _gravity;
+        private bool _jump;
+        private bool _doublejump;
+        private DateTime _firstjump = DateTime.Now;
+        
+        //****NETWORK****
+        private int count;
         public bool Playing { get; set; }
 
-        //********
-        public byte SyncRate = 10;
-        public Vector3? F1 = null, F2 = null, dI;
-        //********
-
-        public BoundingObjectModel BoundingObject { get; set; }
-        public float Length, Width;
-        
         public bool CollideWithMap
         {
-            get { return Position.Y < 0.1 && Position.Y > -0.1 && Position.X < 12.58 && Position.X > -23.91; }
+            get { return Position.Y < 0.01 && Position.Y > -1 && Position.X < 12.58 && Position.X > -23.91; }
         }
         #endregion
 
         public Character(string playerName, string nameCharacter, byte playerNb, SceneManager scene, Vector3 position, Vector3 scale
-            ,float speed = 1f, float length = 1.8f, float weidth = 1.2f )
+            ,float speed = 1f)
             : base(nameCharacter, scene, position, scale, speed)
         {
             Playing = true;
@@ -68,22 +68,20 @@ namespace GameClient.Characters
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;
-            Gravity = 0.005f;
+            Gravity = -10f;
+            _gravity = new Vector3(0, Gravity, 0);
             _spawnPosition = position;
-            CollisionEnabled = true;
 
-            Length = length;
-            Width = weidth;
-            BoundingObject = new BoundingObjectModel(this);
+            _latteralMove = new Vector3(LatteralSpeed, 0, 0);
         }
 
         public override void Update(GameTime gameTime)
         {
             var pendingAnim = new List<Animation>();
-
-            if (Playing)
+                
+            #region ManageKeyboard
+            if (Playing && !IsDead)
             {
-                #region ManageKeyboard
                 if (CurrentAnimation != Animation.Jump)
                     pendingAnim.Add(Animation.Default);
 
@@ -97,9 +95,18 @@ namespace GameClient.Characters
                     Attack(gameTime);
                     pendingAnim.Add(Animation.Attack);
                 }
-                if (GetKey(Movement.Jump).IsPressed() && !_jumping && CollideWithMap)
+                if (GetKey(Movement.Jump).IsPressed() && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 200)
                 {
-                    Jump(gameTime);
+                    GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity/1.3f));
+
+                    if (_jump)
+                        _doublejump = true;
+                    else
+                    {
+                        _jump = true;
+                        _firstjump = DateTime.Now;
+                    }
+
                     pendingAnim.Add(Animation.Jump);
                     GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
                 }
@@ -114,11 +121,11 @@ namespace GameClient.Characters
                     MoveLeft(gameTime);
                     pendingAnim.Add(Animation.Run);
                 }
-                #endregion
             }
-            
+            #endregion
+
             #region Death
-            if (!IsDead && Position.Y < -10)
+            if (!IsDead && Position.Y < -20)
             {
                 IsDead = true;
                 DeathDate = DateTime.Now;
@@ -130,53 +137,38 @@ namespace GameClient.Characters
                 SetAnimation(Animation.Default);
                 IsDead = false;
                 Position = _spawnPosition;
+                Speed = Vector3.Zero;
+                _jump = false;
+                _doublejump = false;
                 Damages = 0;
             }
             #endregion
 
-            #region Jump
-            if (_jumping)
-                UpdateJump(gameTime, pendingAnim);
-
-            if (!CollideWithMap && !_jumping)
-            {
-                Position -= new Vector3(0, (float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity * 2), 0);
-                pendingAnim.Add(Animation.Jump);
-            }
-            #endregion
-
-            ApplyGravity();
-
+            #region Animations
             if (CollideWithMap && CurrentAnimation != Animation.Default)
                 pendingAnim.Add(Animation.Default);
 
-            CollisionEnabled = false;
-
             SetPriorityAnimation(pendingAnim);
+            #endregion
 
-            if (CollideWithSomeone() && !_jumping && CollisionEnabled)
-            {
-                var c = GetPlayerColliding();
-                int mul = 1;
+            #region Physic
+            ApplyGravity(gameTime);
+            ApplySpeed(gameTime);
+            KeepOnTheGround();
+            #endregion
 
-                if (c != null && c.Yaw == Yaw)
-                    mul = -mul;
+            #region Network
+            if (Playing && Client != null /*&& count % SyncRate == 0*/)
+                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas {ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw});
 
-                Position += new Vector3(mul * (Yaw == _baseYaw ? new Random().Next(0, 1000) / 1000f : -new Random().Next(0, 1000) / 1000f), 0, 0);
-            }
-
-            if(Playing && Client != null && count % SyncRate == 0)
-                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas(){ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw});
-
-            if (!Playing && dI.HasValue)
+            /*if (!Playing && dI.HasValue)
                 Position += dI.Value;
 
-            count = (count + 1)%60;
+            count = (count + 1)%60;*/
+            #endregion
 
             base.Update(gameTime);
         }
-
-        private int count;
 
         void SetPriorityAnimation(ICollection<Animation> pendingAnim)
         {
@@ -186,16 +178,13 @@ namespace GameClient.Characters
                 SetAnimation(Animation.Attack);
             else if (pendingAnim.Contains(Animation.Jump))
                 SetAnimation(Animation.Jump);
-            else if (pendingAnim.Contains(Animation.Run) && !_jumping)
+            else if (pendingAnim.Contains(Animation.Run) && (!_jump || !_doublejump))
                 SetAnimation(Animation.Run);
-            else if (pendingAnim.Count != 0 && !_jumping)
+            else if (pendingAnim.Count != 0 && (!_jump || !_doublejump))
                 SetAnimation(Animation.Default);
 
             if (ModelName == "Spiderman")
-                if(CurrentAnimation == Animation.SpecialAttack)
-                    AnimationController.Speed = 2f;
-                else
-                    AnimationController.Speed = 1.6f;
+                AnimationController.Speed = CurrentAnimation == Animation.SpecialAttack ? 2f : 1.6f;
         }
 
         UniversalKeys GetKey(Movement movement)
@@ -207,108 +196,47 @@ namespace GameClient.Characters
         void MoveRight(GameTime gameTime)
         {
             Yaw = _baseYaw + MathHelper.Pi;
-            Position -= new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
-            
-            if (CollisionEnabled && CollideWithSomeone())
-                Position += new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
+            Position -= _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         void MoveLeft(GameTime gameTime)
         {
             Yaw = _baseYaw;
-            Position += new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
-            
-            if (CollisionEnabled && CollideWithSomeone())
-                Position -= new Vector3((float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity), 0, 0);
-        }
-
-        bool CollideWithSomeone()
-        {
-            return CollisionEnabled && !Scene.Items.GetRange(0, Scene.Items.Count).FindAll(e => e is Character && !e.Equals(this)).TrueForAll(e => !new BoundingObjectModel(this).Intersects(new BoundingObjectModel(e as Character)));
-        }
-
-        void Jump(GameTime gameTime)
-        {
-            _jumping = true;
-            _jumppos = 0;
-        }
-
-        private void UpdateJump(GameTime gameTime, ICollection<Animation> pendingAnim)
-        {
-            _jumppos += gameTime.ElapsedGameTime.TotalMilliseconds * Gravity;
-            var pos = Position;
-
-            if (Position.X < 12.58 && Position.X > -23.91 || Position.Y > 0.1)
-            {
-                Position = new Vector3(Position.X, (float)(3 * Math.Sin(_jumppos)), Position.Z);
-            }
-            else
-            {
-                _jumping = false;
-                Position -= new Vector3(0, (float)(gameTime.ElapsedGameTime.TotalMilliseconds * Gravity * 2), 0);
-                _jumppos = 0;
-                pendingAnim.Add(Animation.Jump);
-            }
-
-            if (CollideWithSomeone())
-            {
-                Position = pos + new Vector3(Yaw == _baseYaw ? 0.15f : -0.15f, 0, 0);
-                _jumppos -= gameTime.ElapsedGameTime.TotalMilliseconds * Gravity;
-            }
-
-            if (!CollideWithMap) return;
-
-            _jumping = false;
-            Position = new Vector3(Position.X, 0, Position.Z);
-            _jumppos = 0;
-            pendingAnim.Add(Animation.Default);
+            Position += _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         void Attack(GameTime gameTime)
         {
-            if (CollideWithMap)
-                CollisionEnabled = true;
-
-            var pos = Position;
-            Position += new Vector3(Yaw == _baseYaw ? Width/2 : -Width/2, 0, 0);
-            BoundingObject.UpdateBox(this);
-
-            if (CollideWithSomeone())
-            {
-                var c = GetPlayerColliding();
-                if (c != null)
-                {
-                    c.Damages += (1 + c.Damages/50) * 0.5f;
-                    c.Position += new Vector3((Yaw == _baseYaw ? 1 : -1) * (c.Damages / 5f) , c.Damages/500f, 0);
-                    c.SetAnimation(Animation.Jump);
-                    c._jumping = true;
-                    c._jumppos = 0;
-                }
-            }
-
-            Position = pos;
-            BoundingObject.UpdateBox(this);
+            
         }
         #endregion
 
-        void ApplyGravity()
+        #region Physic
+        public void GiveImpulse(Vector3 impulsion)
         {
-            if(!CollideWithMap && !CollideWithSomeone())
-                Position -= new Vector3(0, Gravity * 1.5f, 0);
+            Speed = Speed + impulsion;
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        void ApplyGravity(GameTime gameTime)
         {
-            BoundingObject.UpdateBox(this);
-            base.Draw(gameTime, spriteBatch);
+            Speed += _gravity * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
         }
 
-        Character GetPlayerColliding()
+        private void KeepOnTheGround()
         {
-            return
-                Scene.Items.GetRange(0, Scene.Items.Count)
-                     .FindAll(e => e is Character && !e.Equals(this))
-                     .Find(e => BoundingObject.Intersects(new BoundingObjectModel(e as Character))) as Character;
+            if (!CollideWithMap) return;
+
+            Position = new Vector3(Position.X, 0, Position.Z);
+            Speed.Y = 0;
+            Speed.X *= 0.9f;
+            _jump = false;
+            _doublejump = false;
         }
+
+        void ApplySpeed(GameTime gameTime)
+        {
+            Position = Position + Speed * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
+        }
+        #endregion
     }
 }

@@ -35,7 +35,7 @@ namespace GameClient.Menus
                                   new PartialButton("MenuSettings.Controls", () => GameEngine.DisplayStack.Push(MenuControls())),
                                   new PartialButton("MenuSettings.Graphics", () => GameEngine.DisplayStack.Push(MenuGraphics())),
                                   new PartialButton("MenuSettings.Sounds", () => GameEngine.DisplayStack.Push(MenuSounds())),
-                                  new PartialButton("Menu.Back", () => GameEngine.DisplayStack.Pop())
+                                  new PartialButton("Menu.Back", ReturnButton)
                               };
 
             Menu.Add("Buttons.Item", new ListButtons(new Vector2(50, 44), 20, buttons, RessourceProvider.Fonts["Menu"],
@@ -80,7 +80,7 @@ namespace GameClient.Menus
             Menu.Add("ApplyButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(70, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, ApplyButtonGraphics));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
-                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+                Color.DarkOrange, ReturnButton));
 
             (Menu.Items["Graphics.ClassicList.Resolution"] as ClassicList).SetSelectedLine(new[]
                 {
@@ -148,7 +148,7 @@ namespace GameClient.Menus
             Menu.Add("ApplyButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(70, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, ApplyButtonSounds));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
-                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+                Color.DarkOrange, ReturnButton));
             return Menu;
         }
 
@@ -182,7 +182,7 @@ namespace GameClient.Menus
             Menu.Add("ApplyButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(70, 80), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange,() => ApplyButtonControls(keys)));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(10, 80), RessourceProvider.Fonts["Menu"], Color.White,
-                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+                Color.DarkOrange, ReturnButton));
 
             return Menu;
         }
@@ -211,5 +211,10 @@ namespace GameClient.Menus
         }
         #endregion
 
+        void ReturnButton()
+        {
+            GameEngine.DisplayStack.Pop();
+            System.Threading.Thread.Sleep(200);
+        }
     }
 }

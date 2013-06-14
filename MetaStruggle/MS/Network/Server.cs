@@ -50,8 +50,9 @@ namespace Network
                 try
                 {
                     var c = new Client(_listener.AcceptTcpClient(), _eventDispatcher, _parserMethod,
-                                       cc => 
+                                       cc =>
                                        {
+                                           cc.BaseClient.NoDelay = true;
                                            if (ClientConnected != null)
                                                ClientConnected.BeginInvoke(cc, null, null);
                                        });

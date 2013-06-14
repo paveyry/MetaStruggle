@@ -14,8 +14,8 @@ namespace GameClient.CollisionEngine
 
         public BoundingObjectModel(Character model)
         {
-            Length = model.Length;
-            WeidthOver2 = model.Width / 2;
+            //Length = model.Length;
+            //WeidthOver2 = model.Width / 2;
             ModelPosition = new Vector3();
             BoxModel = new BoundingBox();
             UpdateBox(model);
