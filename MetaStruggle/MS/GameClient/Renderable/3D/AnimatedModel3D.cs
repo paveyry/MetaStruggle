@@ -29,8 +29,8 @@ namespace GameClient.Renderable._3D
         public AnimationController AnimationController { get; set; }
         private float _speed;
 
-
-        public float Speed
+        //Animation Speed
+        public float ASpeed
         {
             get { return _speed; }
             set
@@ -81,7 +81,7 @@ namespace GameClient.Renderable._3D
                 ScaleInterpolation = InterpolationMode.Linear
             };
 
-            Speed = speed;
+            _speed = speed;
 
             SetAnimation(Animation.Default);
         }

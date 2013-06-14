@@ -20,7 +20,6 @@ namespace GameClient.Renderable._3D
         Vector3 Scale { get; set; }
         string ModelName { get; set; }
         SceneManager Scene { get; set; }
-        float Speed { get; set; }
         float Gravity { get; set; }
         void Update(GameTime gameTime);
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);
