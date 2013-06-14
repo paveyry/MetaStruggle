@@ -154,8 +154,6 @@ namespace GameClient.Menus
 
         void ApplyButtonSounds()
         {
-            GameEngine.DisplayStack.Push(MenuGraphics());
-            return;
             GameEngine.Config.VolumeMusic = (Menu.Items["Sounds.Item.Musics"] as Slider).Value;
             GameEngine.Config.VolumeEffect = (Menu.Items["Sounds.Item.Effects"] as Slider).Value;
             GameEngine.Config.ApplySound();
