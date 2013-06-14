@@ -52,7 +52,7 @@ namespace GameClient.Characters
 
         public bool CollideWithMap
         {
-            get { return Position.Y < 0.01 && Position.Y > -1 && Position.X < 12.58 && Position.X > -23.91; }
+            get { return (Position.Y < 0.01 && Position.Y > -1 && Position.X < 13 && Position.X > -24.5); }
         }
         #endregion
 
@@ -68,7 +68,7 @@ namespace GameClient.Characters
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;
-            Gravity = -10f;
+            Gravity = -20f;
             _gravity = new Vector3(0, Gravity, 0);
             _spawnPosition = position;
 
@@ -95,9 +95,9 @@ namespace GameClient.Characters
                     Attack(gameTime);
                     pendingAnim.Add(Animation.Attack);
                 }
-                if (GetKey(Movement.Jump).IsPressed() && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 200)
+                if (/*GetKey(Movement.Jump).IsPressed()*/GameEngine.KeyboardState.IsKeyDown(Keys.Space) && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
-                    GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity/1.3f));
+                    GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity/1.4f));
 
                     if (_jump)
                         _doublejump = true;
@@ -178,9 +178,9 @@ namespace GameClient.Characters
                 SetAnimation(Animation.Attack);
             else if (pendingAnim.Contains(Animation.Jump))
                 SetAnimation(Animation.Jump);
-            else if (pendingAnim.Contains(Animation.Run) && (!_jump || !_doublejump))
+            else if (pendingAnim.Contains(Animation.Run) && !_jump && !_doublejump)
                 SetAnimation(Animation.Run);
-            else if (pendingAnim.Count != 0 && (!_jump || !_doublejump))
+            else if (pendingAnim.Count != 0 && !_jump && !_doublejump)
                 SetAnimation(Animation.Default);
 
             if (ModelName == "Spiderman")
@@ -189,7 +189,7 @@ namespace GameClient.Characters
 
         UniversalKeys GetKey(Movement movement)
         {
-            return RessourceProvider.InputKeys[movement.ToString() + "." + PlayerNb];
+            return RessourceProvider.InputKeys[movement + "." + PlayerNb];
         }
 
         #region Movements
