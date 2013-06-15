@@ -31,7 +31,7 @@ namespace GameClient
 
         protected override void Initialize()
         {
-            GameEngine.InitializeEngine(Content, _graphics);
+            GameEngine.InitializeEngine(Content, _graphics, this);
             GameEngine.Config.ApplyConfig(_graphics);
             Window.Title = GameEngine.Config.GameName;
             GameEngine.DisplayStack.Push(new MainMenu(_spriteBatch, _graphics).CreateMainMenu());

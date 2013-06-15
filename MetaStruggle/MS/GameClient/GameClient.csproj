@@ -132,8 +132,8 @@
     <Compile Include="Menus\CharacterSelector.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
-    <Compile Include="Menus\TestMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
+    <Compile Include="ParticleEngine\ParticleSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

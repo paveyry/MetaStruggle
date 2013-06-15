@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 //using System.Windows.Forms;
 using GameClient.Global.InputManager;
+using GameClient.ParticleEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -19,17 +20,15 @@ namespace GameClient.Global
         public static Dictionary<string, Texture2D> CharacterFaces = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D> MenuBackgrounds = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D> Skyboxes = new Dictionary<string, Texture2D>();
-
         public static Dictionary<string, SkinnedModel> AnimatedModels = new Dictionary<string, SkinnedModel>();
         public static Dictionary<string, Model> StaticModels = new Dictionary<string, Model>();
-
         public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
-
         //public static Dictionary<string, Cursor> Cursors = new Dictionary<string, Cursor>();
         public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
-
         public static Dictionary<string, UniversalKeys> InputKeys = new Dictionary<string, UniversalKeys>();
+        public static Dictionary<string, ParticleSystem> Particles = new Dictionary<string, ParticleSystem>();
+
 
         public static void Fill(ContentManager content)
         {
@@ -239,6 +238,7 @@ namespace GameClient.Global
         {
             Themes.Add("UglyTestTheme", CreateTheme("UglyTestTheme",content));
         }
+
         private static Dictionary<string, Texture2D> CreateTheme(string themeName, ContentManager content)
         {
             return new Dictionary<string, Texture2D>
@@ -294,6 +294,16 @@ namespace GameClient.Global
                 else
                     for (int j = 0; j < enumMovement.Length; j++)
                         InputKeys.Add(enumMovement.GetValue(j) + "." + i, new UniversalKeys("Keyboard.Escape"));
+        }
+
+        public static void FillParticles(ContentManager content,Game game)
+        {
+            Particles.Add("test", new ParticleSystem(game, "Particles\\test"));
+            foreach (var kvp in Particles)
+            {
+                GameEngine.ParticleSystemManager.AddParticleSystem(kvp.Value);
+                kvp.Value.AutoInitialize(game.GraphicsDevice,content,null);
+            }
         }
     }
 }

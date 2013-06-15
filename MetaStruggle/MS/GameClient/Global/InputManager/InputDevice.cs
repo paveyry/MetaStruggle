@@ -14,13 +14,13 @@ namespace GameClient.Global.InputManager
             var gs = GameEngine.GamePadState;
 
             var value = ks.GetPressedKeys().Select(key => new UniversalKeys("Keyboard." + key.ToString())).ToList();
-            value.AddRange(from Buttons button in Enum.GetValues(typeof (Buttons))
+            value.AddRange(from Buttons button in Enum.GetValues(typeof(Buttons))
                            where gs[nbPlayer].IsButtonDown(button)
-                           select new UniversalKeys("GamePad." + button.ToString()));
-            value.AddRange(from MouseButton mouseButton in Enum.GetValues(typeof (MouseButton))
+                           select new UniversalKeys("GamePad." + (nbPlayer + 1) + "." + button.ToString()));
+            value.AddRange(from MouseButton mouseButton in Enum.GetValues(typeof(MouseButton))
                            where
                                (ButtonState)
-                               (typeof (MouseState).GetProperty(mouseButton.ToString())
+                               (typeof(MouseState).GetProperty(mouseButton.ToString())
                                                    .GetValue(GameEngine.MouseState, null)) == ButtonState.Pressed
                            select new UniversalKeys("Mouse." + mouseButton.ToString()));
             return value;
@@ -30,6 +30,5 @@ namespace GameClient.Global.InputManager
         {
             return new UniversalKeys(key).IsPressed();
         }
-
     }
 }

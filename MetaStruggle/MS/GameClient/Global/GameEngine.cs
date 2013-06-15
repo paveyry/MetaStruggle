@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DPSF;
 using GameClient.Global.InputManager;
 using GameClient.Renderable.Layout;
 using GameClient.SoundEngine;
@@ -25,29 +26,32 @@ namespace GameClient.Global
         public static MouseState MouseState { get; set; }
         public static GamePadState[] GamePadState { get; set; }
         public static InputDevice InputDevice { get; set; }
+        public static ParticleSystemManager ParticleSystemManager { get; set; }
 
         public static int PrimaryHeightOfWindows { get; set; }
         public static int PrimaryWidthOfWindows { get; set; }
 
-        public static void InitializeEngine(ContentManager content, GraphicsDeviceManager graphics)
+        public static void InitializeEngine(ContentManager content, GraphicsDeviceManager graphics, Game game)
         {
             EventManager = new EventManager();
             Config = IO.ConfigSerialization.LoadFile("config.xml");
             LangCenter = new LanguageLoader(graphics.GraphicsDevice);
+            ParticleSystemManager = new ParticleSystemManager();
             RessourceProvider.Fill(content);
+            //RessourceProvider.FillParticles(content,game);
             SoundCenter = SoundCenter.Instance;
             DisplayStack = new LayoutStack<IBasicLayout>();
             InputDevice = new InputDevice();
+            GamePadState = new GamePadState[4];
 
             PrimaryHeightOfWindows = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
             PrimaryWidthOfWindows = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
         }
-
+        
         public static void UpdateEngine()
         {
             KeyboardState = Keyboard.GetState();
             MouseState = Mouse.GetState();
-            GamePadState = new GamePadState[4];
             GamePadState[0] = GamePad.GetState(PlayerIndex.One);
             GamePadState[1] = GamePad.GetState(PlayerIndex.Two);
             GamePadState[2] = GamePad.GetState(PlayerIndex.Three);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DPSF;
 using GameClient.Characters;
 using GameClient.Global;
 using Microsoft.Xna.Framework;
@@ -46,22 +47,28 @@ namespace GameClient.Renderable.Scene
                 System.Threading.Thread.Sleep(200);
                 return;
             }
-
             if (Skybox != null)
                 Skybox.Update();
-
             foreach (var element in Items)
                 element.Update(gameTime);
+
+            //
+            GameEngine.ParticleSystemManager.SetCameraPositionForAllParticleSystems(Camera.Position);
+            GameEngine.ParticleSystemManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            GameEngine.ParticleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, Camera.ViewMatrix, Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f));
+            GameEngine.ParticleSystemManager.DrawAllParticleSystems();
+            //
             if(Skybox != null)
                 Skybox.Draw(spriteBatch);
             foreach (var element in Items)
                 element.Draw(gameTime, spriteBatch);
             Camera.FollowsCharacters(Camera, Items.FindAll(e => e is Character));
             Hud.DrawHUD(spriteBatch);
+            
         }
     }
 }
