@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameClient.CollisionEngine;
 using GameClient.Global;
 using GameClient.Global.InputManager;
 using GameClient.Renderable.Scene;
@@ -49,6 +48,8 @@ namespace GameClient.Characters
         //****NETWORK****
         private int count;
         public bool Playing { get; set; }
+        public Vector3? F1, F2, dI;
+        public int SyncRate = 10;
 
         public bool CollideWithMap
         {
@@ -152,19 +153,22 @@ namespace GameClient.Characters
             #endregion
 
             #region Physic
-            ApplyGravity(gameTime);
-            ApplySpeed(gameTime);
-            KeepOnTheGround();
+            if (Playing)
+            {
+                ApplyGravity(gameTime);
+                ApplySpeed(gameTime);
+                KeepOnTheGround();
+            }
             #endregion
 
             #region Network
-            if (Playing && Client != null /*&& count % SyncRate == 0*/)
+            if (Playing && Client != null && count % SyncRate == 0)
                 new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas {ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw});
 
-            /*if (!Playing && dI.HasValue)
+            if (!Playing && dI.HasValue && count % SyncRate != 0)
                 Position += dI.Value;
 
-            count = (count + 1)%60;*/
+            count = (count + 1)%60;
             #endregion
 
             base.Update(gameTime);

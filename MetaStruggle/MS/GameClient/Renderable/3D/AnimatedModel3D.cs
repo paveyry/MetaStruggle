@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using GameClient.CollisionEngine;
 using GameClient.Renderable.Scene;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -125,7 +123,7 @@ namespace GameClient.Renderable._3D
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>
         /// <param name="bonesSpheres"></param>
-        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, BoundingObjectModel bonesSpheres)
+        /*public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, BoundingObjectModel bonesSpheres)
         {
             foreach (ModelMesh mesh in Model.Model.Meshes)
             {
@@ -145,7 +143,7 @@ namespace GameClient.Renderable._3D
 
                 mesh.Draw();
             }
-        }
+        }*/
 
     }
 

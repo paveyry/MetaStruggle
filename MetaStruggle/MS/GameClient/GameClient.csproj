@@ -118,10 +118,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollisionEngine\BoundingObjectModel.cs" />
-    <Compile Include="CollisionEngine\CollisionEngine.cs" />
-    <Compile Include="CollisionEngine\RenderBoundingObjects\BoundingBoxRenderer.cs" />
-    <Compile Include="CollisionEngine\RenderBoundingObjects\BoundingSphereRenderer.cs" />
     <Compile Include="Global\Config.cs" />
     <Compile Include="Global\GameEngine.cs" />
     <Compile Include="Global\InputManager\InputDevice.cs" />
