@@ -40,14 +40,12 @@ namespace GameClient.Renderable.Scene
 
         public void FollowsCharacters(Camera3D camera, IEnumerable<I3DElement> characters)
         {
-            return;
             if (!characters.Any())
                 return;
+
             float minX = float.MaxValue, maxX = float.MinValue;
             foreach (Character character in characters)
             {
-                //if (character.IsDead)
-                //    continue;
                 if (character.Position.X < minX)
                     minX = character.Position.X;
                 if (character.Position.X > maxX)

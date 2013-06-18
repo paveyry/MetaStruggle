@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using GameClient.Global;
 using GameClient.Global.InputManager;
@@ -36,7 +37,7 @@ namespace GameClient.Characters
         public string PlayerName;
         public Texture2D Face;
 
-        //****PHYSIQUE****
+        //****PHYSIC****
         private const float LatteralSpeed = 0.005f;
         private readonly Vector3 _latteralMove;
         public Vector3 Speed;
@@ -53,7 +54,7 @@ namespace GameClient.Characters
 
         public bool CollideWithMap
         {
-            get { return (Position.Y < 0.01 && Position.Y > -1 && Position.X < 13 && Position.X > -24.5); }
+            get { return (Position.Y <= 0.00 && Position.Y > -1 && Position.X < 13 && Position.X > -24.5); }
         }
         #endregion
 
@@ -88,15 +89,15 @@ namespace GameClient.Characters
 
                 if (GetKey(Movement.SpecialAttack).IsPressed())
                 {
-                    Attack(gameTime);
+                    Attack(gameTime, true);
                     pendingAnim.Add(Animation.SpecialAttack);
                 }
                 if (GetKey(Movement.Attack).IsPressed())
                 {
-                    Attack(gameTime);
+                    Attack(gameTime, false);
                     pendingAnim.Add(Animation.Attack);
                 }
-                if (/*GetKey(Movement.Jump).IsPressed()*/GameEngine.KeyboardState.IsKeyDown(Keys.Space) && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
+                if (GameEngine.KeyboardState.IsKeyDown(Keys.Space) && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
                     GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity/1.4f));
 
@@ -209,9 +210,35 @@ namespace GameClient.Characters
             Position += _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
-        void Attack(GameTime gameTime)
+        void Attack(GameTime gameTime, bool special)
         {
-            
+            List<I3DElement> characters = Scene.Items.FindAll(i3de => i3de is Character && i3de != this);
+
+            foreach (Character character in characters)
+            {
+                if (Yaw == _baseYaw)
+                {
+                    if ((Position - character.Position).Length() < 1.3 && (Position - character.Position).X < 0)
+                    {
+                        character.GiveImpulse(new Vector3(-Gravity*(1 + character.Damages/2)*0.001f,
+                                                          special ? -Gravity*(1 + character.Damages/2)*0.001f : 0.1f, 0));
+
+                        character.Damages += ((special ? 10 : 3) + character.Damages/3)*
+                                             (float) (gameTime.ElapsedGameTime.TotalMilliseconds/1000);
+                    }
+                }
+                else
+                {
+                    if ((character.Position - Position).Length() < 1.3 && (character.Position - Position).X < 0)
+                    {
+                        character.GiveImpulse(new Vector3(Gravity*(1 + character.Damages/2)*0.001f,
+                                                          special ? -Gravity*(1 + character.Damages/2)*0.001f : 0.1f, 0));
+
+                        character.Damages += ((special ? 10 : 3) + character.Damages/3)*
+                                             (float) (gameTime.ElapsedGameTime.TotalMilliseconds/1000);
+                    }
+                }
+            }
         }
         #endregion
 
@@ -232,7 +259,7 @@ namespace GameClient.Characters
 
             Position = new Vector3(Position.X, 0, Position.Z);
             Speed.Y = 0;
-            Speed.X *= 0.9f;
+            Speed.X *= 0.7f;
             _jump = false;
             _doublejump = false;
         }
