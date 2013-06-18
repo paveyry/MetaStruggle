@@ -255,7 +255,12 @@ namespace GameClient.Characters
 
         private void KeepOnTheGround()
         {
-            if (!CollideWithMap) return;
+            if (!CollideWithMap)
+            {
+                if(CurrentAnimation != Animation.Jump)
+                    SetAnimation(Animation.Jump);
+                return;
+            }
 
             Position = new Vector3(Position.X, 0, Position.Z);
             Speed.Y = 0;
