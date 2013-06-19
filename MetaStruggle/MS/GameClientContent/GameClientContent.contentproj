@@ -272,9 +272,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Cursors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Themes\UglyTestTheme\ListLines\Background.png">
       <Name>Background</Name>
@@ -460,6 +458,13 @@
   <ItemGroup>
     <Compile Include="Particles\test.png">
       <Name>test</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cursors\bite.png">
+      <Name>bite</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

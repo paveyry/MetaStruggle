@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-//using System.Windows.Forms;
 using GameClient.Global.InputManager;
 using GameClient.ParticleEngine;
 using Microsoft.Xna.Framework;
@@ -23,7 +22,7 @@ namespace GameClient.Global
         public static Dictionary<string, SkinnedModel> AnimatedModels = new Dictionary<string, SkinnedModel>();
         public static Dictionary<string, Model> StaticModels = new Dictionary<string, Model>();
         public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
-        //public static Dictionary<string, Cursor> Cursors = new Dictionary<string, Cursor>();
+        public static Dictionary<string, Texture2D> Cursors = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
         public static Dictionary<string, UniversalKeys> InputKeys = new Dictionary<string, UniversalKeys>();
@@ -41,7 +40,7 @@ namespace GameClient.Global
 
             LoadFonts(content);
 
-            //LoadCursors(content);
+            LoadCursors(content);
             LoadThemes(content);
             LoadVideos(content);
             LoadInputKeys();
@@ -231,7 +230,7 @@ namespace GameClient.Global
 
         static void LoadCursors(ContentManager content)
         {
-
+            Cursors.Add("bite",content.Load<Texture2D>("Cursors\\bite"));
         }
 
         static void LoadThemes(ContentManager content)
