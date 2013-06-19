@@ -224,18 +224,19 @@ namespace GameClient.Global
         static void LoadFonts(ContentManager content)
         {
             Fonts.Add("Menu", content.Load<SpriteFont>("Fonts\\Menu"));
+            Fonts.Add("MenuLittle", content.Load<SpriteFont>("Fonts\\MenuLittle"));
             Fonts.Add("HUD", content.Load<SpriteFont>("Fonts\\HUD"));
             Fonts.Add("HUDlittle", content.Load<SpriteFont>("Fonts\\HUDlittle"));
         }
 
         static void LoadCursors(ContentManager content)
         {
-            Cursors.Add("bite",content.Load<Texture2D>("Cursors\\bite"));
+            Cursors.Add("thunder", content.Load<Texture2D>("Cursors\\thunder"));
         }
 
         static void LoadThemes(ContentManager content)
         {
-            Themes.Add("UglyTestTheme", CreateTheme("UglyTestTheme",content));
+            Themes.Add("MSTheme", CreateTheme("MSTheme",content));
         }
 
         private static Dictionary<string, Texture2D> CreateTheme(string themeName, ContentManager content)

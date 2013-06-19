@@ -97,7 +97,7 @@ namespace GameClient.Characters
                     Attack(gameTime, false);
                     pendingAnim.Add(Animation.Attack);
                 }
-                if (GameEngine.KeyboardState.IsKeyDown(Keys.Space) && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
+                if (GetKey(Movement.Jump).IsPressed() && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
                     GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity/1.4f));
 

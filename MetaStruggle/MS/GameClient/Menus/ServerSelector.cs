@@ -80,7 +80,7 @@ namespace GameClient.Menus
             Menu.Add("ListServer.Item", new ClassicList(new Rectangle(10, 10, 80, 50), Servers, new Dictionary<string, int>
                 {
                     {"Map",18}, {"IP:Port",11}, {"Player", 3}
-                }, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, "UglyTestTheme"));
+                }, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, "MSTheme"));
         }
         
         void GameBegin(object data)

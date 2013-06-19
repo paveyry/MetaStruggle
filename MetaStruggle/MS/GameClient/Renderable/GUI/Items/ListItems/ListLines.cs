@@ -65,22 +65,23 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             }
 
             Field.InternalRectangle = new Rectangle(InternalRectangle.X, RealRectangle.Y, InternalRectangle.Width, _heightField);
-            
+
             _maxLines = Lines.Count;
             _ratio = 1f;
+            _cursor = 0;
             bool isOutOfLimits = false;
             for (int i = _cursor, posInY = InternalRectangle.Y; i < Lines.Count; i++)
             {
                 Lines[i].InternalRectangle = new Rectangle(InternalRectangle.X, posInY, InternalRectangle.Width, _heightLine);
                 posInY += _heightLine;
 
-                Lines[i].IsDrawable = posInY  <= InternalRectangle.Y + InternalRectangle.Height;
+                Lines[i].IsDrawable = posInY <= InternalRectangle.Y + InternalRectangle.Height;
                 if (Lines[i].IsDrawable || isOutOfLimits) continue;
 
                 HeightInternalRectangle = posInY - _heightLine - InternalRectangle.Y; //Update InternalRectangle if Lines are out of the limits
                 _maxLines = i;
                 isOutOfLimits = true;
-                _ratio = (Lines.Count*_heightLine)/(float) InternalRectangle.Height;
+                _ratio = (Lines.Count * _heightLine) / (float)InternalRectangle.Height;
             }
 
         }
@@ -104,9 +105,10 @@ namespace GameClient.Renderable.GUI.Items.ListItems
             spriteBatch.Draw(Theme["Top"], new Rectangle(RealRectangle.X, RealRectangle.Y, RealRectangle.Width, _heightLine), Color.White);
             spriteBatch.Draw(Theme["Down"], new Rectangle(RealRectangle.X, InternalRectangle.Y + InternalRectangle.Height,
                 RealRectangle.Width, Theme["Down"].Height), Color.White);
-            spriteBatch.Draw(Theme["Scroll"], new Rectangle(InternalRectangle.X + InternalRectangle.Width,
-                InternalRectangle.Y + (int)(((_cursor) * _heightLine) / (_ratio)),
-                Theme["RightSide"].Width, (int)(InternalRectangle.Height / _ratio)), Color.White);
+            if (_ratio != 1f)
+                spriteBatch.Draw(Theme["Scroll"], new Rectangle(InternalRectangle.X + InternalRectangle.Width,
+                    InternalRectangle.Y + (int)(((_cursor) * _heightLine) / (_ratio)),
+                    Theme["RightSide"].Width, (int)(InternalRectangle.Height / _ratio)), Color.White);
 
             Field.DrawItem(gameTime, spriteBatch);
             foreach (var line in Lines.Where(line => line.IsDrawable))

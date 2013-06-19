@@ -27,11 +27,11 @@ namespace GameClient.Menus
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
             Menu.Add("CharacterSelector.Text", new SimpleText("Text.SelectPlayer", new Vector2(15, 15), 
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"],Color.White ));
-            Menu.Add("CharacterSelector.Item", new ListImageButtons(new Rectangle(15, 22, 70, 45), RessourceProvider.CharacterFaces, "UglyTestTheme",
+            Menu.Add("CharacterSelector.Item", new ListImageButtons(new Rectangle(15, 22, 70, 45), RessourceProvider.CharacterFaces, "MSTheme",
                 RessourceProvider.Fonts["HUDlittle"]));
             Menu.Add("PlayerName.Text", new SimpleText("Text.TextboxPlayer", new Vector2(15, 75), 
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"], Color.White));
-            Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,82,300,0), "UglyTestTheme",
+            Menu.Add("PlayerName.Item", new Textbox("",new Rectangle(15,82,300,0), "MSTheme",
                 RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 82), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));

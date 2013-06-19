@@ -19,7 +19,7 @@ namespace GameClient.Renderable.GUI
         {
             Background = background;
             Items = new Dictionary<string, Item>();
-            Mouse = RessourceProvider.Cursors["bite"];
+            Mouse = RessourceProvider.Cursors["thunder"];
         }
 
         public void Add(string key, Item item)
