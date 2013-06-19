@@ -62,17 +62,17 @@ namespace GameClient.Renderable.Scene
             foreach (var element in Items)
                 element.Update(gameTime);
 
-            //
             GameEngine.ParticleSystemManager.SetCameraPositionForAllParticleSystems(Camera.Position);
             GameEngine.ParticleSystemManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            GameEngine.ParticleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, Camera.ViewMatrix, Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f));
+            GameEngine.ParticleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity,
+                Camera.ViewMatrix, Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45),
+                spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f));
             GameEngine.ParticleSystemManager.DrawAllParticleSystems();
             spriteBatch.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            //
             if(Skybox != null)
                 Skybox.Draw(spriteBatch);
             foreach (var element in Items)

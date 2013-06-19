@@ -13,11 +13,13 @@ namespace GameClient.Renderable.GUI
     {
         public Dictionary<string, Item> Items { get; set; }
         private Texture2D Background { get; set; }
+        private Texture2D Mouse { get; set; }
 
         public Menu(Texture2D background)
         {
             Background = background;
             Items = new Dictionary<string, Item>();
+            Mouse = RessourceProvider.Cursors["bite"];
         }
 
         public void Add(string key, Item item)
@@ -41,6 +43,7 @@ namespace GameClient.Renderable.GUI
                                GameEngine.Config.ResolutionHeight), Color.White);
             foreach (var item in Items)
                 item.Value.DrawItem(gameTime, spriteBatch);
+            DrawMouse(spriteBatch);
             spriteBatch.End();
         }
 
@@ -53,8 +56,11 @@ namespace GameClient.Renderable.GUI
             System.Threading.Thread.Sleep(200);
             if (GameEngine.DisplayStack.Count > 1)
                 GameEngine.DisplayStack.Pop();
-            //else
-            //    Environment.Exit(0);
+        }
+
+        public void DrawMouse(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Mouse,new Vector2(GameEngine.MouseState.X,GameEngine.MouseState.Y),Color.White);
         }
     }
 }

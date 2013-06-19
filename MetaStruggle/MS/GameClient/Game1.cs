@@ -26,7 +26,7 @@ namespace GameClient
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             AppDomain.CurrentDomain.ProcessExit += (sender, args) => { GameEngine.SaveDatas(); GameEngine.SoundCenter.StopAll(); };
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         protected override void Initialize()
