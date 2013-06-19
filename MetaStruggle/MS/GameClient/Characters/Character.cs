@@ -51,7 +51,7 @@ namespace GameClient.Characters
         private int count;
         public bool Playing { get; set; }
         public Vector3? F1, F2, dI;
-        public int SyncRate = 10;
+        public int SyncRate = 5;
 
         //****PARTICLE****
         Dictionary<string,ParticleSystem> ParticlesCharacter { get; set; }
