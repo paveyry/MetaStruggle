@@ -35,7 +35,7 @@ namespace GameClient.Renderable.Scene
 
         public void SetTarget(I3DElement targetElement)
         {
-            Target = new Vector3(targetElement.Position.X, targetElement.Position.Y + 4, targetElement.Position.Z);
+            Target = new Vector3(targetElement.Position.X, targetElement.Position.Y, targetElement.Position.Z);
         }
 
         public void FollowsCharacters(Camera3D camera, IEnumerable<I3DElement> characters)
@@ -44,17 +44,20 @@ namespace GameClient.Renderable.Scene
                 return;
 
             float minX = float.MaxValue, maxX = float.MinValue;
+            float minY = float.MaxValue, maxY = float.MinValue;
             foreach (Character character in characters)
             {
-                if (character.Position.X < minX)
+                if (character.Position.X < minX && character.Position.X > -38)
                     minX = character.Position.X;
-                if (character.Position.X > maxX)
+                if (character.Position.X > maxX && character.Position.X < 33)
                     maxX = character.Position.X;
+                if (character.Position.Y > maxY && character.Position.Y < 20 && character.Position.X < 33 && character.Position.X > -38)
+                    maxY = character.Position.Y;
             }
-            Target = new Vector3((maxX + minX) / 2, camera.Target.Y, characters.First().Position.Z);
+            Target = new Vector3((maxX + minX) / 2, (maxY - 1) / 2, characters.First().Position.Z - 0.3f);
 
-            Position = new Vector3(Target.X, Position.Y, (characters.Count() == 1) ? Position.Z :
-                                   -(float)((maxX - Target.X) / Math.Tan(MathHelper.PiOver4 / 2)) + Target.Z);
+            Position = new Vector3(Target.X, Position.Y, ((characters.Count() == 1) ? Position.Z :
+                                   -(float)((maxX - Target.X + maxY - Target.Y) / Math.Tan(MathHelper.PiOver4 / 2)) + Target.Z) - 4);
         }
     }
 }

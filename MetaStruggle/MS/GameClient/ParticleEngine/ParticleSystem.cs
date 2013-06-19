@@ -38,35 +38,35 @@ namespace GameClient.ParticleEngine
 
         public void LoadParticleSystem()
         {
-            ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
-            InitialProperties.LifetimeMin = 1.5f;
-            InitialProperties.LifetimeMax = 3.0f;
-            InitialProperties.PositionMin = Vector3.Zero;
-            InitialProperties.PositionMax = Vector3.Zero;
-            InitialProperties.VelocityMin = new Vector3(-50, 50, -50);
-            InitialProperties.VelocityMax = new Vector3(50, 100, 50);
-            InitialProperties.RotationMin.Z = 0.0f;
-            InitialProperties.RotationMax.Z = MathHelper.Pi;
-            InitialProperties.RotationalVelocityMin.Z = -MathHelper.Pi;
-            InitialProperties.RotationalVelocityMax.Z = MathHelper.Pi;
-            InitialProperties.StartSizeMin = 20;
-            InitialProperties.StartSizeMax = 40;
-            InitialProperties.EndSizeMin = 30;
-            InitialProperties.EndSizeMax = 30;
-            InitialProperties.StartColorMin = Color.Black;
-            InitialProperties.StartColorMax = Color.White;
-            InitialProperties.EndColorMin = Color.Black;
-            InitialProperties.EndColorMax = Color.White;
-            ParticleEvents.RemoveAllEvents();
-            ParticleSystemEvents.RemoveAllEvents();
-            ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionUsingVelocity);
-            ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
-            ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
-            ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
-            ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, 100);
-            ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 200);
-            Emitter.ParticlesPerSecond = 50;
-            Emitter.PositionData.Position = new Vector3(0, 0, -17);
+            //ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
+            //InitialProperties.LifetimeMin = 1.5f;
+            //InitialProperties.LifetimeMax = 3.0f;
+            //InitialProperties.PositionMin = Vector3.Zero;
+            //InitialProperties.PositionMax = Vector3.Zero;
+            //InitialProperties.VelocityMin = new Vector3(-50, 50, -50);
+            //InitialProperties.VelocityMax = new Vector3(50, 100, 50);
+            //InitialProperties.RotationMin.Z = 0.0f;
+            //InitialProperties.RotationMax.Z = MathHelper.Pi;
+            //InitialProperties.RotationalVelocityMin.Z = -MathHelper.Pi;
+            //InitialProperties.RotationalVelocityMax.Z = MathHelper.Pi;
+            //InitialProperties.StartSizeMin = 20;
+            //InitialProperties.StartSizeMax = 40;
+            //InitialProperties.EndSizeMin = 30;
+            //InitialProperties.EndSizeMax = 30;
+            //InitialProperties.StartColorMin = Color.Black;
+            //InitialProperties.StartColorMax = Color.White;
+            //InitialProperties.EndColorMin = Color.Black;
+            //InitialProperties.EndColorMax = Color.White;
+            //ParticleEvents.RemoveAllEvents();
+            //ParticleSystemEvents.RemoveAllEvents();
+            //ParticleEvents.AddEveryTimeEvent(UpdateParticlePositionUsingVelocity);
+            //ParticleEvents.AddEveryTimeEvent(UpdateParticleRotationUsingRotationalVelocity);
+            //ParticleEvents.AddEveryTimeEvent(UpdateParticleWidthAndHeightUsingLerp);
+            //ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
+            //ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, 100);
+            //ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 200);
+            //Emitter.ParticlesPerSecond = 50;
+            //Emitter.PositionData.Position = new Vector3(0, 0, -17);
         }
 
         public void InitializeParticleProperties(DefaultTexturedQuadParticle cParticle)
