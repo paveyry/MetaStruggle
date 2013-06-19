@@ -123,13 +123,15 @@
     <Compile Include="Global\InputManager\InputDevice.cs" />
     <Compile Include="Global\InputManager\UniversalKeys.cs" />
     <Compile Include="Global\RessourceProvider.cs" />
-    <Compile Include="IO\ConfigSerialization.cs" />
+    <Compile Include="IO\Serialization.cs" />
     <Compile Include="Global\LanguageLoader.cs" />
     <Compile Include="Menus\CharacterSelector.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
-    <Compile Include="ParticleEngine\ParticleSystem.cs" />
+    <Compile Include="ParticleEngine\EmitterFields.cs" />
+    <Compile Include="ParticleEngine\Particle.cs" />
+    <Compile Include="ParticleEngine\ParticleFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

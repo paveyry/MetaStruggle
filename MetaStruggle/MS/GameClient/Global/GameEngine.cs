@@ -34,7 +34,7 @@ namespace GameClient.Global
         public static void InitializeEngine(ContentManager content, GraphicsDeviceManager graphics, Game game)
         {
             EventManager = new EventManager();
-            Config = IO.ConfigSerialization.LoadFile("config.xml");
+            Config = IO.Serialization.LoadConfigFile("config.xml");
             LangCenter = new LanguageLoader(graphics.GraphicsDevice);
             ParticleSystemManager = new ParticleSystemManager();
             RessourceProvider.Fill(content);
@@ -60,7 +60,7 @@ namespace GameClient.Global
 
         public static void SaveDatas()
         {
-            IO.ConfigSerialization.SaveFile("config.xml", Config);
+            IO.Serialization.SaveConfigFile("config.xml", Config);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace GameClient.Renderable.Scene
             foreach (var kvp in RessourceProvider.Particles)
             {
                 GameEngine.ParticleSystemManager.AddParticleSystem(kvp.Value);
-                kvp.Value.Initialize();
+                kvp.Value.InitializeParticle();
             }
         }
 

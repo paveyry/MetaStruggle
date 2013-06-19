@@ -32,7 +32,7 @@ namespace GameClient.Global
                     VolumeEffect = 100,
                     FullScreen = false,
                     PreferMultiSampling = true,
-                    Keys = new [] { "Keyboard.Q,Keyboard.D,Keyboard.Z,Keyboard.Space,Keyboard.A" }
+                    Keys = new [] { "Keyboard.Q,Keyboard.D,Keyboard.Z,Keyboard.Space,Keyboard.A" },
                 };
         }
 
