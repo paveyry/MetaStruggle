@@ -31,41 +31,26 @@ namespace GameClient.Global
 
         public static void Fill(ContentManager content)
         {
-            LoadCharacterFaces(content);
-            LoadMenuBackgrounds(content);
-            LoadSkyboxes(content);
+            LoadDictionnary(content, "CharacterFaces", CharacterFaces);
+            LoadDictionnary(content, "MenuBackgrounds", MenuBackgrounds);
+            LoadDictionnary(content, "Skyboxes", Skyboxes);
+            LoadDictionnary(content, "StaticModels", StaticModels);
+            LoadDictionnary(content, "Fonts", Fonts);
+            LoadDictionnary(content, "Cursors", Cursors);
+            LoadDictionnary(content, "Videos", Videos);
 
             LoadAnimatedModels(content);
-            LoadStaticModels(content);
-
-            LoadFonts(content);
-
-            LoadCursors(content);
             LoadThemes(content);
-            LoadVideos(content);
             LoadInputKeys();
         }
 
-        static void LoadCharacterFaces(ContentManager content)
+        private static void LoadDictionnary<T>(ContentManager content, string dirName, Dictionary<string, T> dictionary)
         {
-            CharacterFaces.Add("Zeus", content.Load<Texture2D>("CharacterFaces\\Zeus"));
-            CharacterFaces.Add("Spiderman", content.Load<Texture2D>("CharacterFaces\\Spiderman"));
-            CharacterFaces.Add("Alex", content.Load<Texture2D>("CharacterFaces\\Alex"));
-            CharacterFaces.Add("Ares", content.Load<Texture2D>("CharacterFaces\\Ares"));
-            CharacterFaces.Add("Ironman", content.Load<Texture2D>("CharacterFaces\\Ironman"));
+            foreach (var file in Directory.GetFiles("Content\\" + dirName).Select(Path.GetFileNameWithoutExtension).Where(file => !dictionary.ContainsKey(file)))
+                dictionary.Add(file, content.Load<T>(dirName + '\\' + file));
         }
 
-        static void LoadMenuBackgrounds(ContentManager content)
-        {
-            MenuBackgrounds.Add("MainMenu", content.Load<Texture2D>("MenuBackgrounds\\MainMenu"));
-            MenuBackgrounds.Add("SimpleMenu", content.Load<Texture2D>("MenuBackgrounds\\SimpleMenu"));
-        }
-
-        static void LoadSkyboxes(ContentManager content)
-        {
-            Skyboxes.Add("Ocean", content.Load<Texture2D>("Skyboxes\\Ocean"));
-        }
-
+        #region AnimatedModels
         static void LoadAnimatedModels(ContentManager content)
         {
             AnimatedModels.Add("Zeus", GetZeus(content));
@@ -213,35 +198,18 @@ namespace GameClient.Global
             }
             return sm;
         }
+        #endregion
 
-        static void LoadStaticModels(ContentManager content)
-        {
-            StaticModels.Add("MapDesert", content.Load<Model>("StaticModels\\MapDesert"));
-            StaticModels.Add("MapTardis", content.Load<Model>("StaticModels\\tardis map"));
-            StaticModels.Add("MapMinecraft", content.Load<Model>("StaticModels\\tree map"));
-        }
-
-        static void LoadFonts(ContentManager content)
-        {
-            Fonts.Add("Menu", content.Load<SpriteFont>("Fonts\\Menu"));
-            Fonts.Add("MenuLittle", content.Load<SpriteFont>("Fonts\\MenuLittle"));
-            Fonts.Add("HUD", content.Load<SpriteFont>("Fonts\\HUD"));
-            Fonts.Add("HUDlittle", content.Load<SpriteFont>("Fonts\\HUDlittle"));
-        }
-
-        static void LoadCursors(ContentManager content)
-        {
-            Cursors.Add("thunder", content.Load<Texture2D>("Cursors\\thunder"));
-        }
-
+        #region Themes
         static void LoadThemes(ContentManager content)
         {
-            Themes.Add("MSTheme", CreateTheme("MSTheme",content));
+            foreach (var dir in Directory.GetDirectories("Content\\Themes").Select(Path.GetFileNameWithoutExtension))
+                Themes.Add(dir, CreateTheme(dir, content));
         }
 
         private static Dictionary<string, Texture2D> CreateTheme(string themeName, ContentManager content)
         {
-            return new Dictionary<string, Texture2D>
+            return new Dictionary<string, Texture2D> // je dois vérifier que le théme est complet...
                 {
                     {"CheckBox.Selected", content.Load<Texture2D>("Themes\\" +themeName + "\\CheckBox\\Selected")},
                     {"CheckBox.Normal", content.Load<Texture2D>("Themes\\" +themeName + "\\CheckBox\\Normal")},
@@ -274,11 +242,7 @@ namespace GameClient.Global
                     {"Textbox.Background", content.Load<Texture2D>("Themes\\" +themeName + "\\Textbox\\Background")}
                 };
         }
-
-        static void LoadVideos(ContentManager content)
-        {
-            Videos.Add("Intro", content.Load<Video>("Videos\\Intro"));
-        }
+        #endregion
 
         static void LoadInputKeys()
         {
@@ -296,10 +260,10 @@ namespace GameClient.Global
                         InputKeys.Add(enumMovement.GetValue(j) + "." + i, new UniversalKeys("Keyboard.Escape"));
         }
 
-        public static void FillParticles(ContentManager content,Game game)
+        public static void FillParticles(ContentManager content, Game game)
         {
             foreach (var dir in Directory.GetDirectories("Particles"))
-                Particles.Add(dir, new Particle(game, content, dir + '\\'));
+                Particles.Add(Path.GetFileNameWithoutExtension(dir), new Particle(game, content, dir + '\\'));
         }
     }
 }

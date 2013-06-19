@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameClient.Global;
 using GameClient.Global.InputManager;
+using GameClient.Renderable.Particle;
 using GameClient.Renderable.Scene;
 using GameClient.Renderable._3D;
 using Microsoft.Xna.Framework;
@@ -52,6 +53,9 @@ namespace GameClient.Characters
         public Vector3? F1, F2, dI;
         public int SyncRate = 10;
 
+        //****PARTICLE****
+        Particle ParticleCharacter { get; set; }
+
         public bool CollideWithMap
         {
             get { return (Position.Y <= 0.00 && Position.Y > -1 && Position.X < 13 && Position.X > -24.5); }
@@ -67,6 +71,9 @@ namespace GameClient.Characters
             PlayerNb = playerNb;
             PlayerName = playerName;
             Face = RessourceProvider.CharacterFaces[nameCharacter];
+            ParticleCharacter = (RessourceProvider.Particles.ContainsKey(nameCharacter))
+                                    ? RessourceProvider.Particles[nameCharacter]
+                                    : null;
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;
@@ -159,6 +166,13 @@ namespace GameClient.Characters
                 ApplyGravity(gameTime);
                 ApplySpeed(gameTime);
                 KeepOnTheGround();
+            }
+            #endregion
+
+            #region Particle
+            if (ParticleCharacter != null)
+            {
+                ParticleCharacter.UpdatePositionEmitter(Position);
             }
             #endregion
 

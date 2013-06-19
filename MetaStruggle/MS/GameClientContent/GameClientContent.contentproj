@@ -217,15 +217,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StaticModels\tardis map.fbx">
-      <Name>tardis map</Name>
+    <Compile Include="StaticModels\MapTardis.fbx">
+      <Name>MapTardis</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StaticModels\tree map.fbx">
-      <Name>tree map</Name>
+    <Compile Include="StaticModels\MapMinecraft.fbx">
+      <Name>MapMinecraft</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
