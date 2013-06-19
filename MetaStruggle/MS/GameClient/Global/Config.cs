@@ -17,6 +17,7 @@ namespace GameClient.Global
         public int VolumeMusic { get; set; }
         public int VolumeEffect { get; set; }
         public bool FullScreen { get; set; }
+        public bool PreferMultiSampling { get; set; }
         public string[] Keys { get; set; }
 
         public static Config GetDefaultConfig()
@@ -30,6 +31,7 @@ namespace GameClient.Global
                     VolumeMusic = 100,
                     VolumeEffect = 100,
                     FullScreen = false,
+                    PreferMultiSampling = true,
                     Keys = new [] { "Keyboard.Q,Keyboard.D,Keyboard.Z,Keyboard.Space,Keyboard.A" }
                 };
         }
@@ -45,7 +47,7 @@ namespace GameClient.Global
         {
             graphics.PreferredBackBufferWidth = GameEngine.Config.ResolutionWidth;
             graphics.PreferredBackBufferHeight = GameEngine.Config.ResolutionHeight;
-            graphics.PreferMultiSampling = true;
+            graphics.PreferMultiSampling = GameEngine.Config.PreferMultiSampling;
             graphics.GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None };
             graphics.IsFullScreen = GameEngine.Config.FullScreen;
             graphics.ApplyChanges();

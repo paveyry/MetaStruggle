@@ -12,11 +12,21 @@ namespace GameClient.ParticleEngine
     public class ParticleSystem : DefaultTexturedQuadParticleSystem
     {
         string TextureDir { get; set; }
+        private Game _game;
+        private ContentManager _content;
 
-        public ParticleSystem(Game game, string textureDir) : base(game)
+        public ParticleSystem(Game game, ContentManager content, string textureDir)
+            : base(game)
         {
+            _game = game;
+            _content = content;
             TextureDir = textureDir;
             ParticleInitializationFunction = InitializeParticleProperties;
+        }
+
+        public void Initialize()
+        {
+                AutoInitialize(_game.GraphicsDevice, _content, null);
         }
 
         public override void AutoInitialize(GraphicsDevice cGraphicsDevice, ContentManager cContentManager, SpriteBatch cSpriteBatch)
@@ -56,7 +66,7 @@ namespace GameClient.ParticleEngine
             ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, 100);
             ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, 200);
             Emitter.ParticlesPerSecond = 50;
-            Emitter.PositionData.Position = /*new Vector3(-200, -200, 0)*/ new Vector3(0, 0, 0);
+            Emitter.PositionData.Position = new Vector3(0, 0, -17);
         }
 
         public void InitializeParticleProperties(DefaultTexturedQuadParticle cParticle)

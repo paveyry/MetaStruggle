@@ -24,6 +24,16 @@ namespace GameClient.Renderable.Scene
             SpriteBatch = spriteBatch;
             Items = new List<I3DElement>();
             Hud = new HUD();
+            InitializeParticleEngine();
+        }
+
+        public void InitializeParticleEngine()
+        {
+            foreach (var kvp in RessourceProvider.Particles)
+            {
+                GameEngine.ParticleSystemManager.AddParticleSystem(kvp.Value);
+                kvp.Value.Initialize();
+            }
         }
 
         public void AddElement(I3DElement element)
@@ -61,6 +71,7 @@ namespace GameClient.Renderable.Scene
         {
             GameEngine.ParticleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity, Camera.ViewMatrix, Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f));
             GameEngine.ParticleSystemManager.DrawAllParticleSystems();
+            spriteBatch.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             //
             if(Skybox != null)
                 Skybox.Draw(spriteBatch);
@@ -68,7 +79,6 @@ namespace GameClient.Renderable.Scene
                 element.Draw(gameTime, spriteBatch);
             Camera.FollowsCharacters(Camera, Items.FindAll(e => e is Character));
             Hud.DrawHUD(spriteBatch);
-            
         }
     }
 }

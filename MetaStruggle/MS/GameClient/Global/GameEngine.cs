@@ -38,7 +38,7 @@ namespace GameClient.Global
             LangCenter = new LanguageLoader(graphics.GraphicsDevice);
             ParticleSystemManager = new ParticleSystemManager();
             RessourceProvider.Fill(content);
-            //RessourceProvider.FillParticles(content,game);
+            RessourceProvider.FillParticles(content,game);
             SoundCenter = SoundCenter.Instance;
             DisplayStack = new LayoutStack<IBasicLayout>();
             InputDevice = new InputDevice();

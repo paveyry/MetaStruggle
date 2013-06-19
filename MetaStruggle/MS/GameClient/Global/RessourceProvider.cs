@@ -298,12 +298,7 @@ namespace GameClient.Global
 
         public static void FillParticles(ContentManager content,Game game)
         {
-            Particles.Add("test", new ParticleSystem(game, "Particles\\test"));
-            foreach (var kvp in Particles)
-            {
-                GameEngine.ParticleSystemManager.AddParticleSystem(kvp.Value);
-                kvp.Value.AutoInitialize(game.GraphicsDevice,content,null);
-            }
+            Particles.Add("test", new ParticleSystem(game,content, "Particles\\test"));
         }
     }
 }
