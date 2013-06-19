@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using GameClient.Characters;
 using GameClient.Global.InputManager;
 using GameClient.Renderable.Particle;
 using Microsoft.Xna.Framework;
@@ -27,9 +28,10 @@ namespace GameClient.Global
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
         public static Dictionary<string, UniversalKeys> InputKeys = new Dictionary<string, UniversalKeys>();
         public static Dictionary<string, Dictionary<string, ParticleSystem>> Particles = new Dictionary<string, Dictionary<string, ParticleSystem>>();
+        public static Dictionary<string, Character> Characters = new Dictionary<string, Character>();
 
 
-        public static void Fill(ContentManager content)
+        public static void Fill(ContentManager content, Game game)
         {
             LoadDictionnary(content, "CharacterFaces", CharacterFaces);
             LoadDictionnary(content, "MenuBackgrounds", MenuBackgrounds);
@@ -39,9 +41,12 @@ namespace GameClient.Global
             LoadDictionnary(content, "Cursors", Cursors);
             LoadDictionnary(content, "Videos", Videos);
 
+            FillParticles(content, game);
             LoadAnimatedModels(content);
             LoadThemes(content);
             LoadInputKeys();
+
+            FillCharacters();
         }
 
         private static void LoadDictionnary<T>(ContentManager content, string dirName, Dictionary<string, T> dictionary)
@@ -54,7 +59,6 @@ namespace GameClient.Global
         static void LoadAnimatedModels(ContentManager content)
         {
             AnimatedModels.Add("Zeus", GetZeus(content));
-            AnimatedModels.Add("Dwarf", GetDwarf(content));
             AnimatedModels.Add("Spiderman", GetSpiderman(content));
             AnimatedModels.Add("Alex", GetAlex(content));
             AnimatedModels.Add("Ares", GetAres(content));
@@ -95,30 +99,6 @@ namespace GameClient.Global
                 foreach (SkinnedEffect effect in mesh.Effects)
                 {
                     effect.Texture = body;
-
-                    effect.EnableDefaultLighting();
-
-                    effect.SpecularColor = new Vector3(0.25f);
-                    effect.SpecularPower = 16;
-                }
-            }
-
-            return sm;
-        }
-        static SkinnedModel GetDwarf(ContentManager content)
-        {
-            var sm = content.Load<SkinnedModel>("AnimatedModels\\Dwarf\\Model");
-            var body = content.Load<Texture2D>("AnimatedModels\\Dwarf\\Body");
-            var axe = content.Load<Texture2D>("AnimatedModels\\Dwarf\\axe");
-
-            foreach (ModelMesh mesh in sm.Model.Meshes)
-            {
-                foreach (SkinnedEffect effect in mesh.Effects)
-                {
-                    effect.Texture = body;
-
-                    if (mesh.Name == "axe")
-                        effect.Texture = axe;
 
                     effect.EnableDefaultLighting();
 
@@ -197,6 +177,15 @@ namespace GameClient.Global
                 }
             }
             return sm;
+        }
+        #endregion
+
+        #region Characters
+        private static void FillCharacters()
+        {
+            foreach (var kvp in AnimatedModels)
+                Characters.Add(kvp.Key, new Character(null, kvp.Key, 0, null, new Vector3(0, 0, -17), new Vector3(1),
+                                                      (kvp.Key == "Spiderman" || kvp.Key == "Alex") ? 1.6f : 1));
         }
         #endregion
 

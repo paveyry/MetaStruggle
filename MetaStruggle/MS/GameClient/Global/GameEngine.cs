@@ -37,8 +37,8 @@ namespace GameClient.Global
             Config = IO.Serialization.LoadConfigFile("config.xml");
             LangCenter = new LanguageLoader(graphics.GraphicsDevice);
             ParticleSystemManager = new ParticleSystemManager();
-            RessourceProvider.Fill(content);
-            RessourceProvider.FillParticles(content,game);
+            RessourceProvider.Fill(content, game);
+            
             SoundCenter = SoundCenter.Instance;
             DisplayStack = new LayoutStack<IBasicLayout>();
             InputDevice = new InputDevice();

@@ -292,5 +292,16 @@ namespace GameClient.Characters
             Position = Position + Speed * (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
         }
         #endregion
+
+        #region Environnement
+        public void SetEnvironnementDatas(string playerName, byte id, SceneManager sm, bool playing, Client client)
+        {
+            PlayerName = playerName;
+            Scene = sm;
+            ID = id;
+            Playing = playing;
+            Client = client;
+        }
+        #endregion
     }
 }
