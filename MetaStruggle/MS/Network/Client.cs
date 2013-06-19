@@ -76,7 +76,7 @@ namespace Network
         {
             while (Connected)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(10);
 
                 if (CheckIfDisconnected()) return;
                 if (_client.Available < PacketHeader.HeaderSize) continue;
@@ -101,7 +101,7 @@ namespace Network
 
         bool CheckIfDisconnected()
         {
-            if (Connected && _client.Client.Poll(-1, SelectMode.SelectRead) && _client.Available == 0)
+            if (_client.Client == null || (Connected && _client.Client.Poll(-1, SelectMode.SelectRead) && _client.Available == 0))
                 Disconnect();
 
             return !Connected;

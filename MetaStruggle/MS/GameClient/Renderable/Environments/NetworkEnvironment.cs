@@ -64,6 +64,9 @@ namespace GameClient.Renderable.Environments
 
         void SetCharacterPosition(object data)
         {
+            if (sm == null)
+                return;
+
             var cp = (CharacterPositionDatas) data;
 
             var c = (Character) sm.Items.Where(e => e is Character).First(e => (e as Character).ID == cp.ID);
