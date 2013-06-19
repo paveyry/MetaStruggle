@@ -130,7 +130,7 @@
     <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
     <Compile Include="Renderable\Particle\EmitterFields.cs" />
-    <Compile Include="Renderable\Particle\Particle.cs" />
+    <Compile Include="Renderable\Particle\ParticleSystem.cs" />
     <Compile Include="Renderable\Particle\ParticleFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

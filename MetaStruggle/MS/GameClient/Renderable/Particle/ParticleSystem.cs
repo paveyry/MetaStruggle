@@ -6,15 +6,20 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameClient.Renderable.Particle
 {
-    public class Particle : DefaultTexturedQuadParticleSystem
+    public class ParticleSystem : DefaultTexturedQuadParticleSystem
     {
-        ParticleFields LoadedFields { get; set; }
-        CInitialPropertiesForQuad LoadedInitialProperties { get; set; }
-        EmitterFields LoadedEmitterFields { get; set; }
+        #region Private Fields
+        private ParticleFields LoadedFields { get; set; }
+        private CInitialPropertiesForQuad LoadedInitialProperties { get; set; }
+        private EmitterFields LoadedEmitterFields { get; set; }
         private readonly Game _game;
         private readonly ContentManager _content;
+        #endregion
+        #region Public Fields
+        public bool ActivateParticleSystem { get { return Emitter.Enabled; } set { Emitter.Enabled = value; } }
+        #endregion
 
-        public Particle(Game game, ContentManager content, string dir)
+        public ParticleSystem(Game game, ContentManager content, string dir)
             : base(game)
         {
             _game = game;

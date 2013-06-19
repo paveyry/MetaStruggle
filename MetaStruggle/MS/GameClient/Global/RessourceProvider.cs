@@ -26,7 +26,7 @@ namespace GameClient.Global
         public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
         public static Dictionary<string, UniversalKeys> InputKeys = new Dictionary<string, UniversalKeys>();
-        public static Dictionary<string, Particle> Particles = new Dictionary<string, Particle>();
+        public static Dictionary<string, Dictionary<string, ParticleSystem>> Particles = new Dictionary<string, Dictionary<string, ParticleSystem>>();
 
 
         public static void Fill(ContentManager content)
@@ -262,8 +262,11 @@ namespace GameClient.Global
 
         public static void FillParticles(ContentManager content, Game game)
         {
-            foreach (var dir in Directory.GetDirectories("Particles"))
-                Particles.Add(Path.GetFileNameWithoutExtension(dir), new Particle(game, content, dir + '\\'));
+            foreach (var mainDir in Directory.GetDirectories("Particles"))
+                Particles.Add(Path.GetFileNameWithoutExtension(mainDir),
+                              Directory.GetDirectories(mainDir)
+                                       .ToDictionary(Path.GetFileNameWithoutExtension,
+                                                     dir => new ParticleSystem(game, content, dir + '\\')));
         }
     }
 }

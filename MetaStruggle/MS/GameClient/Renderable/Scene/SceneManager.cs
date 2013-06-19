@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DPSF;
 using GameClient.Characters;
 using GameClient.Global;
@@ -29,7 +30,7 @@ namespace GameClient.Renderable.Scene
 
         public void InitializeParticleEngine()
         {
-            foreach (var kvp in RessourceProvider.Particles)
+            foreach (var kvp in RessourceProvider.Particles.SelectMany(mainKvp => mainKvp.Value))
             {
                 GameEngine.ParticleSystemManager.AddParticleSystem(kvp.Value);
                 kvp.Value.InitializeParticle();

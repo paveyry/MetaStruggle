@@ -54,7 +54,7 @@ namespace GameClient.Characters
         public int SyncRate = 10;
 
         //****PARTICLE****
-        Particle ParticleCharacter { get; set; }
+        Dictionary<string,ParticleSystem> ParticlesCharacter { get; set; }
 
         public bool CollideWithMap
         {
@@ -71,7 +71,7 @@ namespace GameClient.Characters
             PlayerNb = playerNb;
             PlayerName = playerName;
             Face = RessourceProvider.CharacterFaces[nameCharacter];
-            ParticleCharacter = (RessourceProvider.Particles.ContainsKey(nameCharacter))
+            ParticlesCharacter = (RessourceProvider.Particles.ContainsKey(nameCharacter))
                                     ? RessourceProvider.Particles[nameCharacter]
                                     : null;
             Pitch = -MathHelper.PiOver2;
@@ -170,9 +170,13 @@ namespace GameClient.Characters
             #endregion
 
             #region Particle
-            if (ParticleCharacter != null)
+            if (ParticlesCharacter != null)
             {
-                ParticleCharacter.UpdatePositionEmitter(Position);
+                foreach (var kvp in ParticlesCharacter)
+                {
+                    kvp.Value.UpdatePositionEmitter(Position);
+                    kvp.Value.ActivateParticleSystem = !GetKey(Movement.Jump).IsPressed(); //test
+                }
             }
             #endregion
 
