@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using GameClient.Global.InputManager;
-using GameClient.ParticleEngine;
+using GameClient.Renderable.Particle;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;

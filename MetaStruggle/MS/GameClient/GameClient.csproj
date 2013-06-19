@@ -129,9 +129,9 @@
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
-    <Compile Include="ParticleEngine\EmitterFields.cs" />
-    <Compile Include="ParticleEngine\Particle.cs" />
-    <Compile Include="ParticleEngine\ParticleFields.cs" />
+    <Compile Include="Renderable\Particle\EmitterFields.cs" />
+    <Compile Include="Renderable\Particle\Particle.cs" />
+    <Compile Include="Renderable\Particle\ParticleFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

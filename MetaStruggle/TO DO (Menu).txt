@@ -1,12 +1,2 @@
 TO DO (Menu)
-1  - (DONE) Correct Width Button (MenuButton replace Button)
-2  - (DONE) Make the differences between ItemRectangle and InternalRectangle (everywhere!)
-3  - (DONE) Fix UpdateResolution (linked to 2)
-4  - (DONE) Create Item : Cell
-5  - (DONE) Add a Theme possibility for ListImage
-6  - (DONE) Continue to clean and improve the code (almost done...).
-7  - (DONE) Replace ListButtons by a new one
-8  - (DONE) Create CheckBox
-9  - (USELESS!) Create ComboBox
-10 - (DONE) Create Slider
-11 - Faire un fuckin' menu pause
+1 - Faire un fuckin' menu pause

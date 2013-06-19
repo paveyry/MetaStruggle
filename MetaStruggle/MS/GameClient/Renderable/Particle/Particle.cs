@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DPSF;
+﻿using DPSF;
 using GameClient.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameClient.ParticleEngine
+namespace GameClient.Renderable.Particle
 {
     public class Particle : DefaultTexturedQuadParticleSystem
     {
@@ -29,7 +25,6 @@ namespace GameClient.ParticleEngine
                 as CInitialPropertiesForQuad;
             LoadedEmitterFields =
                 Serialization.LoadFile(dir + "EmitterFields.xml", typeof (EmitterFields)) as EmitterFields;
-            ParticleInitializationFunction = InitializeParticleUsingInitialProperties;
         }
 
         public void InitializeParticle()
