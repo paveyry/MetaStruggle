@@ -74,6 +74,9 @@ namespace GameClient.Menus
             Menu.Add("Graphics.Text.Fullscreen", new SimpleText("MenuGraphics.Fullscreen", new Vector2(20, 20), Item.PosOnScreen.TopLeft,
                 RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("Graphics.Checkbox.Fullscreen", new CheckBox(new Vector2(72, 20), "MSTheme", GameEngine.Config.FullScreen));
+            Menu.Add("Graphics.Text.TextureHD", new SimpleText("MenuGraphics.TextureHD", new Vector2(20, 30), Item.PosOnScreen.TopLeft,
+                RessourceProvider.Fonts["Menu"], Color.White));
+            Menu.Add("Graphics.Checkbox.TextureHD", new CheckBox(new Vector2(72, 30), "MSTheme", GameEngine.Config.PreferMultiSampling));
             Menu.Add("Graphics.ClassicList.Resolution", new ClassicList(new Rectangle(20, 40, 60, 30), CreateResolutions(),
                 new Dictionary<string, int> { { "MenuGraphics.Resolution", 100 } }, RessourceProvider.Fonts["MenuLittle"], Color.White,
                 Color.DarkOrange, "MSTheme"));
@@ -125,6 +128,7 @@ namespace GameClient.Menus
                 GameEngine.Config.ResolutionHeight = int.Parse(res[1]);
             }
             GameEngine.Config.FullScreen = (Menu.Items["Graphics.Checkbox.Fullscreen"] as CheckBox).IsSelect;
+            GameEngine.Config.PreferMultiSampling = (Menu.Items["Graphics.Checkbox.TextureHD"] as CheckBox).IsSelect;
             GameEngine.Config.ApplyGraphics(_graphics);
             foreach (Menu menu in GameEngine.DisplayStack.OfType<Menu>())
                 menu.UpdateResolution();

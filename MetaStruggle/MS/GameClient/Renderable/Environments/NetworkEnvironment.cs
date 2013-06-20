@@ -92,12 +92,11 @@ namespace GameClient.Renderable.Environments
 
             foreach (var p in gs.Players)
             {
-                Character c = RessourceProvider.Characters[p.Name];
+                Character c = RessourceProvider.Characters[p.ModelType];
                 c.SetEnvironnementDatas(p.Name, p.ID, sm, p.Name == CurrentCharacterName, p.Name == CurrentCharacterName ? Client : null);
                 sm.AddElement(c);
             }
-
-
+            
             sm.AddElement(new Model3D(sm, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
                                       new Vector3(1f, 1f, 0.8f)));
         }

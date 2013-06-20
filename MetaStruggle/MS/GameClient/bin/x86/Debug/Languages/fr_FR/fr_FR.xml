@@ -14,6 +14,7 @@
 	<MenuSettings.Sounds>Sons</MenuSettings.Sounds>
 	<MenuSettings.Apply>Appliquer</MenuSettings.Apply>
 	<MenuGraphics.Fullscreen>Plein Écran : </MenuGraphics.Fullscreen>
+	<MenuGraphics.TextureHD>Textures HD : </MenuGraphics.TextureHD>
 	<MenuGraphics.Resolution>Résolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musiques : </MenuSounds.Musics>
 	<MenuSounds.Effects>Effets : </MenuSounds.Effects>

@@ -101,8 +101,16 @@ namespace Network
 
         bool CheckIfDisconnected()
         {
-            if (_client.Client == null || (Connected && _client.Client.Poll(-1, SelectMode.SelectRead) && _client.Available == 0))
+            try
+            {
+                if (_client == null || _client.Client == null ||
+                    (Connected && _client.Client.Poll(-1, SelectMode.SelectRead) && _client.Available == 0))
+                    Disconnect();
+            }
+            catch
+            {
                 Disconnect();
+            }
 
             return !Connected;
         }
