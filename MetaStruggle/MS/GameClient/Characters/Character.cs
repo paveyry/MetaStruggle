@@ -174,8 +174,8 @@ namespace GameClient.Characters
             {
                 foreach (var kvp in ParticlesCharacter)
                 {
-                    kvp.Value.UpdatePositionEmitter(Position);
-                    kvp.Value.ActivateParticleSystem = !GetKey(Movement.Jump).IsPressed(); //test
+                    kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 0.6f : -0.6f, 1.2f, 0));
+                    kvp.Value.ActivateParticleSystem = GetKey(Movement.Attack).IsPressed(); //test
                 }
             }
             #endregion
@@ -238,8 +238,8 @@ namespace GameClient.Characters
                 {
                     if ((Position - character.Position).Length() < 1.3 && (Position - character.Position).X < 0)
                     {
-                        character.GiveImpulse(new Vector3(-Gravity*(1 + character.Damages/2)*0.001f,
-                                                          special ? -Gravity*(1 + character.Damages/2)*0.001f : 0.1f, 0));
+                        character.GiveImpulse(new Vector3(-Gravity*(1 + character.Damages)*0.001f,
+                                                          special ? -Gravity*(1 + character.Damages)*0.001f : 0.1f, 0));
 
                         character.Damages += ((special ? 10 : 3) + character.Damages/3)*
                                              (float) (gameTime.ElapsedGameTime.TotalMilliseconds/1000);
@@ -249,8 +249,8 @@ namespace GameClient.Characters
                 {
                     if ((character.Position - Position).Length() < 1.3 && (character.Position - Position).X < 0)
                     {
-                        character.GiveImpulse(new Vector3(Gravity*(1 + character.Damages/2)*0.001f,
-                                                          special ? -Gravity*(1 + character.Damages/2)*0.001f : 0.1f, 0));
+                        character.GiveImpulse(new Vector3(Gravity*(1 + character.Damages)*0.001f,
+                                                          special ? -Gravity*(1 + character.Damages)*0.001f : 0.1f, 0));
 
                         character.Damages += ((special ? 10 : 3) + character.Damages/3)*
                                              (float) (gameTime.ElapsedGameTime.TotalMilliseconds/1000);
@@ -275,7 +275,7 @@ namespace GameClient.Characters
         {
             if (!CollideWithMap)
             {
-                if(CurrentAnimation != Animation.Jump)
+                if(CurrentAnimation != Animation.Jump && CurrentAnimation != Animation.Attack && CurrentAnimation != Animation.SpecialAttack)
                     SetAnimation(Animation.Jump);
                 return;
             }
