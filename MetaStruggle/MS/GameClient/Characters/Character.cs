@@ -290,11 +290,7 @@ namespace GameClient.Characters
         {
             if (!CollideWithMap)
             {
-<<<<<<< HEAD
-                if (CurrentAnimation != Animation.Jump)
-=======
                 if(CurrentAnimation != Animation.Jump && CurrentAnimation != Animation.Attack && CurrentAnimation != Animation.SpecialAttack)
->>>>>>> 2c3b136b716f1fd7b3974407e6425389a16cda89
                     SetAnimation(Animation.Jump);
                 return;
             }
