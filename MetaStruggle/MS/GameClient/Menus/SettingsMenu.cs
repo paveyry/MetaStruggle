@@ -190,7 +190,7 @@ namespace GameClient.Menus
         void CreateKeySelectorList(int player,Dictionary<string,UniversalKeys> keys)
         {
             Menu.Add("Controls.KeySelector.Pl" + player,
-                new KeySelectorList(new Rectangle(10, 30, 80, 30),
+                new KeySelectorList(new Rectangle(10, 30, 80, 40),
                     (from object movement in Enum.GetValues(typeof(Characters.Movement))
                      select movement.ToString() into movementStr
                      select new[] { "Controls." + movementStr, movementStr + "." + player }),keys, player,
