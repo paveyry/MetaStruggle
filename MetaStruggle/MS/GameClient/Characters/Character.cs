@@ -169,10 +169,13 @@ namespace GameClient.Characters
             #endregion
 
             #region Animations
-            if (CollideWithMap && CurrentAnimation != Animation.Default)
-                pendingAnim.Add(Animation.Default);
+            if (Playing)
+            {
+                if (CollideWithMap && CurrentAnimation != Animation.Default)
+                    pendingAnim.Add(Animation.Default);
 
-            SetPriorityAnimation(pendingAnim);
+                SetPriorityAnimation(pendingAnim);
+            }
             #endregion
 
             #region Physic
@@ -197,7 +200,7 @@ namespace GameClient.Characters
 
             #region Network
             if (Playing && Client != null && count % SyncRate == 0)
-                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw });
+                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte) CurrentAnimation});
 
             if (!Playing && dI.HasValue && count % SyncRate != 0)
                 Position += dI.Value;

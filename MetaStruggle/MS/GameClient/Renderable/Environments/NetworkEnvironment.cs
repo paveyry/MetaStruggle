@@ -71,6 +71,7 @@ namespace GameClient.Renderable.Environments
             var cp = (CharacterPositionDatas) data;
 
             var c = (Character) sm.Items.Where(e => e is Character).First(e => (e as Character).ID == cp.ID);
+            
             if (!c.Playing)
             {
                 c.F1 = c.F2;
@@ -81,9 +82,10 @@ namespace GameClient.Renderable.Environments
 
                 if (c.F1 != null && c.F2 != null)
                     c.dI = new Vector3((c.F2.Value.X - c.F1.Value.X)/(c.SyncRate + 1), (c.F2.Value.Y - c.F1.Value.Y)/(c.SyncRate), 0);
+
+                c.Yaw = cp.Yaw;
+                c.SetAnimation((Animation)cp.Anim);
             }
-            else
-                c.Position = new Vector3(cp.X, cp.Y, -17);
         }
 
         void GameStart(object data)
