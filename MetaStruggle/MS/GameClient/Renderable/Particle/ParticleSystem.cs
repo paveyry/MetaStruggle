@@ -69,6 +69,7 @@ namespace GameClient.Renderable.Particle
                 ParticleEvents.AddEveryTimeEvent(UpdateParticleTransparencyToFadeOutUsingLerp, LoadedFields.IntUpdateParticleTransparencyToFadeOutUsingLerp);
             if (LoadedFields.BoolUpdateParticleToFaceTheCamera)
                 ParticleEvents.AddEveryTimeEvent(UpdateParticleToFaceTheCamera, LoadedFields.IntUpdateParticleToFaceTheCamera);
+            ActivateParticleSystem = false;
             #endregion
         }
 

@@ -14,8 +14,8 @@ namespace GameClient.Global
 {
     public class ParticleEngine
     {
-        public ParticleSystemManager ParticleSystemManager { get; set; }
-        public Dictionary<string, Dictionary<string, ParticleSystem>> Particles = new Dictionary<string, Dictionary<string, ParticleSystem>>();
+        public ParticleSystemManager ParticleSystemManager { get; private set; }
+        public Dictionary<string, Dictionary<string, ParticleSystem>> Particles { get; private set; }
 
         public ParticleEngine(ContentManager content, Game game)
         {
@@ -78,7 +78,6 @@ namespace GameClient.Global
         {
             ParticleSystemManager.SetCameraPositionForAllParticleSystems(camera.Position);
             ParticleSystemManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
-            
         }
 
         public void Draw(SpriteBatch spriteBatch, Camera3D camera)

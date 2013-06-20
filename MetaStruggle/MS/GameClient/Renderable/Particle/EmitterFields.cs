@@ -4,7 +4,6 @@ namespace GameClient.Renderable.Particle
 {
     public class EmitterFields
     {
-        public bool Enabled { get; set; }
         public bool EmitParticlesAutomatically { get; set; }
         public bool LerpEmittersPositionAndOrientation { get; set; }
         public bool LerpEmittersPositionAndOrientationOnNextUpdate { get; set; }
@@ -14,7 +13,6 @@ namespace GameClient.Renderable.Particle
 
         public static void CopyEmitterFieldsToParticleEmitter(EmitterFields copyEmitter, ParticleEmitter emitter)
         {
-            emitter.Enabled = copyEmitter.Enabled;
             emitter.EmitParticlesAutomatically = copyEmitter.EmitParticlesAutomatically;
             emitter.LerpEmittersPositionAndOrientation = copyEmitter.LerpEmittersPositionAndOrientation;
             emitter.LerpEmittersPositionAndOrientationOnNextUpdate =
