@@ -15,6 +15,7 @@ namespace GameClient.Renderable.Particle
         private readonly Game _game;
         private readonly ContentManager _content;
         #endregion
+
         #region Public Fields
         public bool ActivateParticleSystem { get { return Emitter.Enabled; } set { Emitter.Enabled = value; } }
         public bool IsDrawable { get; set; }

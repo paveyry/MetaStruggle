@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CInitialPropertiesForQuadOfDefaultTexturedQuadParticleDefaultTexturedQuadParticleVertex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LifetimeMin>1.5</LifetimeMin>
-  <LifetimeMax>3.0</LifetimeMax>
+  <LifetimeMin>0.3</LifetimeMin>
+  <LifetimeMax>1</LifetimeMax>
   <PositionMin>
     <X>0</X>
     <Y>0</Y>
@@ -13,14 +13,14 @@
     <Z>0</Z>
   </PositionMax>
   <VelocityMin>
-    <X>-50</X>
-    <Y>50</Y>
-    <Z>-50</Z>
+    <X>-1</X>
+    <Y>-1</Y>
+    <Z>-1</Z>
   </VelocityMin>
   <VelocityMax>
-    <X>50</X>
-    <Y>100</Y>
-    <Z>50</Z>
+    <X>1</X>
+    <Y>1</Y>
+    <Z>1</Z>
   </VelocityMax>
   <AccelerationMin>
     <X>0</X>
@@ -80,24 +80,24 @@
   <PositionIsAffectedByEmittersPosition>true</PositionIsAffectedByEmittersPosition>
   <VelocityIsAffectedByEmittersOrientation>true</VelocityIsAffectedByEmittersOrientation>
   <RotationMin>
-    <X>0</X>
-    <Y>0</Y>
-    <Z>0</Z>
+    <X>1</X>
+    <Y>1</Y>
+    <Z>1</Z>
   </RotationMin>
   <RotationMax>
-    <X>0</X>
-    <Y>0</Y>
-    <Z>3.14159274</Z>
-  </RotationMax>
+    <X>5</X>
+    <Y>5</Y>
+    <Z>5</Z>
+  </RotationMax>	
   <RotationalVelocityMin>
-    <X>0</X>
-    <Y>0</Y>
-    <Z>-3.14159274</Z>
+    <X>-3</X>
+    <Y>-3</Y>
+    <Z>-3</Z>
   </RotationalVelocityMin>
   <RotationalVelocityMax>
-    <X>0</X>
-    <Y>0</Y>
-    <Z>3.14159274</Z>
+    <X>3</X>
+    <Y>3</Y>
+    <Z>3</Z>
   </RotationalVelocityMax>
   <RotationalAccelerationMin>
     <X>0</X>
@@ -109,14 +109,14 @@
     <Y>0</Y>
     <Z>0</Z>
   </RotationalAccelerationMax>
-  <StartWidthMin>10</StartWidthMin>
-  <StartWidthMax>10</StartWidthMax>
-  <StartHeightMin>10</StartHeightMin>
-  <StartHeightMax>10</StartHeightMax>
-  <EndWidthMin>10</EndWidthMin>
-  <EndWidthMax>10</EndWidthMax>
-  <EndHeightMin>10</EndHeightMin>
-  <EndHeightMax>10</EndHeightMax>
+  <StartWidthMin>0.2</StartWidthMin>
+  <StartWidthMax>0.2</StartWidthMax>
+  <StartHeightMin>0.2</StartHeightMin>
+  <StartHeightMax>0.2</StartHeightMax>
+  <EndWidthMin>0.2</EndWidthMin>
+  <EndWidthMax>0.2</EndWidthMax>
+  <EndHeightMin>0.2</EndHeightMin>
+  <EndHeightMax>0.2</EndHeightMax>
   <StartSizeMin>0</StartSizeMin>
   <StartSizeMax>0</StartSizeMax>
   <EndSizeMin>0</EndSizeMin>

@@ -3,6 +3,7 @@
     public class ParticleFields
     {
         public string TextureDir { get; set; }
+
         #region ParticleEvents
         public bool BoolUpdateParticlePositionUsingVelocity { get; set; }
         public bool BoolUpdateParticleRotationUsingRotationalVelocity { get; set; }
