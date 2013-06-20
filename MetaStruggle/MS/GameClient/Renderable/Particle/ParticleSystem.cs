@@ -17,6 +17,7 @@ namespace GameClient.Renderable.Particle
         #endregion
         #region Public Fields
         public bool ActivateParticleSystem { get { return Emitter.Enabled; } set { Emitter.Enabled = value; } }
+        public bool IsDrawable { get; set; }
         #endregion
 
         public ParticleSystem(Game game, ContentManager content, string dir)
@@ -24,6 +25,7 @@ namespace GameClient.Renderable.Particle
         {
             _game = game;
             _content = content;
+            IsDrawable = false;
             LoadedFields = Serialization.LoadFile(dir + "ParticleFields.xml", typeof(ParticleFields)) as ParticleFields;
             LoadedInitialProperties =
                 Serialization.LoadFile(dir + "InitialProperties.xml", typeof (CInitialPropertiesForQuad))

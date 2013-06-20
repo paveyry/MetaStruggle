@@ -27,7 +27,6 @@ namespace GameClient.Global
         public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
         public static Dictionary<string, UniversalKeys> InputKeys = new Dictionary<string, UniversalKeys>();
-        public static Dictionary<string, Dictionary<string, ParticleSystem>> Particles = new Dictionary<string, Dictionary<string, ParticleSystem>>();
         public static Dictionary<string, Character> Characters = new Dictionary<string, Character>();
 
 
@@ -41,7 +40,6 @@ namespace GameClient.Global
             LoadDictionnary(content, "Cursors", Cursors);
             LoadDictionnary(content, "Videos", Videos);
 
-            FillParticles(content, game);
             LoadAnimatedModels(content);
             LoadThemes(content);
             LoadInputKeys();
@@ -247,15 +245,6 @@ namespace GameClient.Global
                 else
                     for (int j = 0; j < enumMovement.Length; j++)
                         InputKeys.Add(enumMovement.GetValue(j) + "." + i, new UniversalKeys("Keyboard.Escape"));
-        }
-
-        public static void FillParticles(ContentManager content, Game game)
-        {
-            foreach (var mainDir in Directory.GetDirectories("Particles"))
-                Particles.Add(Path.GetFileNameWithoutExtension(mainDir),
-                              Directory.GetDirectories(mainDir)
-                                       .ToDictionary(Path.GetFileNameWithoutExtension,
-                                                     dir => new ParticleSystem(game, content, dir + '\\')));
         }
     }
 }

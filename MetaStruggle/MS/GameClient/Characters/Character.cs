@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GameClient.Global;
 using GameClient.Global.InputManager;
 using GameClient.Renderable.Particle;
@@ -46,7 +47,7 @@ namespace GameClient.Characters
         private bool _jump;
         private bool _doublejump;
         private DateTime _firstjump = DateTime.Now;
-        
+
         //****NETWORK****
         private int count;
         public bool Playing { get; set; }
@@ -54,7 +55,7 @@ namespace GameClient.Characters
         public int SyncRate = 5;
 
         //****PARTICLE****
-        Dictionary<string,ParticleSystem> ParticlesCharacter { get; set; }
+        Dictionary<string, ParticleSystem> ParticlesCharacter { get; set; }
 
         public bool CollideWithMap
         {
@@ -63,7 +64,7 @@ namespace GameClient.Characters
         #endregion
 
         public Character(string playerName, string nameCharacter, byte playerNb, SceneManager scene, Vector3 position, Vector3 scale
-            ,float speed = 1f)
+            , float speed = 1f)
             : base(nameCharacter, scene, position, scale, speed)
         {
             Playing = true;
@@ -71,9 +72,7 @@ namespace GameClient.Characters
             PlayerNb = playerNb;
             PlayerName = playerName;
             Face = RessourceProvider.CharacterFaces[nameCharacter];
-            ParticlesCharacter = (RessourceProvider.Particles.ContainsKey(nameCharacter))
-                                    ? RessourceProvider.Particles[nameCharacter]
-                                    : null;
+            SetParticlesCharacter(nameCharacter);
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;
@@ -84,10 +83,26 @@ namespace GameClient.Characters
             _latteralMove = new Vector3(LatteralSpeed, 0, 0);
         }
 
+        void SetParticlesCharacter(string nameCharacter)
+        {
+            if (GameEngine.ParticleEngine.Particles.ContainsKey(nameCharacter))
+                ParticlesCharacter = GameEngine.ParticleEngine.Particles[nameCharacter];
+            else if (GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
+                ParticlesCharacter = GameEngine.ParticleEngine.Particles["defaultPerso"].ToDictionary(e => e.Key, e => e.Value);
+            else
+                ParticlesCharacter = null;
+            if (ParticlesCharacter != null && GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
+                foreach (var kvp in GameEngine.ParticleEngine.Particles["defaultPerso"].Where(kvp => !ParticlesCharacter.ContainsKey(kvp.Key)))
+                    ParticlesCharacter.Add(kvp.Key, kvp.Value);
+
+            GameEngine.ParticleEngine.AddParticles(ParticlesCharacter);
+
+        }
+
         public override void Update(GameTime gameTime)
         {
             var pendingAnim = new List<Animation>();
-                
+
             #region ManageKeyboard
             if (Playing && !IsDead)
             {
@@ -106,7 +121,7 @@ namespace GameClient.Characters
                 }
                 if (GetKey(Movement.Jump).IsPressed() && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
-                    GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity/1.4f));
+                    GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity / 1.4f));
 
                     if (_jump)
                         _doublejump = true;
@@ -182,12 +197,12 @@ namespace GameClient.Characters
 
             #region Network
             if (Playing && Client != null && count % SyncRate == 0)
-                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas {ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw});
+                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw });
 
             if (!Playing && dI.HasValue && count % SyncRate != 0)
                 Position += dI.Value;
 
-            count = (count + 1)%60;
+            count = (count + 1) % 60;
             #endregion
 
             base.Update(gameTime);
@@ -219,7 +234,7 @@ namespace GameClient.Characters
         void MoveRight(GameTime gameTime)
         {
             Yaw = _baseYaw + MathHelper.Pi;
-            Position -= _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
+            Position -= _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         void MoveLeft(GameTime gameTime)
@@ -238,22 +253,22 @@ namespace GameClient.Characters
                 {
                     if ((Position - character.Position).Length() < 1.3 && (Position - character.Position).X < 0)
                     {
-                        character.GiveImpulse(new Vector3(-Gravity*(1 + character.Damages/2)*0.001f,
-                                                          special ? -Gravity*(1 + character.Damages/2)*0.001f : 0.1f, 0));
+                        character.GiveImpulse(new Vector3(-Gravity * (1 + character.Damages / 2) * 0.001f,
+                                                          special ? -Gravity * (1 + character.Damages / 2) * 0.001f : 0.1f, 0));
 
-                        character.Damages += ((special ? 10 : 3) + character.Damages/3)*
-                                             (float) (gameTime.ElapsedGameTime.TotalMilliseconds/1000);
+                        character.Damages += ((special ? 10 : 3) + character.Damages / 3) *
+                                             (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
                     }
                 }
                 else
                 {
                     if ((character.Position - Position).Length() < 1.3 && (character.Position - Position).X < 0)
                     {
-                        character.GiveImpulse(new Vector3(Gravity*(1 + character.Damages/2)*0.001f,
-                                                          special ? -Gravity*(1 + character.Damages/2)*0.001f : 0.1f, 0));
+                        character.GiveImpulse(new Vector3(Gravity * (1 + character.Damages / 2) * 0.001f,
+                                                          special ? -Gravity * (1 + character.Damages / 2) * 0.001f : 0.1f, 0));
 
-                        character.Damages += ((special ? 10 : 3) + character.Damages/3)*
-                                             (float) (gameTime.ElapsedGameTime.TotalMilliseconds/1000);
+                        character.Damages += ((special ? 10 : 3) + character.Damages / 3) *
+                                             (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
                     }
                 }
             }
@@ -275,7 +290,7 @@ namespace GameClient.Characters
         {
             if (!CollideWithMap)
             {
-                if(CurrentAnimation != Animation.Jump)
+                if (CurrentAnimation != Animation.Jump)
                     SetAnimation(Animation.Jump);
                 return;
             }

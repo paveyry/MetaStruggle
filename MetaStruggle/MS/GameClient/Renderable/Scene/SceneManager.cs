@@ -30,11 +30,7 @@ namespace GameClient.Renderable.Scene
 
         public void InitializeParticleEngine()
         {
-            foreach (var kvp in RessourceProvider.Particles.SelectMany(mainKvp => mainKvp.Value))
-            {
-                GameEngine.ParticleSystemManager.AddParticleSystem(kvp.Value);
-                kvp.Value.InitializeParticle();
-            }
+            GameEngine.ParticleEngine.SetDrawableParticles();
         }
 
         public void AddElement(I3DElement element)
@@ -63,17 +59,13 @@ namespace GameClient.Renderable.Scene
             foreach (var element in Items)
                 element.Update(gameTime);
 
-            GameEngine.ParticleSystemManager.SetCameraPositionForAllParticleSystems(Camera.Position);
-            GameEngine.ParticleSystemManager.UpdateAllParticleSystems((float)gameTime.ElapsedGameTime.TotalSeconds);
+            GameEngine.ParticleEngine.Update(gameTime,Camera);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            GameEngine.ParticleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity,
-                Camera.ViewMatrix, Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45),
-                spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f));
-            GameEngine.ParticleSystemManager.DrawAllParticleSystems();
-            spriteBatch.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GameEngine.ParticleEngine.Draw(spriteBatch, Camera);
+
             if(Skybox != null)
                 Skybox.Draw(spriteBatch);
             foreach (var element in Items)

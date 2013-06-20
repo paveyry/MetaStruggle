@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameClient.Characters;
+using GameClient.Global;
 using GameClient.Renderable._3D;
 using GameClient.Renderable.Scene;
 using Microsoft.Xna.Framework;
@@ -47,7 +48,7 @@ namespace GameClient.Renderable.Environments
                 sm.AddElement(c);
             }
 
-            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
+            sm.AddElement(new Model3D(sm, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
         }
 
@@ -58,8 +59,8 @@ namespace GameClient.Renderable.Environments
 
         void RegisterEvents()
         {
-            Global.GameEngine.EventManager.Register("Network.Game.GameStart", GameStart);
-            Global.GameEngine.EventManager.Register("Network.Game.SetCharacterPosition", SetCharacterPosition);
+            GameEngine.EventManager.Register("Network.Game.GameStart", GameStart);
+            GameEngine.EventManager.Register("Network.Game.SetCharacterPosition", SetCharacterPosition);
         }
 
         void SetCharacterPosition(object data)
@@ -90,15 +91,14 @@ namespace GameClient.Renderable.Environments
             var gs = (GameStartDatas) data;
 
             foreach (var p in gs.Players)
-                sm.AddElement(new Character(p.Name, p.ModelType, 0, sm, new Vector3(0, 0, -17), new Vector3(1),
-                                            (p.ModelType == "Spiderman" || p.ModelType == "Alex") ? 1.6f : 1)
-                    {
-                        ID = p.ID,
-                        Playing = p.Name == CurrentCharacterName,
-                        Client = p.Name == CurrentCharacterName ? Client : null
-                    });
+            {
+                Character c = RessourceProvider.Characters[p.Name];
+                c.SetEnvironnementDatas(p.Name, p.ID, sm, p.Name == CurrentCharacterName, p.Name == CurrentCharacterName ? Client : null);
+                sm.AddElement(c);
+            }
 
-            sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
+
+            sm.AddElement(new Model3D(sm, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
                                       new Vector3(1f, 1f, 0.8f)));
         }
     }

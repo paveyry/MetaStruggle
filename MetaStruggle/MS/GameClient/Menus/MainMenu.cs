@@ -45,8 +45,6 @@ namespace GameClient.Menus
         {
             if (GameEngine.SceneManager == null)
                 GameEngine.SceneManager = Renderable.Environments.Environment1.GetScene(_spriteBatch);
-            else
-                GameEngine.SceneManager.InitializeParticleEngine();
             GameEngine.SoundCenter.PlayWithStatus("tardisbattlefield");
             GameEngine.DisplayStack.Push(GameEngine.SceneManager);
         }

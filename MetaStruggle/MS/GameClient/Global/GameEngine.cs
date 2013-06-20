@@ -26,7 +26,7 @@ namespace GameClient.Global
         public static MouseState MouseState { get; set; }
         public static GamePadState[] GamePadState { get; set; }
         public static InputDevice InputDevice { get; set; }
-        public static ParticleSystemManager ParticleSystemManager { get; set; }
+        public static ParticleEngine ParticleEngine { get; set; }
 
         public static int PrimaryHeightOfWindows { get; set; }
         public static int PrimaryWidthOfWindows { get; set; }
@@ -36,7 +36,7 @@ namespace GameClient.Global
             EventManager = new EventManager();
             Config = IO.Serialization.LoadConfigFile("config.xml");
             LangCenter = new LanguageLoader(graphics.GraphicsDevice);
-            ParticleSystemManager = new ParticleSystemManager();
+            ParticleEngine = new ParticleEngine(content,game);
             RessourceProvider.Fill(content, game);
             
             SoundCenter = SoundCenter.Instance;
