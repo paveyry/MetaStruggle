@@ -103,7 +103,7 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
-            #region Particle
+            #region Particle (à modifier ! -> Zone de test)
             if (ParticlesCharacter != null)
             {
                 foreach (var kvp in ParticlesCharacter)
@@ -112,6 +112,7 @@ namespace GameClient.Characters
                     kvp.Value.ActivateParticleSystem = GetKey(Movement.Attack).IsPressed() && DateTime.Now.Millisecond % 300 < 100; //test
                 }
                 var ParticlesStars = ParticlesCharacter["Stars"];
+                var ParticlesStarship = ParticlesCharacter["Starship"];
                 var ParticlesStarsfil = ParticlesCharacter["Starsfil"];
                 var ParticlesJump = ParticlesCharacter["Jump"];
                 var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
@@ -123,6 +124,7 @@ namespace GameClient.Characters
                 ParticlesJump.UpdatePositionEmitter(Position);
                 ParticlesDoubleJump.UpdatePositionEmitter(Position);
                 ParticlesRun.UpdatePositionEmitter(Position + new Vector3(0.2f, 0, 0));
+                ParticlesStarship.ActivateParticleSystem = true;
                 ParticlesStars.ActivateParticleSystem = true;
                 ParticlesStarsfil.ActivateParticleSystem = true;
                 if (GetKey(Movement.Right).IsPressed() && !_jump && !running || GetKey(Movement.Left).IsPressed() && !_jump && !running)
