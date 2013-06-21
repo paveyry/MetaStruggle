@@ -17,33 +17,39 @@ namespace GameClient.Global.InputManager
         }
 
         #region Fields
-        public Device KeyDevice;
+        private readonly Device _keyDevice;
 
         private readonly Keys _keyboardKey;
         private readonly MouseButton _mouseKey;
         private readonly Buttons _gamePadKey;
         private readonly int _gamePadNb;
+
+        private delegate bool IsPressedDelegate();
+        private IsPressedDelegate Pressed { get; set; }
         #endregion
 
         public UniversalKeys(string key)
         {
             var keysElement = key.Split('.');
-            if (!Enum.TryParse(keysElement[0], out KeyDevice))
+            if (!Enum.TryParse(keysElement[0], out _keyDevice))
                 throw new Exception("Invalid entry");
-            switch (KeyDevice)
+            switch (_keyDevice)
             {
                 case Device.Keyboard:
                     if (!Enum.TryParse(keysElement[1], out _keyboardKey))
                         throw new Exception("Invalid keyboard entry");
+                    Pressed = KeyboardPressed;
                     break;
                 case Device.Mouse:
                     if (!Enum.TryParse(keysElement[1], out _mouseKey))
                         throw new Exception("Invalid mouse entry");
+                    Pressed = MousePressed;
                     break;
                 case Device.GamePad:
                     if ((!int.TryParse(keysElement[1], out _gamePadNb) && --_gamePadNb >= 0 && _gamePadNb < 4)
                         || (!Enum.TryParse(keysElement[2], out _gamePadKey)))
                         throw new Exception("Invalid gamepad entry");
+                    Pressed = GamePadPressed;
                     return;
             }
             _gamePadNb = -1;
@@ -51,22 +57,29 @@ namespace GameClient.Global.InputManager
 
         public bool IsPressed()
         {
-            switch (KeyDevice)
-            {
-                case Device.Keyboard:
-                    return GameEngine.KeyboardState.IsKeyDown(_keyboardKey);
-                case Device.Mouse:
-                    return (ButtonState)(typeof(MouseState).GetProperty(_mouseKey.ToString())
+            return Pressed.Invoke();
+        }
+
+        private bool KeyboardPressed()
+        {
+            return GameEngine.KeyboardState.IsKeyDown(_keyboardKey);
+        }
+
+        private bool MousePressed()
+        {
+            return (ButtonState)(typeof(MouseState).GetProperty(_mouseKey.ToString())
                         .GetValue(GameEngine.MouseState, null)) == ButtonState.Pressed;
-                default:
-                    return GameEngine.GamePadState[_gamePadNb].IsButtonDown(_gamePadKey);
-            }
+        }
+
+        private bool GamePadPressed()
+        {
+            return GameEngine.GamePadState[_gamePadNb].IsButtonDown(_gamePadKey);
         }
 
         public override string ToString()
         {
             string key;
-            switch (KeyDevice)
+            switch (_keyDevice)
             {
                 case Device.Keyboard:
                     key = _keyboardKey.ToString();
@@ -78,7 +91,7 @@ namespace GameClient.Global.InputManager
                     key = _gamePadNb + "." + _gamePadKey.ToString();
                     break;
             }
-            return KeyDevice.ToString() + "." + key;
+            return _keyDevice.ToString() + "." + key;
         }
     }
 }

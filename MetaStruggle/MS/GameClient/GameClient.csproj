@@ -118,6 +118,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Characters\AI\ComputerCharacter.cs" />
+    <Compile Include="Characters\AI\PartialCharacter.cs" />
     <Compile Include="Global\Config.cs" />
     <Compile Include="Global\GameEngine.cs" />
     <Compile Include="Global\InputManager\InputDevice.cs" />
@@ -128,8 +130,10 @@
     <Compile Include="Global\LanguageLoader.cs" />
     <Compile Include="Menus\CharacterSelector.cs" />
     <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\PauseMenu.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
+    <Compile Include="Renderable\Environments\LocalEnvironnement.cs" />
     <Compile Include="Renderable\Particle\EmitterFields.cs" />
     <Compile Include="Renderable\Particle\ParticleSystem.cs" />
     <Compile Include="Renderable\Particle\ParticleFields.cs" />
@@ -141,7 +145,6 @@
     <Compile Include="Renderable\3D\I3DElement.cs" />
     <Compile Include="Renderable\3D\Model3D.cs" />
     <Compile Include="Renderable\3D\Skybox.cs" />
-    <Compile Include="Renderable\Environments\Environment2.cs" />
     <Compile Include="Renderable\Environments\Environment1.cs" />
     <Compile Include="Renderable\Environments\NetworkEnvironment.cs" />
     <Compile Include="Renderable\GUI\Cinematic.cs" />
@@ -225,6 +228,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Renderable\Environments\AI\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

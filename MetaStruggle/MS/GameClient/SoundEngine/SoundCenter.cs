@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using GameClient.Characters;
 using GameClient.Global;
+using GameClient.Renderable._3D;
 
 namespace GameClient.SoundEngine
 {
@@ -120,9 +121,7 @@ namespace GameClient.SoundEngine
                 {
                     _soundBank.Add(Path.GetFileNameWithoutExtension(file), new Music(file));
                 }
-                catch (Exception)
-                {
-                }
+                catch { }
         }
 
         void LoadEffects()
@@ -132,9 +131,7 @@ namespace GameClient.SoundEngine
                 {
                     _soundBank.Add(Path.GetFileNameWithoutExtension(file), new EffectSound(file));
                 }
-                catch (Exception)
-                {
-                }
+                catch { }
         }
 
         #endregion
@@ -212,7 +209,7 @@ namespace GameClient.SoundEngine
 
         #endregion
 
-        void PlaySoundEvent(string type, Character character)
+        void PlaySoundEvent(string type, I3DElement character)
         {
             Play(character.ModelName + type);
         }

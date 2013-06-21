@@ -15,14 +15,6 @@ namespace GameClient.Menus
     class SettingsMenu
     {
         Menu Menu { get; set; }
-        private SpriteBatch _spriteBatch;
-        private GraphicsDeviceManager _graphics;
-        
-        public SettingsMenu(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
-        {
-            _spriteBatch = spriteBatch;
-            _graphics = graphics;
-        }
         
         #region Settings
         public Menu MenuSettings()
@@ -129,7 +121,7 @@ namespace GameClient.Menus
             }
             GameEngine.Config.FullScreen = (Menu.Items["Graphics.Checkbox.Fullscreen"] as CheckBox).IsSelect;
             GameEngine.Config.PreferMultiSampling = (Menu.Items["Graphics.Checkbox.TextureHD"] as CheckBox).IsSelect;
-            GameEngine.Config.ApplyGraphics(_graphics);
+            GameEngine.Config.ApplyGraphics();
             foreach (Menu menu in GameEngine.DisplayStack.OfType<Menu>())
                 menu.UpdateResolution();
         }

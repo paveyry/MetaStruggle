@@ -4,6 +4,8 @@ using System.Linq;
 using DPSF;
 using GameClient.Characters;
 using GameClient.Global;
+using GameClient.Menus;
+using GameClient.Renderable.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GameClient.Renderable._3D;
@@ -36,8 +38,8 @@ namespace GameClient.Renderable.Scene
         public void AddElement(I3DElement element)
         {
             Items.Add(element);
-            if(element is Character)
-                Hud.AddCharacter(element as Character);                
+            if (element is Character)
+                Hud.AddCharacter(element as Character);
         }
 
         public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch)
@@ -50,7 +52,7 @@ namespace GameClient.Renderable.Scene
             if (GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
             {
                 GameEngine.SoundCenter.PlayWithStatus();
-                GameEngine.DisplayStack.Pop();
+                GameEngine.DisplayStack.Push(new PauseMenu().Create());
                 System.Threading.Thread.Sleep(200);
                 return;
             }
@@ -58,15 +60,13 @@ namespace GameClient.Renderable.Scene
                 Skybox.Update();
             foreach (var element in Items)
                 element.Update(gameTime);
-
-            GameEngine.ParticleEngine.Update(gameTime,Camera);
+            GameEngine.ParticleEngine.Update(gameTime, Camera);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             GameEngine.ParticleEngine.Draw(spriteBatch, Camera);
-
-            if(Skybox != null)
+            if (Skybox != null)
                 Skybox.Draw(spriteBatch);
             foreach (var element in Items)
                 element.Draw(gameTime, spriteBatch);

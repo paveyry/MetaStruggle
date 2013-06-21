@@ -6,9 +6,9 @@ namespace GameClient.SoundEngine
     {
         public enum Status
         {
+            Stop,
             Play,
             Pause,
-            Stop,
             Undefined
         }
 
@@ -34,6 +34,7 @@ namespace GameClient.SoundEngine
             Position = 0;
             Loop = loop;
             Player.controls.stop();
+            PlayerStatus = Status.Stop;
             Player.PlayStateChange += PlayStateChange;
         }
 

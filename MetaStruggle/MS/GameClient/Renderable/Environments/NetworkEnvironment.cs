@@ -15,7 +15,7 @@ namespace GameClient.Renderable.Environments
 {
     public class NetworkEnvironment
     {
-        private SceneManager sm;
+        private SceneManager SceneManager { get; set; }
         public string CurrentCharacterName { get; set; }
         public Client Client { get; set; }
 
@@ -24,7 +24,7 @@ namespace GameClient.Renderable.Environments
             RegisterEvents();
             CurrentCharacterName = currentchar;
 
-            sm = SceneManager.CreateScene(
+            SceneManager = SceneManager.CreateScene(
                 new Vector3(-5, 5, -30), //Position initiale de la caméra
                 new Vector3(0, 0, 0), //Point visé par la caméra
                 spriteBatch); //SpriteBatch
@@ -34,27 +34,27 @@ namespace GameClient.Renderable.Environments
             GameStart(gs);
             //CreateItems(gs);
 
-            sm.Camera.FollowsCharacters(sm.Camera, sm.Items.FindAll(e => e is Character));
+            SceneManager.Camera.FollowsCharacters(SceneManager.Camera, SceneManager.Items.FindAll(e => e is Character));
         }
 
         void CreateItems(GameStartDatas gs)
         {
-            foreach (var c in gs.Players.Select(p => new Character(p.Name, p.ModelType, 0,sm, new Vector3(0,0,-17), Vector3.One)
+            foreach (var c in gs.Players.Select(p => new Character(p.Name, p.ModelType, 0, SceneManager, new Vector3(0, 0, -17), Vector3.One)
                 {
                     ID = p.ID,
                     Client = p.Client
                 }))
             {
-                sm.AddElement(c);
+                SceneManager.AddElement(c);
             }
 
-            sm.AddElement(new Model3D(sm, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
+            SceneManager.AddElement(new Model3D(SceneManager, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
         }
 
         public SceneManager GetScene(SpriteBatch spriteBatch)
         {
-            return sm;
+            return SceneManager;
         }
 
         void RegisterEvents()
@@ -65,13 +65,13 @@ namespace GameClient.Renderable.Environments
 
         void SetCharacterPosition(object data)
         {
-            if (sm == null)
+            if (SceneManager == null)
                 return;
 
-            var cp = (CharacterPositionDatas) data;
+            var cp = (CharacterPositionDatas)data;
 
-            var c = (Character) sm.Items.Where(e => e is Character).First(e => (e as Character).ID == cp.ID);
-            
+            var c = (Character)SceneManager.Items.Where(e => e is Character).First(e => (e as Character).ID == cp.ID);
+
             if (!c.Playing)
             {
                 c.F1 = c.F2;
@@ -81,7 +81,7 @@ namespace GameClient.Renderable.Environments
                     c.Position = c.F1.Value;
 
                 if (c.F1 != null && c.F2 != null)
-                    c.dI = new Vector3((c.F2.Value.X - c.F1.Value.X)/(c.SyncRate + 1), (c.F2.Value.Y - c.F1.Value.Y)/(c.SyncRate), 0);
+                    c.dI = new Vector3((c.F2.Value.X - c.F1.Value.X) / (c.SyncRate + 1), (c.F2.Value.Y - c.F1.Value.Y) / (c.SyncRate), 0);
 
                 c.Yaw = cp.Yaw;
                 c.SetAnimation((Animation)cp.Anim);
@@ -90,16 +90,16 @@ namespace GameClient.Renderable.Environments
 
         void GameStart(object data)
         {
-            var gs = (GameStartDatas) data;
+            var gs = (GameStartDatas)data;
 
             foreach (var p in gs.Players)
             {
                 Character c = RessourceProvider.Characters[p.ModelType];
-                c.SetEnvironnementDatas(p.Name, p.ID, sm, p.Name == CurrentCharacterName, p.Name == CurrentCharacterName ? Client : null);
-                sm.AddElement(c);
+                c.SetEnvironnementDatas(p.Name, p.ID, SceneManager, p.Name == CurrentCharacterName, p.Name == CurrentCharacterName ? Client : null);
+                SceneManager.AddElement(c);
             }
-            
-            sm.AddElement(new Model3D(sm, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
+
+            SceneManager.AddElement(new Model3D(SceneManager, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
                                       new Vector3(1f, 1f, 0.8f)));
         }
     }

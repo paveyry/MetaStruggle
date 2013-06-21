@@ -35,6 +35,7 @@ namespace GameClient.Global
         {
             EventManager = new EventManager();
             Config = IO.Serialization.LoadConfigFile("config.xml");
+            Config.SetGraphics(graphics);
             LangCenter = new LanguageLoader(graphics.GraphicsDevice);
             ParticleEngine = new ParticleEngine(content,game);
             RessourceProvider.Fill(content, game);

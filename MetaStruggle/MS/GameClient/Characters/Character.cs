@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GameClient.Characters.AI;
 using GameClient.Global;
 using GameClient.Global.InputManager;
 using GameClient.Renderable.Particle;
@@ -17,7 +18,7 @@ using DPSF;
 
 namespace GameClient.Characters
 {
-    enum Movement
+    public enum Movement
     {
         Left,
         Right,
@@ -57,6 +58,12 @@ namespace GameClient.Characters
         //****PARTICLE****
         Dictionary<string, ParticleSystem> ParticlesCharacter { get; set; }
 
+        //****IA****
+        public delegate bool MovementActivate(Movement movement);
+        public MovementActivate GetKey { get; set; }
+        private ComputerCharacter ComputerCharacter { get; set; }
+        public bool IsNormalPlayer { get; set; }
+
         public bool CollideWithMap
         {
             get { return (Position.Y <= 0.00 && Position.Y > -1 && Position.X < 13 && Position.X > -24.5); }
@@ -72,18 +79,19 @@ namespace GameClient.Characters
             PlayerNb = playerNb;
             PlayerName = playerName;
             Face = RessourceProvider.CharacterFaces[nameCharacter];
-            SetParticlesCharacter(nameCharacter);
+            CreateParticlesCharacter(nameCharacter);
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;
             Gravity = -20f;
             _gravity = new Vector3(0, Gravity, 0);
             _spawnPosition = position;
-
             _latteralMove = new Vector3(LatteralSpeed, 0, 0);
+            IsNormalPlayer = true;
+            GetKey = (movement) => GetUniversalKey(movement).IsPressed();
         }
 
-        void SetParticlesCharacter(string nameCharacter)
+        void CreateParticlesCharacter(string nameCharacter)
         {
             if (GameEngine.ParticleEngine.Particles.ContainsKey(nameCharacter))
                 ParticlesCharacter = GameEngine.ParticleEngine.Particles[nameCharacter];
@@ -96,7 +104,6 @@ namespace GameClient.Characters
                     ParticlesCharacter.Add(kvp.Key, kvp.Value);
 
             GameEngine.ParticleEngine.AddParticles(ParticlesCharacter);
-
         }
 
         public override void Update(GameTime gameTime)
@@ -109,17 +116,17 @@ namespace GameClient.Characters
                 if (CurrentAnimation != Animation.Jump)
                     pendingAnim.Add(Animation.Default);
 
-                if (GetKey(Movement.SpecialAttack).IsPressed())
+                if (CallGetKey(Movement.SpecialAttack))
                 {
                     Attack(gameTime, true);
                     pendingAnim.Add(Animation.SpecialAttack);
                 }
-                if (GetKey(Movement.Attack).IsPressed())
+                if (CallGetKey(Movement.Attack))
                 {
                     Attack(gameTime, false);
                     pendingAnim.Add(Animation.Attack);
                 }
-                if (GetKey(Movement.Jump).IsPressed() && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
+                if (CallGetKey(Movement.Jump) && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
                     GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity / 1.4f));
 
@@ -134,13 +141,13 @@ namespace GameClient.Characters
                     pendingAnim.Add(Animation.Jump);
                     GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
                 }
-                if (GetKey(Movement.Right).IsPressed())
+                if (CallGetKey(Movement.Right))
                 {
                     MoveRight(gameTime);
                     pendingAnim.Add(Animation.Run);
                 }
 
-                if (GetKey(Movement.Left).IsPressed())
+                if (CallGetKey(Movement.Left))
                 {
                     MoveLeft(gameTime);
                     pendingAnim.Add(Animation.Run);
@@ -193,7 +200,7 @@ namespace GameClient.Characters
                 foreach (var kvp in ParticlesCharacter)
                 {
                     kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 0.6f : -0.6f, 1.2f, 0));
-                    kvp.Value.ActivateParticleSystem = GetKey(Movement.Attack).IsPressed(); //test
+                    kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack); //test
                 }
             }
             #endregion
@@ -208,9 +215,15 @@ namespace GameClient.Characters
             count = (count + 1) % 60;
             #endregion
 
+            #region AI
+            if (ComputerCharacter != null)
+                ComputerCharacter.Update(gameTime);
+            #endregion
+
             base.Update(gameTime);
         }
 
+        #region Movements
         void SetPriorityAnimation(ICollection<Animation> pendingAnim)
         {
             if (pendingAnim.Contains(Animation.SpecialAttack))
@@ -227,13 +240,17 @@ namespace GameClient.Characters
             if (ModelName == "Spiderman")
                 AnimationController.Speed = CurrentAnimation == Animation.SpecialAttack ? 2f : 1.6f;
         }
+        
+        bool CallGetKey(Movement movement)
+        {
+            return GetKey.Invoke(movement);
+        }
 
-        UniversalKeys GetKey(Movement movement)
+        UniversalKeys GetUniversalKey(Movement movement)
         {
             return RessourceProvider.InputKeys[movement + "." + PlayerNb];
         }
-
-        #region Movements
+        
         void MoveRight(GameTime gameTime)
         {
             Yaw = _baseYaw + MathHelper.Pi;
@@ -312,13 +329,32 @@ namespace GameClient.Characters
         #endregion
 
         #region Environnement
-        public void SetEnvironnementDatas(string playerName, byte id, SceneManager sm, bool playing, Client client)
+        internal void SetEnvironnementDatas(string playerName, SceneManager sm, bool playing)
         {
             PlayerName = playerName;
             Scene = sm;
-            ID = id;
             Playing = playing;
+        }
+        
+        public void SetEnvironnementDatas(string playerName, SceneManager sm, bool playing, byte playerNb)
+        {
+            SetEnvironnementDatas(playerName,sm,playing);
+            PlayerNb = playerNb;
+        }
+
+        public void SetEnvironnementDatas(string playerName, byte id, SceneManager sm, bool playing, Client client)
+        {
+            SetEnvironnementDatas(playerName,sm,playing);
             Client = client;
+            ID = id;
+        }
+
+        public void SetEnvironnementDatas(string playerName,SceneManager sm, bool playing, ComputerCharacter computerCharacter)
+        {
+            SetEnvironnementDatas(playerName,sm,playing);
+            ComputerCharacter = computerCharacter;
+            IsNormalPlayer = false;
+            GetKey = ComputerCharacter.GetMovement;
         }
         #endregion
     }

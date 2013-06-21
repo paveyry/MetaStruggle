@@ -20,6 +20,8 @@ namespace GameClient.Global
         public bool PreferMultiSampling { get; set; }
         public string[] Keys { get; set; }
 
+        private GraphicsDeviceManager _graphics;
+
         public static Config GetDefaultConfig()
         {
             return new Config
@@ -36,21 +38,21 @@ namespace GameClient.Global
                 };
         }
 
-        public void ApplyConfig(GraphicsDeviceManager graphics)
+        public void ApplyConfig()
         {
-            ApplyGraphics(graphics);
+            ApplyGraphics();
             ApplySound();
             ApplyInput();
         }
 
-        public void ApplyGraphics(GraphicsDeviceManager graphics)
+        public void ApplyGraphics()
         {
-            graphics.PreferredBackBufferWidth = GameEngine.Config.ResolutionWidth;
-            graphics.PreferredBackBufferHeight = GameEngine.Config.ResolutionHeight;
-            graphics.PreferMultiSampling = GameEngine.Config.PreferMultiSampling;
-            graphics.GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None };
-            graphics.IsFullScreen = GameEngine.Config.FullScreen;
-            graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = GameEngine.Config.ResolutionWidth;
+            _graphics.PreferredBackBufferHeight = GameEngine.Config.ResolutionHeight;
+            _graphics.PreferMultiSampling = GameEngine.Config.PreferMultiSampling;
+            _graphics.GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None };
+            _graphics.IsFullScreen = GameEngine.Config.FullScreen;
+            _graphics.ApplyChanges();
         }
 
         public void ApplySound()
@@ -70,6 +72,11 @@ namespace GameClient.Global
                     if (j - start != nbMove - 1)
                         GameEngine.Config.Keys[i] += ",";
                 }
+        }
+
+        public void SetGraphics(GraphicsDeviceManager graphics)
+        {
+            _graphics = graphics;
         }
     }
 }

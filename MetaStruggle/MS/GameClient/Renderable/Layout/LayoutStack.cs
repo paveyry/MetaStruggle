@@ -12,25 +12,41 @@ namespace GameClient.Renderable.Layout
             var e = Peek();
             base.Pop();
 
-            if (!(e is Menu) && Peek() is Menu)
-                GameEngine.SoundCenter.Play("Main Title");
-            SetParticleEngine(Peek());
+            if (Count > 0)
+            {
+                if (!(e is Menu) && Peek() is Menu)
+                    GameEngine.SoundCenter.Play("Main Title");
+                else if (Peek() is SceneManager)
+                {
+                    GameEngine.SoundCenter.Stop("Main Title");
+                    GameEngine.SoundCenter.ResumeAll();
+                    GameEngine.ParticleEngine.SetDrawableParticles();
+                }
+            }
         }
 
         new public void Push(T e)
         {
-            if (!(e is Menu) && Count > 0 && Peek() is Menu)
-                GameEngine.SoundCenter.Stop("Main Title");
-            SetParticleEngine(e);
+            if (Count > 0)
+            {
+                if (!(e is Menu) && Peek() is Menu)
+                    GameEngine.SoundCenter.Stop("Main Title");
+                else if (e is Menu && Peek() is SceneManager)
+                {
+                    GameEngine.SoundCenter.PauseAll();
+                    GameEngine.SoundCenter.Play("Main Title");
+                }
+                else if (!(e is SceneManager) && Peek() is SceneManager)
+                    GameEngine.ParticleEngine.RemoveAndDestroyAll();
+                else if (e is SceneManager )
+                    GameEngine.ParticleEngine.SetDrawableParticles();
+            }
             base.Push(e);
         }
 
-        void SetParticleEngine(T e)
+        void SetParticleEngine(T e, T peek)
         {
-            if (!(e is SceneManager))
-                GameEngine.ParticleEngine.RemoveAndDestroyAll();
-            else
-                GameEngine.ParticleEngine.SetDrawableParticles();
+            
         }
 
     }

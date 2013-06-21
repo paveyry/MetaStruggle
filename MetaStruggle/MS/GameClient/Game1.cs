@@ -32,7 +32,7 @@ namespace GameClient
         protected override void Initialize()
         {
             GameEngine.InitializeEngine(Content, _graphics, this);
-            GameEngine.Config.ApplyConfig(_graphics);
+            GameEngine.Config.ApplyConfig();
             Window.Title = GameEngine.Config.GameName;
             GameEngine.DisplayStack.Push(new MainMenu(_spriteBatch, _graphics).CreateMainMenu());
             GameEngine.DisplayStack.Push(new Cinematic(RessourceProvider.Videos["Intro"]));
