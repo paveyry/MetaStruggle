@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CInitialPropertiesForQuadOfDefaultTexturedQuadParticleDefaultTexturedQuadParticleVertex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LifetimeMin>0.1</LifetimeMin>
-  <LifetimeMax>0.2</LifetimeMax>
+  <LifetimeMin>0.5</LifetimeMin>
+  <LifetimeMax>0.6</LifetimeMax>
   <PositionMin>
     <X>0</X>
     <Y>0</Y>
@@ -14,12 +14,12 @@
   </PositionMax>
   <VelocityMin>
     <X>-3</X>
-    <Y>-3</Y>
+    <Y>0</Y>
     <Z>-3</Z>
   </VelocityMin>
   <VelocityMax>
     <X>3</X>
-    <Y>3</Y>
+    <Y>0</Y>
     <Z>3</Z>
   </VelocityMax>
   <AccelerationMin>
@@ -45,9 +45,9 @@
   <FrictionMin>0</FrictionMin>
   <FrictionMax>0</FrictionMax>
   <StartColorMin>
-    <R>0</R>
-    <G>0</G>
-    <B>0</B>
+    <R>255</R>
+    <G>255</G>
+    <B>255</B>
     <A>255</A>
     <PackedValue>4278190080</PackedValue>
   </StartColorMin>
@@ -59,9 +59,9 @@
     <PackedValue>4294967295</PackedValue>
   </StartColorMax>
   <EndColorMin>
-    <R>0</R>
-    <G>0</G>
-    <B>0</B>
+    <R>255</R>
+    <G>255</G>
+    <B>255</B>
     <A>255</A>
     <PackedValue>4278190080</PackedValue>
   </EndColorMin>
@@ -80,24 +80,24 @@
   <PositionIsAffectedByEmittersPosition>true</PositionIsAffectedByEmittersPosition>
   <VelocityIsAffectedByEmittersOrientation>true</VelocityIsAffectedByEmittersOrientation>
   <RotationMin>
-    <X>1</X>
-    <Y>1</Y>
-    <Z>1</Z>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>0</Z>
   </RotationMin>
   <RotationMax>
-    <X>5</X>
-    <Y>5</Y>
-    <Z>5</Z>
-  </RotationMax>	
+    <X>0</X>
+    <Y>0</Y>
+    <Z>3.14159274</Z>
+  </RotationMax>
   <RotationalVelocityMin>
-    <X>-3</X>
-    <Y>-3</Y>
-    <Z>-3</Z>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>-3.14159274</Z>
   </RotationalVelocityMin>
   <RotationalVelocityMax>
-    <X>3</X>
-    <Y>3</Y>
-    <Z>3</Z>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>3.14159274</Z>
   </RotationalVelocityMax>
   <RotationalAccelerationMin>
     <X>0</X>
@@ -109,14 +109,14 @@
     <Y>0</Y>
     <Z>0</Z>
   </RotationalAccelerationMax>
-  <StartWidthMin>0.2</StartWidthMin>
-  <StartWidthMax>0.2</StartWidthMax>
-  <StartHeightMin>0.2</StartHeightMin>
-  <StartHeightMax>0.2</StartHeightMax>
-  <EndWidthMin>0.2</EndWidthMin>
-  <EndWidthMax>0.2</EndWidthMax>
-  <EndHeightMin>0.2</EndHeightMin>
-  <EndHeightMax>0.2</EndHeightMax>
+  <StartWidthMin>0.4</StartWidthMin>
+  <StartWidthMax>0.4</StartWidthMax>
+  <StartHeightMin>0.4</StartHeightMin>
+  <StartHeightMax>0.4</StartHeightMax>
+  <EndWidthMin>0.4</EndWidthMin>
+  <EndWidthMax>0.4</EndWidthMax>
+  <EndHeightMin>0.4</EndHeightMin>
+  <EndHeightMax>0.4</EndHeightMax>
   <StartSizeMin>0</StartSizeMin>
   <StartSizeMax>0</StartSizeMax>
   <EndSizeMin>0</EndSizeMin>
