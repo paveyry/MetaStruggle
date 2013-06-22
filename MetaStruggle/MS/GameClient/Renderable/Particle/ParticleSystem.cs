@@ -1,4 +1,7 @@
-﻿using DPSF;
+﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using DPSF;
 using GameClient.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -6,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameClient.Renderable.Particle
 {
+    [Serializable]
     public class ParticleSystem : DefaultTexturedQuadParticleSystem
     {
         #region Private Fields
@@ -33,6 +37,17 @@ namespace GameClient.Renderable.Particle
                 as CInitialPropertiesForQuad;
             LoadedEmitterFields =
                 Serialization.LoadFile(dir + "EmitterFields.xml", typeof (EmitterFields)) as EmitterFields;
+        }
+
+        private ParticleSystem(Game game, ContentManager content, ParticleFields loadedFields,
+                               CInitialPropertiesForQuad loadedInitialProperties, EmitterFields loadedEmitterFields)
+            : base(game)
+        {
+            _game = game;
+            _content = content;
+            LoadedFields = loadedFields;
+            LoadedInitialProperties = loadedInitialProperties;
+            LoadedEmitterFields = loadedEmitterFields;
         }
 
         public void InitializeParticle()
@@ -76,6 +91,11 @@ namespace GameClient.Renderable.Particle
         public void UpdatePositionEmitter(Vector3 pos)
         {
             Emitter.PositionData.Position = pos;
+        }
+
+        public ParticleSystem Clone()
+        {
+            return new ParticleSystem(_game,_content,LoadedFields,LoadedInitialProperties,LoadedEmitterFields);
         }
     }
 }

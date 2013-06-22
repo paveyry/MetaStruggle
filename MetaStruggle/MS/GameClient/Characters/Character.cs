@@ -96,12 +96,12 @@ namespace GameClient.Characters
             if (GameEngine.ParticleEngine.Particles.ContainsKey(nameCharacter))
                 ParticlesCharacter = GameEngine.ParticleEngine.Particles[nameCharacter];
             else if (GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
-                ParticlesCharacter = GameEngine.ParticleEngine.Particles["defaultPerso"].ToDictionary(e => e.Key, e => e.Value);
+                ParticlesCharacter = GameEngine.ParticleEngine.Particles["defaultPerso"].ToDictionary(e => e.Key, e => e.Value.Clone());
             else
                 ParticlesCharacter = null;
             if (ParticlesCharacter != null && GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
                 foreach (var kvp in GameEngine.ParticleEngine.Particles["defaultPerso"].Where(kvp => !ParticlesCharacter.ContainsKey(kvp.Key)))
-                    ParticlesCharacter.Add(kvp.Key, kvp.Value);
+                    ParticlesCharacter.Add(kvp.Key, kvp.Value.Clone());
 
             GameEngine.ParticleEngine.AddParticles(ParticlesCharacter);
         }
@@ -333,7 +333,7 @@ namespace GameClient.Characters
         {
             PlayerName = playerName;
             Scene = sm;
-            Playing = playing;
+            Playing = playing; 
         }
         
         public void SetEnvironnementDatas(string playerName, SceneManager sm, bool playing, byte playerNb)

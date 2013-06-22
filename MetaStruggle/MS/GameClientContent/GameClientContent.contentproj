@@ -122,8 +122,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Skyboxes\Ocean.jpg">
-      <Name>Ocean</Name>
+    <Compile Include="Skyboxes\MapDesert.jpg">
+      <Name>MapDesert</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -471,6 +471,13 @@
   <ItemGroup>
     <Compile Include="Cursors\thunder.png">
       <Name>thunder</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Skyboxes\MapTardis.jpg">
+      <Name>MapTardis</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

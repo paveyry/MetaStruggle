@@ -18,7 +18,7 @@ namespace GameClient.Renderable.Environments
 
         public LocalEnvironnement(List<PartialCharacter> characters, SpriteBatch spriteBatch, string mapName)
         {
-            SceneManager = SceneManager.CreateScene( new Vector3(-5, 5, -30), new Vector3(0, 0, 0), spriteBatch);
+            SceneManager = SceneManager.CreateScene( new Vector3(-5, 5, -30), new Vector3(0, 0, 0), spriteBatch,mapName);
             CreateCharacters(characters,mapName);
 
             SceneManager.Camera.FollowsCharacters(SceneManager.Camera, SceneManager.Items.FindAll(e => e is Character));
@@ -26,8 +26,6 @@ namespace GameClient.Renderable.Environments
 
         void CreateCharacters(List<PartialCharacter> characters, string mapName)
         {
-            SceneManager.AddElement(new Model3D(SceneManager, RessourceProvider.StaticModels[mapName], new Vector3(10, 0, 0),
-                                      new Vector3(1f, 1f, 0.8f)));
             foreach (var partialCharacter in characters)
             {
                 var player = RessourceProvider.Characters[partialCharacter.ModelName];

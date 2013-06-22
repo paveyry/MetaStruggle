@@ -1,7 +1,9 @@
-﻿using DPSF;
+﻿using System;
+using DPSF;
 
 namespace GameClient.Renderable.Particle
 {
+    [Serializable]
     public class EmitterFields
     {
         public bool EmitParticlesAutomatically { get; set; }

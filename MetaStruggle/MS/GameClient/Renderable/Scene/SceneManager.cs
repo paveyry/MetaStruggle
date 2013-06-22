@@ -21,13 +21,22 @@ namespace GameClient.Renderable.Scene
         public Skybox Skybox { get; set; }
         public HUD Hud { get; set; }
 
-        public SceneManager(Camera3D camera, SpriteBatch spriteBatch)
+        public SceneManager(Camera3D camera, SpriteBatch spriteBatch, string mapName = null)
         {
             Camera = camera;
             SpriteBatch = spriteBatch;
             Items = new List<I3DElement>();
             Hud = new HUD();
             InitializeParticleEngine();
+            if (mapName != null)
+                AddMap(mapName);
+        }
+
+        public void AddMap(string mapName)
+        {
+            Skybox = new Skybox(RessourceProvider.Skyboxes[mapName]);
+            AddElement(new Model3D(this, RessourceProvider.StaticModels[mapName], new Vector3(10, 0, 0),
+                          new Vector3(1f, 1f, 0.8f)));
         }
 
         public void InitializeParticleEngine()
@@ -42,9 +51,9 @@ namespace GameClient.Renderable.Scene
                 Hud.AddCharacter(element as Character);
         }
 
-        public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch)
+        public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch, string mapName = null)
         {
-            return new SceneManager(new Camera3D(cameraPosition, cameraTarget), spriteBatch);
+            return new SceneManager(new Camera3D(cameraPosition, cameraTarget), spriteBatch, mapName);
         }
 
         public void Update(GameTime gameTime)

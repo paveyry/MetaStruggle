@@ -99,8 +99,9 @@ namespace GameClient.Renderable.Environments
                 SceneManager.AddElement(c);
             }
 
-            SceneManager.AddElement(new Model3D(SceneManager, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
-                                      new Vector3(1f, 1f, 0.8f)));
+            //SceneManager.AddElement(new Model3D(SceneManager, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
+            //                          new Vector3(1f, 1f, 0.8f)));
+            SceneManager.AddMap(gs.MapName);
         }
     }
 }

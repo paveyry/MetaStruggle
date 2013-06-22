@@ -1,5 +1,8 @@
-﻿namespace GameClient.Renderable.Particle
+﻿using System;
+
+namespace GameClient.Renderable.Particle
 {
+    [Serializable]
     public class ParticleFields
     {
         public string TextureDir { get; set; }
