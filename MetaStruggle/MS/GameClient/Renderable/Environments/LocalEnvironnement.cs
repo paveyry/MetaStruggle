@@ -30,10 +30,10 @@ namespace GameClient.Renderable.Environments
             {
                 var player = RessourceProvider.Characters[partialCharacter.ModelName];
                 if (partialCharacter.IsAI)
-                    player.SetEnvironnementDatas(partialCharacter.PlayerName, SceneManager, false,
+                    player.SetEnvironnementDatas(partialCharacter.PlayerName,mapName, SceneManager, false,
                                                  new ComputerCharacter(SceneManager, partialCharacter.Handicap,partialCharacter.Level));
                 else
-                    player.SetEnvironnementDatas(partialCharacter.PlayerName, SceneManager, true,
+                    player.SetEnvironnementDatas(partialCharacter.PlayerName,mapName, SceneManager, true,
                                                  partialCharacter.PlayerNb);
                 SceneManager.Items.Add(player);
             }

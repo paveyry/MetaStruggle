@@ -39,6 +39,7 @@ namespace GameClient.Characters
         public float Damages = 0;
         public string PlayerName;
         public Texture2D Face;
+        public string MapName;
 
         //****PHYSIC****
         private const float LatteralSpeed = 0.005f;
@@ -81,7 +82,6 @@ namespace GameClient.Characters
             PlayerNb = playerNb;
             PlayerName = playerName;
             Face = RessourceProvider.CharacterFaces[nameCharacter];
-            CreateParticlesCharacter(nameCharacter);
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
             _baseYaw = Yaw;
@@ -95,15 +95,29 @@ namespace GameClient.Characters
 
         void CreateParticlesCharacter(string nameCharacter)
         {
+            #region FillCorrectlyDictionnary
             if (GameEngine.ParticleEngine.Particles.ContainsKey(nameCharacter))
                 ParticlesCharacter = GameEngine.ParticleEngine.Particles[nameCharacter];
             else if (GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
-                ParticlesCharacter = GameEngine.ParticleEngine.Particles["defaultPerso"].ToDictionary(e => e.Key, e => e.Value.Clone());
+                ParticlesCharacter = GameEngine.ParticleEngine.Particles["defaultPerso"].ToDictionary(e => e.Key,
+                                                                                                      e =>
+                                                                                                      e.Value.Clone());
             else
                 ParticlesCharacter = null;
             if (ParticlesCharacter != null && GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
-                foreach (var kvp in GameEngine.ParticleEngine.Particles["defaultPerso"].Where(kvp => !ParticlesCharacter.ContainsKey(kvp.Key)))
+                foreach (
+                    var kvp in
+                        GameEngine.ParticleEngine.Particles["defaultPerso"].Where(
+                            kvp => !ParticlesCharacter.ContainsKey(kvp.Key)))
                     ParticlesCharacter.Add(kvp.Key, kvp.Value.Clone());
+            #endregion
+
+            foreach (var particleSystem in ParticlesCharacter.Where((kvp) => kvp.Key.EndsWith(MapName)).ToDictionary((kvp) => kvp.Key, kvp =>kvp.Value))
+            {
+                ParticlesCharacter[particleSystem.Key.Substring(0,particleSystem.Key.Length - MapName.Length)] =
+                    particleSystem.Value;
+                ParticlesCharacter.Remove(particleSystem.Key);
+            }
 
             GameEngine.ParticleEngine.AddParticles(ParticlesCharacter);
         }
@@ -244,7 +258,7 @@ namespace GameClient.Characters
 
             #region Network
             if (Playing && Client != null && count % SyncRate == 0)
-                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte) CurrentAnimation});
+                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte)CurrentAnimation });
 
             if (!Playing && dI.HasValue && count % SyncRate != 0)
                 Position += dI.Value;
@@ -277,7 +291,7 @@ namespace GameClient.Characters
             if (ModelName == "Spiderman")
                 AnimationController.Speed = CurrentAnimation == Animation.SpecialAttack ? 2f : 1.6f;
         }
-        
+
         bool CallGetKey(Movement movement)
         {
             return GetKey.Invoke(movement);
@@ -287,7 +301,7 @@ namespace GameClient.Characters
         {
             return RessourceProvider.InputKeys[movement + "." + PlayerNb];
         }
-        
+
         void MoveRight(GameTime gameTime)
         {
             Yaw = _baseYaw + MathHelper.Pi;
@@ -310,8 +324,8 @@ namespace GameClient.Characters
                 {
                     if ((Position - character.Position).Length() < 1.3 && (Position - character.Position).X < 0)
                     {
-                        character.GiveImpulse(new Vector3(-Gravity*(1 + character.Damages)*0.001f,
-                                                          special ? -Gravity*(1 + character.Damages)*0.001f : 0.1f, 0));
+                        character.GiveImpulse(new Vector3(-Gravity * (1 + character.Damages) * 0.001f,
+                                                          special ? -Gravity * (1 + character.Damages) * 0.001f : 0.1f, 0));
 
                         character.Damages += ((special ? 10 : 3) + character.Damages / 3) *
                                              (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
@@ -321,8 +335,8 @@ namespace GameClient.Characters
                 {
                     if ((character.Position - Position).Length() < 1.3 && (character.Position - Position).X < 0)
                     {
-                        character.GiveImpulse(new Vector3(Gravity*(1 + character.Damages)*0.001f,
-                                                          special ? -Gravity*(1 + character.Damages)*0.001f : 0.1f, 0));
+                        character.GiveImpulse(new Vector3(Gravity * (1 + character.Damages) * 0.001f,
+                                                          special ? -Gravity * (1 + character.Damages) * 0.001f : 0.1f, 0));
 
                         character.Damages += ((special ? 10 : 3) + character.Damages / 3) *
                                              (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
@@ -347,7 +361,7 @@ namespace GameClient.Characters
         {
             if (!CollideWithMap)
             {
-                if(CurrentAnimation != Animation.Jump && CurrentAnimation != Animation.Attack && CurrentAnimation != Animation.SpecialAttack)
+                if (CurrentAnimation != Animation.Jump && CurrentAnimation != Animation.Attack && CurrentAnimation != Animation.SpecialAttack)
                     SetAnimation(Animation.Jump);
                 return;
             }
@@ -372,29 +386,31 @@ namespace GameClient.Characters
         #endregion
 
         #region Environnement
-        internal void SetEnvironnementDatas(string playerName, SceneManager sm, bool playing)
+        public void SetEnvironnementDatas(string playerName, string mapName, SceneManager sm, bool playing)
         {
             PlayerName = playerName;
             Scene = sm;
-            Playing = playing; 
+            Playing = playing;
+            MapName = mapName;
+            CreateParticlesCharacter(ModelName);
         }
-        
-        public void SetEnvironnementDatas(string playerName, SceneManager sm, bool playing, byte playerNb)
+
+        public void SetEnvironnementDatas(string playerName, string mapName, SceneManager sm, bool playing, byte playerNb)
         {
-            SetEnvironnementDatas(playerName,sm,playing);
+            SetEnvironnementDatas(playerName, mapName, sm, playing);
             PlayerNb = playerNb;
         }
 
-        public void SetEnvironnementDatas(string playerName, byte id, SceneManager sm, bool playing, Client client)
+        public void SetEnvironnementDatas(string playerName, string mapName, byte id, SceneManager sm, bool playing, Client client)
         {
-            SetEnvironnementDatas(playerName,sm,playing);
+            SetEnvironnementDatas(playerName, mapName, sm, playing);
             Client = client;
             ID = id;
         }
 
-        public void SetEnvironnementDatas(string playerName,SceneManager sm, bool playing, ComputerCharacter computerCharacter)
+        public void SetEnvironnementDatas(string playerName, string mapName, SceneManager sm, bool playing, ComputerCharacter computerCharacter)
         {
-            SetEnvironnementDatas(playerName,sm,playing);
+            SetEnvironnementDatas(playerName, mapName, sm, playing);
             ComputerCharacter = computerCharacter;
             IsNormalPlayer = false;
             GetKey = ComputerCharacter.GetMovement;

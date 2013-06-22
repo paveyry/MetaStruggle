@@ -21,8 +21,12 @@ namespace GameClient.Menus
 
             var buttons = new List<PartialButton>
                               {
+                                  new PartialButton("Menu.Back", ReturnButton),
                                   new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu().MenuSettings())),
-                                  new PartialButton("Menu.Back", ReturnButton)
+                                  new PartialButton("Pause.ReturnMainMenu", () => {
+                                          GameEngine.DisplayStack.Pop();
+                                          ReturnButton();
+                                      })
                               };
 
             Menu.Add("Buttons.Item", new ListButtons(new Vector2(50, 44), 20, buttons, RessourceProvider.Fonts["Menu"],

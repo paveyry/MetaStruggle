@@ -95,7 +95,7 @@ namespace GameClient.Renderable.Environments
             foreach (var p in gs.Players)
             {
                 Character c = RessourceProvider.Characters[p.ModelType];
-                c.SetEnvironnementDatas(p.Name, p.ID, SceneManager, p.Name == CurrentCharacterName, p.Name == CurrentCharacterName ? Client : null);
+                c.SetEnvironnementDatas(p.Name,gs.MapName, p.ID, SceneManager, p.Name == CurrentCharacterName, p.Name == CurrentCharacterName ? Client : null);
                 SceneManager.AddElement(c);
             }
 

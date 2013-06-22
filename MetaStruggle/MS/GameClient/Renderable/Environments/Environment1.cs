@@ -23,6 +23,7 @@ namespace GameClient.Renderable.Environments
             sm.AddElement(new Character("Zeus", "Zeus", 2,sm, new Vector3(-12, 5, -17), new Vector3(1)));
             sm.AddElement(new Character("Ironman", "Ironman", 1,sm, new Vector3(-12, 5, -17), new Vector3(1)));
             sm.AddElement(new Character("Alex", "Alex", 0,sm, new Vector3(-8, 5, -17), new Vector3(1), 1.6f));
+            (sm.Items.Last() as Character).SetEnvironnementDatas("Alex", "MapTardis",sm,true);
 
             //sm.AddElement(new Character("Ares", "Ares", sm, new Vector3(-3, 10, -17), new Vector3(1)));
             //sm.AddElement(new Model3D(sm, Global.RessourceProvider.StaticModels["MapTardis"], new Vector3(10, 0, 0),

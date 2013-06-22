@@ -20,6 +20,7 @@ namespace GameClient.Renderable.Scene
         public List<I3DElement> Items { get; private set; }
         public Skybox Skybox { get; set; }
         public HUD Hud { get; set; }
+        public string MapName { get; set; }
 
         public SceneManager(Camera3D camera, SpriteBatch spriteBatch, string mapName = null)
         {
