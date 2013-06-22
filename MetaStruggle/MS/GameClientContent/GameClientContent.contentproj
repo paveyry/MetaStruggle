@@ -122,13 +122,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Skyboxes\MapDesert.jpg">
-      <Name>MapDesert</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="CharacterFaces\Zeus.png">
       <Name>Zeus</Name>
       <Importer>TextureImporter</Importer>
@@ -506,13 +499,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Skyboxes\test.jpg">
-      <Name>test</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Particles\planete.png">
       <Name>planete</Name>
       <Importer>TextureImporter</Importer>
@@ -522,13 +508,6 @@
   <ItemGroup>
     <Compile Include="Particles\Newleo.png">
       <Name>Newleo</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Skyboxes\cielbleu.jpg">
-      <Name>cielbleu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -562,13 +541,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Skyboxes\grisaille.jpg">
-      <Name>grisaille</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AnimatedModels\Poseidon\poseidon.fbx">
       <Name>poseidon</Name>
       <Importer>FbxImporter</Importer>
@@ -597,13 +569,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Skyboxes\MapTardis.jpg">
-      <Name>MapTardis</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Themes\MSTheme\Slider\BackgroundNormal.png">
       <Name>BackgroundNormal</Name>
       <Importer>TextureImporter</Importer>
@@ -615,6 +580,28 @@
       <Name>Credits</Name>
       <Importer>WmvImporter</Importer>
       <Processor>VideoProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Skyboxes\MapTardis.jpg">
+      <Name>MapTardis</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Skyboxes\MapDesert.jpg">
+      <Name>MapDesert</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Skyboxes\MapMinecraft.jpg">
+      <Name>MapMinecraft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
