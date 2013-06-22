@@ -6,6 +6,7 @@ using GameClient.Characters;
 using GameClient.Global;
 using GameClient.Menus;
 using GameClient.Renderable.GUI;
+using GameClient.Renderable.Particle;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GameClient.Renderable._3D;
@@ -21,6 +22,7 @@ namespace GameClient.Renderable.Scene
         public Skybox Skybox { get; set; }
         public HUD Hud { get; set; }
         public string MapName { get; set; }
+        Dictionary<string, ParticleSystem> ParticlesMap { get; set; }
 
         public SceneManager(Camera3D camera, SpriteBatch spriteBatch, string mapName = null)
         {
@@ -28,9 +30,9 @@ namespace GameClient.Renderable.Scene
             SpriteBatch = spriteBatch;
             Items = new List<I3DElement>();
             Hud = new HUD();
-            InitializeParticleEngine();
             if (mapName != null)
                 AddMap(mapName);
+            InitializeParticleEngine();
         }
 
         public void AddMap(string mapName)
@@ -38,11 +40,20 @@ namespace GameClient.Renderable.Scene
             Skybox = new Skybox(RessourceProvider.Skyboxes[mapName]);
             AddElement(new Model3D(this, RessourceProvider.StaticModels[mapName], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
+
+            if (GameEngine.ParticleEngine.Particles.ContainsKey(mapName))
+            {
+                ParticlesMap = GameEngine.ParticleEngine.Particles[mapName];
+                GameEngine.ParticleEngine.AddParticles(ParticlesMap);
+            }
+
         }
 
         public void InitializeParticleEngine()
         {
             GameEngine.ParticleEngine.SetDrawableParticles();
+            foreach (var kvp in ParticlesMap)
+                kvp.Value.ActivateParticleSystem = true;
         }
 
         public void AddElement(I3DElement element)
@@ -75,13 +86,15 @@ namespace GameClient.Renderable.Scene
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            GameEngine.ParticleEngine.Draw(spriteBatch, Camera);
+            
+            
             if (Skybox != null)
                 Skybox.Draw(spriteBatch);
             foreach (var element in Items)
                 element.Draw(gameTime, spriteBatch);
             Camera.FollowsCharacters(Camera, Items.FindAll(e => e is Character));
             Hud.DrawHUD(spriteBatch);
+            GameEngine.ParticleEngine.Draw(spriteBatch, Camera);
         }
     }
 }

@@ -36,6 +36,7 @@ namespace GameClient.Characters
         public Client Client { get; set; }
         public bool IsDead;
         public DateTime DeathDate;
+        public int NumberOfDeath;
         public float Damages = 0;
         public string PlayerName;
         public Texture2D Face;
@@ -99,9 +100,8 @@ namespace GameClient.Characters
             if (GameEngine.ParticleEngine.Particles.ContainsKey(nameCharacter))
                 ParticlesCharacter = GameEngine.ParticleEngine.Particles[nameCharacter];
             else if (GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
-                ParticlesCharacter = GameEngine.ParticleEngine.Particles["defaultPerso"].ToDictionary(e => e.Key,
-                                                                                                      e =>
-                                                                                                      e.Value.Clone());
+                ParticlesCharacter = GameEngine.ParticleEngine.Particles["defaultPerso"]
+                    .ToDictionary(e => e.Key, e => e.Value.Clone());
             else
                 ParticlesCharacter = null;
             if (ParticlesCharacter != null && GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
@@ -112,9 +112,10 @@ namespace GameClient.Characters
                     ParticlesCharacter.Add(kvp.Key, kvp.Value.Clone());
             #endregion
 
-            foreach (var particleSystem in ParticlesCharacter.Where((kvp) => kvp.Key.EndsWith(MapName)).ToDictionary((kvp) => kvp.Key, kvp =>kvp.Value))
+            foreach (var particleSystem in ParticlesCharacter.Where((kvp) => kvp.Key.EndsWith(MapName))
+                .ToDictionary((kvp) => kvp.Key, kvp => kvp.Value))
             {
-                ParticlesCharacter[particleSystem.Key.Substring(0,particleSystem.Key.Length - MapName.Length)] =
+                ParticlesCharacter[particleSystem.Key.Substring(0, particleSystem.Key.Length - MapName.Length)] =
                     particleSystem.Value;
                 ParticlesCharacter.Remove(particleSystem.Key);
             }
@@ -132,9 +133,9 @@ namespace GameClient.Characters
                     kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 1 : -0.6f, 1.2f, 0));
                     kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack) && DateTime.Now.Millisecond % 300 < 100; //test
                 }
-                var ParticlesStars = ParticlesCharacter["Stars"];
-                var ParticlesStarship = ParticlesCharacter["Starship"];
-                var ParticlesStarsfil = ParticlesCharacter["Starsfil"];
+                //var ParticlesStars = ParticlesCharacter["Stars"];
+                //var ParticlesStarship = ParticlesCharacter["Starship"];
+                //var ParticlesStarsfil = ParticlesCharacter["Starsfil"]; //MAP TARDIS
                 //var ParticlesNuages = ParticlesCharacter["Nuages"];
                 //var ParticlesPluie = ParticlesCharacter["Pluie"];
                 var ParticlesJump = ParticlesCharacter["Jump"];
@@ -147,11 +148,11 @@ namespace GameClient.Characters
                 ParticlesJump.UpdatePositionEmitter(Position);
                 ParticlesDoubleJump.UpdatePositionEmitter(Position);
                 ParticlesRun.UpdatePositionEmitter(Position + new Vector3(0.2f, 0, 0));
-                ParticlesStarship.ActivateParticleSystem = true;
+                //ParticlesStarship.ActivateParticleSystem = true;
                 //ParticlesPluie.ActivateParticleSystem = true;
-                ParticlesStars.ActivateParticleSystem = true;
+                //ParticlesStars.ActivateParticleSystem = true;
                 //ParticlesNuages.ActivateParticleSystem = true;
-                ParticlesStarsfil.ActivateParticleSystem = true;
+                //ParticlesStarsfil.ActivateParticleSystem = true;
                 if (CallGetKey(Movement.Right) && !_jump && !running || CallGetKey(Movement.Left) && !_jump && !running)
                     run = DateTime.Now;
                 ParticlesRun.ActivateParticleSystem = CallGetKey(Movement.Right) && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 && (DateTime.Now - run).TotalMilliseconds % 500 < 100 || CallGetKey(Movement.Left) && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 && (DateTime.Now - run).TotalMilliseconds % 500 < 100;
@@ -221,6 +222,7 @@ namespace GameClient.Characters
             if (!IsDead && Position.Y < -20 || !IsDead && Position.X < -38 || !IsDead && Position.X > 33)
             {
                 IsDead = true;
+                NumberOfDeath++;
                 DeathDate = DateTime.Now;
                 GameEngine.EventManager.ThrowNewEvent("Character.Die", this);
             }

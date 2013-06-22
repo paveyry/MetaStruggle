@@ -37,8 +37,11 @@ namespace GameClient.Global
         {
             foreach (var kvp in Particles.SelectMany(mainKvp => mainKvp.Value).Where(kvp => kvp.Value.IsDrawable))
             {
-                ParticleSystemManager.AddParticleSystem(kvp.Value);
-                kvp.Value.InitializeParticle();
+                if (!ParticleSystemManager.ContainsParticleSystem(kvp.Value))
+                {
+                    ParticleSystemManager.AddParticleSystem(kvp.Value);
+                    kvp.Value.InitializeParticle();
+                }
             }
         }
 

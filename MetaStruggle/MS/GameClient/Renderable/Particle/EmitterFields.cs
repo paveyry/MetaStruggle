@@ -1,5 +1,6 @@
 ﻿using System;
 using DPSF;
+using Microsoft.Xna.Framework;
 
 namespace GameClient.Renderable.Particle
 {
@@ -12,6 +13,7 @@ namespace GameClient.Renderable.Particle
         public float ParticlesPerSecond { get; set; }
         public int BurstParticles { get; set; }
         public float BurstTime { get; set; }
+        public Vector3 Position { get; set; }
 
         public static void CopyEmitterFieldsToParticleEmitter(EmitterFields copyEmitter, ParticleEmitter emitter)
         {
@@ -22,6 +24,7 @@ namespace GameClient.Renderable.Particle
             emitter.ParticlesPerSecond = copyEmitter.ParticlesPerSecond;
             emitter.BurstParticles = copyEmitter.BurstParticles;
             emitter.BurstTime = copyEmitter.BurstTime;
+            emitter.PositionData.Position = copyEmitter.Position;
         }
     }
 }
