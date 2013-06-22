@@ -111,11 +111,11 @@ namespace GameClient.Characters
                     kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 1 : -0.6f, 1.2f, 0));
                     kvp.Value.ActivateParticleSystem = GetKey(Movement.Attack).IsPressed() && DateTime.Now.Millisecond % 300 < 100; //test
                 }
-                //var ParticlesStars = ParticlesCharacter["Stars"];
-                //var ParticlesStarship = ParticlesCharacter["Starship"];
-                //var ParticlesStarsfil = ParticlesCharacter["Starsfil"];
+                var ParticlesStars = ParticlesCharacter["Stars"];
+                var ParticlesStarship = ParticlesCharacter["Starship"];
+                var ParticlesStarsfil = ParticlesCharacter["Starsfil"];
                 //var ParticlesNuages = ParticlesCharacter["Nuages"];
-                var ParticlesPluie = ParticlesCharacter["Pluie"];
+                //var ParticlesPluie = ParticlesCharacter["Pluie"];
                 var ParticlesJump = ParticlesCharacter["Jump"];
                 var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
                 var ParticlesRun = ParticlesCharacter["Run"];
@@ -126,11 +126,11 @@ namespace GameClient.Characters
                 ParticlesJump.UpdatePositionEmitter(Position);
                 ParticlesDoubleJump.UpdatePositionEmitter(Position);
                 ParticlesRun.UpdatePositionEmitter(Position + new Vector3(0.2f, 0, 0));
-                //ParticlesStarship.ActivateParticleSystem = true;
-                ParticlesPluie.ActivateParticleSystem = true;
-                //ParticlesStars.ActivateParticleSystem = true;
+                ParticlesStarship.ActivateParticleSystem = true;
+                //ParticlesPluie.ActivateParticleSystem = true;
+                ParticlesStars.ActivateParticleSystem = true;
                 //ParticlesNuages.ActivateParticleSystem = true;
-                //ParticlesStarsfil.ActivateParticleSystem = true;
+                ParticlesStarsfil.ActivateParticleSystem = true;
                 if (GetKey(Movement.Right).IsPressed() && !_jump && !running || GetKey(Movement.Left).IsPressed() && !_jump && !running)
                     run = DateTime.Now;
                 ParticlesRun.ActivateParticleSystem = GetKey(Movement.Right).IsPressed() && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 && (DateTime.Now - run).TotalMilliseconds % 500 < 100 || GetKey(Movement.Left).IsPressed() && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 && (DateTime.Now - run).TotalMilliseconds % 500 < 100;
