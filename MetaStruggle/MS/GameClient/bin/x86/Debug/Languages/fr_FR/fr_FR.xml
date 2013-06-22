@@ -5,6 +5,7 @@
 	<MainMenu.SoloPlay>Jeu Solo</MainMenu.SoloPlay>
 	<MainMenu.Multi>Multijoueur</MainMenu.Multi>
 	<MainMenu.Settings>Options</MainMenu.Settings>
+	<MainMenu.Credits>Crédits</MainMenu.Credits>
 	<MainMenu.Quit>Quitter</MainMenu.Quit>
 	<MenuMulti.Local>Jeu Local</MenuMulti.Local>
 	<MenuMulti.Online>Jeu en Réseau</MenuMulti.Online>
@@ -34,4 +35,5 @@
 	<Text.Respawn>Respawn dans </Text.Respawn>
 	<Text.SelectPlayer>Selectionnez un Personnage:</Text.SelectPlayer>
 	<Text.TextboxPlayer>Entrez un nom de joueur:</Text.TextboxPlayer>
+	<Pause.ReturnMainMenu>Retour au menu principal</Pause.ReturnMainMenu>
 </Language>
