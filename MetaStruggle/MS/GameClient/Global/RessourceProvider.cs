@@ -61,6 +61,7 @@ namespace GameClient.Global
             AnimatedModels.Add("Alex", GetAlex(content));
             AnimatedModels.Add("Ares", GetAres(content));
             AnimatedModels.Add("Ironman", GetIronman(content));
+            AnimatedModels.Add("Poseidon", GetPoseidon(content));
         }
 
         static SkinnedModel GetZeus(ContentManager content)
@@ -87,6 +88,32 @@ namespace GameClient.Global
 
             return sm;
         }
+
+        static SkinnedModel GetPoseidon(ContentManager content)
+        {
+            var sm = content.Load<SkinnedModel>("AnimatedModels\\Poseidon\\poseidon");
+            var body = content.Load<Texture2D>("AnimatedModels\\Poseidon\\textura cor-2");
+            var hairtex = content.Load<Texture2D>("AnimatedModels\\Poseidon\\hairtex");
+
+            foreach (ModelMesh mesh in sm.Model.Meshes)
+            {
+                foreach (SkinnedEffect effect in mesh.Effects)
+                {
+                    effect.Texture = body;
+
+                    if (mesh.Name == "Trident" || mesh.Name == "Hair")
+                        effect.Texture = hairtex;
+
+                    effect.EnableDefaultLighting();
+
+                    effect.SpecularColor = new Vector3(0.25f);
+                    effect.SpecularPower = 16;
+                }
+            }
+
+            return sm;
+        }
+
         static SkinnedModel GetIronman(ContentManager content)
         {
             var sm = content.Load<SkinnedModel>("AnimatedModels\\Ironman\\Model");
