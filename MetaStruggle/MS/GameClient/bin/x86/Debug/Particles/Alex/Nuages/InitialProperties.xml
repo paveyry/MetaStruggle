@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CInitialPropertiesForQuadOfDefaultTexturedQuadParticleDefaultTexturedQuadParticleVertex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LifetimeMin>0.5</LifetimeMin>
-  <LifetimeMax>0.6</LifetimeMax>
+  <LifetimeMin>50</LifetimeMin>
+  <LifetimeMax>70</LifetimeMax>
   <PositionMin>
-    <X>40</X>
+    <X>-80</X>
     <Y>50</Y>
     <Z>50</Z>
   </PositionMin>
   <PositionMax>
-    <X>-60</X>
+    <X>-80</X>
     <Y>-50</Y>
-    <Z>5</Z>
+    <Z>-5</Z>
   </PositionMax>
   <VelocityMin>
-    <X>0</X>
+    <X>2</X>
     <Y>0</Y>
     <Z>0</Z>
   </VelocityMin>
   <VelocityMax>
-    <X>0</X>
+    <X>5</X>
     <Y>0</Y>
     <Z>0</Z>
   </VelocityMax>
@@ -49,28 +49,28 @@
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>4294967295</PackedValue>
   </StartColorMin>
   <StartColorMax>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>4294967295</PackedValue>
   </StartColorMax>
   <EndColorMin>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>4294967295</PackedValue>
   </EndColorMin>
   <EndColorMax>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>4294967295</PackedValue>
   </EndColorMax>
   <InterpolateBetweenMinAndMaxPosition>false</InterpolateBetweenMinAndMaxPosition>
   <InterpolateBetweenMinAndMaxVelocity>false</InterpolateBetweenMinAndMaxVelocity>
@@ -109,14 +109,14 @@
     <Y>0</Y>
     <Z>0</Z>
   </RotationalAccelerationMax>
-  <StartWidthMin>0.2</StartWidthMin>
-  <StartWidthMax>0.4</StartWidthMax>
-  <StartHeightMin>0.2</StartHeightMin>
-  <StartHeightMax>0.4</StartHeightMax>
-  <EndWidthMin>0.6</EndWidthMin>
-  <EndWidthMax>0.8</EndWidthMax>
-  <EndHeightMin>0.6</EndHeightMin>
-  <EndHeightMax>0.8</EndHeightMax>
+  <StartWidthMin>9</StartWidthMin>
+  <StartWidthMax>40</StartWidthMax>
+  <StartHeightMin>8</StartHeightMin>
+  <StartHeightMax>18</StartHeightMax>
+  <EndWidthMin>9</EndWidthMin>
+  <EndWidthMax>40</EndWidthMax>
+  <EndHeightMin>8</EndHeightMin>
+  <EndHeightMax>18</EndHeightMax>
   <StartSizeMin>0</StartSizeMin>
   <StartSizeMax>0</StartSizeMax>
   <EndSizeMin>0</EndSizeMin>

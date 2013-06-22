@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CInitialPropertiesForQuadOfDefaultTexturedQuadParticleDefaultTexturedQuadParticleVertex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LifetimeMin>0.5</LifetimeMin>
-  <LifetimeMax>0.6</LifetimeMax>
+  <LifetimeMin>0.8</LifetimeMin>
+  <LifetimeMax>1</LifetimeMax>
   <PositionMin>
     <X>40</X>
     <Y>50</Y>
@@ -10,16 +10,16 @@
   <PositionMax>
     <X>-60</X>
     <Y>-50</Y>
-    <Z>5</Z>
+    <Z>-20</Z>
   </PositionMax>
   <VelocityMin>
     <X>0</X>
-    <Y>0</Y>
+    <Y>-30</Y>
     <Z>0</Z>
   </VelocityMin>
   <VelocityMax>
     <X>0</X>
-    <Y>0</Y>
+    <Y>-50</Y>
     <Z>0</Z>
   </VelocityMax>
   <AccelerationMin>
@@ -49,28 +49,28 @@
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>16711680</PackedValue>
   </StartColorMin>
   <StartColorMax>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>16711680</PackedValue>
   </StartColorMax>
   <EndColorMin>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>16711680</PackedValue>
   </EndColorMin>
   <EndColorMax>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>16711680</PackedValue>
   </EndColorMax>
   <InterpolateBetweenMinAndMaxPosition>false</InterpolateBetweenMinAndMaxPosition>
   <InterpolateBetweenMinAndMaxVelocity>false</InterpolateBetweenMinAndMaxVelocity>
@@ -113,10 +113,10 @@
   <StartWidthMax>0.4</StartWidthMax>
   <StartHeightMin>0.2</StartHeightMin>
   <StartHeightMax>0.4</StartHeightMax>
-  <EndWidthMin>0.6</EndWidthMin>
-  <EndWidthMax>0.8</EndWidthMax>
-  <EndHeightMin>0.6</EndHeightMin>
-  <EndHeightMax>0.8</EndHeightMax>
+  <EndWidthMin>0.2</EndWidthMin>
+  <EndWidthMax>0.4</EndWidthMax>
+  <EndHeightMin>0.2</EndHeightMin>
+  <EndHeightMax>0.6</EndHeightMax>
   <StartSizeMin>0</StartSizeMin>
   <StartSizeMax>0</StartSizeMax>
   <EndSizeMin>0</EndSizeMin>
