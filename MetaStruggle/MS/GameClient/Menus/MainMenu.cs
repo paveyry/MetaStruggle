@@ -31,6 +31,7 @@ namespace GameClient.Menus
                     new PartialButton("MainMenu.SoloPlay", Play),
                     new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
                     new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu().MenuSettings())),
+                    new PartialButton("MainMenu.Credits", () => GameEngine.DisplayStack.Push(new Cinematic(RessourceProvider.Videos["Credits"]))),
                     new PartialButton("MainMenu.Quit", () => Environment.Exit(0)),
                     new PartialButton("Test", () => GameEngine.DisplayStack.Push(new LocalGame().Create())),
                 };

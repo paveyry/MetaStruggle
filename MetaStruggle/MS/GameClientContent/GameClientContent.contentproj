@@ -383,11 +383,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\MSTheme\Slider\BackgroundNorlmal.png">
-      <Name>BackgroundNorlmal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Themes\MSTheme\Slider\BackgroundSelected.png">
       <Name>BackgroundSelected</Name>
       <Importer>TextureImporter</Importer>
@@ -613,6 +608,13 @@
       <Name>BackgroundNormal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Videos\Credits.wmv">
+      <Name>Credits</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
