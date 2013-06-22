@@ -383,8 +383,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\MSTheme\Slider\BackgroundNormal.png">
-      <Name>BackgroundNormal</Name>
+    <Compile Include="Themes\MSTheme\Slider\BackgroundNorlmal.png">
+      <Name>BackgroundNorlmal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -604,6 +604,13 @@
   <ItemGroup>
     <Compile Include="Skyboxes\MapTardis.jpg">
       <Name>MapTardis</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\MSTheme\Slider\BackgroundNormal.png">
+      <Name>BackgroundNormal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

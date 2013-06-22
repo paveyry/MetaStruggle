@@ -41,8 +41,6 @@ namespace GameClient.Menus
 
         void NextButton()
         {
-            //GameEngine.DisplayStack.Push(new SettingsMenu(_spriteBatch, _graphics).MenuGraphics());
-            //return;
             Textbox playerNameTextbox = Menu.Items["PlayerName.Item"] as Textbox;
             ListImageButtons characterSelector = Menu.Items["CharacterSelector.Item"] as ListImageButtons;
 

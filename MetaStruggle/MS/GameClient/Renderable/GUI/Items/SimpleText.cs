@@ -32,10 +32,10 @@ namespace GameClient.Renderable.GUI.Items
             ColorNormal = colorNormal;
             ColorSelected = colorSelected;
         }
-        public SimpleText(string text, Vector2 position, PosOnScreen pos, SpriteFont font, Color colorNormal)
-            : this(() => GameEngine.LangCenter.GetString(text), position, pos, font, colorNormal, colorNormal) { }
-        public SimpleText(NameFunc text, Vector2 position, PosOnScreen pos, SpriteFont font, Color colorNormal) 
-            : this(text,position, pos, font, colorNormal, colorNormal) { }
+        public SimpleText(string text, Vector2 position, PosOnScreen pos, SpriteFont font, Color colorNormal, bool isDrawable = true)
+            : this(() => GameEngine.LangCenter.GetString(text), position, pos, font, colorNormal, colorNormal,isDrawable) { }
+        public SimpleText(NameFunc text, Vector2 position, PosOnScreen pos, SpriteFont font, Color colorNormal, bool isDrawable = true) 
+            : this(text,position, pos, font, colorNormal, colorNormal,isDrawable) { }
         #endregion
 
         private static Rectangle CreateRectangle(Vector2 position, SpriteFont font, string text)

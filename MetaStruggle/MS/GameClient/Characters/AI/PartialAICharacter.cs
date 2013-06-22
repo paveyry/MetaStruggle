@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GameClient.Characters.AI
 {
-    class PartialCharacter
+    class PartialAICharacter
     {
 
         public byte PlayerNb { get; set; }
@@ -16,14 +16,14 @@ namespace GameClient.Characters.AI
         public bool IsAI { get; set; }
 
 
-        public PartialCharacter(string playerName, string modelName, byte playerNb)
+        public PartialAICharacter(string playerName, string modelName, byte playerNb)
         {
             PlayerName = playerName;
             ModelName = modelName;
             PlayerNb = playerNb;
         }
 
-        public PartialCharacter(string playerName, string modelName, byte handicap, byte level)
+        public PartialAICharacter(string playerName, string modelName, byte handicap, byte level)
             : this(playerName, modelName,0)
         {
             IsAI = true;

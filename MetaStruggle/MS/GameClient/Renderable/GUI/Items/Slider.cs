@@ -100,12 +100,22 @@ namespace GameClient.Renderable.GUI.Items
             if (InternalRectangle.Intersects(new Rectangle(GameEngine.MouseState.X, GameEngine.MouseState.Y, 1, 1)))
             {
                 if (GameEngine.MouseState.LeftButton == ButtonState.Pressed)
-                    ValuePos = GameEngine.MouseState.X - InternalRectangle.X;
+                    ValuePos = GameEngine.MouseState.X - InternalRectangle.X + 1;
                 int abstractValue = Value - Min, tenOfTotal = (Max - Min) / 10;
-                if (GameEngine.MouseState.ScrollWheelValue > _oldWheelValue && Value < Max)
-                    Value = (abstractValue - abstractValue%tenOfTotal) + tenOfTotal + Min;
-                else if (GameEngine.MouseState.ScrollWheelValue < _oldWheelValue && Value > Min)
-                    Value = (abstractValue + ((tenOfTotal - abstractValue%tenOfTotal)%tenOfTotal)) - tenOfTotal + Min;
+                if (tenOfTotal > 0)
+                {
+                    if (GameEngine.MouseState.ScrollWheelValue > _oldWheelValue && Value < Max)
+                        Value = (abstractValue - abstractValue%tenOfTotal) + tenOfTotal + Min;
+                    else if (GameEngine.MouseState.ScrollWheelValue < _oldWheelValue && Value > Min)
+                        Value = (abstractValue + ((tenOfTotal - abstractValue%tenOfTotal)%tenOfTotal)) - tenOfTotal + Min;
+                }
+                else
+                {
+                    if (GameEngine.MouseState.ScrollWheelValue > _oldWheelValue && Value < Max)
+                        Value++;
+                    else if (GameEngine.MouseState.ScrollWheelValue < _oldWheelValue && Value > Min)
+                        Value--;
+                }
             }
             _oldWheelValue = GameEngine.MouseState.ScrollWheelValue;
         }

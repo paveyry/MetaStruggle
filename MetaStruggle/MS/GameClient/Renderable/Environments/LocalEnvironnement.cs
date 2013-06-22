@@ -16,7 +16,7 @@ namespace GameClient.Renderable.Environments
     {
         private SceneManager SceneManager { get; set; }
 
-        public LocalEnvironnement(List<PartialCharacter> characters, SpriteBatch spriteBatch, string mapName)
+        public LocalEnvironnement(List<PartialAICharacter> characters, SpriteBatch spriteBatch, string mapName)
         {
             SceneManager = SceneManager.CreateScene( new Vector3(-5, 5, -30), new Vector3(0, 0, 0), spriteBatch,mapName);
             CreateCharacters(characters,mapName);
@@ -24,11 +24,11 @@ namespace GameClient.Renderable.Environments
             SceneManager.Camera.FollowsCharacters(SceneManager.Camera, SceneManager.Items.FindAll(e => e is Character));
         }
 
-        void CreateCharacters(List<PartialCharacter> characters, string mapName)
+        void CreateCharacters(List<PartialAICharacter> characters, string mapName)
         {
             foreach (var partialCharacter in characters)
             {
-                var player = RessourceProvider.Characters[partialCharacter.ModelName];
+                var player = RessourceProvider.Characters[partialCharacter.ModelName].ConvertToCharacter();
                 if (partialCharacter.IsAI)
                     player.SetEnvironnementDatas(partialCharacter.PlayerName,mapName, SceneManager, false,
                                                  new ComputerCharacter(SceneManager, partialCharacter.Handicap,partialCharacter.Level));

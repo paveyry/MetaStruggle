@@ -5,6 +5,7 @@ using System.Text;
 using GameClient.Global;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items.ListItems;
+using GameClient.Renderable.Layout;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -23,10 +24,11 @@ namespace GameClient.Menus
                               {
                                   new PartialButton("Menu.Back", ReturnButton),
                                   new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu().MenuSettings())),
-                                  new PartialButton("Pause.ReturnMainMenu", () => {
+                                  new PartialButton("Pause.ReturnMainMenu", () =>
+                                      {
                                           GameEngine.DisplayStack.Pop();
                                           ReturnButton();
-                                      })
+                                      }                                   )
                               };
 
             Menu.Add("Buttons.Item", new ListButtons(new Vector2(50, 44), 20, buttons, RessourceProvider.Fonts["Menu"],
@@ -40,5 +42,6 @@ namespace GameClient.Menus
             GameEngine.DisplayStack.Pop();
             System.Threading.Thread.Sleep(200);
         }
+
     }
 }

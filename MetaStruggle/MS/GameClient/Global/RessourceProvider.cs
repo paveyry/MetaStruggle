@@ -27,7 +27,7 @@ namespace GameClient.Global
         public static Dictionary<string, Dictionary<string, Texture2D>> Themes = new Dictionary<string, Dictionary<string, Texture2D>>();
         public static Dictionary<string, Video> Videos = new Dictionary<string, Video>();
         public static Dictionary<string, UniversalKeys> InputKeys = new Dictionary<string, UniversalKeys>();
-        public static Dictionary<string, Character> Characters = new Dictionary<string, Character>();
+        public static Dictionary<string, PartialCharacter> Characters = new Dictionary<string, PartialCharacter>();
 
 
         public static void Fill(ContentManager content, Game game)
@@ -209,8 +209,8 @@ namespace GameClient.Global
         private static void FillCharacters()
         {
             foreach (var kvp in AnimatedModels)
-                Characters.Add(kvp.Key, new Character(null, kvp.Key, 0, null, new Vector3(0, 0, -17), new Vector3(1),
-                                                      (kvp.Key == "Spiderman" || kvp.Key == "Alex") ? 1.6f : 1));
+                Characters.Add(kvp.Key,
+                               new PartialCharacter(kvp.Key, (kvp.Key == "Spiderman" || kvp.Key == "Alex") ? 1.6f : 1));
         }
         #endregion
 

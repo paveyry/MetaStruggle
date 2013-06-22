@@ -119,7 +119,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Characters\AI\ComputerCharacter.cs" />
-    <Compile Include="Characters\AI\PartialCharacter.cs" />
+    <Compile Include="Characters\AI\PartialAICharacter.cs" />
+    <Compile Include="Characters\PartialCharacter.cs" />
     <Compile Include="Global\Config.cs" />
     <Compile Include="Global\GameEngine.cs" />
     <Compile Include="Global\InputManager\InputDevice.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="IO\Serialization.cs" />
     <Compile Include="Global\LanguageLoader.cs" />
     <Compile Include="Menus\CharacterSelector.cs" />
+    <Compile Include="Menus\LocalGame.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\PauseMenu.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
