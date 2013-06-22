@@ -19,8 +19,6 @@ namespace GameClient.Renderable.Environments
                     new Vector3(-5, 5, -30),    //Position initiale de la caméra
                     new Vector3(0, 0, 0),       //Point visé par la caméra
                     spriteBatch, "MapTardis");               //SpriteBatch
-
-            //sm.Skybox = new Skybox(Global.RessourceProvider.Videos["Intro"]);
             //sm.AddElement(new Character("Spiderman", "Spiderman", 3,sm, new Vector3(-5, 5, -17), new Vector3(1), 1.6f));
             sm.AddElement(new Character("Zeus", "Zeus", 2,sm, new Vector3(-12, 5, -17), new Vector3(1)));
             sm.AddElement(new Character("Ironman", "Ironman", 1,sm, new Vector3(-12, 5, -17), new Vector3(1)));

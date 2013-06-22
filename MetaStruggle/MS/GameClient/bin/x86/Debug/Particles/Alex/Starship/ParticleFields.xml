@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ParticleFields xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <TextureDir>Particles\\test1</TextureDir>
+  <TextureDir>Particles\\Newleo</TextureDir>
   <BoolUpdateParticlePositionUsingVelocity>true</BoolUpdateParticlePositionUsingVelocity>
   <BoolUpdateParticleRotationUsingRotationalVelocity>true</BoolUpdateParticleRotationUsingRotationalVelocity>
   <BoolUpdateParticleWidthAndHeightUsingLerp>true</BoolUpdateParticleWidthAndHeightUsingLerp>
@@ -8,5 +8,5 @@
   <BoolUpdateParticleTransparencyToFadeOutUsingLerp>true</BoolUpdateParticleTransparencyToFadeOutUsingLerp>
   <IntUpdateParticleTransparencyToFadeOutUsingLerp>100</IntUpdateParticleTransparencyToFadeOutUsingLerp>
   <BoolUpdateParticleToFaceTheCamera>true</BoolUpdateParticleToFaceTheCamera>
-  <IntUpdateParticleToFaceTheCamera>200</IntUpdateParticleToFaceTheCamera>
+  <IntUpdateParticleToFaceTheCamera>2</IntUpdateParticleToFaceTheCamera>
 </ParticleFields>

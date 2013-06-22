@@ -57,6 +57,8 @@ namespace GameClient.Characters
 
         //****PARTICLE****
         Dictionary<string, ParticleSystem> ParticlesCharacter { get; set; }
+        private DateTime run;
+        private bool running;
 
         //****IA****
         public delegate bool MovementActivate(Movement movement);
@@ -108,6 +110,40 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
+            #region Particle (à modifier ! -> Zone de test)
+            if (ParticlesCharacter != null && PlayerName == "Alex")
+            {
+                foreach (var kvp in ParticlesCharacter)
+                {
+                    kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 1 : -0.6f, 1.2f, 0));
+                    kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack) && DateTime.Now.Millisecond % 300 < 100; //test
+                }
+                var ParticlesStars = ParticlesCharacter["Stars"];
+                var ParticlesStarship = ParticlesCharacter["Starship"];
+                var ParticlesStarsfil = ParticlesCharacter["Starsfil"];
+                //var ParticlesNuages = ParticlesCharacter["Nuages"];
+                //var ParticlesPluie = ParticlesCharacter["Pluie"];
+                var ParticlesJump = ParticlesCharacter["Jump"];
+                var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
+                var ParticlesRun = ParticlesCharacter["Run"];
+                var ParticlesRetombe = ParticlesCharacter["Retombe"];
+                var ParticlesCoupdepied = ParticlesCharacter["Coupdepied"];
+                ParticlesCoupdepied.UpdatePositionEmitter(Position);
+                ParticlesRetombe.UpdatePositionEmitter(Position);
+                ParticlesJump.UpdatePositionEmitter(Position);
+                ParticlesDoubleJump.UpdatePositionEmitter(Position);
+                ParticlesRun.UpdatePositionEmitter(Position + new Vector3(0.2f, 0, 0));
+                ParticlesStarship.ActivateParticleSystem = true;
+                //ParticlesPluie.ActivateParticleSystem = true;
+                ParticlesStars.ActivateParticleSystem = true;
+                //ParticlesNuages.ActivateParticleSystem = true;
+                ParticlesStarsfil.ActivateParticleSystem = true;
+                if (CallGetKey(Movement.Right) && !_jump && !running || CallGetKey(Movement.Left) && !_jump && !running)
+                    run = DateTime.Now;
+                ParticlesRun.ActivateParticleSystem = CallGetKey(Movement.Right) && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 && (DateTime.Now - run).TotalMilliseconds % 500 < 100 || CallGetKey(Movement.Left) && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 && (DateTime.Now - run).TotalMilliseconds % 500 < 100;
+            }
+            #endregion
+
             var pendingAnim = new List<Animation>();
 
             #region ManageKeyboard
@@ -118,6 +154,8 @@ namespace GameClient.Characters
 
                 if (CallGetKey(Movement.SpecialAttack))
                 {
+                    var ParticlesCoupdepied = ParticlesCharacter["Coupdepied"];
+                    ParticlesCoupdepied.ActivateParticleSystem = true;
                     Attack(gameTime, true);
                     pendingAnim.Add(Animation.SpecialAttack);
                 }
@@ -131,9 +169,17 @@ namespace GameClient.Characters
                     GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity / 1.4f));
 
                     if (_jump)
+                    {
+                        var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
+                        ParticlesDoubleJump.UpdatePositionEmitter(Position);
+                        ParticlesDoubleJump.ActivateParticleSystem = true;
                         _doublejump = true;
+                    }
                     else
                     {
+                        var ParticlesJump = ParticlesCharacter["Jump"];
+                        ParticlesJump.UpdatePositionEmitter(Position);
+                        ParticlesJump.ActivateParticleSystem = true;
                         _jump = true;
                         _firstjump = DateTime.Now;
                     }
@@ -143,12 +189,14 @@ namespace GameClient.Characters
                 }
                 if (CallGetKey(Movement.Right))
                 {
+                    running = true;
                     MoveRight(gameTime);
                     pendingAnim.Add(Animation.Run);
                 }
 
                 if (CallGetKey(Movement.Left))
                 {
+                    running = true;
                     MoveLeft(gameTime);
                     pendingAnim.Add(Animation.Run);
                 }
@@ -191,17 +239,6 @@ namespace GameClient.Characters
                 ApplyGravity(gameTime);
                 ApplySpeed(gameTime);
                 KeepOnTheGround();
-            }
-            #endregion
-
-            #region Particle
-            if (ParticlesCharacter != null)
-            {
-                foreach (var kvp in ParticlesCharacter)
-                {
-                    kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 0.6f : -0.6f, 1.2f, 0));
-                    kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack); //test
-                }
             }
             #endregion
 
@@ -318,6 +355,12 @@ namespace GameClient.Characters
             Position = new Vector3(Position.X, 0, Position.Z);
             Speed.Y = 0;
             Speed.X *= 0.7f;
+            if (_jump)
+            {
+                var ParticlesRetombe = ParticlesCharacter["Retombe"];
+                ParticlesRetombe.UpdatePositionEmitter(Position);
+                ParticlesRetombe.ActivateParticleSystem = true;
+            }
             _jump = false;
             _doublejump = false;
         }

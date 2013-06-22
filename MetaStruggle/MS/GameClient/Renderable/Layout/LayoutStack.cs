@@ -36,17 +36,12 @@ namespace GameClient.Renderable.Layout
                     GameEngine.SoundCenter.PauseAll();
                     GameEngine.SoundCenter.Play("Main Title");
                 }
-                else if (!(e is SceneManager) && Peek() is SceneManager)
+                if (!(e is SceneManager) && Peek() is SceneManager)
                     GameEngine.ParticleEngine.RemoveAndDestroyAll();
                 else if (e is SceneManager )
                     GameEngine.ParticleEngine.SetDrawableParticles();
             }
             base.Push(e);
-        }
-
-        void SetParticleEngine(T e, T peek)
-        {
-            
         }
 
     }
