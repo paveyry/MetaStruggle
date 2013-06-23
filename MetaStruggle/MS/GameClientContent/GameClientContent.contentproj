@@ -259,13 +259,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Buttons\TextboxMulti.png">
-      <Name>TextboxMulti</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Fonts\MenuLittle.spritefont">
       <Name>MenuLittle</Name>
       <Importer>FontDescriptionImporter</Importer>

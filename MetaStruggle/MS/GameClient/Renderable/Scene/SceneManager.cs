@@ -71,9 +71,9 @@ namespace GameClient.Renderable.Scene
         {
             if (GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
             {
+                System.Threading.Thread.Sleep(200);
                 GameEngine.SoundCenter.PlayWithStatus();
                 GameEngine.DisplayStack.Push(new PauseMenu().Create());
-                System.Threading.Thread.Sleep(200);
                 return;
             }
             if (Skybox != null)

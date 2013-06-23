@@ -31,7 +31,7 @@ namespace GameClient.Characters
     {
         #region Fields
         public byte ID { get; set; }
-        public byte PlayerNb { get; set; }
+        public int PlayerNb { get; set; }
         private readonly float _baseYaw;
         private readonly Vector3 _spawnPosition;
         public Client Client { get; set; }
@@ -66,16 +66,14 @@ namespace GameClient.Characters
         //****IA****
         public delegate bool MovementActivate(Movement movement);
         public MovementActivate GetKey { get; set; }
-        private ComputerCharacter ComputerCharacter { get; set; }
-        public bool IsAI { get; set; }
-
+        
         public bool CollideWithMap
         {
             get { return (Position.Y <= 0.00 && Position.Y > -1 && Position.X < 13 && Position.X > -24.5); }
         }
         #endregion
 
-        public Character(string playerName, string nameCharacter, byte playerNb, SceneManager scene, Vector3 position, Vector3 scale
+        public Character(string playerName, string nameCharacter,string mapName, int playerNb, SceneManager scene, Vector3 position, Vector3 scale
             , float speed = 1f)
             : base(nameCharacter, scene, position, scale, speed)
         {
@@ -83,6 +81,7 @@ namespace GameClient.Characters
             ID = 0;
             PlayerNb = playerNb;
             PlayerName = playerName;
+            MapName = mapName;
             Face = RessourceProvider.CharacterFaces[nameCharacter];
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
@@ -92,6 +91,7 @@ namespace GameClient.Characters
             _spawnPosition = position;
             _latteralMove = new Vector3(LatteralSpeed, 0, 0);
             GetKey = (movement) => GetUniversalKey(movement).IsPressed();
+            CreateParticlesCharacter(ModelName);
         }
 
         void CreateParticlesCharacter(string nameCharacter)
@@ -125,6 +125,8 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
+            if (this is ComputerCharacter)
+                PlayerName = PlayerName;
             #region Particle (à modifier ! -> Zone de test)
             if (ParticlesCharacter != null && PlayerName == "Alex")
             {
@@ -133,6 +135,8 @@ namespace GameClient.Characters
                     kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 1 : -0.6f, 1.2f, 0));
                     kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack) && DateTime.Now.Millisecond % 300 < 100; //test
                 }
+                if (this is ComputerCharacter)
+                    PlayerName = PlayerName;
                 //var ParticlesStars = ParticlesCharacter["Stars"];
                 //var ParticlesStarship = ParticlesCharacter["Starship"];
                 //var ParticlesStarsfil = ParticlesCharacter["Starsfil"]; //MAP TARDIS
@@ -268,11 +272,6 @@ namespace GameClient.Characters
             count = (count + 1) % 60;
             #endregion
 
-            #region AI
-            if (ComputerCharacter != null)
-                ComputerCharacter.Update(gameTime);
-            #endregion
-
             base.Update(gameTime);
         }
 
@@ -388,35 +387,19 @@ namespace GameClient.Characters
         #endregion
 
         #region Environnement
-        public void SetEnvironnementDatas(string playerName, string mapName, SceneManager sm, bool playing)
+        public void SetEnvironnementDatas(bool playing, byte playerNb)
         {
-            PlayerName = playerName;
-            Scene = sm;
             Playing = playing;
-            MapName = mapName;
-            CreateParticlesCharacter(ModelName);
-        }
-
-        public void SetEnvironnementDatas(string playerName, string mapName, SceneManager sm, bool playing, byte playerNb)
-        {
-            SetEnvironnementDatas(playerName, mapName, sm, playing);
             PlayerNb = playerNb;
         }
 
-        public void SetEnvironnementDatas(string playerName, string mapName, byte id, SceneManager sm, bool playing, Client client)
+        public void SetEnvironnementDatas(byte id, bool playing, Client client)
         {
-            SetEnvironnementDatas(playerName, mapName, sm, playing);
+            Playing = playing;
             Client = client;
             ID = id;
         }
 
-        public void SetEnvironnementDatas(string playerName, string mapName, SceneManager sm, bool playing, ComputerCharacter computerCharacter)
-        {
-            SetEnvironnementDatas(playerName, mapName, sm, false);
-            ComputerCharacter = computerCharacter;
-            IsAI = true;
-            GetKey = ComputerCharacter.GetMovement;
-        }
         #endregion
     }
 }

@@ -26,17 +26,15 @@ namespace GameClient.Renderable.Environments
 
         void CreateCharacters(List<PartialAICharacter> characters, string mapName)
         {
-            foreach (var partialCharacter in characters)
+            foreach (var pChar in characters)
             {
-                var player = RessourceProvider.Characters[partialCharacter.ModelName].ConvertToCharacter();
-                if (partialCharacter.IsAI)
-                    player.SetEnvironnementDatas(partialCharacter.PlayerName,mapName, SceneManager, false,
-                                                 new ComputerCharacter(SceneManager, partialCharacter.Handicap,partialCharacter.Level));
-                else
-                    player.SetEnvironnementDatas(partialCharacter.PlayerName,mapName, SceneManager, true,
-                                                 partialCharacter.PlayerNb);
-                SceneManager.AddElement(player);
+                var model = RessourceProvider.Characters[pChar.ModelName];
+                SceneManager.AddElement(pChar.IsAI 
+                    ? model.ConvertToComputerCharacter(pChar.PlayerName, mapName, SceneManager, pChar.Handicap,pChar.Level) 
+                    : model.ConvertToCharacter(pChar.PlayerName, mapName, pChar.PlayerNb, SceneManager));
             }
+            foreach (var character in SceneManager.Items.OfType<ComputerCharacter>())
+                character.Initialize();
         }
     }
 }

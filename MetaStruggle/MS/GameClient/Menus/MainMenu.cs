@@ -28,7 +28,7 @@ namespace GameClient.Menus
             var menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
             var buttons = new List<PartialButton>
                 {
-                    new PartialButton("MainMenu.SoloPlay", () => GameEngine.DisplayStack.Push(new LocalGame(_spriteBatch).Create())),
+                    new PartialButton("MainMenu.SoloPlay", () => GameEngine.DisplayStack.Push(new LocalGameMenu(_spriteBatch).Create())),
                     new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
                     new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu().MenuSettings())),
                     new PartialButton("MainMenu.Credits", () => GameEngine.DisplayStack.Push(new Cinematic(RessourceProvider.Videos["Credits"]))),

@@ -13,12 +13,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameClient.Menus
 {
-    class LocalGame
+    class LocalGameMenu
     {
         Menu Menu { get; set; }
         private readonly SpriteBatch _spriteBatch;
 
-        public LocalGame(SpriteBatch spriteBatch)
+        public LocalGameMenu(SpriteBatch spriteBatch)
         {
             _spriteBatch = spriteBatch;
         }
@@ -63,10 +63,10 @@ namespace GameClient.Menus
         void CreateCharacterSelector(int nb)
         {
             bool status = (nb == 0);
-            
+
             Menu.Add("Multiple.CharacterSelector.Item." + nb, new ListImageButtons(new Rectangle(5, 22, 45, 60), RessourceProvider.CharacterFaces, "MSTheme",
                 RessourceProvider.Fonts["HUDlittle"], 5, status));
-            Menu.Add("Multiple.Textbox.PlayerName." + nb, new Textbox(status ? "" : "Player " + (nb + 1), new Rectangle(55, 80, 300, 0), "MSTheme",
+            Menu.Add("Multiple.Textbox.PlayerName." + nb, new Textbox(GameEngine.LangCenter.GetString("Player." + (nb + 1)), new Rectangle(55, 80, 300, 0), "MSTheme",
                 RessourceProvider.Fonts["MenuLittle"], Color.White, status));
             if (status) return;
             Menu.Add("Multiple.Activate.Checkbox." + nb, new CheckBox(new Vector2(83, 23), "MSTheme", false, () => OnChangeChecboxActivate(nb), false));
@@ -81,15 +81,17 @@ namespace GameClient.Menus
             Menu.Items["Text.Multiple.ActivateAI"].IsDrawable =
             Menu.Items["Multiple.IA.Checkbox." + nb].IsDrawable =
                 (Menu.Items["Multiple.Activate.Checkbox." + nb] as CheckBox).IsSelect;
+            OnChangeCheckboxAI(nb);
         }
 
         void OnChangeCheckboxAI(int nb)
         {
+            var iaCheckBox = (Menu.Items["Multiple.IA.Checkbox." + nb] as CheckBox);
             Menu.Items["Text.Multiple.SliderLevel"].IsDrawable =
             Menu.Items["Text.Multiple.SliderHandicap"].IsDrawable =
             Menu.Items["Multiple.IA.Slider.Handicap." + nb].IsDrawable =
             Menu.Items["Multiple.IA.Slider.Level." + nb].IsDrawable =
-                (Menu.Items["Multiple.IA.Checkbox." + nb] as CheckBox).IsSelect;
+                iaCheckBox.IsSelect && iaCheckBox.IsDrawable;
         }
 
         private void HideElementsPlayers(int playerSelected)
@@ -118,7 +120,7 @@ namespace GameClient.Menus
                     return;
             if (characters.Count < 2)
                 return;
-            GameEngine.DisplayStack.Push(new LocalGame(_spriteBatch).MapSelector(characters));
+            GameEngine.DisplayStack.Push(new LocalGameMenu(_spriteBatch).MapSelector(characters));
         }
 
         bool AddCreateCharacter(int nb, List<PartialAICharacter> characters)
@@ -135,8 +137,8 @@ namespace GameClient.Menus
 
             characters.Add((isAI) ?
                 new PartialAICharacter(playerName, modelName,
-                (byte)(Menu.Items["Multiple.IA.Slider.Handicap."+nb] as Slider).Value,
-                (byte)(Menu.Items["Multiple.IA.Slider.Level." + nb] as Slider).Value) 
+                (byte)(Menu.Items["Multiple.IA.Slider.Handicap." + nb] as Slider).Value,
+                (byte)(Menu.Items["Multiple.IA.Slider.Level." + nb] as Slider).Value)
                 : new PartialAICharacter(playerName, modelName, (byte)nb));
             return true;
         }
@@ -151,7 +153,7 @@ namespace GameClient.Menus
             Menu.Add("MapSelector.Text", new SimpleText("Text.SelectMap", new Vector2(15, 15),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("MapSelector.Item", new ListImageButtons(new Rectangle(15, 22, 70, 45), RessourceProvider.MapScreens, "MSTheme",
-                RessourceProvider.Fonts["HUDlittle"],4));
+                RessourceProvider.Fonts["HUDlittle"], 4));
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["MenuLittle"], Color.White,
                 Color.DarkOrange, () => NextButtonMapSelector(characters)));
             return Menu;
@@ -163,7 +165,7 @@ namespace GameClient.Menus
             if (mapSelected == null)
                 return;
 
-            GameEngine.DisplayStack.Push(new LocalEnvironnement(characters,_spriteBatch,"Map"+mapSelected).SceneManager);
+            GameEngine.DisplayStack.Push(new LocalEnvironnement(characters, _spriteBatch, "Map" + mapSelected).SceneManager);
         }
         #endregion
 

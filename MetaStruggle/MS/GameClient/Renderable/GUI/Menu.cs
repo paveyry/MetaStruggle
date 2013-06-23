@@ -49,13 +49,14 @@ namespace GameClient.Renderable.GUI
 
         public void Update(GameTime gameTime)
         {
+            if (GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
+            {
+                System.Threading.Thread.Sleep(200);
+                if (GameEngine.DisplayStack.Count > 1)
+                    GameEngine.DisplayStack.Pop();
+            }
             for (int i = 0; i < Items.Values.Count; i++)
                 Items.Values.ElementAt(i).UpdateItem(gameTime);
-
-            if (!GameEngine.KeyboardState.IsKeyDown(Keys.Escape)) return;
-            System.Threading.Thread.Sleep(200);
-            if (GameEngine.DisplayStack.Count > 1)
-                GameEngine.DisplayStack.Pop();
         }
 
         public void DrawMouse(SpriteBatch spriteBatch)

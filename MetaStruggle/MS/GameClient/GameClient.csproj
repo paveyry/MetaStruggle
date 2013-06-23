@@ -130,7 +130,7 @@
     <Compile Include="IO\Serialization.cs" />
     <Compile Include="Global\LanguageLoader.cs" />
     <Compile Include="Menus\CharacterSelector.cs" />
-    <Compile Include="Menus\LocalGame.cs" />
+    <Compile Include="Menus\LocalGameMenu.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\PauseMenu.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />

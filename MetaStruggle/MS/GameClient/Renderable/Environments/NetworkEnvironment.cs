@@ -39,14 +39,14 @@ namespace GameClient.Renderable.Environments
 
         void CreateItems(GameStartDatas gs)
         {
-            foreach (var c in gs.Players.Select(p => new Character(p.Name, p.ModelType, 0, SceneManager, new Vector3(0, 0, -17), Vector3.One)
-                {
-                    ID = p.ID,
-                    Client = p.Client
-                }))
-            {
-                SceneManager.AddElement(c);
-            }
+            //foreach (var c in gs.Players.Select(p => new Character(p.Name, p.ModelType, 0, SceneManager, new Vector3(0, 0, -17), Vector3.One)
+            //    {
+            //        ID = p.ID,
+            //        Client = p.Client
+            //    }))
+            //{
+            //    SceneManager.AddElement(c);
+            //}
 
             SceneManager.AddElement(new Model3D(SceneManager, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
@@ -94,13 +94,11 @@ namespace GameClient.Renderable.Environments
 
             foreach (var p in gs.Players)
             {
-                Character c = RessourceProvider.Characters[p.ModelType].ConvertToCharacter();
-                c.SetEnvironnementDatas(p.Name,gs.MapName, p.ID, SceneManager, p.Name == CurrentCharacterName, p.Name == CurrentCharacterName ? Client : null);
+                Character c = RessourceProvider.Characters[p.ModelType].ConvertToCharacter(p.Name,gs.MapName, 0, SceneManager);
+                c.SetEnvironnementDatas(p.ID, p.Name == CurrentCharacterName, p.Name == CurrentCharacterName ? Client : null);
                 SceneManager.AddElement(c);
             }
 
-            //SceneManager.AddElement(new Model3D(SceneManager, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
-            //                          new Vector3(1f, 1f, 0.8f)));
             SceneManager.AddMap(gs.MapName);
         }
     }
