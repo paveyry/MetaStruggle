@@ -26,6 +26,7 @@ namespace GameClient.Characters
         Jump,
         SpecialAttack
     }
+
     public class Character : AnimatedModel3D
     {
         #region Fields
@@ -66,7 +67,7 @@ namespace GameClient.Characters
         public delegate bool MovementActivate(Movement movement);
         public MovementActivate GetKey { get; set; }
         private ComputerCharacter ComputerCharacter { get; set; }
-        public bool IsNormalPlayer { get; set; }
+        public bool IsAI { get; set; }
 
         public bool CollideWithMap
         {
@@ -90,7 +91,6 @@ namespace GameClient.Characters
             _gravity = new Vector3(0, Gravity, 0);
             _spawnPosition = position;
             _latteralMove = new Vector3(LatteralSpeed, 0, 0);
-            IsNormalPlayer = true;
             GetKey = (movement) => GetUniversalKey(movement).IsPressed();
         }
 
@@ -412,9 +412,9 @@ namespace GameClient.Characters
 
         public void SetEnvironnementDatas(string playerName, string mapName, SceneManager sm, bool playing, ComputerCharacter computerCharacter)
         {
-            SetEnvironnementDatas(playerName, mapName, sm, playing);
+            SetEnvironnementDatas(playerName, mapName, sm, false);
             ComputerCharacter = computerCharacter;
-            IsNormalPlayer = false;
+            IsAI = true;
             GetKey = ComputerCharacter.GetMovement;
         }
         #endregion

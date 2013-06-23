@@ -19,10 +19,10 @@
 	<MenuGraphics.Resolution>Résolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musiques : </MenuSounds.Musics>
 	<MenuSounds.Effects>Effets : </MenuSounds.Effects>
-	<Controls.Pl1>Joueur Un</Controls.Pl1>
-	<Controls.Pl2>Joueur Deux</Controls.Pl2>
-	<Controls.Pl3>Joueur Trois</Controls.Pl3>
-	<Controls.Pl4>Joueur Quatre</Controls.Pl4>
+	<Player.1>Joueur Un</Player.1>
+	<Player.2>Joueur Deux</Player.2>
+	<Player.3>Joueur Trois</Player.3>
+	<Player.4>Joueur Quatre</Player.4>
 	<Controls.Movements>Mouvements</Controls.Movements>
 	<Controls.Keys>Touches</Controls.Keys>
 	<Controls.Left>Gauche</Controls.Left>

@@ -30,7 +30,10 @@ namespace GameClient.Renderable.Layout
             if (Count > 0)
             {
                 if (!(e is Menu) && Peek() is Menu)
-                    GameEngine.SoundCenter.Stop("Main Title");
+                {  GameEngine.SoundCenter.Stop("Main Title");
+                    if (e is SceneManager)
+                        GameEngine.SoundCenter.Play((e as SceneManager).MapName);
+                }
                 else if (e is Menu && Peek() is SceneManager)
                 {
                     GameEngine.SoundCenter.PauseAll();

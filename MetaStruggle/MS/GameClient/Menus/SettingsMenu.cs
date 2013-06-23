@@ -166,10 +166,10 @@ namespace GameClient.Menus
 
             Menu.Add("Controls.ButtonsPlayer.Item", new ListButtons(new Vector2(10, 20), 0, new List<PartialButton>
                 {
-                    new PartialButton("Controls.Pl1",() => HideKeySelectorsPlayers(0)),
-                    new PartialButton("Controls.Pl2",() => HideKeySelectorsPlayers(1)),
-                    new PartialButton("Controls.Pl3",() => HideKeySelectorsPlayers(2)),
-                    new PartialButton("Controls.Pl4",() => HideKeySelectorsPlayers(3)),
+                    new PartialButton("Player.1",() => HideKeySelectorsPlayers(0)),
+                    new PartialButton("Player.2",() => HideKeySelectorsPlayers(1)),
+                    new PartialButton("Player.3",() => HideKeySelectorsPlayers(2)),
+                    new PartialButton("Player.4",() => HideKeySelectorsPlayers(3)),
                 }, RessourceProvider.Fonts["Menu"], Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Horizontal, false));
 
             for (int i = 0; i < 4; i++)

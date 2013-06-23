@@ -35,10 +35,10 @@ namespace GameClient.Menus
 
             Menu.Add("ButtonsPlayer.Item", new ListButtons(new Vector2(10, 12), 0, new List<PartialButton>
                 {
-                    new PartialButton("Controls.Pl1",() => HideElementsPlayers(0)),
-                    new PartialButton("Controls.Pl2",() => HideElementsPlayers(1)),
-                    new PartialButton("Controls.Pl3",() => HideElementsPlayers(2)),
-                    new PartialButton("Controls.Pl4",() => HideElementsPlayers(3)),
+                    new PartialButton("Player.1",() => HideElementsPlayers(0)),
+                    new PartialButton("Player.2",() => HideElementsPlayers(1)),
+                    new PartialButton("Player.3",() => HideElementsPlayers(2)),
+                    new PartialButton("Player.4",() => HideElementsPlayers(3)),
                 }, RessourceProvider.Fonts["MenuLittle"], Color.White, Color.DarkOrange, ListButtons.StatusListButtons.Horizontal, false));
 
             Menu.Add("PlayerName.Text", new SimpleText("Text.TextboxPlayer", new Vector2(55, 73),

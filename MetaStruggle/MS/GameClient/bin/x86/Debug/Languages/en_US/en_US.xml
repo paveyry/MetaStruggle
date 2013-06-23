@@ -19,10 +19,10 @@
 	<MenuGraphics.Resolution>Resolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musics : </MenuSounds.Musics>
 	<MenuSounds.Effects>Effects : </MenuSounds.Effects>
-	<Controls.Pl1>Player One</Controls.Pl1>
-	<Controls.Pl2>Player Two</Controls.Pl2>
-	<Controls.Pl3>Player Three</Controls.Pl3>
-	<Controls.Pl4>Player Four</Controls.Pl4>
+	<Player.1>Player One</Player.1>
+	<Player.2>Player Two</Player.2>
+	<Player.3>Player Three</Player.3>
+	<Player.4>Player Four</Player.4>
 	<Controls.Movements>Movements</Controls.Movements>
 	<Controls.Keys>Keys</Controls.Keys>
 	<Controls.Left>Left</Controls.Left>

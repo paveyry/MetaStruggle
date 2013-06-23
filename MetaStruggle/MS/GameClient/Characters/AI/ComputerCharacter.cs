@@ -18,7 +18,7 @@ namespace GameClient.Characters.AI
 
         public bool GetMovement(Movement movement) //
         {
-            return false;
+            return (movement == Movement.Left);
         }
 
         public void Update(GameTime gameTime) //

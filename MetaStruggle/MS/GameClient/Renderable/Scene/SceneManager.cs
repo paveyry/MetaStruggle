@@ -43,6 +43,7 @@ namespace GameClient.Renderable.Scene
 
             if (!GameEngine.ParticleEngine.Particles.ContainsKey(mapName)) return;
 
+            MapName = mapName;
             ParticlesMap = GameEngine.ParticleEngine.Particles[mapName];
             GameEngine.ParticleEngine.AddParticles(ParticlesMap);
         }
@@ -84,8 +85,6 @@ namespace GameClient.Renderable.Scene
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
-            
             if (Skybox != null)
                 Skybox.Draw(spriteBatch);
             foreach (var element in Items)
