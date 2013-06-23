@@ -373,9 +373,9 @@ namespace GameClient.Characters
             Speed.X *= 0.7f;
             if (_jump)
             {
-                var ParticlesRetombe = ParticlesCharacter["Retombe"];
-                ParticlesRetombe.UpdatePositionEmitter(Position);
-                ParticlesRetombe.ActivateParticleSystem = true;
+                //var ParticlesRetombe = ParticlesCharacter["Retombe"];
+                //ParticlesRetombe.UpdatePositionEmitter(Position);
+                //ParticlesRetombe.ActivateParticleSystem = true;
             }
             _jump = false;
             _doublejump = false;
