@@ -36,4 +36,8 @@
 	<Text.SelectPlayer>Select a Character:</Text.SelectPlayer>
 	<Text.TextboxPlayer>Enter a Player Name:</Text.TextboxPlayer>
 	<Pause.ReturnMainMenu>Back to main menu</Pause.ReturnMainMenu>
+	<Text.ActivatePl>Activate Player :</Text.ActivatePl>
+	<Text.ActivateAI>Activate AI :</Text.ActivateAI>
+	<Text.SliderHandicap>Handicap :</Text.SliderHandicap>
+	<Text.SliderLevel>Level :</Text.SliderLevel>
 </Language>

@@ -38,7 +38,7 @@ namespace GameClient.Renderable.Scene
         public void AddMap(string mapName)
         {
             Skybox = new Skybox(RessourceProvider.Skyboxes[mapName]);
-            AddElement(new Model3D(this, RessourceProvider.StaticModels[mapName], new Vector3(10, 0, 0),
+            Items.Add(new Model3D(this, RessourceProvider.StaticModels[mapName], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
 
             if (!GameEngine.ParticleEngine.Particles.ContainsKey(mapName)) return;

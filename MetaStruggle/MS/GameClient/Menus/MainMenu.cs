@@ -28,12 +28,12 @@ namespace GameClient.Menus
             var menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
             var buttons = new List<PartialButton>
                 {
-                    new PartialButton("MainMenu.SoloPlay", Play),
+                    new PartialButton("MainMenu.SoloPlay", () => GameEngine.DisplayStack.Push(new LocalGame(_spriteBatch).Create())),
                     new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
                     new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu().MenuSettings())),
                     new PartialButton("MainMenu.Credits", () => GameEngine.DisplayStack.Push(new Cinematic(RessourceProvider.Videos["Credits"]))),
                     new PartialButton("MainMenu.Quit", () => Environment.Exit(0)),
-                    new PartialButton("Test", () => GameEngine.DisplayStack.Push(new LocalGame().Create())),
+                    new PartialButton("Test", Play),
                 };
 
             menu.Add("Buttons.Item", new ListButtons(new Vector2(50,44),20,buttons,RessourceProvider.Fonts["Menu"],
@@ -44,10 +44,7 @@ namespace GameClient.Menus
 
          public void Play()
         {
-            if (GameEngine.SceneManager == null)
-                GameEngine.SceneManager = Renderable.Environments.Environment1.GetScene(_spriteBatch);
-            GameEngine.SoundCenter.PlayWithStatus("tardisbattlefield");
-            GameEngine.DisplayStack.Push(GameEngine.SceneManager);
+            GameEngine.DisplayStack.Push(Renderable.Environments.Environment1.GetScene(_spriteBatch));
         }
     }
 }

@@ -36,4 +36,8 @@
 	<Text.SelectPlayer>Selectionnez un Personnage:</Text.SelectPlayer>
 	<Text.TextboxPlayer>Entrez un nom de joueur:</Text.TextboxPlayer>
 	<Pause.ReturnMainMenu>Retour au menu principal</Pause.ReturnMainMenu>
+	<Text.ActivatePl>Activé Joueur :</Text.ActivatePl>
+	<Text.ActivateAI>Activé IA :</Text.ActivateAI>
+	<Text.SliderHandicap>Handicap :</Text.SliderHandicap>
+	<Text.SliderLevel>Niveau :</Text.SliderLevel>
 </Language>

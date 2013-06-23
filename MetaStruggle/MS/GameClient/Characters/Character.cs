@@ -169,8 +169,8 @@ namespace GameClient.Characters
 
                 if (CallGetKey(Movement.SpecialAttack))
                 {
-                    var ParticlesCoupdepied = ParticlesCharacter["Coupdepied"];
-                    ParticlesCoupdepied.ActivateParticleSystem = true;
+                    //var ParticlesCoupdepied = ParticlesCharacter["Coupdepied"];
+                    //ParticlesCoupdepied.ActivateParticleSystem = true;
                     Attack(gameTime, true);
                     pendingAnim.Add(Animation.SpecialAttack);
                 }
@@ -185,16 +185,16 @@ namespace GameClient.Characters
 
                     if (_jump)
                     {
-                        var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
-                        ParticlesDoubleJump.UpdatePositionEmitter(Position);
-                        ParticlesDoubleJump.ActivateParticleSystem = true;
+                        //var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
+                        //ParticlesDoubleJump.UpdatePositionEmitter(Position);
+                        //ParticlesDoubleJump.ActivateParticleSystem = true;
                         _doublejump = true;
                     }
                     else
                     {
-                        var ParticlesJump = ParticlesCharacter["Jump"];
-                        ParticlesJump.UpdatePositionEmitter(Position);
-                        ParticlesJump.ActivateParticleSystem = true;
+                        //var ParticlesJump = ParticlesCharacter["Jump"];
+                        //ParticlesJump.UpdatePositionEmitter(Position);
+                        //ParticlesJump.ActivateParticleSystem = true;
                         _jump = true;
                         _firstjump = DateTime.Now;
                     }

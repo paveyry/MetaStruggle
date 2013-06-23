@@ -24,11 +24,7 @@ namespace GameClient.Menus
                               {
                                   new PartialButton("Menu.Back", ReturnButton),
                                   new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu().MenuSettings())),
-                                  new PartialButton("Pause.ReturnMainMenu", () =>
-                                      {
-                                          GameEngine.DisplayStack.Pop();
-                                          ReturnButton();
-                                      }                                   )
+                                  new PartialButton("Pause.ReturnMainMenu", ReturnMainMenu)
                               };
 
             Menu.Add("Buttons.Item", new ListButtons(new Vector2(50, 44), 20, buttons, RessourceProvider.Fonts["Menu"],
@@ -41,6 +37,14 @@ namespace GameClient.Menus
         {
             GameEngine.DisplayStack.Pop();
             System.Threading.Thread.Sleep(200);
+        }
+
+        void ReturnMainMenu()
+        {
+            System.Threading.Thread.Sleep(200);
+            var mainMenu = GameEngine.DisplayStack.ToList().Last();
+            GameEngine.DisplayStack = new LayoutStack<IBasicLayout>();
+            GameEngine.DisplayStack.Push(mainMenu);
         }
 
     }

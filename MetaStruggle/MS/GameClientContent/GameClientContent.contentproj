@@ -582,7 +582,13 @@
       <Processor>VideoProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="MapScreens\Minecraft.png">
+      <Name>Minecraft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Skyboxes\MapTardis.jpg">
       <Name>MapTardis</Name>
@@ -600,6 +606,20 @@
   <ItemGroup>
     <Compile Include="Skyboxes\MapMinecraft.jpg">
       <Name>MapMinecraft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MapScreens\Tardis.png">
+      <Name>Tardis</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MapScreens\Desert.png">
+      <Name>Desert</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

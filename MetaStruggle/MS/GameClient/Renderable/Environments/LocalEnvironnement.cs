@@ -14,7 +14,7 @@ namespace GameClient.Renderable.Environments
 {
     class LocalEnvironnement
     {
-        private SceneManager SceneManager { get; set; }
+        public SceneManager SceneManager { get; private set; }
 
         public LocalEnvironnement(List<PartialAICharacter> characters, SpriteBatch spriteBatch, string mapName)
         {
@@ -35,7 +35,7 @@ namespace GameClient.Renderable.Environments
                 else
                     player.SetEnvironnementDatas(partialCharacter.PlayerName,mapName, SceneManager, true,
                                                  partialCharacter.PlayerNb);
-                SceneManager.Items.Add(player);
+                SceneManager.AddElement(player);
             }
         }
     }

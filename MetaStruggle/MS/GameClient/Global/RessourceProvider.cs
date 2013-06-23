@@ -19,6 +19,7 @@ namespace GameClient.Global
     {
         public static Dictionary<string, Texture2D> CharacterFaces = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D> MenuBackgrounds = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, Texture2D> MapScreens = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D> Skyboxes = new Dictionary<string, Texture2D>();
         public static Dictionary<string, SkinnedModel> AnimatedModels = new Dictionary<string, SkinnedModel>();
         public static Dictionary<string, Model> StaticModels = new Dictionary<string, Model>();
@@ -33,6 +34,7 @@ namespace GameClient.Global
         public static void Fill(ContentManager content, Game game)
         {
             LoadDictionnary(content, "CharacterFaces", CharacterFaces);
+            LoadDictionnary(content, "MapScreens", MapScreens);
             LoadDictionnary(content, "MenuBackgrounds", MenuBackgrounds);
             LoadDictionnary(content, "Skyboxes", Skyboxes);
             LoadDictionnary(content, "StaticModels", StaticModels);
@@ -88,7 +90,6 @@ namespace GameClient.Global
 
             return sm;
         }
-
         static SkinnedModel GetPoseidon(ContentManager content)
         {
             var sm = content.Load<SkinnedModel>("AnimatedModels\\Poseidon\\poseidon");
@@ -113,7 +114,6 @@ namespace GameClient.Global
 
             return sm;
         }
-
         static SkinnedModel GetIronman(ContentManager content)
         {
             var sm = content.Load<SkinnedModel>("AnimatedModels\\Ironman\\Model");
