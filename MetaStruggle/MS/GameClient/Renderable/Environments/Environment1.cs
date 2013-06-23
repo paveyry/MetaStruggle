@@ -18,10 +18,10 @@ namespace GameClient.Renderable.Environments
             var sm = SceneManager.CreateScene(
                     new Vector3(-5, 5, -30),    //Position initiale de la caméra
                     new Vector3(0, 0, 0),       //Point visé par la caméra
-                    spriteBatch, "MapDesert");               //SpriteBatch
+                    spriteBatch, "MapTardis");               //SpriteBatch
             //sm.AddElement(new Character("Spiderman", "Spiderman", 3,sm, new Vector3(-5, 5, -17), new Vector3(1), 1.6f));
             sm.AddElement(new Character("Zeus", "Zeus", 2,sm, new Vector3(-12, 5, -17), new Vector3(1)));
-            sm.AddElement(new Character("Ironman", "Ironman", 1,sm, new Vector3(-20, 5, -17), new Vector3(1)));
+            sm.AddElement(new Character("Ironman", "Ironman", 1,sm, new Vector3(-12, 5, -17), new Vector3(1)));
             sm.AddElement(new Character("Alex", "Alex", 0,sm, new Vector3(-8, 5, -17), new Vector3(1), 1.6f));
             (sm.Items.Last() as Character).SetEnvironnementDatas("Alex", "MapTardis",sm,true);
 

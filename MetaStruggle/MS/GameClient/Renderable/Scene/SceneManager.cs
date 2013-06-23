@@ -41,10 +41,12 @@ namespace GameClient.Renderable.Scene
             AddElement(new Model3D(this, RessourceProvider.StaticModels[mapName], new Vector3(10, 0, 0),
                           new Vector3(1f, 1f, 0.8f)));
 
-            if (!GameEngine.ParticleEngine.Particles.ContainsKey(mapName)) return;
+            if (GameEngine.ParticleEngine.Particles.ContainsKey(mapName))
+            {
+                ParticlesMap = GameEngine.ParticleEngine.Particles[mapName];
+                GameEngine.ParticleEngine.AddParticles(ParticlesMap);
+            }
 
-            ParticlesMap = GameEngine.ParticleEngine.Particles[mapName];
-            GameEngine.ParticleEngine.AddParticles(ParticlesMap);
         }
 
         public void InitializeParticleEngine()
