@@ -50,7 +50,7 @@ namespace GameClient.Renderable.Scene
 
         public void InitializeParticleEngine()
         {
-            GameEngine.ParticleEngine.SetDrawableParticles();
+            //GameEngine.ParticleEngine.SetDrawableParticles();
             foreach (var kvp in ParticlesMap)
                 kvp.Value.ActivateParticleSystem = true;
         }
@@ -71,7 +71,7 @@ namespace GameClient.Renderable.Scene
         {
             if (GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
             {
-                System.Threading.Thread.Sleep(200);
+                System.Threading.Thread.Sleep(400);
                 GameEngine.SoundCenter.PlayWithStatus();
                 GameEngine.DisplayStack.Push(new PauseMenu().Create());
                 return;
@@ -92,6 +92,12 @@ namespace GameClient.Renderable.Scene
             Camera.FollowsCharacters(Camera, Items.FindAll(e => e is Character));
             Hud.DrawHUD(spriteBatch);
             GameEngine.ParticleEngine.Draw(spriteBatch, Camera);
+        }
+
+        public void ResetAll()
+        {
+            GameEngine.ParticleEngine.DestroyAll();
+            GameEngine.SoundCenter.Stop(MapName);
         }
     }
 }

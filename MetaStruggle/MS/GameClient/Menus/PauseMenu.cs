@@ -19,7 +19,7 @@ namespace GameClient.Menus
         public Menu Create()
         {
             System.Threading.Thread.Sleep(200);
-            Menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"]);
+            Menu = new Menu(RessourceProvider.MenuBackgrounds["MainMenu"],false);
 
             var buttons = new List<PartialButton>
                               {
@@ -44,7 +44,7 @@ namespace GameClient.Menus
         {
             System.Threading.Thread.Sleep(200);
             var stack = GameEngine.DisplayStack.ToList();
-            GameEngine.SoundCenter.Stop((stack[1] as SceneManager).MapName);
+            (stack[1] as SceneManager).ResetAll();
             GameEngine.DisplayStack = new LayoutStack<IBasicLayout>();
             GameEngine.DisplayStack.Push(stack.Last());
         }

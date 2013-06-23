@@ -21,7 +21,7 @@ namespace GameClient.Global
         {
             ParticleSystemManager = new ParticleSystemManager();
             Particles = new Dictionary<string, Dictionary<string, ParticleSystem>>();
-            FillParticles(content,game);
+            FillParticles(content, game);
         }
 
         public void FillParticles(ContentManager content, Game game)
@@ -33,17 +33,14 @@ namespace GameClient.Global
                                                      dir => new ParticleSystem(game, content, dir + '\\')));
         }
 
-        public void SetDrawableParticles()
-        {
-            foreach (var kvp in Particles.SelectMany(mainKvp => mainKvp.Value).Where(kvp => kvp.Value.IsDrawable))
-            {
-                if (!ParticleSystemManager.ContainsParticleSystem(kvp.Value))
-                {
-                    ParticleSystemManager.AddParticleSystem(kvp.Value);
-                    kvp.Value.InitializeParticle();
-                }
-            }
-        }
+        //public void SetDrawableParticles()
+        //{
+        //    foreach (var kvp in Particles.SelectMany(mainKvp => mainKvp.Value).Where(kvp => kvp.Value.IsDrawable))
+        //    {
+        //        if (!ParticleSystemManager.ContainsParticleSystem(kvp.Value)) return;
+        //        ParticleSystemManager.AddParticleSystem(kvp.Value);
+        //    }
+        //}
 
         #region AddParticles
         public void AddParticle(string mainDir, string particlesystem)
@@ -52,6 +49,11 @@ namespace GameClient.Global
             particle.IsDrawable = true;
             ParticleSystemManager.AddParticleSystem(particle);
             particle.InitializeParticle();
+        }
+
+        public void Draw()
+        {
+            ParticleSystemManager.DrawAllParticleSystems();
         }
 
         public void AddParticles(string mainDir)
@@ -63,7 +65,7 @@ namespace GameClient.Global
         {
             if (dictionary == null)
                 return;
-            foreach (var kvp in dictionary.Where(kvp => !kvp.Value.IsDrawable))
+            foreach (var kvp in dictionary)
             {
                 kvp.Value.IsDrawable = true;
                 ParticleSystemManager.AddParticleSystem(kvp.Value);
@@ -72,7 +74,19 @@ namespace GameClient.Global
         }
         #endregion
 
-        public void RemoveAndDestroyAll()
+        public void ResumeAll()
+        {
+            foreach (var particle in Particles.SelectMany(mainKvp => mainKvp.Value).Where(kvp => kvp.Value.IsDrawable))
+                particle.Value.Resume();
+        }
+
+        public void PauseAll()
+        {
+            foreach (var particle in Particles.SelectMany(mainKvp => mainKvp.Value).Where(kvp => kvp.Value.IsDrawable))
+                particle.Value.Pause();
+        }
+
+        public void DestroyAll()
         {
             ParticleSystemManager.DestroyAndRemoveAllParticleSystems();
         }
@@ -86,7 +100,7 @@ namespace GameClient.Global
         public void Draw(SpriteBatch spriteBatch, Camera3D camera)
         {
             ParticleSystemManager.DrawAllParticleSystems();
-            
+
             ParticleSystemManager.SetWorldViewProjectionMatricesForAllParticleSystems(Matrix.Identity,
                 camera.ViewMatrix, Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45),
                 spriteBatch.GraphicsDevice.DisplayMode.AspectRatio, 1f, 100f));

@@ -14,10 +14,12 @@ namespace GameClient.Renderable.GUI
         public Dictionary<string, Item> Items { get; set; }
         private Texture2D Background { get; set; }
         private Texture2D Mouse { get; set; }
+        private bool EscPop { get; set; }
 
-        public Menu(Texture2D background)
+        public Menu(Texture2D background, bool escPop = true)
         {
             Background = background;
+            EscPop = escPop;
             Items = new Dictionary<string, Item>();
             Mouse = RessourceProvider.Cursors["thunder"];
         }
@@ -49,7 +51,7 @@ namespace GameClient.Renderable.GUI
 
         public void Update(GameTime gameTime)
         {
-            if (GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
+            if (EscPop && GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
             {
                 System.Threading.Thread.Sleep(200);
                 if (GameEngine.DisplayStack.Count > 1)

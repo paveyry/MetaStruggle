@@ -20,7 +20,8 @@ namespace GameClient.Renderable.Layout
                 {
                     GameEngine.SoundCenter.Stop("Main Title");
                     GameEngine.SoundCenter.ResumeAll();
-                    GameEngine.ParticleEngine.SetDrawableParticles();
+                    GameEngine.ParticleEngine.ResumeAll();
+                    GameEngine.ParticleEngine.Draw();
                 }
             }
         }
@@ -40,9 +41,9 @@ namespace GameClient.Renderable.Layout
                     GameEngine.SoundCenter.Play("Main Title");
                 }
                 if (!(e is SceneManager) && Peek() is SceneManager)
-                    GameEngine.ParticleEngine.RemoveAndDestroyAll();
-                else if (e is SceneManager )
-                    GameEngine.ParticleEngine.SetDrawableParticles();
+                    GameEngine.ParticleEngine.PauseAll();
+                //else if (e is SceneManager )
+                //    GameEngine.ParticleEngine.SetDrawableParticles();
             }
             base.Push(e);
         }

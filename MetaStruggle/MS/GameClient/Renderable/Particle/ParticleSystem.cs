@@ -97,5 +97,15 @@ namespace GameClient.Renderable.Particle
         {
             return new ParticleSystem(_game,_content,LoadedFields,LoadedInitialProperties,LoadedEmitterFields);
         }
+
+        public void Pause()
+        {
+            Enabled = Visible = false;
+        }
+
+        public void Resume()
+        {
+            Enabled = Visible = true;
+        }
     }
 }
