@@ -8,8 +8,7 @@ namespace GameClient.SoundEngine
         {
             Stop,
             Play,
-            Pause,
-            Undefined
+            Pause
         }
 
         private WindowsMediaPlayer Player { get; set; }
@@ -40,8 +39,13 @@ namespace GameClient.SoundEngine
 
         public void PlayStateChange(int state)
         {
-            if ((WMPPlayState)state == WMPPlayState.wmppsStopped && RealLoop)
-                Play();
+            if ((WMPPlayState)state == WMPPlayState.wmppsStopped)
+            {
+                if (RealLoop)
+                    Play();
+                else
+                    PlayerStatus = Status.Stop;
+            }
         }
 
         #region BasicPlayer

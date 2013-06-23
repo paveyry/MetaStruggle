@@ -6,6 +6,7 @@ using GameClient.Global;
 using GameClient.Renderable.GUI;
 using GameClient.Renderable.GUI.Items.ListItems;
 using GameClient.Renderable.Layout;
+using GameClient.Renderable.Scene;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -42,9 +43,10 @@ namespace GameClient.Menus
         void ReturnMainMenu()
         {
             System.Threading.Thread.Sleep(200);
-            var mainMenu = GameEngine.DisplayStack.ToList().Last();
+            var stack = GameEngine.DisplayStack.ToList();
+            GameEngine.SoundCenter.Stop((stack[1] as SceneManager).MapName);
             GameEngine.DisplayStack = new LayoutStack<IBasicLayout>();
-            GameEngine.DisplayStack.Push(mainMenu);
+            GameEngine.DisplayStack.Push(stack.Last());
         }
 
     }
