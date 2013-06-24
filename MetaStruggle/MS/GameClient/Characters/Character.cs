@@ -125,8 +125,6 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
-            if (this is ComputerCharacter)
-                PlayerName = PlayerName;
             #region Particle (à modifier ! -> Zone de test)
             if (ParticlesCharacter != null && PlayerName == "Alex")
             {
@@ -135,8 +133,6 @@ namespace GameClient.Characters
                     kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == BaseYaw ? 1 : -0.6f, 1.2f, 0));
                     kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack) && DateTime.Now.Millisecond % 300 < 100; //test
                 }
-                if (this is ComputerCharacter)
-                    PlayerName = PlayerName;
                 //var ParticlesStars = ParticlesCharacter["Stars"];
                 //var ParticlesStarship = ParticlesCharacter["Starship"];
                 //var ParticlesStarsfil = ParticlesCharacter["Starsfil"]; //MAP TARDIS
