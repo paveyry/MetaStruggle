@@ -9,13 +9,26 @@ namespace GameClient.Characters.AI
 {
     public class ComputerCharacter : Character
     {
-        Dictionary<Character, float> EnnemiesLevel { get; set; }
-        Dictionary<Movement, bool> Movements { get; set; }
+        enum StatusAction
+        {
+            InProgress,
+            Aborted,
+            Finished
+        }
+
+        
         byte Handicap { get; set; }
         byte Level { get; set; }
 
-        private delegate int ActionDelegate();
+        Dictionary<Character, float> EnnemiesLevel { get; set; }
+        Dictionary<Movement, bool> Movements { get; set; }
+
+        private delegate StatusAction ActionDelegate(Character character);
         ActionDelegate Action { get; set; }
+        Dictionary<ActionDelegate, int> PriorityAction { get; set; }
+
+        private float _oldDamages;
+       
 
         public ComputerCharacter(string playerName, string nameCharacter, string mapName, SceneManager scene, Vector3 position, Vector3 scale
             , float speed, byte handicap, byte level)
@@ -25,7 +38,9 @@ namespace GameClient.Characters.AI
             Handicap = handicap;
             Level = level;
             GetKey = GetMovement;
-            Action = () => -1;
+            Action = ((c) => StatusAction.Aborted);
+            _oldDamages = Damages;
+            FillPriorityAction();
 
             Movements = new Dictionary<Movement, bool>();
             foreach (Movement move in Enum.GetValues(typeof(Movement)))
@@ -38,6 +53,31 @@ namespace GameClient.Characters.AI
                 EnnemiesLevel.Add(character, 0);
         }
 
+        private void FillPriorityAction()
+        {
+            PriorityAction = new Dictionary<ActionDelegate, int>()
+                {
+                    {AvoidAttack,2},
+                    {AttackAndTrack,1},
+                    {Track,0},
+                };
+        }
+
+        #region Update & Cie
+        public override void Update(GameTime gameTime)
+        {
+            foreach (var movement in Movements.Keys.ToList())
+                Movements[movement] = false;
+
+            UpdateEnemiesLevel();
+            Track(EnnemiesLevel.Keys.First());
+            if (_oldDamages < Damages)
+                AvoidAttack(null);
+            _oldDamages = Damages;
+
+            base.Update(gameTime);
+        }
+
         public bool GetMovement(Movement movement)
         {
             return Movements[movement];
@@ -45,31 +85,24 @@ namespace GameClient.Characters.AI
 
         void UpdateEnemiesLevel()
         {
-            var listEnnemies = EnnemiesLevel.Keys.ToList();
-            for (int index = 0; index < listEnnemies.Count; index++)
-                EnnemiesLevel[listEnnemies[index]] = listEnnemies[index].Damages/100f +
-                                                     listEnnemies[index].NumberOfDeath*2;
+            foreach (var t in EnnemiesLevel.Keys.ToList())
+                EnnemiesLevel[t] = t.Damages / 100f + t.NumberOfDeath * 2;
+        }
+        #endregion
+
+        #region Actions
+        StatusAction AttackAndTrack(Character character)
+        {
+            if (Track(character) == StatusAction.Finished)
+                Movements[Movement.Attack] = true;
+            return StatusAction.InProgress;
         }
 
-        public override void Update(GameTime gameTime) //
-        {
-            UpdateEnemiesLevel();
-            Track(EnnemiesLevel.Keys.First());
-
-            base.Update(gameTime);
-        }
-
-        //int AttackAndTrack(Character character)
-        //{
-        //    if (Track(character))
-        //        Movements[Movement.Attack] = true;
-        //}
-
-        bool Track(Character character)
+        StatusAction Track(Character character)
         {
 
-            if (MathHelper.Distance(Position.X, character.Position.X) < 2)
-                return true;
+            if (MathHelper.Distance(Position.X, character.Position.X) < 1)
+                return StatusAction.Finished;
             if (Position.X < character.Position.X)
             {
                 Movements[Movement.Left] = true;
@@ -80,8 +113,15 @@ namespace GameClient.Characters.AI
                 Movements[Movement.Right] = true;
                 Movements[Movement.Left] = false;
             }
-
-            return false;
+            Movements[Movement.Jump] = (Position.Y < character.Position.Y);
+            return StatusAction.InProgress;
         }
+
+        StatusAction AvoidAttack(Character character)
+        {
+            Movements[Movement.Jump] = true;
+            return StatusAction.Finished;
+        }
+        #endregion
     }
 }

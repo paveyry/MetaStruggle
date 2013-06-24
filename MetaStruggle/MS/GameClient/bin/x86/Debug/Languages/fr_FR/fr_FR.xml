@@ -40,4 +40,5 @@
 	<Text.ActivateAI>Activé IA :</Text.ActivateAI>
 	<Text.SliderHandicap>Handicap :</Text.SliderHandicap>
 	<Text.SliderLevel>Niveau :</Text.SliderLevel>
+	<Text.SelectMap>Selectionnez le terrain de jeu :</Text.SelectMap>
 </Language>
