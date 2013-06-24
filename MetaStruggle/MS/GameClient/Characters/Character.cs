@@ -56,7 +56,7 @@ namespace GameClient.Characters
         private int count;
         public bool Playing { get; set; }
         public Vector3? F1, F2, dI;
-        public int SyncRate = 2;
+        public int SyncRate = 3;
 
         //****PARTICLE****
         Dictionary<string, ParticleSystem> ParticlesCharacter { get; set; }
@@ -257,7 +257,7 @@ namespace GameClient.Characters
             else if (dI.HasValue)
                 Position += dI.Value;
 
-            count = (count + 1) % 59;
+            count = (count + 1) % 60;
             #endregion
             
             #region Physic
