@@ -125,16 +125,20 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
+            Dictionary<Movement, bool> movements = new Dictionary<Movement, bool>();
+            foreach (Movement move in Enum.GetValues(typeof(Movement)))
+                movements.Add(move,CallGetKey(move));
+
+
+
             #region Particle (à modifier ! -> Zone de test)
-            if (ParticlesCharacter != null && PlayerName == "Alex")
+            if (ParticlesCharacter != null && ModelName == "Alex") //switch perso => prévoir default
             {
                 foreach (var kvp in ParticlesCharacter)
                 {
                     kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == BaseYaw ? 1 : -0.6f, 1.2f, 0));
-                    kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack) && DateTime.Now.Millisecond % 300 < 100; //test
+                    kvp.Value.ActivateParticleSystem = movements[Movement.Attack] && DateTime.Now.Millisecond % 300 < 100; //test
                 }
-                if (this is ComputerCharacter)
-                    PlayerName = PlayerName;
                 //var ParticlesStars = ParticlesCharacter["Stars"];
                 //var ParticlesStarship = ParticlesCharacter["Starship"];
                 //var ParticlesStarsfil = ParticlesCharacter["Starsfil"]; //MAP TARDIS
@@ -155,9 +159,11 @@ namespace GameClient.Characters
                 //ParticlesStars.ActivateParticleSystem = true;
                 //ParticlesNuages.ActivateParticleSystem = true;
                 //ParticlesStarsfil.ActivateParticleSystem = true;
-                if (CallGetKey(Movement.Right) && !_jump && !running || CallGetKey(Movement.Left) && !_jump && !running)
+                if (movements[Movement.Right] && !_jump && !running || movements[Movement.Left] && !_jump && !running)
                     run = DateTime.Now;
-                ParticlesRun.ActivateParticleSystem = CallGetKey(Movement.Right) && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 && (DateTime.Now - run).TotalMilliseconds % 500 < 100 || CallGetKey(Movement.Left) && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 && (DateTime.Now - run).TotalMilliseconds % 500 < 100;
+                ParticlesRun.ActivateParticleSystem = movements[Movement.Right] && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 
+                    && (DateTime.Now - run).TotalMilliseconds % 500 < 100 || movements[Movement.Left] && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0
+                    && (DateTime.Now - run).TotalMilliseconds % 500 < 100;
             }
             #endregion
 
@@ -169,19 +175,19 @@ namespace GameClient.Characters
                 if (CurrentAnimation != Animation.Jump)
                     pendingAnim.Add(Animation.Default);
 
-                if (CallGetKey(Movement.SpecialAttack))
+                if (movements[Movement.SpecialAttack])
                 {
                     //var ParticlesCoupdepied = ParticlesCharacter["Coupdepied"];
                     //ParticlesCoupdepied.ActivateParticleSystem = true;
-                    Attack(gameTime, true);
+                    //Attack(gameTime, true);
                     pendingAnim.Add(Animation.SpecialAttack);
                 }
-                if (CallGetKey(Movement.Attack))
+                if (movements[Movement.Attack])
                 {
                     Attack(gameTime, false);
                     pendingAnim.Add(Animation.Attack);
                 }
-                if (CallGetKey(Movement.Jump) && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
+                if (movements[Movement.Jump] && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
                     GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity / 1.4f));
 
@@ -204,14 +210,14 @@ namespace GameClient.Characters
                     pendingAnim.Add(Animation.Jump);
                     GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
                 }
-                if (CallGetKey(Movement.Right))
+                if (movements[Movement.Right])
                 {
                     running = true;
                     MoveRight(gameTime);
                     pendingAnim.Add(Animation.Run);
                 }
 
-                if (CallGetKey(Movement.Left))
+                if (movements[Movement.Left])
                 {
                     running = true;
                     MoveLeft(gameTime);
