@@ -32,7 +32,7 @@ namespace GameClient.Characters
         #region Fields
         public byte ID { get; set; }
         public int PlayerNb { get; set; }
-        private readonly float _baseYaw;
+        public readonly float BaseYaw;
         private readonly Vector3 _spawnPosition;
         public Client Client { get; set; }
         public bool IsDead;
@@ -85,7 +85,7 @@ namespace GameClient.Characters
             Face = RessourceProvider.CharacterFaces[nameCharacter];
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
-            _baseYaw = Yaw;
+            BaseYaw = Yaw;
             Gravity = -20f;
             _gravity = new Vector3(0, Gravity, 0);
             _spawnPosition = position;
@@ -132,7 +132,7 @@ namespace GameClient.Characters
             {
                 foreach (var kvp in ParticlesCharacter)
                 {
-                    kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 1 : -0.6f, 1.2f, 0));
+                    kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == BaseYaw ? 1 : -0.6f, 1.2f, 0));
                     kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack) && DateTime.Now.Millisecond % 300 < 100; //test
                 }
                 if (this is ComputerCharacter)
@@ -305,13 +305,13 @@ namespace GameClient.Characters
 
         void MoveRight(GameTime gameTime)
         {
-            Yaw = _baseYaw + MathHelper.Pi;
+            Yaw = BaseYaw + MathHelper.Pi;
             Position -= _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         void MoveLeft(GameTime gameTime)
         {
-            Yaw = _baseYaw;
+            Yaw = BaseYaw;
             Position += _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
@@ -321,7 +321,7 @@ namespace GameClient.Characters
 
             foreach (Character character in characters)
             {
-                if (Yaw == _baseYaw)
+                if (Yaw == BaseYaw)
                 {
                     if ((Position - character.Position).Length() < 1.3 && (Position - character.Position).X < 0)
                     {

@@ -23,8 +23,9 @@ namespace GameClient.Renderable.Scene
         public HUD Hud { get; set; }
         public string MapName { get; set; }
         Dictionary<string, ParticleSystem> ParticlesMap { get; set; }
+        bool ActivatePause { get; set; }
 
-        public SceneManager(Camera3D camera, SpriteBatch spriteBatch, string mapName = null)
+        public SceneManager(Camera3D camera, SpriteBatch spriteBatch, string mapName = null, bool activatePause = false)
         {
             Camera = camera;
             SpriteBatch = spriteBatch;
@@ -32,6 +33,7 @@ namespace GameClient.Renderable.Scene
             Hud = new HUD();
             if (mapName != null)
                 AddMap(mapName);
+            ActivatePause = activatePause;
             InitializeParticleEngine();
         }
 
@@ -62,14 +64,14 @@ namespace GameClient.Renderable.Scene
                 Hud.AddCharacter(element as Character);
         }
 
-        public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch, string mapName = null)
+        public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch, string mapName = null, bool activatePause = false)
         {
-            return new SceneManager(new Camera3D(cameraPosition, cameraTarget), spriteBatch, mapName);
+            return new SceneManager(new Camera3D(cameraPosition, cameraTarget), spriteBatch, mapName, activatePause);
         }
 
         public void Update(GameTime gameTime)
         {
-            if (GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
+            if (ActivatePause && GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
             {
                 System.Threading.Thread.Sleep(400);
                 GameEngine.SoundCenter.PlayWithStatus();

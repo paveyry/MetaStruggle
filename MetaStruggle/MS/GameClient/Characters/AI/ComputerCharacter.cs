@@ -16,7 +16,7 @@ namespace GameClient.Characters.AI
             Finished
         }
 
-        
+
         byte Handicap { get; set; }
         byte Level { get; set; }
 
@@ -28,7 +28,7 @@ namespace GameClient.Characters.AI
         Dictionary<ActionDelegate, int> PriorityAction { get; set; }
 
         private float _oldDamages;
-       
+
 
         public ComputerCharacter(string playerName, string nameCharacter, string mapName, SceneManager scene, Vector3 position, Vector3 scale
             , float speed, byte handicap, byte level)
@@ -68,12 +68,14 @@ namespace GameClient.Characters.AI
         {
             foreach (var movement in Movements.Keys.ToList())
                 Movements[movement] = false;
-
             UpdateEnemiesLevel();
+            Character stronger = EnnemiesLevel.Aggregate((kvp1, kvp2) => (kvp1.Value < kvp2.Value) ? kvp1 : kvp2).Key;
+
             Track(EnnemiesLevel.Keys.First());
             if (_oldDamages < Damages)
                 AvoidAttack(null);
             _oldDamages = Damages;
+
 
             base.Update(gameTime);
         }
@@ -94,7 +96,11 @@ namespace GameClient.Characters.AI
         StatusAction AttackAndTrack(Character character)
         {
             if (Track(character) == StatusAction.Finished)
+            {
+                if (BaseYaw != character.BaseYaw)
+
                 Movements[Movement.Attack] = true;
+            }
             return StatusAction.InProgress;
         }
 
@@ -102,7 +108,11 @@ namespace GameClient.Characters.AI
         {
 
             if (MathHelper.Distance(Position.X, character.Position.X) < 1)
+            {
+                if (BaseYaw != character.BaseYaw)
+                    Movements[(BaseYaw == Yaw) ? Movement.Right : Movement.Left] = true;
                 return StatusAction.Finished;
+            }
             if (Position.X < character.Position.X)
             {
                 Movements[Movement.Left] = true;
