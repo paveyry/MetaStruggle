@@ -70,9 +70,9 @@ namespace GameClient.Renderable.Environments
 
             var cp = (CharacterPositionDatas)data;
 
-            var c = (Character)SceneManager.Items.Where(e => e is Character).First(e => (e as Character).ID == cp.ID);
+            var c = (Character)SceneManager.Items.Where(e => e is Character).FirstOrDefault(e => (e as Character).ID == cp.ID);
 
-            if (!c.Playing)
+            if (c != null && !c.Playing)
             {
                 c.F1 = c.F2;
                 c.F2 = new Vector3(cp.X, cp.Y, -17);

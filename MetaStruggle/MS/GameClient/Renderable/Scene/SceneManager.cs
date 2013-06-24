@@ -34,7 +34,6 @@ namespace GameClient.Renderable.Scene
             if (mapName != null)
                 AddMap(mapName);
             ActivatePause = activatePause;
-            InitializeParticleEngine();
         }
 
         public void AddMap(string mapName)
@@ -48,11 +47,11 @@ namespace GameClient.Renderable.Scene
             MapName = mapName;
             ParticlesMap = GameEngine.ParticleEngine.Particles[mapName];
             GameEngine.ParticleEngine.AddParticles(ParticlesMap);
+            InitializeParticleEngine();
         }
 
         public void InitializeParticleEngine()
         {
-            //GameEngine.ParticleEngine.SetDrawableParticles();
             foreach (var kvp in ParticlesMap)
                 kvp.Value.ActivateParticleSystem = true;
         }
