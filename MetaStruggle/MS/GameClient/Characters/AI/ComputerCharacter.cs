@@ -25,6 +25,7 @@ namespace GameClient.Characters.AI
 
         private delegate StatusAction ActionDelegate(Character character);
         ActionDelegate Action { get; set; }
+        StatusAction ActualStatus { get; set; }
         Dictionary<ActionDelegate, int> PriorityAction { get; set; }
 
         private float _oldDamages;
@@ -71,13 +72,21 @@ namespace GameClient.Characters.AI
             UpdateEnemiesLevel();
             Character stronger = EnnemiesLevel.Aggregate((kvp1, kvp2) => (kvp1.Value < kvp2.Value) ? kvp1 : kvp2).Key;
 
-            Track(EnnemiesLevel.Keys.First());
+            SetAction(AttackAndTrack);
             if (_oldDamages < Damages)
-                AvoidAttack(null);
+                SetAction(AvoidAttack);
+
+            ActualStatus = Action(stronger);
+
             _oldDamages = Damages;
 
-
             base.Update(gameTime);
+        }
+
+        void SetAction(ActionDelegate action)
+        {
+            if (PriorityAction[action] > PriorityAction[Action] || ActualStatus != StatusAction.InProgress)
+                Action = action;
         }
 
         public bool GetMovement(Movement movement)
@@ -96,11 +105,7 @@ namespace GameClient.Characters.AI
         StatusAction AttackAndTrack(Character character)
         {
             if (Track(character) == StatusAction.Finished)
-            {
-                if (BaseYaw != character.BaseYaw)
-
                 Movements[Movement.Attack] = true;
-            }
             return StatusAction.InProgress;
         }
 
@@ -109,7 +114,7 @@ namespace GameClient.Characters.AI
 
             if (MathHelper.Distance(Position.X, character.Position.X) < 1)
             {
-                if (BaseYaw != character.BaseYaw)
+                if (Yaw != character.Yaw)
                     Movements[(BaseYaw == Yaw) ? Movement.Right : Movement.Left] = true;
                 return StatusAction.Finished;
             }
