@@ -32,7 +32,7 @@ namespace GameClient.Characters
         #region Fields
         public byte ID { get; set; }
         public int PlayerNb { get; set; }
-        public readonly float BaseYaw;
+        private readonly float _baseYaw;
         private readonly Vector3 _spawnPosition;
         public Client Client { get; set; }
         public bool IsDead;
@@ -56,7 +56,7 @@ namespace GameClient.Characters
         private int count;
         public bool Playing { get; set; }
         public Vector3? F1, F2, dI;
-        public int SyncRate = 5;
+        public int SyncRate = 2;
 
         //****PARTICLE****
         Dictionary<string, ParticleSystem> ParticlesCharacter { get; set; }
@@ -85,7 +85,7 @@ namespace GameClient.Characters
             Face = RessourceProvider.CharacterFaces[nameCharacter];
             Pitch = -MathHelper.PiOver2;
             Yaw = MathHelper.PiOver2;
-            BaseYaw = Yaw;
+            _baseYaw = Yaw;
             Gravity = -20f;
             _gravity = new Vector3(0, Gravity, 0);
             _spawnPosition = position;
@@ -125,14 +125,19 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
+            if (this is ComputerCharacter)
+                PlayerName = PlayerName;
+
             #region Particle (à modifier ! -> Zone de test)
             if (ParticlesCharacter != null && PlayerName == "Alex")
             {
                 foreach (var kvp in ParticlesCharacter)
                 {
-                    kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == BaseYaw ? 1 : -0.6f, 1.2f, 0));
+                    kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == _baseYaw ? 1 : -0.6f, 1.2f, 0));
                     kvp.Value.ActivateParticleSystem = CallGetKey(Movement.Attack) && DateTime.Now.Millisecond % 300 < 100; //test
                 }
+                if (this is ComputerCharacter)
+                    PlayerName = PlayerName;
                 //var ParticlesStars = ParticlesCharacter["Stars"];
                 //var ParticlesStarship = ParticlesCharacter["Starship"];
                 //var ParticlesStarsfil = ParticlesCharacter["Starsfil"]; //MAP TARDIS
@@ -249,23 +254,22 @@ namespace GameClient.Characters
             }
             #endregion
 
+            #region Network
+            if (Playing && Client != null && count % SyncRate == 0)
+                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte)CurrentAnimation });
+            else if (dI.HasValue)
+                Position += dI.Value;
+
+            count = (count + 1) % 60;
+            #endregion
+             
             #region Physic
             if (Playing)
             {
                 ApplyGravity(gameTime);
                 ApplySpeed(gameTime);
-                KeepOnTheGround();
             }
-            #endregion
-
-            #region Network
-            if (Playing && Client != null && count % SyncRate == 0)
-                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte)CurrentAnimation });
-
-            if (!Playing && dI.HasValue && count % SyncRate != 0)
-                Position += dI.Value;
-
-            count = (count + 1) % 60;
+            KeepOnTheGround();
             #endregion
 
             base.Update(gameTime);
@@ -301,13 +305,13 @@ namespace GameClient.Characters
 
         void MoveRight(GameTime gameTime)
         {
-            Yaw = BaseYaw + MathHelper.Pi;
+            Yaw = _baseYaw + MathHelper.Pi;
             Position -= _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         void MoveLeft(GameTime gameTime)
         {
-            Yaw = BaseYaw;
+            Yaw = _baseYaw;
             Position += _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
@@ -317,7 +321,7 @@ namespace GameClient.Characters
 
             foreach (Character character in characters)
             {
-                if (Yaw == BaseYaw)
+                if (Yaw == _baseYaw)
                 {
                     if ((Position - character.Position).Length() < 1.3 && (Position - character.Position).X < 0)
                     {
