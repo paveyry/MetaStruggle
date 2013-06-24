@@ -32,8 +32,7 @@ namespace GameClient.Menus
                     new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
                     new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu().MenuSettings())),
                     new PartialButton("MainMenu.Credits", () => GameEngine.DisplayStack.Push(new Cinematic(RessourceProvider.Videos["Credits"]))),
-                    new PartialButton("MainMenu.Quit", () => Environment.Exit(0)),
-                    new PartialButton("Test", () => GameEngine.DisplayStack.Push(Renderable.Environments.Environment1.GetScene(_spriteBatch))),
+                    new PartialButton("MainMenu.Quit", () => Environment.Exit(0))
                 };
 
             menu.Add("Buttons.Item", new ListButtons(new Vector2(50, 44), 20, buttons, RessourceProvider.Fonts["Menu"],
