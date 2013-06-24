@@ -41,9 +41,10 @@ namespace GameServer
         public void ChangeMode()
         {
             Console.WriteLine("===Salle d'attente complete===");
+            State = State.InGame;
             MasterOperation(false);
             GameManager = new GameManager(CurrentLobby.Players, _map, _em);
-            Console.WriteLine("Debut du jeu");
+            Console.WriteLine("Debut du jeu"); 
         }
 
         public void MasterOperation(bool register)
