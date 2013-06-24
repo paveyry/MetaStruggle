@@ -18,7 +18,7 @@ namespace GameClient.Renderable.Environments
 
         public LocalEnvironnement(List<PartialAICharacter> characters, SpriteBatch spriteBatch, string mapName)
         {
-            SceneManager = SceneManager.CreateScene( new Vector3(-5, 5, -30), new Vector3(0, 0, 0), spriteBatch,mapName, true);
+            SceneManager = SceneManager.CreateScene( new Vector3(-5, 5, -30), new Vector3(0, 0, 0), spriteBatch, mapName, true);
             CreateCharacters(characters,mapName);
 
             SceneManager.Camera.FollowsCharacters(SceneManager.Camera, SceneManager.Items.FindAll(e => e is Character));
