@@ -294,7 +294,7 @@ namespace GameClient.Characters
             #region Network
 
             if (Playing && Client != null && count%SyncRate == 0)
-                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte)CurrentAnimation });
+                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte)CurrentAnimation, Damages = Damages, Lives = (byte) (NumberMaxOfLives - NumberOfDeath)});
             else if (dI.HasValue)
                 Position += dI.Value;
 
