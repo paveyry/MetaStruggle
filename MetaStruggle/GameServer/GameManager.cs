@@ -49,6 +49,7 @@ namespace GameServer
         void RegisterEvents()
         {
             _em.Register("Network.Game.SetCharacterPosition", SetCharacterPos);
+            _em.Register("Network.Game.GiveImpulse", GiveImpulse);
         }
 
         void PlayerDisconnect(Player player)
@@ -91,6 +92,14 @@ namespace GameServer
             var c = (CharacterPositionDatas) data;
             foreach (var networkCharacter in Characters/*.Where(e => e.ID != c.ID)*/)
                 new SetCharacterPosition().Pack(networkCharacter.Client.Writer, c);
+        }
+
+        void GiveImpulse(object data)
+        {
+            var c = (GiveImpulseDatas)data;
+
+            foreach (var networkCharacter in Characters.Where(e => e.ID == c.ID))
+                new GiveImpulse().Pack(networkCharacter.Client.Writer, c);
         }
     }
 }
