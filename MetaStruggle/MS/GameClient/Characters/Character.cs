@@ -60,7 +60,7 @@ namespace GameClient.Characters
         private int count;
         public bool Playing { get; set; }
         public Vector3? F1, F2, dI;
-        public int SyncRate = 3;
+        public int SyncRate = 5;
 
         //****PARTICLE****
         Dictionary<string, ParticleSystem> ParticlesCharacter { get; set; }
@@ -202,12 +202,11 @@ namespace GameClient.Characters
                                 break;
                         }
                     }
-                    if ((DateTime.Now - _lastSA).TotalMilliseconds < 1500)
+                    if ((DateTime.Now - _lastSA).TotalMilliseconds < 1000)
                         pendingAnim.Add(Animation.SpecialAttack);
 
-                    if ((DateTime.Now - _lastSA).TotalMilliseconds > 3000 && _saDone)
-                    {
-                            
+                    if ((DateTime.Now - _lastSA).TotalMilliseconds > 1000 && _saDone)
+                    {  
                         _lastSA = DateTime.Now;
                         _saDone = false;
                     }
