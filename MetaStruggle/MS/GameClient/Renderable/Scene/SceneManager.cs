@@ -140,12 +140,8 @@ namespace GameClient.Renderable.Scene
             foreach (var character in characters.Where(c => c.IsDead).Where(character => !StatusCharacter.Contains(character)
                 && character.NumberMaxOfLives - character.NumberOfDeath <= 0))
                 StatusCharacter.Push(character);
-<<<<<<< HEAD
-            if (characters.Count() == StatusCharacter.Count + 1)
-=======
 
-            if (characters.Count() == StatusCharacter.Count - 1)
->>>>>>> Possibilité de perdre/gagner
+            if (characters.Count() == StatusCharacter.Count + 1)
             {
                 foreach (var c in characters.Where(c => !StatusCharacter.Contains(c)))
                     StatusCharacter.Push(c);
