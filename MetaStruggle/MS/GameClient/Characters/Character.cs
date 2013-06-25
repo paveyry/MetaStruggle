@@ -148,10 +148,9 @@ namespace GameClient.Characters
                 ParticlesDoubleJump.UpdatePositionEmitter(Position);
                 ParticlesRun.UpdatePositionEmitter(Position + new Vector3(0.2f, 0, 0));
                 ParticlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
-                if (movements[Movement.Right] && !_jump && !running || movements[Movement.Left] && !_jump && !running)
+                if (CurrentAnimation == Animation.Run && !_jump && !running)
                     run = DateTime.Now;
-                ParticlesRun.ActivateParticleSystem = movements[Movement.Right] && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0
-                    && (DateTime.Now - run).TotalMilliseconds % 500 < 100 || movements[Movement.Left] && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0
+                ParticlesRun.ActivateParticleSystem = CurrentAnimation == Animation.Run && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0
                     && (DateTime.Now - run).TotalMilliseconds % 500 < 100;
                 switch (ModelName)
                 {

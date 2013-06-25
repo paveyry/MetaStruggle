@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CInitialPropertiesForQuadOfDefaultTexturedQuadParticleDefaultTexturedQuadParticleVertex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LifetimeMin>0.06</LifetimeMin>
-  <LifetimeMax>0.09</LifetimeMax>
+  <LifetimeMin>0.1</LifetimeMin>
+  <LifetimeMax>0.15</LifetimeMax>
   <PositionMin>
-    <X>-0.4</X>
-    <Y>0.2</Y>
-    <Z>-0.3</Z>
+    <X>-0.5</X>
+    <Y>-0.1</Y>
+    <Z>-0.5</Z>
   </PositionMin>
   <PositionMax>
-    <X>0.4</X>
-    <Y>0.2</Y>
-    <Z>0.3</Z>
+    <X>0.5</X>
+    <Y>0.3</Y>
+    <Z>0.5</Z>
   </PositionMax>
   <VelocityMin>
     <X>0</X>
@@ -85,8 +85,8 @@
     <Z>1.57079632679</Z>
   </RotationMin>
   <RotationMax>
-    <X>0</X>
-    <Y>0</Y>
+    <X>3.14159</X>
+    <Y>3.14159</Y>
     <Z>1.57079632679</Z>
   </RotationMax>
   <RotationalVelocityMin>
