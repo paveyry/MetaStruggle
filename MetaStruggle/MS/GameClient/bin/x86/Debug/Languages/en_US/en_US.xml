@@ -2,7 +2,7 @@
 <Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<Menu.Back>Back</Menu.Back>
 	<Menu.Next>Next</Menu.Next>
-	<Pause.ReturnMainMenu>Back to main menu</Pause.ReturnMainMenu>
+	<Menu.ReturnMainMenu>Back to main menu</Menu.ReturnMainMenu>
 	<MainMenu.SoloPlay>Single Player</MainMenu.SoloPlay>
 	<MainMenu.Multi>Multiplayer</MainMenu.Multi>
 	<MainMenu.Settings>Settings</MainMenu.Settings>

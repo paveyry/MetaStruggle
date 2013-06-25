@@ -26,9 +26,9 @@ namespace GameClient.Menus
                     {"MenuGameOver.Rank",20},
                     {"MenuGameOver.Players",80}
                 },RessourceProvider.Fonts["MenuLittle"],Color.White,Color.White,"MSTheme" ));
-            Menu.Add("WinnerHead.Item", new ImageButton(characters.Peek().PlayerName,new Rectangle(80,80,characters.Peek().Face.Width/3,characters.Peek().Face.Height/3),
-                characters.Peek().Face,RessourceProvider.Fonts["MenuLittle"]));
-
+            Menu.Add("WinnerHead.Item", new ImageButton(characters.Peek().PlayerName,new Rectangle(40,10,characters.Peek().Face.Width/3,characters.Peek().Face.Height/3),
+                characters.Peek().Face,RessourceProvider.Fonts["MenuLittle"],true));
+            (Menu.Items["WinnerHead.Item"] as ImageButton).IsSelect = true;
             Menu.Add("NextButton.Item", new MenuButton("Menu.ReturnMainMenu", new Vector2(70, 90), RessourceProvider.Fonts["MenuLittle"], Color.White,
                 Color.DarkOrange, ReturnMainMenu));
             return Menu;
