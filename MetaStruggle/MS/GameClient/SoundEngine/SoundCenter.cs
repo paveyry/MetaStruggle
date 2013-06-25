@@ -149,7 +149,7 @@ namespace GameClient.SoundEngine
                 return;
 
             if (_poolTask.ContainsKey(name))
-                Stop(name);
+                return;
 
             _poolTask.Add(name, new Thread(() => PlayPool(name)));
             _poolTask[name].Start();

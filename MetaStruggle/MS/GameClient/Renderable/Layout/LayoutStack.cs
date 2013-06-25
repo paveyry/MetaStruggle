@@ -42,8 +42,6 @@ namespace GameClient.Renderable.Layout
                 }
                 if (!(e is SceneManager) && Peek() is SceneManager)
                     GameEngine.ParticleEngine.PauseAll();
-                //else if (e is SceneManager )
-                //    GameEngine.ParticleEngine.SetDrawableParticles();
             }
             base.Push(e);
         }
