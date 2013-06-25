@@ -51,6 +51,7 @@ namespace GameServer
             State = State.InGame;
             MasterOperation(false);
             GameManager = new GameManager(CurrentLobby.Players, _map, _em, this);
+            Server.Stop();
             Console.WriteLine("Debut du jeu"); 
         }
 
