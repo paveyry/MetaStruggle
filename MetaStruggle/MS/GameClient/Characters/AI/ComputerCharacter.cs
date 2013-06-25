@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameClient.Renderable.Scene;
 using GameClient.Renderable._3D;
+using System.Security.Cryptography;
 using Microsoft.Xna.Framework;
 using System.Linq;
 
@@ -16,7 +17,10 @@ namespace GameClient.Characters.AI
             Finished
         }
 
-
+        public override float Damages { get { return base.Damages; } set
+        {
+            base.Damages = value + (value - base.Damages) * (Handicap / 10f - 0.1f);
+        } }
         byte Handicap { get; set; }
         byte Level { get; set; }
 
@@ -38,7 +42,7 @@ namespace GameClient.Characters.AI
         {
             EnnemiesLevel = new Dictionary<Character, float>();
             Handicap = handicap;
-            Level = level;
+            Level = (byte)(10-level);
             GetKey = GetMovement;
             Action = DoNothing;
             _oldDamages = Damages;
@@ -116,11 +120,19 @@ namespace GameClient.Characters.AI
             return (MathHelper.Distance(Position.X, stronger.Position.X) < 5) ? stronger : clother;
         }
 
+        int GetRandomNumber(int start, int end)
+        {
+            var rndNumber = new RNGCryptoServiceProvider();
+            var rnd = new byte[1];
+            rndNumber.GetBytes(rnd);
+            return start + rnd[0] % end;
+        }
+
         public override void Update(GameTime gameTime)
         {
             UpdateEnemiesLevel();
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - _oldTime > 500)
+            if (gameTime.TotalGameTime.TotalMilliseconds - _oldTime > 250 * (1 + Level / 3f - (1/3f)))
             {
                 SelectedCharacter = SelectCharacter();
 
@@ -128,11 +140,12 @@ namespace GameClient.Characters.AI
                 {
                     if (_oldDamages < Damages)
                         SetAction(AvoidAttack);
-                    if (ReturnToMap(SelectedCharacter, gameTime) != StatusAction.Finished /*rnd*/)
+                    if (ReturnToMap(SelectedCharacter, gameTime) != StatusAction.Finished)
                         Action = ReturnToMap;
                     SetAction(Track);
-                    if (Action == Track && Action(SelectedCharacter, gameTime) == StatusAction.Finished /*rnd*/)
-                        if (SelectedCharacter.Damages > 100 /*rnd*/)
+                    if (Action == Track && Action(SelectedCharacter, gameTime) == StatusAction.Finished)
+                        if ((SelectedCharacter.Damages > GetRandomNumber(50,150) && GetRandomNumber(0, 3) != 0) 
+                            || (SelectedCharacter.Damages < 100 && GetRandomNumber(0, 3) == 0))
                             Action = SpecialAttack;
                         else
                             Action = Attack;
@@ -199,7 +212,7 @@ namespace GameClient.Characters.AI
         StatusAction AvoidAttack(Character character, GameTime gameTime)
         {
             Movements[Movement.Jump] = true;
-            Movements[(Position.X < 0) ? Movement.Left : Movement.Right] = true;
+            Movements[(Position.X < 0 || GetRandomNumber(0, 3) == 0) ? Movement.Left : Movement.Right] = true;
             return StatusAction.Finished;
         }
 
@@ -207,9 +220,9 @@ namespace GameClient.Characters.AI
         {
             if (Position.Y < 0)
                 Movements[(Position.X > 0) ? Movement.Right : Movement.Left] = true;
-            if (Position.X < -24.7)
+            if (Position.X < -24.5)
                 Movements[Movement.Left] = true;
-            else if (Position.X > 13.2)
+            else if (Position.X > 13)
                 Movements[Movement.Right] = true;
             else
                 return StatusAction.Finished;

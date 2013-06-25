@@ -40,7 +40,7 @@ namespace GameClient.Characters
         public DateTime DeathDate;
         public int NumberOfDeath;
         public int NumberMaxOfLives;
-        public float Damages = 0;
+        public virtual float Damages { get; set; }
         public string PlayerName;
         public Texture2D Face;
         public string MapName;
