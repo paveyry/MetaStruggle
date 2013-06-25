@@ -27,6 +27,7 @@ namespace Network
             _packets.Add(7, new ServerMessage());
             _packets.Add(8, new GameStart());
             _packets.Add(9, new RemovePlayer());
+            _packets.Add(10, new GiveImpulse());
             _packets.Add(12, new SetCharacterPosition());
         }   
 

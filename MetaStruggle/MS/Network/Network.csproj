@@ -45,6 +45,8 @@
     <Compile Include="IEventDispatcher.cs" />
     <Compile Include="IO\Reader.cs" />
     <Compile Include="IO\Writer.cs" />
+    <Compile Include="Packet\Packets\DatasTypes\GiveImpulseDatas.cs" />
+    <Compile Include="Packet\Packets\GiveImpulse.cs" />
     <Compile Include="Packet\Packets\SetCharacterPosition.cs" />
     <Compile Include="Packet\Packets\DatasTypes\CharacterActionDatas.cs" />
     <Compile Include="Packet\Packets\DatasTypes\CharacterPositionDatas.cs" />

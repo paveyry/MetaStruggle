@@ -61,6 +61,7 @@ namespace GameClient.Renderable.Environments
         {
             GameEngine.EventManager.Register("Network.Game.GameStart", GameStart);
             GameEngine.EventManager.Register("Network.Game.SetCharacterPosition", SetCharacterPosition);
+            GameEngine.EventManager.Register("Network.Game.GiveImpulse", GiveImpulse);
         }
 
         void SetCharacterPosition(object data)
@@ -72,20 +73,19 @@ namespace GameClient.Renderable.Environments
 
             var c = (Character)SceneManager.Items.Where(e => e is Character).FirstOrDefault(e => (e as Character).ID == cp.ID);
 
-            if (c != null && !c.Playing)
-            {
-                c.F1 = c.F2;
-                c.F2 = new Vector3(cp.X, cp.Y, -17);
+            if (c == null || c.Playing) return;
 
-                if (c.F1.HasValue)
-                    c.Position = c.F1.Value;
+            c.F1 = c.F2;
+            c.F2 = new Vector3(cp.X, cp.Y, -17);
 
-                if (c.F1 != null && c.F2 != null)
-                    c.dI = new Vector3((c.F2.Value.X - c.F1.Value.X) /(c.SyncRate + 2 /*lag compensation*/), (c.F2.Value.Y - c.F1.Value.Y) / (c.SyncRate), 0);
+            if (c.F1.HasValue)
+                c.Position = c.F1.Value;
 
-                c.Yaw = cp.Yaw;
-                c.SetAnimation((Animation)cp.Anim);
-            }
+            if (c.F1 != null && c.F2 != null)
+                c.dI = new Vector3((c.F2.Value.X - c.F1.Value.X) /(c.SyncRate + 2 /*lag compensation*/), (c.F2.Value.Y - c.F1.Value.Y) / (c.SyncRate), 0);
+
+            c.Yaw = cp.Yaw;
+            c.SetAnimation((Animation)cp.Anim);
         }
 
         void GameStart(object data)
@@ -100,6 +100,18 @@ namespace GameClient.Renderable.Environments
             }
 
             SceneManager.AddMap(gs.MapName);
+        }
+
+        void GiveImpulse(object data)
+        {
+            var gid = (GiveImpulseDatas) data;
+
+            var c = SceneManager.Items.OfType<Character>().FirstOrDefault(a => a.ID == gid.ID);
+
+            if (c == null) return;
+
+            c.GiveImpulse(new Vector3(gid.X, gid.Y, 0));
+            c.Damages += gid.Damages;
         }
     }
 }

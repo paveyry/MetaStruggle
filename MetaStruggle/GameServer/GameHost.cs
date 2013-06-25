@@ -13,11 +13,12 @@ namespace GameServer
         public State State;
         public Lobby CurrentLobby;
         public GameManager GameManager;
-        public readonly Server Server;
+        public Server Server;
         private readonly EventManager _em;
         private readonly Parser _parser;
-        private string _map;
-        private byte _maxPlayers;
+        private readonly string _map;
+        private readonly byte _maxPlayers;
+        private readonly ushort _port;
         private const string MasterServerHost = "metastruggle.eu";
         private const ushort MasterServerPort = 5555;
 
@@ -27,15 +28,21 @@ namespace GameServer
             _em = new EventManager();
             _map = map;
             _maxPlayers = maxplayers;
-            CurrentLobby = new Lobby(maxplayers, map, _em, this);
+            _port = port;
+            OpenLobby();
+        }
+
+        public void OpenLobby()
+        {
+            CurrentLobby = new Lobby(_maxPlayers, _map, _em, this);
             Server = new Server(_em, _parser.Parse);
-            
-            Server.Start(port);
+
+            Server.Start(_port);
             State = State.Lobby;
 
             MasterOperation(true);
 
-            Console.WriteLine("Salle d'attente ouverte pour la map " + map);
+            Console.WriteLine("Salle d'attente ouverte pour la map " + _map);
         }
 
         public void ChangeMode()
@@ -43,7 +50,7 @@ namespace GameServer
             Console.WriteLine("===Salle d'attente complete===");
             State = State.InGame;
             MasterOperation(false);
-            GameManager = new GameManager(CurrentLobby.Players, _map, _em);
+            GameManager = new GameManager(CurrentLobby.Players, _map, _em, this);
             Console.WriteLine("Debut du jeu"); 
         }
 

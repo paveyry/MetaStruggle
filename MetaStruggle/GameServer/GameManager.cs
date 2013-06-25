@@ -14,11 +14,13 @@ namespace GameServer
         public List<NetworkCharacter> Characters { get; set; }
         public string Map { get; set; }
         private EventManager _em;
+        private GameHost _gh;
 
-        public GameManager(IEnumerable<Player> players, string map, EventManager em)
+        public GameManager(IEnumerable<Player> players, string map, EventManager em, GameHost gh)
         {
             Map = map;
             _em = em;
+            _gh = gh;
 
             RegisterEvents();
 
@@ -55,9 +57,14 @@ namespace GameServer
 
             foreach (var p in Characters)
             {
-                new ServerMessage().Pack(p.Client.Writer, player.Name + " s'est déconnecté");
+                //new ServerMessage().Pack(p.Client.Writer, player.Name + " s'est déconnecté");
                 new RemovePlayer().Pack(p.Client.Writer, player.ID);
             }
+
+            if (Characters.Count != 0) return;
+
+            _gh.Server.Stop();
+            _gh.OpenLobby();
         }
 
         void CreateNetworkCharacters(IEnumerable<Player> players)
