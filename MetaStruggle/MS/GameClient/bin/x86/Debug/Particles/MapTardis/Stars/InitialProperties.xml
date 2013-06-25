@@ -3,7 +3,7 @@
   <LifetimeMin>0.5</LifetimeMin>
   <LifetimeMax>0.6</LifetimeMax>
   <PositionMin>
-    <X>40</X>
+    <X>60</X>
     <Y>50</Y>
     <Z>50</Z>
   </PositionMin>

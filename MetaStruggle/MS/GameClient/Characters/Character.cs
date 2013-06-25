@@ -366,7 +366,9 @@ namespace GameClient.Characters
 
                 var damages = ((float)
                      (special ? 10 + (Damages/4) : ((Damages/7) + 6)*gameTime.ElapsedGameTime.TotalMilliseconds/1000));
-                
+                var ParticlesFrappe = ParticlesCharacter["Frappe"];
+                ParticlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
+                ParticlesFrappe.ActivateParticleSystem = DateTime.Now.Millisecond % 150 < 25;
                 character.Damages += damages;
 
                 if(Client != null)
