@@ -25,6 +25,7 @@ namespace GameClient.Characters.AI
 
         private delegate StatusAction ActionDelegate(Character character, GameTime gameTime);
         ActionDelegate Action { get; set; }
+        Character SelectedCharacter { get; set; }
         StatusAction ActualStatus { get; set; }
         Dictionary<ActionDelegate, int> PriorityAction { get; set; }
 
@@ -91,40 +92,64 @@ namespace GameClient.Characters.AI
                 Movements[movement] = false;
         }
 
+        Character SelectCharacter()
+        {
+            var ennemiesLevelAlives = EnnemiesLevel.Where(kvp => !kvp.Key.IsDead).ToList();
+            if (!ennemiesLevelAlives.Any())
+                return null;
+
+            float min = float.MaxValue, dist = float.MaxValue;
+            Character stronger = null, clother = null;
+            foreach (var kvp in ennemiesLevelAlives)
+            {
+                if (min > kvp.Value)
+                {
+                    stronger = kvp.Key;
+                    min = kvp.Value;
+                }
+                var tempDist = MathHelper.Distance(Position.X, kvp.Key.Position.X);
+                if (!(dist > tempDist)) continue;
+                clother = kvp.Key;
+                dist = tempDist;
+            }
+
+            return (MathHelper.Distance(Position.X, stronger.Position.X) < 5) ? stronger : clother;
+        }
+
         public override void Update(GameTime gameTime)
         {
             UpdateEnemiesLevel();
 
-            var ennemiesLevelAlives = EnnemiesLevel.Where(kvp => !kvp.Key.IsDead);
-            Character stronger = (!ennemiesLevelAlives.Any()) ? null : ennemiesLevelAlives.Aggregate((kvp1, kvp2) => (kvp1.Value < kvp2.Value) ? kvp1 : kvp2).Key;
             if (gameTime.TotalGameTime.TotalMilliseconds - _oldTime > 500)
             {
-                if (stronger != null)
+                SelectedCharacter = SelectCharacter();
+
+                if (SelectedCharacter != null)
                 {
                     if (_oldDamages < Damages)
                         SetAction(AvoidAttack);
-                    if (ReturnToMap(stronger, gameTime) != StatusAction.Finished /*rnd*/)
+                    if (ReturnToMap(SelectedCharacter, gameTime) != StatusAction.Finished /*rnd*/)
                         Action = ReturnToMap;
                     SetAction(Track);
-                    if (Action == Track && Action(stronger, gameTime) == StatusAction.Finished /*rnd*/)
-                        if (stronger.Damages > 100 /*rnd*/)
+                    if (Action == Track && Action(SelectedCharacter, gameTime) == StatusAction.Finished /*rnd*/)
+                        if (SelectedCharacter.Damages > 100 /*rnd*/)
                             Action = SpecialAttack;
-                        else 
+                        else
                             Action = Attack;
                 }
                 else
                     Action = DoNothing;
 
                 ResetMovements();
-                ActualStatus = Action(stronger, gameTime);
+                ActualStatus = Action(SelectedCharacter, gameTime);
 
                 _oldDamages = Damages;
                 _oldTime = gameTime.TotalGameTime.TotalMilliseconds;
             }
-            else if (Action == Track && Action(stronger, gameTime) == StatusAction.Finished)
+            else if (Action == Track && Action(SelectedCharacter, gameTime) == StatusAction.Finished)
             {
-                Action = DoNothing;
                 ResetMovements();
+                Action = DoNothing;
             }
 
             base.Update(gameTime);
