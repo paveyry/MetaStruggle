@@ -58,46 +58,16 @@ namespace GameClient.Characters.AI
         {
             PriorityAction = new Dictionary<ActionDelegate, int>()
                 {
-                    {DoNothing,-42},
-                    {Track,0},
-                    {AttackAndTrack,1},
-                    {AvoidAttack,2},
-                    {ReturnToMap,42}
+                    {DoNothing,-1},
+                    {Attack,0},
+                    {SpecialAttack,1},
+                    {Track,2},
+                    {AvoidAttack,3},
+                    {ReturnToMap,4}
                 };
         }
 
         #region Update & Cie
-        public override void Update(GameTime gameTime)
-        {
-            UpdateEnemiesLevel();
-            if (gameTime.TotalGameTime.TotalMilliseconds - _oldTime > 500)
-            {
-                foreach (var movement in Movements.Keys.ToList())
-                    Movements[movement] = false;
-
-                var ennemiesLevelAlives = EnnemiesLevel.Where(kvp => !kvp.Key.IsDead);
-                Character stronger = (!ennemiesLevelAlives.Any())? null : ennemiesLevelAlives.Aggregate((kvp1, kvp2) => (kvp1.Value < kvp2.Value) ? kvp1 : kvp2).Key;
-
-                if (stronger != null)
-                {
-                    SetAction(AttackAndTrack);
-                    if (_oldDamages < Damages)
-                        SetAction(AvoidAttack);
-                    if (ReturnToMap(stronger, gameTime) != StatusAction.Finished)
-                        Action = ReturnToMap;
-                }
-                else
-                    Action = DoNothing;
-                ActualStatus = Action(stronger, gameTime);
-
-                _oldDamages = Damages;
-                _oldTime = gameTime.TotalGameTime.TotalMilliseconds;
-            }
-
-
-            base.Update(gameTime);
-        }
-
         void SetAction(ActionDelegate action)
         {
             if (PriorityAction[action] > PriorityAction[Action] || ActualStatus != StatusAction.InProgress)
@@ -114,35 +84,82 @@ namespace GameClient.Characters.AI
             foreach (var e in EnnemiesLevel.Keys.ToList())
                 EnnemiesLevel[e] = (e.IsDead) ? float.MaxValue : e.Damages / 100f + e.NumberOfDeath * 2;
         }
+
+        void ResetMovements()
+        {
+            foreach (var movement in Movements.Keys.ToList())
+                Movements[movement] = false;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            UpdateEnemiesLevel();
+
+            var ennemiesLevelAlives = EnnemiesLevel.Where(kvp => !kvp.Key.IsDead);
+            Character stronger = (!ennemiesLevelAlives.Any()) ? null : ennemiesLevelAlives.Aggregate((kvp1, kvp2) => (kvp1.Value < kvp2.Value) ? kvp1 : kvp2).Key;
+            if (gameTime.TotalGameTime.TotalMilliseconds - _oldTime > 500)
+            {
+                if (stronger != null)
+                {
+                    if (_oldDamages < Damages)
+                        SetAction(AvoidAttack);
+                    if (ReturnToMap(stronger, gameTime) != StatusAction.Finished /*rnd*/)
+                        Action = ReturnToMap;
+                    SetAction(Track);
+                    if (Action == Track && Action(stronger, gameTime) == StatusAction.Finished /*rnd*/)
+                        if (stronger.Damages > 100 /*rnd*/)
+                            Action = SpecialAttack;
+                        else 
+                            Action = Attack;
+                }
+                else
+                    Action = DoNothing;
+
+                ResetMovements();
+                ActualStatus = Action(stronger, gameTime);
+
+                _oldDamages = Damages;
+                _oldTime = gameTime.TotalGameTime.TotalMilliseconds;
+            }
+            else if (Action == Track && Action(stronger, gameTime) == StatusAction.Finished)
+            {
+                Action = DoNothing;
+                ResetMovements();
+            }
+
+            base.Update(gameTime);
+        }
         #endregion
 
         #region Actions
-        StatusAction AttackAndTrack(Character character, GameTime gameTime)
+        StatusAction Attack(Character character, GameTime gameTime)
         {
-            if (Track(character,gameTime) == StatusAction.Finished)
-                Movements[Movement.Attack] = true;
+            Movements[Movement.Attack] = true;
+            return StatusAction.InProgress;
+        }
+
+        StatusAction SpecialAttack(Character character, GameTime gameTime)
+        {
+            Movements[Movement.SpecialAttack] = true;
             return StatusAction.InProgress;
         }
 
         StatusAction Track(Character character, GameTime gameTime)
         {
-
-            if (MathHelper.Distance(Position.X, character.Position.X) < 1)
-            {
-                if (Yaw != character.Yaw)
-                    Movements[(BaseYaw == Yaw) ? Movement.Right : Movement.Left] = true;
-                return StatusAction.Finished;
-            }
-            if (Position.X < character.Position.X)
-            {
-                Movements[Movement.Left] = true;
-                Movements[Movement.Right] = false;
-            }
-            else
+            var dist = Position.X - character.Position.X;
+            if (dist < 1 && dist > 0)
             {
                 Movements[Movement.Right] = true;
-                Movements[Movement.Left] = false;
+                return StatusAction.Finished;
             }
+            if (dist > -1 && dist < 0)
+            {
+                Movements[Movement.Left] = true;
+                return StatusAction.Finished;
+            }
+
+            Movements[(Position.X < character.Position.X) ? Movement.Left : Movement.Right] = true;
+
             Movements[Movement.Jump] = (Position.Y < character.Position.Y);
             return StatusAction.InProgress;
         }
@@ -150,14 +167,17 @@ namespace GameClient.Characters.AI
         StatusAction AvoidAttack(Character character, GameTime gameTime)
         {
             Movements[Movement.Jump] = true;
+            Movements[(Position.X < 0) ? Movement.Left : Movement.Right] = true;
             return StatusAction.Finished;
         }
 
         StatusAction ReturnToMap(Character character, GameTime gameTime)
         {
-            if (Position.X < -24.5)
+            if (Position.Y < 0)
+                Movements[(Position.X > 0) ? Movement.Right : Movement.Left] = true;
+            if (Position.X < -24.7)
                 Movements[Movement.Left] = true;
-            else if (Position.X > 13)
+            else if (Position.X > 13.2)
                 Movements[Movement.Right] = true;
             else
                 return StatusAction.Finished;
