@@ -569,13 +569,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapScreens\Minecraft.png">
-      <Name>Minecraft</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Skyboxes\MapTardis.jpg">
       <Name>MapTardis</Name>
       <Importer>TextureImporter</Importer>
@@ -597,6 +590,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimatedModels\Poseidon\poseidon.fbx">
+      <Name>poseidon</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MapScreens\Minecraft.png">
+      <Name>Minecraft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="MapScreens\Tardis.png">
       <Name>Tardis</Name>
       <Importer>TextureImporter</Importer>
@@ -608,13 +615,6 @@
       <Name>Desert</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AnimatedModels\Poseidon\poseidon.fbx">
-      <Name>poseidon</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
