@@ -33,7 +33,7 @@ namespace GameClient.Characters
         public byte ID { get; set; }
         public int PlayerNb { get; set; }
         public readonly float BaseYaw;
-        private readonly Vector3 _spawnPosition;
+        public Vector3 SpawnPosition;
         public Client Client { get; set; }
         public bool IsDead;
         public bool IsPermanentlyDead { get; set; }
@@ -92,7 +92,7 @@ namespace GameClient.Characters
             BaseYaw = Yaw;
             Gravity = -20f;
             _gravity = new Vector3(0, Gravity, 0);
-            _spawnPosition = position;
+            SpawnPosition = position;
             _latteralMove = new Vector3(LatteralSpeed, 0, 0);
             GetKey = (movement) => GetUniversalKey(movement).IsPressed();
             CreateParticlesCharacter(ModelName);
@@ -258,7 +258,7 @@ namespace GameClient.Characters
             {
                 SetAnimation(Animation.Default);
                 IsDead = false;
-                Position = _spawnPosition;
+                Position = SpawnPosition;
                 Speed = Vector3.Zero;
                 _jump = false;
                 _doublejump = false;
@@ -343,8 +343,8 @@ namespace GameClient.Characters
 
             foreach (Character character in characters.Cast<Character>().Where(character => (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).Length() < 1.3 && (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).X < 0))
             {
-                character.GiveImpulse(new Vector3((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages/3) * 0.03f,
-                                                  special ? -Gravity * (1 + character.Damages) * 0.001f : 0.2f, 0));
+                character.GiveImpulse(new Vector3((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages/3) * 0.008f,
+                                                  special ? -Gravity * (1 + character.Damages) * 0.008f : 0.2f, 0));
 
                 character.Damages += ((special ? 10 : 3) + character.Damages / 6);
             }
