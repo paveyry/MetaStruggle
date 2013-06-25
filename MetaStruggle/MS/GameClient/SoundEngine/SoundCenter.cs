@@ -14,7 +14,6 @@ namespace GameClient.SoundEngine
         private const string DirEffect = "Effects";
         private readonly Dictionary<string, Sound> _soundBank = new Dictionary<string, Sound>();
         private readonly Dictionary<string, Thread> _poolTask = new Dictionary<string, Thread>();
-        private Sound.Status MusicStatus { get; set; }
 
         public int VolumeMusic
         {
@@ -48,7 +47,6 @@ namespace GameClient.SoundEngine
             CheckDirectories();
             LoadMusics();
             LoadEffects();
-            MusicStatus = Sound.Status.Stop;
 
             GameEngine.EventManager.Register("Character.Jump", (data) => PlaySoundEvent("Jump", (Character) data));
             GameEngine.EventManager.Register("Character.Die", (data) => PlaySoundEvent("Die", (Character) data));
@@ -64,45 +62,6 @@ namespace GameClient.SoundEngine
                 else if ((sound.Value is EffectSound) && !isMusic)
                     sound.Value.Volume = volume;
         }
-
-        #region PlayerWithStatus
-
-        public void PlayWithStatus()
-        {
-            if (MusicStatus == Sound.Status.Play)
-            {
-                PauseAll();
-                MusicStatus = Sound.Status.Pause;
-            }
-            else if (MusicStatus == Sound.Status.Pause)
-            {
-                ResumeAll();
-                MusicStatus = Sound.Status.Play;
-            }
-        }
-
-        public void PlayWithStatus(string sound)
-        {
-            if (MusicStatus == Sound.Status.Stop)
-            {
-                Play(sound);
-                MusicStatus = Sound.Status.Play;
-            }
-
-            else if (MusicStatus == Sound.Status.Pause)
-            {
-                ResumeAll();
-                MusicStatus = Sound.Status.Play;
-            }
-        }
-
-        public void StopAllWithStatus()
-        {
-            MusicStatus = Sound.Status.Stop;
-            StopAll();
-        }
-
-        #endregion PlayerWithStatus
 
         #region LoadingFiles
 

@@ -70,14 +70,14 @@ namespace GameClient.Characters
         //****IA****
         public delegate bool MovementActivate(Movement movement);
         public MovementActivate GetKey { get; set; }
-        
+
         public bool CollideWithMap
         {
             get { return (Position.Y <= 0.00 && Position.Y > -1 && Position.X < 13 && Position.X > -24.5); }
         }
         #endregion
 
-        public Character(string playerName, string nameCharacter,string mapName, int playerNb, SceneManager scene, Vector3 position, Vector3 scale
+        public Character(string playerName, string nameCharacter, string mapName, int playerNb, SceneManager scene, Vector3 position, Vector3 scale
             , float speed = 1f)
             : base(nameCharacter, scene, position, scale, speed)
         {
@@ -109,11 +109,13 @@ namespace GameClient.Characters
             else
                 ParticlesCharacter = null;
             if (ParticlesCharacter != null && GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
-                foreach (
-                    var kvp in
-                        GameEngine.ParticleEngine.Particles["defaultPerso"].Where(
+                foreach (var kvp in GameEngine.ParticleEngine.Particles["defaultPerso"].Where(
                             kvp => !ParticlesCharacter.ContainsKey(kvp.Key)))
-                    ParticlesCharacter.Add(kvp.Key, kvp.Value.Clone());
+                    try
+                    {
+                        ParticlesCharacter.Add(kvp.Key, kvp.Value.Clone());
+                    }
+                    catch { }
             #endregion
 
             foreach (var particleSystem in ParticlesCharacter.Where((kvp) => kvp.Key.EndsWith(MapName))
@@ -129,7 +131,7 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
-            Dictionary<Movement, bool> movements = Enum.GetValues(typeof (Movement)).Cast<Movement>().ToDictionary(move => move, CallGetKey);
+            Dictionary<Movement, bool> movements = Enum.GetValues(typeof(Movement)).Cast<Movement>().ToDictionary(move => move, CallGetKey);
 
             #region Particle (à modifier ! -> Zone de test)
             if (ParticlesCharacter != null) //switch perso => prévoir default
@@ -205,7 +207,7 @@ namespace GameClient.Characters
                         pendingAnim.Add(Animation.SpecialAttack);
 
                     if ((DateTime.Now - _lastSA).TotalMilliseconds > 1000 && _saDone)
-                    {  
+                    {
                         _lastSA = DateTime.Now;
                         _saDone = false;
                     }
@@ -293,14 +295,14 @@ namespace GameClient.Characters
 
             #region Network
 
-            if (Playing && Client != null && count%SyncRate == 0)
-                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte)CurrentAnimation, Damages = Damages, Lives = (byte) (NumberMaxOfLives - NumberOfDeath)});
+            if (Playing && Client != null && count % SyncRate == 0)
+                new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte)CurrentAnimation, Damages = Damages, Lives = (byte)(NumberMaxOfLives - NumberOfDeath) });
             else if (dI.HasValue)
                 Position += dI.Value;
 
             count = (count + 1) % 60;
             #endregion
-            
+
             #region Physic
             if (Playing)
             {
@@ -360,19 +362,19 @@ namespace GameClient.Characters
             foreach (Character character in characters.Cast<Character>().Where(character => (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).Length() < 1.3 && (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).X < 0))
             {
                 var impulse =
-                    new Vector3((float)((Yaw == BaseYaw ? -1 : 1)*Gravity*(1 + character.Damages/3)*0.008f*(special ? 1 : 10f*gameTime.ElapsedGameTime.TotalMilliseconds/1000)),special ? -Gravity*(1 + character.Damages)*0.008f : 0.2f, 0);
-                
+                    new Vector3((float)((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages / 3) * 0.008f * (special ? 1 : 10f * gameTime.ElapsedGameTime.TotalMilliseconds / 1000)), special ? -Gravity * (1 + character.Damages) * 0.008f : 0.2f, 0);
+
                 character.GiveImpulse(impulse);
 
                 var damages = ((float)
-                     (special ? 10 + (Damages/4) : ((Damages/7) + 6)*gameTime.ElapsedGameTime.TotalMilliseconds/1000));
+                     (special ? 10 + (Damages / 4) : ((Damages / 7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
                 var ParticlesFrappe = ParticlesCharacter["Frappe"];
                 ParticlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
                 ParticlesFrappe.ActivateParticleSystem = DateTime.Now.Millisecond % 150 < 25;
                 character.Damages += damages;
 
-                if(Client != null)
-                    new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas {Damages = damages, ID = character.ID, X = impulse.X, Y = impulse.Y});
+                if (Client != null)
+                    new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas { Damages = damages, ID = character.ID, X = impulse.X, Y = impulse.Y });
                 switch (ModelName)
                 {
                     case "Zeus":

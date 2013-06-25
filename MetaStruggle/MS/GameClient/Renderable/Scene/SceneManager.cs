@@ -79,7 +79,7 @@ namespace GameClient.Renderable.Scene
                 (element as Character).SpawnPosition = new Vector3(sp.Item1, sp.Item2, -17);
                 (element as Character).Position = (element as Character).SpawnPosition;
             }
- 
+
             Items.Add(element);
         }
 
@@ -90,17 +90,20 @@ namespace GameClient.Renderable.Scene
 
         public void Update(GameTime gameTime)
         {
-            if (ActivatePause && GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
+            if (GameEngine.KeyboardState.IsKeyDown(Keys.Escape))
             {
-                System.Threading.Thread.Sleep(400);
-                GameEngine.SoundCenter.PlayWithStatus();
-                GameEngine.DisplayStack.Push(new PauseMenu().Create());
+                if (ActivatePause)
+                    GameEngine.DisplayStack.Push(new PauseMenu().Create());
+                else
+                {
+                    ResetAll();
+                    var mainmenu = GameEngine.DisplayStack.ToList().First();
+                    GameEngine.DisplayStack.Push(mainmenu);
+                }
                 return;
             }
-
             if (GameManager(gameTime))
             {
-                GameEngine.SoundCenter.PlayWithStatus();
                 GameEngine.DisplayStack.Push(new MenuGameOver().Create(StatusCharacter));
                 return;
             }

@@ -57,9 +57,14 @@ namespace GameClient.Renderable.Particle
 
         public override void AutoInitialize(GraphicsDevice cGraphicsDevice, ContentManager cContentManager, SpriteBatch cSpriteBatch)
         {
-            InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000,
+            try
+            {
+                InitializeTexturedQuadParticleSystem(cGraphicsDevice, cContentManager, 1000, 50000,
                                                 UpdateVertexProperties, LoadedFields.TextureDir);
-            LoadParticleSystem();
+                LoadParticleSystem();
+            }
+            catch { }
+            
         }
 
         public void LoadParticleSystem()
