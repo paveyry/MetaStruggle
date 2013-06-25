@@ -15,6 +15,8 @@ namespace GameClient.Renderable.GUI
         private Texture2D Background { get; set; }
         private Texture2D Mouse { get; set; }
         private bool EscPop { get; set; }
+        public delegate void UpdateDelegate(GameTime gameTime);
+        public UpdateDelegate UpdateFunc { get; set; }
 
         public Menu(Texture2D background, bool escPop = true)
         {
@@ -22,6 +24,7 @@ namespace GameClient.Renderable.GUI
             EscPop = escPop;
             Items = new Dictionary<string, Item>();
             Mouse = RessourceProvider.Cursors["thunder"];
+            UpdateFunc = time => {};
         }
 
         public void Add(string key, Item item)
@@ -43,8 +46,9 @@ namespace GameClient.Renderable.GUI
             spriteBatch.Begin();
             spriteBatch.Draw(Background, new Rectangle(0, 0, GameEngine.Config.ResolutionWidth,
                                GameEngine.Config.ResolutionHeight), Color.White);
-            foreach (var item in Items)
-                item.Value.DrawItem(gameTime, spriteBatch);
+            for (int i = 0; i < Items.Values.Count; i++)
+                Items.Values.ElementAt(i).DrawItem(gameTime,spriteBatch);
+
             DrawMouse(spriteBatch);
             spriteBatch.End();
         }
@@ -59,6 +63,7 @@ namespace GameClient.Renderable.GUI
             }
             for (int i = 0; i < Items.Values.Count; i++)
                 Items.Values.ElementAt(i).UpdateItem(gameTime);
+            UpdateFunc(gameTime);
         }
 
         public void DrawMouse(SpriteBatch spriteBatch)

@@ -18,27 +18,28 @@ namespace GameClient.Menus
     {
         private string PersoName;
         private string PlayerName;
-        private List<string[]> Servers;
         private Client Client;
         private SpriteBatch _spriteBatch;
         Menu Menu;
+        private double _oldTime;
+
 
         public ServerSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, string persoName, string playerName)
         {
             _spriteBatch = spriteBatch;
             PersoName = persoName;
             PlayerName = playerName;
-            Servers = new List<string[]>();
+            Client = new Client("metastruggle.eu", 5555, GameEngine.EventManager, new Parser().Parse);
             GameEngine.EventManager.Register("Network.Master.ServerList", ReceiveServers);
             GameEngine.EventManager.Register("Network.Game.GameStart", GameBegin);
-            Client = new Client("metastruggle.eu", 5555, GameEngine.EventManager, new Parser().Parse);
             AskList();
+            _oldTime = -1;
         }
 
         public Menu Create()
         {
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
-
+            Menu.UpdateFunc = Update;
 
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 70), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));
@@ -47,10 +48,8 @@ namespace GameClient.Menus
             return Menu;
         }
 
-
         void NextButton()
         {
-
             System.Threading.Thread.Sleep(200);
 
             var listServer = Menu.Items["ListServer.Item"] as ClassicList;
@@ -60,10 +59,9 @@ namespace GameClient.Menus
             var serverItem = listServer.Selected[1].Split(':');
 
             Client = new Client(serverItem[0], int.Parse(serverItem[1]), GameEngine.EventManager, new Parser().Parse);
-            ////menu.Add("text",new Button(new Rectangle(400, 400, 50, 50), "Player waiting...", RessourceProvider.Fonts["HUD"], Color.White, Color.DarkOrange, () => {}));
             new JoinLobby().Pack(Client.Writer, PlayerName, PersoName);
 
-            //GameEngine.DisplayStack.Push(new ServerSelector(_spriteBatch, _graphics, perso).Create());
+            GameEngine.DisplayStack.Push(new WaitingRoom(listServer.Selected).Create());
         }
 
         void AskList()
@@ -71,13 +69,23 @@ namespace GameClient.Menus
             new MasterServerListRequest().Pack(Client.Writer);
         }
 
+        void Update(GameTime gameTime)
+        {
+            if (_oldTime != -1 || gameTime.TotalGameTime.TotalMilliseconds - _oldTime > 2000)
+                AskList();
+            else
+                _oldTime = gameTime.TotalGameTime.TotalMilliseconds;
+        }
+
         void ReceiveServers(object data)
         {
+            Client = new Client("metastruggle.eu", 5555, GameEngine.EventManager, new Parser().Parse);
             var listServers = (List<MasterServerDatas>) data;
+            var servers = new List<string[]>();
             foreach (var s in listServers)
-                Servers.Add(new[] {s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" +s.MaxPlayer});
+                servers.Add(new[] {s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" +s.MaxPlayer});
             Client.Disconnect();
-            Menu.Add("ListServer.Item", new ClassicList(new Rectangle(10, 10, 80, 50), Servers, new Dictionary<string, int>
+            Menu.Add("ListServer.Item", new ClassicList(new Rectangle(10, 10, 80, 50), servers, new Dictionary<string, int>
                 {
                     {"Map",18}, {"IP:Port",11}, {"Player", 3}
                 }, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, "MSTheme"));

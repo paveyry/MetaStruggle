@@ -30,7 +30,7 @@ namespace GameClient.Menus
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
             
             Menu.Add("Text.NumberOfLives", new SimpleText("Text.Lifes", new Vector2(60, 3), Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"], Color.White));
-            Menu.Add("Slider.NumberOfLives", new Slider(new Rectangle(70, 3, 200, 20), 5, 1, 100, "MSTheme", RessourceProvider.Fonts["MenuLittle"]));
+            Menu.Add("Slider.NumberOfLives", new Slider(new Rectangle(70, 3, 200, 20), 5, 1, 99, "MSTheme", RessourceProvider.Fonts["MenuLittle"]));
 
             Menu.Add("CharacterSelector.Text", new SimpleText("Text.SelectPlayer", new Vector2(5, 17),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"], Color.White));

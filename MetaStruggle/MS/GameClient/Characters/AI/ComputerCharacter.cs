@@ -19,7 +19,7 @@ namespace GameClient.Characters.AI
 
         public override float Damages { get { return base.Damages; } set
         {
-            base.Damages = value + (value - base.Damages) * (Handicap / 10f - 0.1f);
+            base.Damages = value + Math.Abs((value - base.Damages) * (Handicap / 10f - 0.1f));
         } }
         byte Handicap { get; set; }
         byte Level { get; set; }

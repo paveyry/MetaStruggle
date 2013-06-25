@@ -10,6 +10,7 @@
 	<MainMenu.Quit>Quitter</MainMenu.Quit>
 	<MenuMulti.Local>Jeu Local</MenuMulti.Local>
 	<MenuMulti.Online>Jeu en Réseau</MenuMulti.Online>
+	<Menu.WaitingRoom>En attente d'autres joueurs : </Menu.WaitingRoom>
 	<MenuSettings.Language>Français</MenuSettings.Language>
 	<MenuSettings.Controls>Commandes</MenuSettings.Controls>
 	<MenuSettings.Graphics>Graphismes</MenuSettings.Graphics>

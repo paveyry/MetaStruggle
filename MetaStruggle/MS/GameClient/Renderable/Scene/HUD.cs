@@ -15,8 +15,9 @@ namespace GameClient.Renderable.Scene
         public HUD()
         {
             _players = new List<Character>();
-            _intervalSize.X = (int)Math.Floor(RessourceProvider.Fonts["HUD"].MeasureString(999 + "%" + " (99)").X) + 1;
-            _intervalSize.Y = (int)Math.Floor(RessourceProvider.Fonts["HUD"].MeasureString(999 + "%" + " (99)").Y) + 1;
+            var measureString = RessourceProvider.Fonts["HUD"].MeasureString(999 + "%");
+            _intervalSize.X = (int)Math.Floor(measureString.X) + 1;
+            _intervalSize.Y = (int)Math.Floor(measureString.Y) + 1;
         }
 
         public void AddCharacter(Character newChar)
@@ -46,8 +47,10 @@ namespace GameClient.Renderable.Scene
                                            character.PlayerName,
                                            new Vector2(x + addCoordonate, height + addCoordonate), Color.White);
                 x += width;
-                spriteBatch.DrawString(RessourceProvider.Fonts["HUD"], (int)character.Damages + "%" + " (" + (character.NumberMaxOfLives - character.NumberOfDeath) + ")",
-                                       new Vector2(x, height - (int) _intervalSize.Y), Color.White);
+                spriteBatch.DrawString(RessourceProvider.Fonts["HUD"], (int)character.Damages + "%" ,
+                                       new Vector2(x, 0/*height - (int) _intervalSize.Y*/), Color.White);
+                spriteBatch.DrawString(RessourceProvider.Fonts["HUD"], "("+ (character.NumberMaxOfLives - character.NumberOfDeath) + ")",
+                                       new Vector2(x,_intervalSize.Y), Color.White);
                 x += (int)_intervalSize.X;
             }
             spriteBatch.End();
