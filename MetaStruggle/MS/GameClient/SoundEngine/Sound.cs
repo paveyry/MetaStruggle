@@ -1,4 +1,5 @@
-﻿using WMPLib;
+﻿using System;
+using WMPLib;
 
 namespace GameClient.SoundEngine
 {
@@ -60,7 +61,11 @@ namespace GameClient.SoundEngine
             }
 
             PlayerStatus = Status.Play;
-            Player.controls.play();
+            try
+            {
+                Player.controls.play();
+            }
+            catch {}
         }
 
         public void Pause()
@@ -75,7 +80,11 @@ namespace GameClient.SoundEngine
             RealLoop = false;
             Position = 0;
             PlayerStatus = Status.Stop;
-            Player.controls.stop();
+            try
+            {
+                Player.controls.stop();
+            }
+            catch { }
         }
 
         #endregion

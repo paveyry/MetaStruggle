@@ -23,16 +23,15 @@ namespace GameClient.Menus
 
             Menu.Add("ListOfPlayer.Items", new ClassicList(new Rectangle(20,40,60,40),CreateLines(characters),new Dictionary<string, int>
                 {
-                    {"Rang",20},
-                    {"Jouers",80}
+                    {"MenuGameOver.Rank",20},
+                    {"MenuGameOver.Players",80}
                 },RessourceProvider.Fonts["MenuLittle"],Color.White,Color.White,"MSTheme" ));
             Menu.Add("WinnerHead.Item", new ImageButton(characters.Peek().PlayerName,new Rectangle(80,80,characters.Peek().Face.Width/3,characters.Peek().Face.Height/3),
                 characters.Peek().Face,RessourceProvider.Fonts["MenuLittle"]));
 
-            Menu.Add("NextButton.Item", new MenuButton("Pause.ReturnMainMenu", new Vector2(70, 90), RessourceProvider.Fonts["MenuLittle"], Color.White,
+            Menu.Add("NextButton.Item", new MenuButton("Menu.ReturnMainMenu", new Vector2(70, 90), RessourceProvider.Fonts["MenuLittle"], Color.White,
                 Color.DarkOrange, ReturnMainMenu));
             return Menu;
-
         }
 
         void ReturnMainMenu()

@@ -2,6 +2,7 @@
 <Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<Menu.Back>Back</Menu.Back>
 	<Menu.Next>Next</Menu.Next>
+	<Pause.ReturnMainMenu>Back to main menu</Pause.ReturnMainMenu>
 	<MainMenu.SoloPlay>Single Player</MainMenu.SoloPlay>
 	<MainMenu.Multi>Multiplayer</MainMenu.Multi>
 	<MainMenu.Settings>Settings</MainMenu.Settings>
@@ -19,6 +20,8 @@
 	<MenuGraphics.Resolution>Resolution : </MenuGraphics.Resolution>
 	<MenuSounds.Musics>Musics : </MenuSounds.Musics>
 	<MenuSounds.Effects>Effects : </MenuSounds.Effects>
+	<MenuGameOver.Rank>Rank</MenuGameOver.Rank>
+	<MenuGameOver.Players>Players</MenuGameOver.Players>
 	<Player.1>Player One</Player.1>
 	<Player.2>Player Two</Player.2>
 	<Player.3>Player Three</Player.3>
@@ -35,7 +38,6 @@
 	<Text.Respawn>Respawn in </Text.Respawn>
 	<Text.SelectPlayer>Select a Character:</Text.SelectPlayer>
 	<Text.TextboxPlayer>Enter a Player Name:</Text.TextboxPlayer>
-	<Pause.ReturnMainMenu>Back to main menu</Pause.ReturnMainMenu>
 	<Text.ActivatePl>Activate Player :</Text.ActivatePl>
 	<Text.ActivateAI>Activate AI :</Text.ActivateAI>
 	<Text.SliderHandicap>Handicap :</Text.SliderHandicap>
