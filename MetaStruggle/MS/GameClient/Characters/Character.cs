@@ -44,6 +44,8 @@ namespace GameClient.Characters
         public string PlayerName;
         public Texture2D Face;
         public string MapName;
+        private DateTime _lastA = DateTime.Now, _lastSA = DateTime.Now;
+        private bool _aDone = true, _saDone = true;
 
         //****PHYSIC****
         private const float LatteralSpeed = 0.005f;
@@ -173,13 +175,35 @@ namespace GameClient.Characters
 
                 if (movements[Movement.SpecialAttack])
                 {
-                    Attack(gameTime, true);
-                    pendingAnim.Add(Animation.SpecialAttack);
+                    if ((DateTime.Now - _lastSA).TotalMilliseconds < 1500)
+                        pendingAnim.Add(Animation.SpecialAttack);
+
+                    if ((DateTime.Now - _lastSA).TotalMilliseconds > 3000 && _saDone)
+                    {
+                        _lastSA = DateTime.Now;
+                        _saDone = false;
+                    }
+                    else if ((DateTime.Now - _lastSA).TotalMilliseconds > 600 && !_saDone)
+                    {
+                        Attack(gameTime, true);
+                        _saDone = true;
+                    }
                 }
                 if (movements[Movement.Attack])
                 {
-                    Attack(gameTime, false);
-                    pendingAnim.Add(Animation.Attack);
+                    if((DateTime.Now - _lastA).TotalMilliseconds < 1500)
+                        pendingAnim.Add(Animation.Attack);
+
+                    if ((DateTime.Now - _lastA).TotalMilliseconds > 1000 && _aDone)
+                    {
+                        _lastA = DateTime.Now;
+                        _aDone = false;
+                    }
+                    else if ((DateTime.Now - _lastA).TotalMilliseconds > 600 && !_aDone)
+                    {
+                        Attack(gameTime, false);
+                        _aDone = true;
+                    }
                 }
                 if (movements[Movement.Jump] && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
@@ -317,32 +341,15 @@ namespace GameClient.Characters
         {
             List<I3DElement> characters = Scene.Items.FindAll(i3de => i3de is Character && i3de != this);
 
-            foreach (Character character in characters)
+            foreach (Character character in characters.Cast<Character>().Where(character => (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).Length() < 1.3 && (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).X < 0))
             {
-                if (Yaw == BaseYaw)
-                {
-                    if ((Position - character.Position).Length() < 1.3 && (Position - character.Position).X < 0)
-                    {
-                        character.GiveImpulse(new Vector3(-Gravity * (1 + character.Damages) * 0.001f,
-                                                          special ? -Gravity * (1 + character.Damages) * 0.001f : 0.1f, 0));
+                character.GiveImpulse(new Vector3((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages/3) * 0.03f,
+                                                  special ? -Gravity * (1 + character.Damages) * 0.001f : 0.2f, 0));
 
-                        character.Damages += ((special ? 10 : 3) + character.Damages / 3) *
-                                             (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
-                    }
-                }
-                else
-                {
-                    if ((character.Position - Position).Length() < 1.3 && (character.Position - Position).X < 0)
-                    {
-                        character.GiveImpulse(new Vector3(Gravity * (1 + character.Damages) * 0.001f,
-                                                          special ? -Gravity * (1 + character.Damages) * 0.001f : 0.1f, 0));
-
-                        character.Damages += ((special ? 10 : 3) + character.Damages / 3) *
-                                             (float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000);
-                    }
-                }
+                character.Damages += ((special ? 10 : 3) + character.Damages / 6);
             }
         }
+
         #endregion
 
         #region Physic
