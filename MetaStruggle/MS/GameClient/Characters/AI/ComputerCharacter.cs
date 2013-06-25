@@ -23,13 +23,13 @@ namespace GameClient.Characters.AI
         Dictionary<Character, float> EnnemiesLevel { get; set; }
         Dictionary<Movement, bool> Movements { get; set; }
 
-        private delegate StatusAction ActionDelegate(Character character);
+        private delegate StatusAction ActionDelegate(Character character, GameTime gameTime);
         ActionDelegate Action { get; set; }
         StatusAction ActualStatus { get; set; }
         Dictionary<ActionDelegate, int> PriorityAction { get; set; }
 
         private float _oldDamages;
-
+        private double _oldTime;
 
         public ComputerCharacter(string playerName, string nameCharacter, string mapName, SceneManager scene, Vector3 position, Vector3 scale
             , float speed, byte handicap, byte level)
@@ -39,7 +39,7 @@ namespace GameClient.Characters.AI
             Handicap = handicap;
             Level = level;
             GetKey = GetMovement;
-            Action = ((c) => StatusAction.Aborted);
+            Action = DoNothing;
             _oldDamages = Damages;
             FillPriorityAction();
 
@@ -58,27 +58,42 @@ namespace GameClient.Characters.AI
         {
             PriorityAction = new Dictionary<ActionDelegate, int>()
                 {
-                    {AvoidAttack,2},
-                    {AttackAndTrack,1},
+                    {DoNothing,-42},
                     {Track,0},
+                    {AttackAndTrack,1},
+                    {AvoidAttack,2},
+                    {ReturnToMap,42}
                 };
         }
 
         #region Update & Cie
         public override void Update(GameTime gameTime)
         {
-            foreach (var movement in Movements.Keys.ToList())
-                Movements[movement] = false;
             UpdateEnemiesLevel();
-            Character stronger = EnnemiesLevel.Aggregate((kvp1, kvp2) => (kvp1.Value < kvp2.Value) ? kvp1 : kvp2).Key;
+            if (gameTime.TotalGameTime.TotalMilliseconds - _oldTime > 500)
+            {
+                foreach (var movement in Movements.Keys.ToList())
+                    Movements[movement] = false;
 
-            SetAction(AttackAndTrack);
-            if (_oldDamages < Damages)
-                SetAction(AvoidAttack);
+                var ennemiesLevelAlives = EnnemiesLevel.Where(kvp => !kvp.Key.IsDead);
+                Character stronger = (!ennemiesLevelAlives.Any())? null : ennemiesLevelAlives.Aggregate((kvp1, kvp2) => (kvp1.Value < kvp2.Value) ? kvp1 : kvp2).Key;
 
-            ActualStatus = Action(stronger);
+                if (stronger != null)
+                {
+                    SetAction(AttackAndTrack);
+                    if (_oldDamages < Damages)
+                        SetAction(AvoidAttack);
+                    if (ReturnToMap(stronger, gameTime) != StatusAction.Finished)
+                        Action = ReturnToMap;
+                }
+                else
+                    Action = DoNothing;
+                ActualStatus = Action(stronger, gameTime);
 
-            _oldDamages = Damages;
+                _oldDamages = Damages;
+                _oldTime = gameTime.TotalGameTime.TotalMilliseconds;
+            }
+
 
             base.Update(gameTime);
         }
@@ -102,14 +117,14 @@ namespace GameClient.Characters.AI
         #endregion
 
         #region Actions
-        StatusAction AttackAndTrack(Character character)
+        StatusAction AttackAndTrack(Character character, GameTime gameTime)
         {
-            if (Track(character) == StatusAction.Finished)
+            if (Track(character,gameTime) == StatusAction.Finished)
                 Movements[Movement.Attack] = true;
             return StatusAction.InProgress;
         }
 
-        StatusAction Track(Character character)
+        StatusAction Track(Character character, GameTime gameTime)
         {
 
             if (MathHelper.Distance(Position.X, character.Position.X) < 1)
@@ -132,9 +147,27 @@ namespace GameClient.Characters.AI
             return StatusAction.InProgress;
         }
 
-        StatusAction AvoidAttack(Character character)
+        StatusAction AvoidAttack(Character character, GameTime gameTime)
         {
             Movements[Movement.Jump] = true;
+            return StatusAction.Finished;
+        }
+
+        StatusAction ReturnToMap(Character character, GameTime gameTime)
+        {
+            if (Position.X < -24.5)
+                Movements[Movement.Left] = true;
+            else if (Position.X > 13)
+                Movements[Movement.Right] = true;
+            else
+                return StatusAction.Finished;
+            Movements[Movement.Jump] = true;
+
+            return StatusAction.InProgress;
+        }
+
+        StatusAction DoNothing(Character character, GameTime gameTime)
+        {
             return StatusAction.Finished;
         }
         #endregion
