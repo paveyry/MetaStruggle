@@ -148,8 +148,9 @@ namespace GameClient.SoundEngine
             if (!_soundBank.ContainsKey(name))
                 return;
 
-            if (_poolTask.ContainsKey(name))
+            if (_poolTask.ContainsKey(name) && _soundBank[name].PlayerStatus == Sound.Status.Play)
                 return;
+            Stop(name);
 
             _poolTask.Add(name, new Thread(() => PlayPool(name)));
             _poolTask[name].Start();
