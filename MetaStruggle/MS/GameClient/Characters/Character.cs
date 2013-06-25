@@ -130,38 +130,36 @@ namespace GameClient.Characters
             Dictionary<Movement, bool> movements = Enum.GetValues(typeof (Movement)).Cast<Movement>().ToDictionary(move => move, CallGetKey);
 
             #region Particle (à modifier ! -> Zone de test)
-            if (ParticlesCharacter != null && ModelName == "Alex") //switch perso => prévoir default
+            if (ParticlesCharacter != null) //switch perso => prévoir default
             {
                 foreach (var kvp in ParticlesCharacter)
                 {
-                    kvp.Value.UpdatePositionEmitter(Position + new Vector3(Yaw == BaseYaw ? 1 : -0.6f, 1.2f, 0));
-                    kvp.Value.ActivateParticleSystem = movements[Movement.Attack] && DateTime.Now.Millisecond % 300 < 100; //test
+                    kvp.Value.ActivateParticleSystem = false;
                 }
-                //var ParticlesStars = ParticlesCharacter["Stars"];
-                //var ParticlesStarship = ParticlesCharacter["Starship"];
-                //var ParticlesStarsfil = ParticlesCharacter["Starsfil"]; //MAP TARDIS
-                //var ParticlesNuages = ParticlesCharacter["Nuages"];
-                //var ParticlesPluie = ParticlesCharacter["Pluie"];
                 var ParticlesJump = ParticlesCharacter["Jump"];
                 var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
                 var ParticlesRun = ParticlesCharacter["Run"];
                 var ParticlesRetombe = ParticlesCharacter["Retombe"];
-                var ParticlesCoupdepied = ParticlesCharacter["Coupdepied"];
-                ParticlesCoupdepied.UpdatePositionEmitter(Position);
                 ParticlesRetombe.UpdatePositionEmitter(Position);
                 ParticlesJump.UpdatePositionEmitter(Position);
                 ParticlesDoubleJump.UpdatePositionEmitter(Position);
                 ParticlesRun.UpdatePositionEmitter(Position + new Vector3(0.2f, 0, 0));
-                //ParticlesStarship.ActivateParticleSystem = true;
-                //ParticlesPluie.ActivateParticleSystem = true;
-                //ParticlesStars.ActivateParticleSystem = true;
-                //ParticlesNuages.ActivateParticleSystem = true;
-                //ParticlesStarsfil.ActivateParticleSystem = true;
                 if (movements[Movement.Right] && !_jump && !running || movements[Movement.Left] && !_jump && !running)
                     run = DateTime.Now;
-                ParticlesRun.ActivateParticleSystem = movements[Movement.Right] && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0 
+                ParticlesRun.ActivateParticleSystem = movements[Movement.Right] && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0
                     && (DateTime.Now - run).TotalMilliseconds % 500 < 100 || movements[Movement.Left] && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0
                     && (DateTime.Now - run).TotalMilliseconds % 500 < 100;
+                switch (ModelName)
+                {
+                    case "Poseidon":
+                        var ParticlesAttaqueeclatdeau = ParticlesCharacter["Attaqueeclatdeau"];
+                        var ParticlesAttaquegeyser = ParticlesCharacter["Attaquegeyser"];
+                        ParticlesAttaqueeclatdeau.UpdatePositionEmitter(Position);
+                        ParticlesAttaquegeyser.UpdatePositionEmitter(Position);
+                        ParticlesAttaqueeclatdeau.ActivateParticleSystem = movements[Movement.Attack] && DateTime.Now.Millisecond % 1000 < 700;
+                        ParticlesAttaquegeyser.ActivateParticleSystem = ParticlesAttaqueeclatdeau.ActivateParticleSystem;
+                        break;
+                }
             }
             #endregion
 
@@ -175,8 +173,6 @@ namespace GameClient.Characters
 
                 if (movements[Movement.SpecialAttack])
                 {
-                    //var ParticlesCoupdepied = ParticlesCharacter["Coupdepied"];
-                    //ParticlesCoupdepied.ActivateParticleSystem = true;
                     Attack(gameTime, true);
                     pendingAnim.Add(Animation.SpecialAttack);
                 }
@@ -191,16 +187,16 @@ namespace GameClient.Characters
 
                     if (_jump)
                     {
-                        //var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
-                        //ParticlesDoubleJump.UpdatePositionEmitter(Position);
-                        //ParticlesDoubleJump.ActivateParticleSystem = true;
+                        var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
+                        ParticlesDoubleJump.UpdatePositionEmitter(Position);
+                        ParticlesDoubleJump.ActivateParticleSystem = true;
                         _doublejump = true;
                     }
                     else
                     {
-                        //var ParticlesJump = ParticlesCharacter["Jump"];
-                        //ParticlesJump.UpdatePositionEmitter(Position);
-                        //ParticlesJump.ActivateParticleSystem = true;
+                        var ParticlesJump = ParticlesCharacter["Jump"];
+                        ParticlesJump.UpdatePositionEmitter(Position);
+                        ParticlesJump.ActivateParticleSystem = true;
                         _jump = true;
                         _firstjump = DateTime.Now;
                     }
@@ -374,9 +370,9 @@ namespace GameClient.Characters
             Speed.X *= 0.7f;
             if (_jump)
             {
-                //var ParticlesRetombe = ParticlesCharacter["Retombe"];
-                //ParticlesRetombe.UpdatePositionEmitter(Position);
-                //ParticlesRetombe.ActivateParticleSystem = true;
+                var ParticlesRetombe = ParticlesCharacter["Retombe"];
+                ParticlesRetombe.UpdatePositionEmitter(Position);
+                ParticlesRetombe.ActivateParticleSystem = true;
             }
             _jump = false;
             _doublejump = false;

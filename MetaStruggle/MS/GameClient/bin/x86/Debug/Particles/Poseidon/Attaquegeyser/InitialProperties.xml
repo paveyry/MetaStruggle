@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CInitialPropertiesForQuadOfDefaultTexturedQuadParticleDefaultTexturedQuadParticleVertex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LifetimeMin>0.1</LifetimeMin>
-  <LifetimeMax>0.2</LifetimeMax>
+  <LifetimeMin>0.06</LifetimeMin>
+  <LifetimeMax>0.09</LifetimeMax>
   <PositionMin>
-    <X>0</X>
+    <X>-0.1</X>
     <Y>0</Y>
-    <Z>0</Z>
+    <Z>-0.1</Z>
   </PositionMin>
   <PositionMax>
-    <X>0</X>
+    <X>0.1</X>
     <Y>0</Y>
-    <Z>0</Z>
+    <Z>0.1</Z>
   </PositionMax>
   <VelocityMin>
-    <X>-3</X>
-    <Y>-3</Y>
-    <Z>-3</Z>
+    <X>2.5</X>
+    <Y>25</Y>
+    <Z>-10</Z>
   </VelocityMin>
   <VelocityMax>
-    <X>3</X>
-    <Y>3</Y>
-    <Z>3</Z>
+    <X>-2.5</X>
+    <Y>25</Y>
+    <Z>10</Z>
   </VelocityMax>
   <AccelerationMin>
     <X>0</X>
@@ -45,32 +45,32 @@
   <FrictionMin>0</FrictionMin>
   <FrictionMax>0</FrictionMax>
   <StartColorMin>
-    <R>0</R>
+    <R>255</R>
     <G>0</G>
     <B>0</B>
-    <A>255</A>
-    <PackedValue>4278190080</PackedValue>
+    <A>0</A>
+    <PackedValue>6684672</PackedValue>
   </StartColorMin>
   <StartColorMax>
     <R>255</R>
-    <G>255</G>
-    <B>255</B>
-    <A>255</A>
-    <PackedValue>4294967295</PackedValue>
-  </StartColorMax>
-  <EndColorMin>
-    <R>0</R>
     <G>0</G>
     <B>0</B>
-    <A>255</A>
-    <PackedValue>4278190080</PackedValue>
+    <A>0</A>
+	<PackedValue>16763955</PackedValue>
+  </StartColorMax>
+  <EndColorMin>
+    <R>255</R>
+    <G>0</G>
+    <B>0</B>
+    <A>0</A>
+	<PackedValue>6684672</PackedValue>
   </EndColorMin>
   <EndColorMax>
     <R>255</R>
-    <G>255</G>
-    <B>255</B>
-    <A>255</A>
-    <PackedValue>4294967295</PackedValue>
+    <G>0</G>
+    <B>0</B>
+    <A>0</A>
+	<PackedValue>16763955</PackedValue>
   </EndColorMax>
   <InterpolateBetweenMinAndMaxPosition>false</InterpolateBetweenMinAndMaxPosition>
   <InterpolateBetweenMinAndMaxVelocity>false</InterpolateBetweenMinAndMaxVelocity>
@@ -80,24 +80,24 @@
   <PositionIsAffectedByEmittersPosition>true</PositionIsAffectedByEmittersPosition>
   <VelocityIsAffectedByEmittersOrientation>true</VelocityIsAffectedByEmittersOrientation>
   <RotationMin>
-    <X>1</X>
-    <Y>1</Y>
-    <Z>1</Z>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>0</Z>
   </RotationMin>
   <RotationMax>
-    <X>5</X>
-    <Y>5</Y>
-    <Z>5</Z>
-  </RotationMax>	
+    <X>0</X>
+    <Y>0</Y>
+    <Z>3.14159274</Z>
+  </RotationMax>
   <RotationalVelocityMin>
-    <X>-3</X>
-    <Y>-3</Y>
-    <Z>-3</Z>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>-3.14159274</Z>
   </RotationalVelocityMin>
   <RotationalVelocityMax>
-    <X>3</X>
-    <Y>3</Y>
-    <Z>3</Z>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>3.14159274</Z>
   </RotationalVelocityMax>
   <RotationalAccelerationMin>
     <X>0</X>
@@ -109,10 +109,10 @@
     <Y>0</Y>
     <Z>0</Z>
   </RotationalAccelerationMax>
-  <StartWidthMin>0.2</StartWidthMin>
-  <StartWidthMax>0.2</StartWidthMax>
-  <StartHeightMin>0.2</StartHeightMin>
-  <StartHeightMax>0.2</StartHeightMax>
+  <StartWidthMin>0.1</StartWidthMin>
+  <StartWidthMax>0.1</StartWidthMax>
+  <StartHeightMin>0.1</StartHeightMin>
+  <StartHeightMax>0.1</StartHeightMax>
   <EndWidthMin>0.2</EndWidthMin>
   <EndWidthMax>0.2</EndWidthMax>
   <EndHeightMin>0.2</EndHeightMin>
