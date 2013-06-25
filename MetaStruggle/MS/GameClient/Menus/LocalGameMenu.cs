@@ -28,6 +28,12 @@ namespace GameClient.Menus
         {
             System.Threading.Thread.Sleep(200);
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
+            
+            //**********
+            Menu.Add("nbvies", new SimpleText("Text.Lifes", new Vector2(60, 3), Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"], Color.White));
+            Menu.Add("slider.nbvies", new Slider(new Rectangle(70, 3, 200, 20), 1, 1, 100, "MSTheme", RessourceProvider.Fonts["MenuLittle"]));
+            //**********
+
             Menu.Add("CharacterSelector.Text", new SimpleText("Text.SelectPlayer", new Vector2(5, 17),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"], Color.White));
             for (int i = 0; i < 4; i++)

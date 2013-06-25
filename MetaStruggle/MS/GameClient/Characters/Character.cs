@@ -125,11 +125,7 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
-            Dictionary<Movement, bool> movements = new Dictionary<Movement, bool>();
-            foreach (Movement move in Enum.GetValues(typeof(Movement)))
-                movements.Add(move,CallGetKey(move));
-
-
+            Dictionary<Movement, bool> movements = Enum.GetValues(typeof (Movement)).Cast<Movement>().ToDictionary(move => move, CallGetKey);
 
             #region Particle (à modifier ! -> Zone de test)
             if (ParticlesCharacter != null && ModelName == "Alex") //switch perso => prévoir default
@@ -179,7 +175,7 @@ namespace GameClient.Characters
                 {
                     //var ParticlesCoupdepied = ParticlesCharacter["Coupdepied"];
                     //ParticlesCoupdepied.ActivateParticleSystem = true;
-                    //Attack(gameTime, true);
+                    Attack(gameTime, true);
                     pendingAnim.Add(Animation.SpecialAttack);
                 }
                 if (movements[Movement.Attack])
