@@ -138,6 +138,7 @@ namespace GameClient.Characters
                 {
                     kvp.Value.ActivateParticleSystem = false;
                 }
+                var ParticlesFrappe = ParticlesCharacter["Frappe"];
                 var ParticlesJump = ParticlesCharacter["Jump"];
                 var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
                 var ParticlesRun = ParticlesCharacter["Run"];
@@ -146,6 +147,7 @@ namespace GameClient.Characters
                 ParticlesJump.UpdatePositionEmitter(Position);
                 ParticlesDoubleJump.UpdatePositionEmitter(Position);
                 ParticlesRun.UpdatePositionEmitter(Position + new Vector3(0.2f, 0, 0));
+                ParticlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
                 if (movements[Movement.Right] && !_jump && !running || movements[Movement.Left] && !_jump && !running)
                     run = DateTime.Now;
                 ParticlesRun.ActivateParticleSystem = movements[Movement.Right] && CollideWithMap && (DateTime.Now - run).TotalMilliseconds % 500 >= 0
@@ -345,7 +347,9 @@ namespace GameClient.Characters
             {
                 character.GiveImpulse(new Vector3((float) ((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages/3) * 0.008f * (special ? 1 : 10f * gameTime.ElapsedGameTime.TotalMilliseconds/1000)),
                                                   special ? -Gravity * (1 + character.Damages) * 0.008f : 0.2f, 0));
-
+                var ParticlesFrappe = ParticlesCharacter["Frappe"];
+                ParticlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
+                ParticlesFrappe.ActivateParticleSystem = true;
                 character.Damages += ((float)(special ? 10 + (Damages / 4) : ((Damages/7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
                 GameEngine.SoundCenter.Play("degats");
             }
