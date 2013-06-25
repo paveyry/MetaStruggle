@@ -38,7 +38,7 @@ namespace GameClient.Renderable.Scene
 
                 if (character.IsDead)
                     spriteBatch.DrawString(RessourceProvider.Fonts["HUDlittle"],
-                                           GameEngine.LangCenter.GetString("Text.Respawn") +
+                        character.IsPermanentlyDead ? GameEngine.LangCenter.GetString("Text.Dead") : GameEngine.LangCenter.GetString("Text.Respawn") +
                                            ((int) (5 - (DateTime.Now - character.DeathDate).TotalSeconds)),
                                            new Vector2(x + addCoordonate, height + addCoordonate), Color.DarkOrange);
                 else
@@ -46,7 +46,7 @@ namespace GameClient.Renderable.Scene
                                            character.PlayerName,
                                            new Vector2(x + addCoordonate, height + addCoordonate), Color.White);
                 x += width;
-                spriteBatch.DrawString(RessourceProvider.Fonts["HUD"], (int)character.Damages + "%",
+                spriteBatch.DrawString(RessourceProvider.Fonts["HUD"], (int)character.Damages + "%" + "(" + (character.NumberMaxOfLives - character.NumberOfDeath) + ")",
                                        new Vector2(x, height - (int) _intervalSize.Y), Color.White);
                 x += (int)_intervalSize.X;
             }

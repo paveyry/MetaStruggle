@@ -42,4 +42,5 @@
 	<Text.SliderLevel>Niveau :</Text.SliderLevel>
 	<Text.SelectMap>Selectionnez le terrain de jeu :</Text.SelectMap>
 	<Text.Lifes>Vies :</Text.Lifes>
+	<Text.Dead>Vaincu</Text.Dead>
 </Language>

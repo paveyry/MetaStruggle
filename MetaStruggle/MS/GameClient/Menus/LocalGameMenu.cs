@@ -74,12 +74,13 @@ namespace GameClient.Menus
                 RessourceProvider.Fonts["HUDlittle"], 5, status));
             Menu.Add("Multiple.Textbox.PlayerName." + nb, new Textbox(GameEngine.LangCenter.GetString("Player." + (nb + 1)), new Rectangle(55, 80, 300, 0), "MSTheme",
                 RessourceProvider.Fonts["MenuLittle"], Color.White, status));
+
             if (status) return;
+
             Menu.Add("Multiple.Activate.Checkbox." + nb, new CheckBox(new Vector2(83, 23), "MSTheme", false, () => OnChangeChecboxActivate(nb), false));
             Menu.Add("Multiple.IA.Checkbox." + nb, new CheckBox(new Vector2(83, 31), "MSTheme", false, () => OnChangeCheckboxAI(nb), false));
             Menu.Add("Multiple.IA.Slider.Handicap." + nb, new Slider(new Rectangle(70, 50, 200, 20), 1, 1, 9, "MSTheme", RessourceProvider.Fonts["MenuLittle"], false));
             Menu.Add("Multiple.IA.Slider.Level." + nb, new Slider(new Rectangle(70, 60, 200, 20), 1, 1, 9, "MSTheme", RessourceProvider.Fonts["MenuLittle"], false));
-
         }
 
         void OnChangeChecboxActivate(int nb)
@@ -124,9 +125,11 @@ namespace GameClient.Menus
             for (int i = 0; i < 4; i++)
                 if (!AddCreateCharacter(i, characters))
                     return;
+
             if (characters.Count < 2)
                 return;
-            GameEngine.DisplayStack.Push(new LocalGameMenu(_spriteBatch).MapSelector(characters));
+
+            GameEngine.DisplayStack.Push(new LocalGameMenu(_spriteBatch).MapSelector(characters, ((Slider)Menu.Items["slider.nbvies"]).Value));
         }
 
         bool AddCreateCharacter(int nb, List<PartialAICharacter> characters)
@@ -136,6 +139,7 @@ namespace GameClient.Menus
 
             string playerName = (Menu.Items["Multiple.Textbox.PlayerName." + nb] as Textbox).Text;
             string modelName = (Menu.Items["Multiple.CharacterSelector.Item." + nb] as ListImageButtons).NameSelected;
+
             if (playerName == "" || modelName == "")
                 return false;
 
@@ -146,12 +150,13 @@ namespace GameClient.Menus
                 (byte)(Menu.Items["Multiple.IA.Slider.Handicap." + nb] as Slider).Value,
                 (byte)(Menu.Items["Multiple.IA.Slider.Level." + nb] as Slider).Value)
                 : new PartialAICharacter(playerName, modelName, (byte)nb));
+
             return true;
         }
         #endregion
 
         #region SelectMap
-        Menu MapSelector(List<PartialAICharacter> characters)
+        Menu MapSelector(List<PartialAICharacter> characters, int nbLives)
         {
             System.Threading.Thread.Sleep(200);
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
@@ -161,17 +166,19 @@ namespace GameClient.Menus
             Menu.Add("MapSelector.Item", new ListImageButtons(new Rectangle(15, 22, 70, 45), RessourceProvider.MapScreens, "MSTheme",
                 RessourceProvider.Fonts["HUDlittle"], 4));
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["MenuLittle"], Color.White,
-                Color.DarkOrange, () => NextButtonMapSelector(characters)));
+                Color.DarkOrange, () => NextButtonMapSelector(characters, nbLives)));
+
             return Menu;
         }
 
-        void NextButtonMapSelector(List<PartialAICharacter> characters)
+        void NextButtonMapSelector(IEnumerable<PartialAICharacter> characters, int nbLives)
         {
             string mapSelected = (Menu.Items["MapSelector.Item"] as ListImageButtons).NameSelected;
+
             if (string.IsNullOrEmpty(mapSelected))
                 return;
 
-            GameEngine.DisplayStack.Push(new LocalEnvironnement(characters, _spriteBatch, "Map" + mapSelected).SceneManager);
+            GameEngine.DisplayStack.Push(new LocalEnvironnement(characters, _spriteBatch, "Map" + mapSelected, nbLives).SceneManager);
         }
         #endregion
 

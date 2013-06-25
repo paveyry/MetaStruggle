@@ -16,15 +16,15 @@ namespace GameClient.Renderable.Environments
     {
         public SceneManager SceneManager { get; private set; }
 
-        public LocalEnvironnement(List<PartialAICharacter> characters, SpriteBatch spriteBatch, string mapName)
+        public LocalEnvironnement(IEnumerable<PartialAICharacter> characters, SpriteBatch spriteBatch, string mapName, int numberOfLives = 5)
         {
-            SceneManager = SceneManager.CreateScene( new Vector3(-5, 5, -30), new Vector3(0, 0, 0), spriteBatch, mapName, true);
+            SceneManager = SceneManager.CreateScene( new Vector3(-5, 5, -30), new Vector3(0, 0, 0), spriteBatch, mapName, true, numberOfLives);
             CreateCharacters(characters,mapName);
 
             SceneManager.Camera.FollowsCharacters(SceneManager.Camera, SceneManager.Items.FindAll(e => e is Character));
         }
 
-        void CreateCharacters(List<PartialAICharacter> characters, string mapName)
+        void CreateCharacters(IEnumerable<PartialAICharacter> characters, string mapName)
         {
             foreach (var pChar in characters)
             {

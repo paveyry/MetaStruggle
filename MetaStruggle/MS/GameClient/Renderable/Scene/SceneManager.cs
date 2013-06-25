@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DPSF;
@@ -63,6 +64,7 @@ namespace GameClient.Renderable.Scene
         public void AddElement(I3DElement element)
         {
             Items.Add(element);
+
             if (element is Character)
             {
                 Hud.AddCharacter(element as Character);
@@ -70,9 +72,9 @@ namespace GameClient.Renderable.Scene
             }
         }
 
-        public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch, string mapName = null, bool activatePause = false)
+        public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch, string mapName = null, bool activatePause = false, int numberOfLives = 5)
         {
-            return new SceneManager(new Camera3D(cameraPosition, cameraTarget), spriteBatch, mapName, activatePause);
+            return new SceneManager(new Camera3D(cameraPosition, cameraTarget), spriteBatch, mapName, activatePause, numberOfLives);
         }
 
         public void Update(GameTime gameTime)
@@ -84,16 +86,31 @@ namespace GameClient.Renderable.Scene
                 GameEngine.DisplayStack.Push(new PauseMenu().Create());
                 return;
             }
-            if (GameManger(gameTime))
+
+            if (GameManager(gameTime))
             {
                 GameEngine.SoundCenter.PlayWithStatus();
                 GameEngine.DisplayStack.Push(new MenuGameOver().Create(StatusCharacter));
             }
 
+            if (Items.OfType<Character>().Count(c => !c.IsPermanentlyDead) <= 1)
+            {
+                var chars = new Stack<Character>();
+
+                foreach (var c in Items.OfType<Character>().Where(c => c.IsPermanentlyDead))
+                    chars.Push(c);
+
+                chars.Push(Items.OfType<Character>().First(c => !c.IsPermanentlyDead));
+
+                GameEngine.DisplayStack.Push(new MenuGameOver().Create(chars));
+            }
+
             if (Skybox != null)
                 Skybox.Update();
+
             foreach (var element in Items)
                 element.Update(gameTime);
+
             GameEngine.ParticleEngine.Update(gameTime, Camera);
         }
 
@@ -101,8 +118,10 @@ namespace GameClient.Renderable.Scene
         {
             if (Skybox != null)
                 Skybox.Draw(spriteBatch);
+
             foreach (var element in Items)
                 element.Draw(gameTime, spriteBatch);
+
             Camera.FollowsCharacters(Camera, Items.FindAll(e => e is Character));
             Hud.DrawHUD(spriteBatch);
             GameEngine.ParticleEngine.Draw(spriteBatch, Camera);
@@ -114,18 +133,26 @@ namespace GameClient.Renderable.Scene
             GameEngine.SoundCenter.Stop(MapName);
         }
 
-        bool GameManger(GameTime gameTime)
+        bool GameManager(GameTime gameTime)
         {
             var characters = Items.OfType<Character>().ToList();
+            
             foreach (var character in characters.Where(c => c.IsDead).Where(character => !StatusCharacter.Contains(character)
                 && character.NumberMaxOfLives - character.NumberOfDeath <= 0))
                 StatusCharacter.Push(character);
+<<<<<<< HEAD
             if (characters.Count() == StatusCharacter.Count + 1)
+=======
+
+            if (characters.Count() == StatusCharacter.Count - 1)
+>>>>>>> Possibilité de perdre/gagner
             {
                 foreach (var c in characters.Where(c => !StatusCharacter.Contains(c)))
                     StatusCharacter.Push(c);
+
                 return true;
             }
+
             return false;
         }
     }
