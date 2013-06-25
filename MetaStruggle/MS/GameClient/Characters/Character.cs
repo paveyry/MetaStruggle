@@ -347,6 +347,7 @@ namespace GameClient.Characters
                                                   special ? -Gravity * (1 + character.Damages) * 0.008f : 0.2f, 0));
 
                 character.Damages += ((float)(special ? 10 + (Damages / 4) : ((Damages/7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
+                GameEngine.SoundCenter.Play("degats");
             }
         }
 
