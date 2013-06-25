@@ -63,13 +63,24 @@ namespace GameClient.Renderable.Scene
 
         public void AddElement(I3DElement element)
         {
-            Items.Add(element);
+            var spawnPositions = new[]
+                {
+                    new Tuple<float, float>(-5, 10), 
+                    new Tuple<float, float>(-12, 10), 
+                    new Tuple<float, float>(-8, 10),
+                    new Tuple<float, float>(-3, 10)
+                };
 
             if (element is Character)
             {
                 Hud.AddCharacter(element as Character);
                 (element as Character).NumberMaxOfLives = NumberOfLives;
+                var sp = spawnPositions[Items.OfType<Character>().Count()];
+                (element as Character).SpawnPosition = new Vector3(sp.Item1, sp.Item2, -17);
+                (element as Character).Position = (element as Character).SpawnPosition;
             }
+ 
+            Items.Add(element);
         }
 
         public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch, string mapName = null, bool activatePause = false, int numberOfLives = 5)
