@@ -162,6 +162,8 @@ namespace GameClient.Characters
                         ParticlesAttaquegeyser.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0, 0));
                         ParticlesAttaqueeclatdeau.ActivateParticleSystem = movements[Movement.Attack] && DateTime.Now.Millisecond % 1000 < 700;
                         ParticlesAttaquegeyser.ActivateParticleSystem = ParticlesAttaqueeclatdeau.ActivateParticleSystem;
+                        if (movements[Movement.Attack])
+                            GameEngine.SoundCenter.Play("water");
                         break;
                 }
             }
@@ -177,14 +179,28 @@ namespace GameClient.Characters
 
                 if (movements[Movement.SpecialAttack])
                 {
-                    if ((DateTime.Now - _lastSA).TotalMilliseconds > 700 && (DateTime.Now - _lastSA).TotalMilliseconds < 1000 && ModelName == "Zeus")
-                    { 
-                        var ParticlesAttaquespe = ParticlesCharacter["Attaquespe"];
-                        var ParticlesAttaquesol = ParticlesCharacter["Attaquesol"];
-                        ParticlesAttaquesol.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f, 0, 0));
-                        ParticlesAttaquespe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f, 3.5f, 0));
-                        ParticlesAttaquesol.ActivateParticleSystem = true;
-                        ParticlesAttaquespe.ActivateParticleSystem = true;
+                    if ((DateTime.Now - _lastSA).TotalMilliseconds > 700 && (DateTime.Now - _lastSA).TotalMilliseconds < 1000)
+                    {
+                        switch (ModelName)
+                        {
+                            case "Zeus":
+                                var ParticlesAttaquespe = ParticlesCharacter["Attaquespe"];
+                                var ParticlesAttaquesol = ParticlesCharacter["Attaquesol"];
+                                ParticlesAttaquesol.UpdatePositionEmitter(Position +
+                                                                          new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f, 0,
+                                                                                      0));
+                                ParticlesAttaquespe.UpdatePositionEmitter(Position +
+                                                                          new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f,
+                                                                                      3.5f, 0));
+                                ParticlesAttaquesol.ActivateParticleSystem = true;
+                                ParticlesAttaquespe.ActivateParticleSystem = true;
+                                break;
+                            case "Poseidon":
+                                GameEngine.SoundCenter.Play("sword");
+                                break;
+                            default:
+                                break;
+                        }
                     }
                     if ((DateTime.Now - _lastSA).TotalMilliseconds < 1500)
                         pendingAnim.Add(Animation.SpecialAttack);
@@ -367,6 +383,28 @@ namespace GameClient.Characters
 
                 if(Client != null)
                     new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas {Damages = damages, ID = character.ID, X = impulse.X, Y = impulse.Y});
+                switch (ModelName)
+                {
+                    case "Zeus":
+                        GameEngine.SoundCenter.Play("degats");
+                        break;
+                    case "Poseidon":
+                        break;
+                    case "Ares":
+                        GameEngine.SoundCenter.Play("sword");
+                        break;
+                    case "Alex":
+                        GameEngine.SoundCenter.Play("degats");
+                        break;
+                    case "Ironman":
+                        GameEngine.SoundCenter.Play("laser");
+                        break;
+                    case "Spiderman":
+                        GameEngine.SoundCenter.Play("degats");
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         #endregion
