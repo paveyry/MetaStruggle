@@ -138,7 +138,7 @@ namespace GameClient.Characters.AI
 
                 if (SelectedCharacter != null)
                 {
-                    if (_oldDamages < Damages)
+                    if (_oldDamages < Damages && GetRandomNumber(0, 3) != 0)
                         SetAction(AvoidAttack);
                     if (ReturnToMap(SelectedCharacter, gameTime) != StatusAction.Finished)
                         Action = ReturnToMap;
