@@ -75,6 +75,9 @@ namespace GameClient.Renderable.Environments
 
             if (c == null || c.Playing) return;
 
+            c.Damages = cp.Damages;
+            c.NumberOfDeath = c.NumberMaxOfLives - cp.Lives;
+
             c.F1 = c.F2;
             c.F2 = new Vector3(cp.X, cp.Y, -17);
 

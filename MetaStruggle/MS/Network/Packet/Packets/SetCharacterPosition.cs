@@ -20,10 +20,10 @@ namespace Network.Packet.Packets
 
         public void UnPack(Client client, Packet packet, IEventDispatcher eventDispatcher)
         {
-            byte id = packet.Reader.ReadByte(), anim = packet.Reader.ReadByte();
-            float x = packet.Reader.ReadSingle(), y = packet.Reader.ReadSingle(), yaw = packet.Reader.ReadSingle();
+            byte id = packet.Reader.ReadByte(), anim = packet.Reader.ReadByte(), lives = packet.Reader.ReadByte();
+            float x = packet.Reader.ReadSingle(), y = packet.Reader.ReadSingle(), yaw = packet.Reader.ReadSingle(), damages = packet.Reader.ReadSingle();
 
-            eventDispatcher.ThrowNewEvent(EventID, new CharacterPositionDatas { ID = id, X = x, Y = y, Yaw = yaw, Anim = anim });
+            eventDispatcher.ThrowNewEvent(EventID, new CharacterPositionDatas { ID = id, X = x, Y = y, Yaw = yaw, Anim = anim, Lives = lives, Damages = damages});
         }
 
         /// <summary>
@@ -38,9 +38,11 @@ namespace Network.Packet.Packets
 
             p.Writer.Write(c.ID);
             p.Writer.Write(c.Anim);
+            p.Writer.Write(c.Lives);
             p.Writer.Write(c.X);
             p.Writer.Write(c.Y);
             p.Writer.Write(c.Yaw);
+            p.Writer.Write(c.Damages);
 
             p.Write(w);
         }

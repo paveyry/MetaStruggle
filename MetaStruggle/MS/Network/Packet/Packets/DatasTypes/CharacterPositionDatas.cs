@@ -12,5 +12,7 @@ namespace Network.Packet.Packets.DatasTypes
         public float Yaw { get; set; }
         public byte ID { get; set; }
         public byte Anim { get; set; }
+        public float Damages { get; set; }
+        public byte Lives { get; set; }
     }
 }

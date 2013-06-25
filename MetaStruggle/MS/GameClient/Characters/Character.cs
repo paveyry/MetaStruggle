@@ -160,7 +160,7 @@ namespace GameClient.Characters
                         var ParticlesAttaquegeyser = ParticlesCharacter["Attaquegeyser"];
                         ParticlesAttaqueeclatdeau.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0, 0));
                         ParticlesAttaquegeyser.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0, 0));
-                        ParticlesAttaqueeclatdeau.ActivateParticleSystem = movements[Movement.Attack] && DateTime.Now.Millisecond % 1000 < 700;
+                        ParticlesAttaqueeclatdeau.ActivateParticleSystem = CurrentAnimation == Animation.Attack && DateTime.Now.Millisecond % 1000 < 700;
                         ParticlesAttaquegeyser.ActivateParticleSystem = ParticlesAttaqueeclatdeau.ActivateParticleSystem;
                         if (movements[Movement.Attack])
                             GameEngine.SoundCenter.Play("water");
@@ -218,19 +218,8 @@ namespace GameClient.Characters
                 }
                 if (movements[Movement.Attack])
                 {
-                    //if((DateTime.Now - _lastA).TotalMilliseconds < 1500)
                     pendingAnim.Add(Animation.Attack);
                     Attack(gameTime, false);
-                    /*if ((DateTime.Now - _lastA).TotalMilliseconds > 1000 && _aDone)
-                    {
-                        _lastA = DateTime.Now;
-                        _aDone = false;
-                    }
-                    else if ((DateTime.Now - _lastA).TotalMilliseconds > 600 && !_aDone)
-                    {
-                        Attack(gameTime, false);
-                        _aDone = true;
-                    }*/
                 }
                 if (movements[Movement.Jump] && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
