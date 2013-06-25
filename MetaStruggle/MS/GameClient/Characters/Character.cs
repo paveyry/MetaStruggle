@@ -154,8 +154,8 @@ namespace GameClient.Characters
                     case "Poseidon":
                         var ParticlesAttaqueeclatdeau = ParticlesCharacter["Attaqueeclatdeau"];
                         var ParticlesAttaquegeyser = ParticlesCharacter["Attaquegeyser"];
-                        ParticlesAttaqueeclatdeau.UpdatePositionEmitter(Position);
-                        ParticlesAttaquegeyser.UpdatePositionEmitter(Position);
+                        ParticlesAttaqueeclatdeau.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0, 0));
+                        ParticlesAttaquegeyser.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0, 0));
                         ParticlesAttaqueeclatdeau.ActivateParticleSystem = movements[Movement.Attack] && DateTime.Now.Millisecond % 1000 < 700;
                         ParticlesAttaquegeyser.ActivateParticleSystem = ParticlesAttaqueeclatdeau.ActivateParticleSystem;
                         break;
