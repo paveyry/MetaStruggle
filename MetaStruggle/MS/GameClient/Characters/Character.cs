@@ -349,7 +349,7 @@ namespace GameClient.Characters
                                                   special ? -Gravity * (1 + character.Damages) * 0.008f : 0.2f, 0));
                 var ParticlesFrappe = ParticlesCharacter["Frappe"];
                 ParticlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
-                ParticlesFrappe.ActivateParticleSystem = true;
+                ParticlesFrappe.ActivateParticleSystem = DateTime.Now.Millisecond % 150 < 25;
                 character.Damages += ((float)(special ? 10 + (Damages / 4) : ((Damages/7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
                 GameEngine.SoundCenter.Play("degats");
             }
