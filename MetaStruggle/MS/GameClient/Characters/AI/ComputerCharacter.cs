@@ -96,8 +96,8 @@ namespace GameClient.Characters.AI
 
         void UpdateEnemiesLevel()
         {
-            foreach (var t in EnnemiesLevel.Keys.ToList())
-                EnnemiesLevel[t] = t.Damages / 100f + t.NumberOfDeath * 2;
+            foreach (var e in EnnemiesLevel.Keys.ToList())
+                EnnemiesLevel[e] = (e.IsDead) ? float.MaxValue : e.Damages / 100f + e.NumberOfDeath * 2;
         }
         #endregion
 

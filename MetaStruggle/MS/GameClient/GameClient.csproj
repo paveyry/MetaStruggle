@@ -132,6 +132,7 @@
     <Compile Include="Menus\CharacterSelector.cs" />
     <Compile Include="Menus\LocalGameMenu.cs" />
     <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\MenuGameOver.cs" />
     <Compile Include="Menus\PauseMenu.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />

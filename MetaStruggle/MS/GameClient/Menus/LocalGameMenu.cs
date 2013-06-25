@@ -168,7 +168,7 @@ namespace GameClient.Menus
         void NextButtonMapSelector(List<PartialAICharacter> characters)
         {
             string mapSelected = (Menu.Items["MapSelector.Item"] as ListImageButtons).NameSelected;
-            if (mapSelected == null)
+            if (string.IsNullOrEmpty(mapSelected))
                 return;
 
             GameEngine.DisplayStack.Push(new LocalEnvironnement(characters, _spriteBatch, "Map" + mapSelected).SceneManager);

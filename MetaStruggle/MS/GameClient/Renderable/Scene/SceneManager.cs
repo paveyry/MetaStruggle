@@ -24,13 +24,17 @@ namespace GameClient.Renderable.Scene
         public string MapName { get; set; }
         Dictionary<string, ParticleSystem> ParticlesMap { get; set; }
         bool ActivatePause { get; set; }
+        int NumberOfLives { get; set; }
+        Stack<Character> StatusCharacter { get; set; }
 
-        public SceneManager(Camera3D camera, SpriteBatch spriteBatch, string mapName = null, bool activatePause = false)
+        public SceneManager(Camera3D camera, SpriteBatch spriteBatch, string mapName = null, bool activatePause = false, int numberOfLives = 5)
         {
             Camera = camera;
             SpriteBatch = spriteBatch;
             Items = new List<I3DElement>();
             Hud = new HUD();
+            NumberOfLives = numberOfLives;
+            StatusCharacter = new Stack<Character>();
             if (mapName != null)
                 AddMap(mapName);
             ActivatePause = activatePause;
@@ -60,7 +64,10 @@ namespace GameClient.Renderable.Scene
         {
             Items.Add(element);
             if (element is Character)
+            {
                 Hud.AddCharacter(element as Character);
+                (element as Character).NumberMaxOfLives = NumberOfLives;
+            }
         }
 
         public static SceneManager CreateScene(Vector3 cameraPosition, Vector3 cameraTarget, SpriteBatch spriteBatch, string mapName = null, bool activatePause = false)
@@ -77,6 +84,12 @@ namespace GameClient.Renderable.Scene
                 GameEngine.DisplayStack.Push(new PauseMenu().Create());
                 return;
             }
+            if (GameManger(gameTime))
+            {
+                GameEngine.SoundCenter.PlayWithStatus();
+                GameEngine.DisplayStack.Push(new MenuGameOver().Create(StatusCharacter));
+            }
+
             if (Skybox != null)
                 Skybox.Update();
             foreach (var element in Items)
@@ -99,6 +112,21 @@ namespace GameClient.Renderable.Scene
         {
             GameEngine.ParticleEngine.DestroyAll();
             GameEngine.SoundCenter.Stop(MapName);
+        }
+
+        bool GameManger(GameTime gameTime)
+        {
+            var characters = Items.OfType<Character>().ToList();
+            foreach (var character in characters.Where(c => c.IsDead).Where(character => !StatusCharacter.Contains(character)
+                && character.NumberMaxOfLives - character.NumberOfDeath <= 0))
+                StatusCharacter.Push(character);
+            if (characters.Count() == StatusCharacter.Count - 1)
+            {
+                foreach (var c in characters.Where(c => !StatusCharacter.Contains(c)))
+                    StatusCharacter.Push(c);
+                return true;
+            }
+            return false;
         }
     }
 }

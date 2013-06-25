@@ -36,8 +36,10 @@ namespace GameClient.Characters
         private readonly Vector3 _spawnPosition;
         public Client Client { get; set; }
         public bool IsDead;
+        public bool IsPermanentlyDead { get; set; }
         public DateTime DeathDate;
         public int NumberOfDeath;
+        public int NumberMaxOfLives;
         public float Damages = 0;
         public string PlayerName;
         public Texture2D Face;
@@ -227,11 +229,12 @@ namespace GameClient.Characters
             {
                 IsDead = true;
                 NumberOfDeath++;
+                IsPermanentlyDead = (NumberMaxOfLives - NumberOfDeath <= 0);
                 DeathDate = DateTime.Now;
                 GameEngine.EventManager.ThrowNewEvent("Character.Die", this);
             }
 
-            if (IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)
+            if (!IsPermanentlyDead && IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)
             {
                 SetAnimation(Animation.Default);
                 IsDead = false;
