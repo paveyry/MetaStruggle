@@ -160,6 +160,13 @@ namespace GameClient.Characters.AI
         StatusAction Attack(Character character, GameTime gameTime)
         {
             Movements[Movement.Attack] = true;
+            if (Yaw != BaseYaw)
+            {
+                if (Position.X < character.Position.X)
+                    Movements[Movement.Right] = true;
+            }
+            else if (Position.X > character.Position.X)
+                Movements[Movement.Left] = true;
             return StatusAction.InProgress;
         }
 

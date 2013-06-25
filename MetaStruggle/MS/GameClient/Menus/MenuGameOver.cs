@@ -28,23 +28,20 @@ namespace GameClient.Menus
                 },RessourceProvider.Fonts["MenuLittle"],Color.White,Color.White,"MSTheme" ));
             Menu.Add("WinnerHead.Item", new ImageButton(characters.Peek().PlayerName,new Rectangle(80,80,characters.Peek().Face.Width/3,characters.Peek().Face.Height/3),
                 characters.Peek().Face,RessourceProvider.Fonts["MenuLittle"]));
-            var buttons = new List<PartialButton>
-                              {
-                                  new PartialButton("Pause.ReturnMainMenu", ReturnMainMenu)
-                              };
-            Menu.Add("Buttons.Item", new ListButtons(new Vector2(85, 90), 20, buttons, RessourceProvider.Fonts["Menu"],
-                Color.White, Color.White, ListButtons.StatusListButtons.Vertical));
+
+            Menu.Add("NextButton.Item", new MenuButton("Pause.ReturnMainMenu", new Vector2(70, 90), RessourceProvider.Fonts["MenuLittle"], Color.White,
+                Color.DarkOrange, ReturnMainMenu));
             return Menu;
 
         }
 
         void ReturnMainMenu()
         {
-            for (int i = 0; i < 5; i++)
-            {
-                GameEngine.DisplayStack.Pop();
-            }
             System.Threading.Thread.Sleep(200);
+            var stack = GameEngine.DisplayStack.ToList();
+            (stack[1] as SceneManager).ResetAll();
+            GameEngine.DisplayStack = new LayoutStack<IBasicLayout>();
+            GameEngine.DisplayStack.Push(stack.Last());
         }
 
         IEnumerable<string[]> CreateLines(IEnumerable<Character> characters)

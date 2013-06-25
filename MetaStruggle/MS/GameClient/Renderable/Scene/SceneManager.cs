@@ -91,19 +91,20 @@ namespace GameClient.Renderable.Scene
             {
                 GameEngine.SoundCenter.PlayWithStatus();
                 GameEngine.DisplayStack.Push(new MenuGameOver().Create(StatusCharacter));
+                return;
             }
 
-            if (Items.OfType<Character>().Count(c => !c.IsPermanentlyDead) <= 1)
-            {
-                var chars = new Stack<Character>();
+            //if (Items.OfType<Character>().Count(c => !c.IsPermanentlyDead) <= 1) //WHAT...
+            //{
+            //    var chars = new Stack<Character>();
 
-                foreach (var c in Items.OfType<Character>().Where(c => c.IsPermanentlyDead))
-                    chars.Push(c);
+            //    foreach (var c in Items.OfType<Character>().Where(c => c.IsPermanentlyDead))
+            //        chars.Push(c);
 
-                chars.Push(Items.OfType<Character>().First(c => !c.IsPermanentlyDead));
+            //    chars.Push(Items.OfType<Character>().First(c => !c.IsPermanentlyDead));
 
-                GameEngine.DisplayStack.Push(new MenuGameOver().Create(chars));
-            }
+            //    GameEngine.DisplayStack.Push(new MenuGameOver().Create(chars));
+            //}
 
             if (Skybox != null)
                 Skybox.Update();
@@ -138,7 +139,7 @@ namespace GameClient.Renderable.Scene
             var characters = Items.OfType<Character>().ToList();
             
             foreach (var character in characters.Where(c => c.IsDead).Where(character => !StatusCharacter.Contains(character)
-                && character.NumberMaxOfLives - character.NumberOfDeath <= 0))
+                && character.IsPermanentlyDead))
                 StatusCharacter.Push(character);
 
             if (characters.Count() == StatusCharacter.Count + 1)

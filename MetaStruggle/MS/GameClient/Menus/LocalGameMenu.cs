@@ -31,7 +31,7 @@ namespace GameClient.Menus
             
             //**********
             Menu.Add("nbvies", new SimpleText("Text.Lifes", new Vector2(60, 3), Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"], Color.White));
-            Menu.Add("slider.nbvies", new Slider(new Rectangle(70, 3, 200, 20), 1, 1, 100, "MSTheme", RessourceProvider.Fonts["MenuLittle"]));
+            Menu.Add("slider.nbvies", new Slider(new Rectangle(70, 3, 200, 20), 1, 1, 15, "MSTheme", RessourceProvider.Fonts["MenuLittle"]));
             //**********
 
             Menu.Add("CharacterSelector.Text", new SimpleText("Text.SelectPlayer", new Vector2(5, 17),
