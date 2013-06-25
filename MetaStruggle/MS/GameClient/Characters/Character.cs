@@ -177,11 +177,21 @@ namespace GameClient.Characters
 
                 if (movements[Movement.SpecialAttack])
                 {
+                    if ((DateTime.Now - _lastSA).TotalMilliseconds > 700 && (DateTime.Now - _lastSA).TotalMilliseconds < 1000 && ModelName == "Zeus")
+                    { 
+                        var ParticlesAttaquespe = ParticlesCharacter["Attaquespe"];
+                        var ParticlesAttaquesol = ParticlesCharacter["Attaquesol"];
+                        ParticlesAttaquesol.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f, 0, 0));
+                        ParticlesAttaquespe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f, 3.5f, 0));
+                        ParticlesAttaquesol.ActivateParticleSystem = true;
+                        ParticlesAttaquespe.ActivateParticleSystem = true;
+                    }
                     if ((DateTime.Now - _lastSA).TotalMilliseconds < 1500)
                         pendingAnim.Add(Animation.SpecialAttack);
 
                     if ((DateTime.Now - _lastSA).TotalMilliseconds > 3000 && _saDone)
                     {
+                            
                         _lastSA = DateTime.Now;
                         _saDone = false;
                     }
