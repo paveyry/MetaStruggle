@@ -44,8 +44,8 @@ namespace GameClient.Characters
         public string PlayerName;
         public Texture2D Face;
         public string MapName;
-        private DateTime _lastA = DateTime.Now, _lastSA = DateTime.Now;
-        private bool _aDone = true, _saDone = true;
+        private DateTime _lastSA = DateTime.Now;
+        private bool _saDone = true;
 
         //****PHYSIC****
         private const float LatteralSpeed = 0.005f;
@@ -191,10 +191,10 @@ namespace GameClient.Characters
                 }
                 if (movements[Movement.Attack])
                 {
-                    if((DateTime.Now - _lastA).TotalMilliseconds < 1500)
-                        pendingAnim.Add(Animation.Attack);
-
-                    if ((DateTime.Now - _lastA).TotalMilliseconds > 1000 && _aDone)
+                    //if((DateTime.Now - _lastA).TotalMilliseconds < 1500)
+                    pendingAnim.Add(Animation.Attack);
+                    Attack(gameTime, false);
+                    /*if ((DateTime.Now - _lastA).TotalMilliseconds > 1000 && _aDone)
                     {
                         _lastA = DateTime.Now;
                         _aDone = false;
@@ -203,7 +203,7 @@ namespace GameClient.Characters
                     {
                         Attack(gameTime, false);
                         _aDone = true;
-                    }
+                    }*/
                 }
                 if (movements[Movement.Jump] && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
@@ -343,10 +343,10 @@ namespace GameClient.Characters
 
             foreach (Character character in characters.Cast<Character>().Where(character => (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).Length() < 1.3 && (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).X < 0))
             {
-                character.GiveImpulse(new Vector3((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages/3) * 0.008f,
+                character.GiveImpulse(new Vector3((float) ((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages/3) * 0.008f * (special ? 1 : 10f * gameTime.ElapsedGameTime.TotalMilliseconds/1000)),
                                                   special ? -Gravity * (1 + character.Damages) * 0.008f : 0.2f, 0));
 
-                character.Damages += ((special ? 10 : 3) + character.Damages / 6);
+                character.Damages += ((float)(special ? 10 + (Damages / 4) : ((Damages/7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
             }
         }
 
