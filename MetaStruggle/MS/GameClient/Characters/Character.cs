@@ -190,7 +190,7 @@ namespace GameClient.Characters
                                                                                       0));
                                 ParticlesAttaquespe.UpdatePositionEmitter(Position +
                                                                           new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f,
-                                                                                      3.5f, 0));
+                                                                                      4.5f, 0));
                                 ParticlesAttaquesol.ActivateParticleSystem = true;
                                 ParticlesAttaquespe.ActivateParticleSystem = true;
                                 break;
