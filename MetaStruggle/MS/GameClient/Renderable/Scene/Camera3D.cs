@@ -61,8 +61,8 @@ namespace GameClient.Renderable.Scene
             }
             Target = new Vector3((maxX + minX) / 2, (maxY - 1) / 2, characters.First().Position.Z - 0.3f);
 
-            Position = new Vector3(Target.X, Position.Y, ((characters.Count() == 1) ? Position.Z :
-                                   -(float)((maxX - Target.X + maxY - Target.Y) / Math.Tan(MathHelper.PiOver4 / 2)) + Target.Z) - 4);
+            Position = new Vector3(Target.X, Position.Y, (characters.Count() == 1) ? Position.Z :
+                                   (-(float)((maxX - Target.X + maxY - Target.Y) / Math.Tan(MathHelper.PiOver4 / 2)) + Target.Z - 4) < -50 ? -50 : -(float)((maxX - Target.X + maxY - Target.Y) / Math.Tan(MathHelper.PiOver4 / 2)) + Target.Z - 4 );
         }
     }
 }
