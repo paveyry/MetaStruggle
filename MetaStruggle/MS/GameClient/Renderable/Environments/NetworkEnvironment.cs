@@ -46,6 +46,7 @@ namespace GameClient.Renderable.Environments
             GameEngine.EventManager.Register("Network.Game.GameStart", GameStart);
             GameEngine.EventManager.Register("Network.Game.SetCharacterPosition", SetCharacterPosition);
             GameEngine.EventManager.Register("Network.Game.GiveImpulse", GiveImpulse);
+            GameEngine.EventManager.Register("Network.Game.RemovePlayer", RemovePlayer);
         }
 
         void SetCharacterPosition(object data)
@@ -102,6 +103,14 @@ namespace GameClient.Renderable.Environments
 
             c.GiveImpulse(new Vector3(gid.X, gid.Y, 0));
             c.Damages += gid.Damages;
+        }
+
+        void RemovePlayer(object data)
+        {
+            SceneManager.Items.GetRange(0, SceneManager.Items.Count)
+                        .OfType<Character>()
+                        .ToList()
+                        .RemoveAll(c => c.ID == (byte) data);
         }
     }
 }
