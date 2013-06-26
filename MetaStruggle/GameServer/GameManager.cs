@@ -93,7 +93,8 @@ namespace GameServer
         void SetCharacterPos(object data)
         {
             var c = (CharacterPositionDatas) data;
-            foreach (var networkCharacter in Characters /*.Where(e => e.ID != c.ID)*/)
+
+            foreach (var networkCharacter in Characters.GetRange(0, Characters.Count) /*.Where(e => e.ID != c.ID)*/)
             {
                 try
                 {
