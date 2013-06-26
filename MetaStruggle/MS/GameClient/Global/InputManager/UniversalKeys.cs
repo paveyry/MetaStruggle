@@ -46,9 +46,10 @@ namespace GameClient.Global.InputManager
                     Pressed = MousePressed;
                     break;
                 case Device.GamePad:
-                    if ((!int.TryParse(keysElement[1], out _gamePadNb) && --_gamePadNb >= 0 && _gamePadNb < 4)
+                    if ((!int.TryParse(keysElement[1], out _gamePadNb) && _gamePadNb > 0 && _gamePadNb <= 4)
                         || (!Enum.TryParse(keysElement[2], out _gamePadKey)))
                         throw new Exception("Invalid gamepad entry");
+                    _gamePadNb--;
                     Pressed = GamePadPressed;
                     return;
             }
@@ -88,7 +89,7 @@ namespace GameClient.Global.InputManager
                     key = _mouseKey.ToString();
                     break;
                 default:
-                    key = _gamePadNb + "." + _gamePadKey.ToString();
+                    key = (_gamePadNb+1) + "." + _gamePadKey.ToString();
                     break;
             }
             return _keyDevice.ToString() + "." + key;
