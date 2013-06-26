@@ -64,10 +64,10 @@ namespace GameClient.Menus
             System.Threading.Thread.Sleep(200);
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
             Menu.Add("Graphics.Text.Fullscreen", new SimpleText("MenuGraphics.Fullscreen", new Vector2(20, 20), Item.PosOnScreen.TopLeft,
-                RessourceProvider.Fonts["Menu"], Color.White));
+                RessourceProvider.Fonts["MenuLittle"], Color.White));
             Menu.Add("Graphics.Checkbox.Fullscreen", new CheckBox(new Vector2(72, 20), "MSTheme", GameEngine.Config.FullScreen));
             Menu.Add("Graphics.Text.TextureHD", new SimpleText("MenuGraphics.TextureHD", new Vector2(20, 30), Item.PosOnScreen.TopLeft,
-                RessourceProvider.Fonts["Menu"], Color.White));
+                RessourceProvider.Fonts["MenuLittle"], Color.White));
             Menu.Add("Graphics.Checkbox.TextureHD", new CheckBox(new Vector2(72, 30), "MSTheme", GameEngine.Config.PreferMultiSampling));
             Menu.Add("Graphics.ClassicList.Resolution", new ClassicList(new Rectangle(20, 40, 60, 30), CreateResolutions(),
                 new Dictionary<string, int> { { "MenuGraphics.Resolution", 100 } }, RessourceProvider.Fonts["MenuLittle"], Color.White,
@@ -134,11 +134,11 @@ namespace GameClient.Menus
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
 
             Menu.Add("Sounds.Text.Musics", new SimpleText("MenuSounds.Musics", new Vector2(10, 20), Item.PosOnScreen.TopLeft,
-                RessourceProvider.Fonts["Menu"], Color.White));
+                RessourceProvider.Fonts["MenuLittle"], Color.White));
             Menu.Add("Sounds.Item.Musics", new Slider(new Rectangle(60, 21, 280, 20),
                 GameEngine.Config.VolumeMusic, "MSTheme", RessourceProvider.Fonts["MenuLittle"]));
             Menu.Add("Sounds.Text.Effects", new SimpleText("MenuSounds.Effects", new Vector2(10, 40), Item.PosOnScreen.TopLeft,
-                RessourceProvider.Fonts["Menu"], Color.White));
+                RessourceProvider.Fonts["MenuLittle"], Color.White));
             Menu.Add("Sounds.Item.Effects", new Slider(new Rectangle(60, 41, 280, 20),
                 GameEngine.Config.VolumeEffect, "MSTheme", RessourceProvider.Fonts["MenuLittle"]));
             Menu.Add("ApplyButton.Item", new MenuButton("MenuSettings.Apply", new Vector2(70, 80), RessourceProvider.Fonts["Menu"], Color.White,

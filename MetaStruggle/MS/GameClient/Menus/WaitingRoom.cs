@@ -37,7 +37,7 @@ namespace GameClient.Menus
         {
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"],false);
             Menu.Add("NumberOfPlayerText", new SimpleText(() => GameEngine.LangCenter.GetString("Menu.WaitingRoom"),
-                new Vector2(20, 50), Item.PosOnScreen.DownLeft, RessourceProvider.Fonts["Menu"], Color.White));
+                new Vector2(20, 50), Item.PosOnScreen.DownLeft, RessourceProvider.Fonts["MenuLittle"], Color.White));
             Menu.UpdateFunc = Update;
             return Menu;
         }

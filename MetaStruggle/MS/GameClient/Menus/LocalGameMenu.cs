@@ -58,8 +58,10 @@ namespace GameClient.Menus
             Menu.Add("Text.Multiple.SliderLevel", new SimpleText("Text.SliderLevel", new Vector2(55, 55),
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"], Color.White, false));
 
-            Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["MenuLittle"], Color.White,
+            Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButtonCharacterSelector));
+            Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(15, 90), RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
 
             return Menu;
         }
@@ -153,7 +155,7 @@ namespace GameClient.Menus
         }
         #endregion
 
-        #region SelectMap
+        #region MapSelector
         Menu MapSelector(List<PartialAICharacter> characters, int nbLives)
         {
             System.Threading.Thread.Sleep(200);
@@ -163,8 +165,11 @@ namespace GameClient.Menus
                 Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["Menu"], Color.White));
             Menu.Add("MapSelector.Item", new ListImageButtons(new Rectangle(15, 22, 70, 45), RessourceProvider.MapScreens, "MSTheme",
                 RessourceProvider.Fonts["HUDlittle"], 4));
-            Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["MenuLittle"], Color.White,
+
+            Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, () => NextButtonMapSelector(characters, nbLives)));
+            Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(15, 90), RessourceProvider.Fonts["Menu"], Color.White,
+                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
 
             return Menu;
         }
