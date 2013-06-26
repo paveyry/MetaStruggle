@@ -166,6 +166,30 @@ namespace GameClient.Characters
                         if (movements[Movement.Attack])
                             GameEngine.SoundCenter.Play("water");
                         break;
+                    case "Ironman":
+                        if (Yaw == BaseYaw)
+                        {
+                            var ParticlesAttaquelaserg = ParticlesCharacter["attaquenormgauche"];
+                            ParticlesAttaquelaserg.UpdatePositionEmitter(Position +
+                                                                        new Vector3((Yaw == BaseYaw) ? 1 : -1, 0, 0));
+                            ParticlesAttaquelaserg.ActivateParticleSystem = CurrentAnimation == Animation.Attack &&
+                                                                           DateTime.Now.Millisecond % 1000 < 700;
+
+                        }
+                        else
+                        {
+                            var ParticlesAttaquelaser = ParticlesCharacter["attaquenorm"];
+                            ParticlesAttaquelaser.UpdatePositionEmitter(Position +
+                                                                        new Vector3((Yaw == BaseYaw) ? 1 : -1, 0, 0));
+                            ParticlesAttaquelaser.ActivateParticleSystem = CurrentAnimation == Animation.Attack &&
+                                                                           DateTime.Now.Millisecond%1000 < 700;
+                        }
+
+                        if (movements[Movement.Attack])
+                            GameEngine.SoundCenter.Play("laser");
+                        break;
+
+
                 }
             }
             #endregion
@@ -195,6 +219,7 @@ namespace GameClient.Characters
                                                                                       4.5f, 0));
                                 ParticlesAttaquesol.ActivateParticleSystem = true;
                                 ParticlesAttaquespe.ActivateParticleSystem = true;
+                                GameEngine.SoundCenter.Play("eclair");
                                 break;
                             case "Poseidon":
                                 GameEngine.SoundCenter.Play("sword");
@@ -377,24 +402,13 @@ namespace GameClient.Characters
                     new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas { Damages = damages, ID = character.ID, X = impulse.X, Y = impulse.Y });
                 switch (ModelName)
                 {
-                    case "Zeus":
-                        GameEngine.SoundCenter.Play("degats");
-                        break;
-                    case "Poseidon":
-                        break;
                     case "Ares":
                         GameEngine.SoundCenter.Play("sword");
                         break;
+                    case "Zeus":
                     case "Alex":
-                        GameEngine.SoundCenter.Play("degats");
-                        break;
-                    case "Ironman":
-                        GameEngine.SoundCenter.Play("laser");
-                        break;
                     case "Spiderman":
                         GameEngine.SoundCenter.Play("degats");
-                        break;
-                    default:
                         break;
                 }
             }

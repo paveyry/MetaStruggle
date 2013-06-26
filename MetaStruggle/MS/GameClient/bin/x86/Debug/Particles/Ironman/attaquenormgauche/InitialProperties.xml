@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CInitialPropertiesForQuadOfDefaultTexturedQuadParticleDefaultTexturedQuadParticleVertex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LifetimeMin>0.5</LifetimeMin>
-  <LifetimeMax>0.6</LifetimeMax>
+  <LifetimeMin>0.05</LifetimeMin>
+  <LifetimeMax>0.05</LifetimeMax>
   <PositionMin>
-    <X>0.4</X>
-    <Y>1.48</Y>
+    <X>-0.4</X>
+    <Y>1.45</Y>
     <Z>0</Z>
   </PositionMin>
   <PositionMax>
-    <X>0.41</X>
-    <Y>1.45</Y>
+    <X>-0.41</X>
+    <Y>1.40</Y>
     <Z>0</Z>
   </PositionMax>
   <VelocityMin>
-    <X>0.5</X>
+    <X>12</X>
     <Y>-0.1</Y>
     <Z>-0.1</Z>
   </VelocityMin>
   <VelocityMax>
-    <X>0.51</X>
+    <X>12</X>
     <Y>0.1</Y>
     <Z>0.1</Z>
   </VelocityMax>
@@ -49,28 +49,28 @@
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>16772814</PackedValue>
   </StartColorMin>
   <StartColorMax>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>16772814</PackedValue>
   </StartColorMax>
   <EndColorMin>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>16772814</PackedValue>
   </EndColorMin>
   <EndColorMax>
     <R>255</R>
     <G>255</G>
     <B>255</B>
     <A>255</A>
-    <PackedValue>2004318071</PackedValue>
+    <PackedValue>16772814</PackedValue>
   </EndColorMax>
   <InterpolateBetweenMinAndMaxPosition>false</InterpolateBetweenMinAndMaxPosition>
   <InterpolateBetweenMinAndMaxVelocity>false</InterpolateBetweenMinAndMaxVelocity>
@@ -117,10 +117,10 @@
   <EndWidthMax>0</EndWidthMax>
   <EndHeightMin>0</EndHeightMin>
   <EndHeightMax>0</EndHeightMax>
-  <StartSizeMin>2</StartSizeMin>
-  <StartSizeMax>2</StartSizeMax>
-  <EndSizeMin>2</EndSizeMin>
-  <EndSizeMax>2</EndSizeMax>
+  <StartSizeMin>0.15</StartSizeMin>
+  <StartSizeMax>0.15</StartSizeMax>
+  <EndSizeMin>0.15</EndSizeMin>
+  <EndSizeMax>0.15</EndSizeMax>
   <InterpolateBetweenMinAndMaxRotation>false</InterpolateBetweenMinAndMaxRotation>
   <InterpolateBetweenMinAndMaxRotationalVelocity>false</InterpolateBetweenMinAndMaxRotationalVelocity>
   <InterpolateBetweenMinAndMaxRotationalAcceleration>false</InterpolateBetweenMinAndMaxRotationalAcceleration>
