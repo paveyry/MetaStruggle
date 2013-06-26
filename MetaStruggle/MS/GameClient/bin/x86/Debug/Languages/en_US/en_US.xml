@@ -10,7 +10,7 @@
 	<MainMenu.Quit>Exit</MainMenu.Quit>
 	<MenuMulti.Local>Local Game</MenuMulti.Local>
 	<MenuMulti.Online>Online Game</MenuMulti.Online>
-	<Menu.WaitingRoom>Waiting others players : </Menu.WaitingRoom>
+	<Menu.WaitingRoom>Waiting others players...</Menu.WaitingRoom>
 	<MenuSettings.Language>English</MenuSettings.Language>
 	<MenuSettings.Controls>Controls</MenuSettings.Controls>
 	<MenuSettings.Graphics>Graphics</MenuSettings.Graphics>
@@ -44,6 +44,6 @@
 	<Text.SliderHandicap>Handicap :</Text.SliderHandicap>
 	<Text.SliderLevel>Level :</Text.SliderLevel>
 	<Text.SelectMap>Select the Map :</Text.SelectMap>
-	<Text.Lifes>Lives :</Text.Lifes>
+	<Text.Lives>Lives :</Text.Lives>
 	<Text.Dead>Defeated</Text.Dead>
 </Language>

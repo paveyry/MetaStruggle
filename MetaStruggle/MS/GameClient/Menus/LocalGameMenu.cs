@@ -29,7 +29,7 @@ namespace GameClient.Menus
             System.Threading.Thread.Sleep(200);
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
             
-            Menu.Add("Text.NumberOfLives", new SimpleText("Text.Lifes", new Vector2(60, 3), Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"], Color.White));
+            Menu.Add("Text.NumberOfLives", new SimpleText("Text.Lives", new Vector2(60, 3), Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"], Color.White));
             Menu.Add("Slider.NumberOfLives", new Slider(new Rectangle(70, 3, 200, 20), 5, 1, 99, "MSTheme", RessourceProvider.Fonts["MenuLittle"]));
 
             Menu.Add("CharacterSelector.Text", new SimpleText("Text.SelectPlayer", new Vector2(5, 17),
@@ -61,7 +61,7 @@ namespace GameClient.Menus
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButtonCharacterSelector));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(15, 90), RessourceProvider.Fonts["Menu"], Color.White,
-                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+                Color.DarkOrange, MainMenu.Back));
 
             return Menu;
         }
@@ -169,7 +169,7 @@ namespace GameClient.Menus
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, () => NextButtonMapSelector(characters, nbLives)));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(15, 90), RessourceProvider.Fonts["Menu"], Color.White,
-                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+                Color.DarkOrange, MainMenu.Back));
 
             return Menu;
         }

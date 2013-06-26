@@ -39,12 +39,12 @@ namespace GameClient.Menus
         public Menu Create()
         {
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
-            Menu.UpdateFunc = Update;
+            //Menu.UpdateFunc = Update;
 
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(15, 90), RessourceProvider.Fonts["Menu"], Color.White, 
-                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+                Color.DarkOrange, MainMenu.Back));
             return Menu;
         }
 

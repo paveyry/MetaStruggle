@@ -12,13 +12,11 @@ namespace GameClient.Menus
         private Menu Menu;
         private SpriteBatch _spriteBatch;
         private GraphicsDeviceManager _graphics;
-        private bool OnMulti { get; set; }
 
-        public CharacterSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, bool onMulti)
+        public CharacterSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
             _spriteBatch = spriteBatch;
             _graphics = graphics;
-            OnMulti = onMulti;
         }
 
         public Menu Create()
@@ -37,7 +35,7 @@ namespace GameClient.Menus
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(15, 90), RessourceProvider.Fonts["Menu"], Color.White,
-                Color.DarkOrange, () => GameEngine.DisplayStack.Pop()));
+                Color.DarkOrange, MainMenu.Back));
 
             return Menu;
         }
@@ -52,11 +50,8 @@ namespace GameClient.Menus
 
             System.Threading.Thread.Sleep(200);
 
-            if (OnMulti)
-                GameEngine.DisplayStack.Push( new ServerSelector(_spriteBatch, _graphics, characterSelector.NameSelected,
+            GameEngine.DisplayStack.Push( new ServerSelector(_spriteBatch, _graphics, characterSelector.NameSelected,
                     playerNameTextbox.Text).Create());
-            else
-                GameEngine.DisplayStack.Pop();
         }
     }
 }

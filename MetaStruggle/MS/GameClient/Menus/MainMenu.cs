@@ -29,7 +29,7 @@ namespace GameClient.Menus
             var buttons = new List<PartialButton>
                 {
                     new PartialButton("MainMenu.SoloPlay", () => GameEngine.DisplayStack.Push(new LocalGameMenu(_spriteBatch).Create())),
-                    new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics, true).Create())),
+                    new PartialButton("MainMenu.Multi", () => GameEngine.DisplayStack.Push(new CharacterSelector(_spriteBatch,_graphics).Create())),
                     new PartialButton("MainMenu.Settings", () => GameEngine.DisplayStack.Push(new SettingsMenu().MenuSettings())),
                     new PartialButton("MainMenu.Credits", () => GameEngine.DisplayStack.Push(new Cinematic(RessourceProvider.Videos["Credits"]))),
                     new PartialButton("MainMenu.Quit", () => Environment.Exit(0))
@@ -41,5 +41,10 @@ namespace GameClient.Menus
             return menu;
         }
 
+        public static void Back()
+        {
+            GameEngine.DisplayStack.Pop();
+            System.Threading.Thread.Sleep(200);
+        }
     }
 }
