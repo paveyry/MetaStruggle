@@ -10,7 +10,7 @@
 	<MainMenu.Quit>Exit</MainMenu.Quit>
 	<MenuMulti.Local>Local Game</MenuMulti.Local>
 	<MenuMulti.Online>Online Game</MenuMulti.Online>
-	<Menu.WaitingRoom>Waiting others players...</Menu.WaitingRoom>
+	<Menu.WaitingRoom>Waiting for others players...</Menu.WaitingRoom>
 	<MenuSettings.Language>English</MenuSettings.Language>
 	<MenuSettings.Controls>Controls</MenuSettings.Controls>
 	<MenuSettings.Graphics>Graphics</MenuSettings.Graphics>
