@@ -397,14 +397,14 @@ namespace GameClient.Characters
         {
             Yaw = BaseYaw + MathHelper.Pi;
 
-            Position -= _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            Position -= _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         private void MoveLeft(GameTime gameTime)
         {
             Yaw = BaseYaw;
 
-            Position += _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            Position += _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         void Attack(GameTime gameTime, bool special)
@@ -414,12 +414,12 @@ namespace GameClient.Characters
             foreach (Character character in characters.Cast<Character>().Where(character => (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).Length() < 1.3 && (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).X < 0))
             {
                 var impulse =
-                    new Vector3((float)((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages / 3) * 0.008f * (special ? 1 : 10f * gameTime.ElapsedGameTime.TotalMilliseconds / 1000)), special ? -Gravity * (1 + character.Damages) * 0.004f : 0.2f, 0);
+                    new Vector3((float)((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages / 3) * 0.008f * (special ? 1.5f : 10f * gameTime.ElapsedGameTime.TotalMilliseconds / 1000)), special ? -Gravity * (1 + character.Damages) * 0.004f : 0.2f, 0);
 
                 character.GiveImpulse(impulse);
 
                 var damages = ((float)
-                     (special ? 10 + (Damages / 4) : ((Damages / 7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
+                     (special ? 20 + (Damages / 4) : ((Damages / 7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
 
                 var particlesFrappe = ParticlesCharacter["Frappe"];
                 particlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
