@@ -21,8 +21,6 @@ namespace GameClient.Menus
         private Client Client;
         private SpriteBatch _spriteBatch;
         Menu Menu;
-        private bool _hasBeenClicked;
-
 
         public ServerSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, string persoName, string playerName)
         {
@@ -33,7 +31,6 @@ namespace GameClient.Menus
             GameEngine.EventManager.Register("Network.Master.ServerList", ReceiveServers);
             GameEngine.EventManager.Register("Network.Game.GameStart", GameBegin);
             AskList();
-            _hasBeenClicked = false;
         }
 
         public Menu Create()
@@ -54,16 +51,15 @@ namespace GameClient.Menus
             System.Threading.Thread.Sleep(200);
 
             var listServer = Menu.Items["ListServer.Item"] as ClassicList;
-            if (_hasBeenClicked && (listServer == null || listServer.Selected == null))
+            if ((listServer == null || listServer.Selected == null))
                 return;
-            Menu.Items["WaitingRomm.Item"].IsDrawable = true;
-            _hasBeenClicked = true;
+            Menu.Items["WaitingRoom.Item"].IsDrawable = true;
+            Menu.Items["NextButton.Item"].IsDrawable = false;
 
             var serverItem = listServer.Selected[1].Split(':');
 
             Client = new Client(serverItem[0], int.Parse(serverItem[1]), GameEngine.EventManager, new Parser().Parse);
             new JoinLobby().Pack(Client.Writer, PlayerName, PersoName);
-
         }
 
         void AskList()
@@ -74,17 +70,17 @@ namespace GameClient.Menus
         void ReceiveServers(object data)
         {
             Client = new Client("metastruggle.eu", 5555, GameEngine.EventManager, new Parser().Parse);
-            var listServers = (List<MasterServerDatas>) data;
+            var listServers = (List<MasterServerDatas>)data;
             var servers = new List<string[]>();
             foreach (var s in listServers)
-                servers.Add(new[] {s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" +s.MaxPlayer});
+                servers.Add(new[] { s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" + s.MaxPlayer });
             Client.Disconnect();
             Menu.Add("ListServer.Item", new ClassicList(new Rectangle(10, 10, 80, 50), servers, new Dictionary<string, int>
                 {
                     {"Map",18}, {"IP:Port",11}, {"Player", 3}
                 }, RessourceProvider.Fonts["HUDlittle"], Color.White, Color.DarkOrange, "MSTheme"));
         }
-        
+
         void GameBegin(object data)
         {
             var gs = (GameStartDatas)data;
