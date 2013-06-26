@@ -272,6 +272,7 @@ namespace GameClient.Characters
                         particlesDoubleJump.UpdatePositionEmitter(Position);
                         particlesDoubleJump.ActivateParticleSystem = true;
                         _doublejump = true;
+                        GameEngine.SoundCenter.Play("saut2");
                     }
                     else
                     {
@@ -280,6 +281,7 @@ namespace GameClient.Characters
                         particlesJump.ActivateParticleSystem = true;
                         _jump = true;
                         _firstjump = DateTime.Now;
+                        GameEngine.SoundCenter.Play("Jump");
                     }
 
                     pendingAnim.Add(Animation.Jump);
@@ -426,7 +428,19 @@ namespace GameClient.Characters
 
                 if (Client != null)
                     new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas { Damages = damages, ID = character.ID, X = impulse.X, Y = impulse.Y });
-                GameEngine.SoundCenter.Play((ModelName == "Ares")? "sword": "degats");
+                switch (ModelName)
+                {
+                    case "Ares":
+                        GameEngine.SoundCenter.Play("sword");
+                        break;
+                    case "Zeus":
+                    case "Alex":
+                    case "Ironman":
+                    case "Spiderman":
+                        GameEngine.SoundCenter.Play("degats");
+                        break;
+                }
+
             }
         }
         #endregion
