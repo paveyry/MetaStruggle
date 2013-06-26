@@ -312,6 +312,7 @@ namespace GameClient.Characters
                 IsPermanentlyDead = (NumberMaxOfLives - NumberOfDeath <= 0);
                 DeathDate = DateTime.Now;
                 GameEngine.EventManager.ThrowNewEvent("Character.Die", this);
+                GameEngine.SoundCenter.Play("Die");
             }
 
             if (!IsPermanentlyDead && IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)
