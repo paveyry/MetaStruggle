@@ -272,16 +272,16 @@ namespace GameClient.Characters
                 }
                 if (movements[Movement.Right])
                 {
-                    running = true;
-                    MoveRight(gameTime);
-                    pendingAnim.Add(Animation.Run);
+                        running = true;
+                        MoveRight(gameTime);
+                        pendingAnim.Add(Animation.Run);
                 }
 
                 if (movements[Movement.Left])
                 {
-                    running = true;
-                    MoveLeft(gameTime);
-                    pendingAnim.Add(Animation.Run);
+                        running = true;
+                        MoveLeft(gameTime);
+                        pendingAnim.Add(Animation.Run);
                 }
             }
             #endregion
@@ -291,6 +291,7 @@ namespace GameClient.Characters
             {
                 IsDead = true;
                 NumberOfDeath++;
+                Speed = Vector3.Zero;
                 IsPermanentlyDead = (NumberMaxOfLives - NumberOfDeath <= 0);
                 DeathDate = DateTime.Now;
                 GameEngine.EventManager.ThrowNewEvent("Character.Die", this);
@@ -368,16 +369,16 @@ namespace GameClient.Characters
             return RessourceProvider.InputKeys[movement + "." + PlayerNb];
         }
 
-        void MoveRight(GameTime gameTime)
+        private void MoveRight(GameTime gameTime)
         {
             Yaw = BaseYaw + MathHelper.Pi;
-            Position -= _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            Position -= _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
-        void MoveLeft(GameTime gameTime)
+        private void MoveLeft(GameTime gameTime)
         {
             Yaw = BaseYaw;
-            Position += _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            Position += _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         void Attack(GameTime gameTime, bool special)
@@ -393,9 +394,13 @@ namespace GameClient.Characters
 
                 var damages = ((float)
                      (special ? 10 + (Damages / 4) : ((Damages / 7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
+<<<<<<< HEAD
                 var ParticlesFrappe = ParticlesCharacter["Frappe"];
                 ParticlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
                 ParticlesFrappe.ActivateParticleSystem = DateTime.Now.Millisecond % 150 < 25;
+=======
+
+>>>>>>> anti-bug particules
                 character.Damages += damages;
 
                 if (Client != null)

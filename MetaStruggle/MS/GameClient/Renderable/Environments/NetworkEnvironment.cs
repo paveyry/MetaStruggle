@@ -32,24 +32,8 @@ namespace GameClient.Renderable.Environments
             Client = client;
 
             GameStart(gs);
-            //CreateItems(gs);
 
             SceneManager.Camera.FollowsCharacters(SceneManager.Camera, SceneManager.Items.FindAll(e => e is Character));
-        }
-
-        void CreateItems(GameStartDatas gs)
-        {
-            //foreach (var c in gs.Players.Select(p => new Character(p.Name, p.ModelType, 0, SceneManager, new Vector3(0, 0, -17), Vector3.One)
-            //    {
-            //        ID = p.ID,
-            //        Client = p.Client
-            //    }))
-            //{
-            //    SceneManager.AddElement(c);
-            //}
-
-            SceneManager.AddElement(new Model3D(SceneManager, RessourceProvider.StaticModels[gs.MapName], new Vector3(10, 0, 0),
-                          new Vector3(1f, 1f, 0.8f)));
         }
 
         public SceneManager GetScene(SpriteBatch spriteBatch)
