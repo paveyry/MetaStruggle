@@ -54,6 +54,9 @@ namespace GameServer
 
         void PlayerDisconnect(Player player)
         {
+            if (Characters.All(c => c.ID != player.ID))
+                return;
+
             Characters.RemoveAll(c => c.ID == player.ID);
 
             foreach (var p in Characters)
@@ -90,8 +93,24 @@ namespace GameServer
         void SetCharacterPos(object data)
         {
             var c = (CharacterPositionDatas) data;
-            foreach (var networkCharacter in Characters/*.Where(e => e.ID != c.ID)*/)
-                new SetCharacterPosition().Pack(networkCharacter.Client.Writer, c);
+            foreach (var networkCharacter in Characters /*.Where(e => e.ID != c.ID)*/)
+            {
+                try
+                {
+                    new SetCharacterPosition().Pack(networkCharacter.Client.Writer, c);
+                }
+                catch
+                {
+                    Console.WriteLine(networkCharacter.Name + " ne répond pas, déconnexion...");
+
+                    Characters.RemoveAll(ch => ch.ID == networkCharacter.ID);
+
+                    foreach (var p in Characters)
+                    {
+                        new RemovePlayer().Pack(p.Client.Writer, networkCharacter.ID);
+                    }
+                }
+            }
         }
 
         void GiveImpulse(object data)
