@@ -72,9 +72,6 @@ namespace Network
             }
         }
 
-        private Packet.Packet last;
-        private Packet.Packet beforelast;
-
         void Receive()
         {
             while (Connected)
@@ -98,8 +95,6 @@ namespace Network
                 }
 
                 packet.ResetStream();
-                beforelast = last;
-                last = packet;
 
                 _parseMethod.BeginInvoke(this, packet, _eventDispatcher, null, null);
             }
