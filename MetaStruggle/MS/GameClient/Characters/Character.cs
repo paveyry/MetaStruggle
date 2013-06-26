@@ -302,7 +302,7 @@ namespace GameClient.Characters
             #endregion
 
             #region Death
-            if (!IsDead && Position.Y < -20 || !IsDead && Position.Y > 25 || !IsDead && Position.X < -38 || !IsDead && Position.X > 33)
+            if (!IsDead && Position.Y < -20 || !IsDead && Position.X < -38 || !IsDead && Position.X > 33)
             {
                 IsDead = true;
                 NumberOfDeath++;
