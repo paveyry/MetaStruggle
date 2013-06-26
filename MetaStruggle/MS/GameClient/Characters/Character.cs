@@ -372,13 +372,21 @@ namespace GameClient.Characters
         private void MoveRight(GameTime gameTime)
         {
             Yaw = BaseYaw + MathHelper.Pi;
-            Position -= _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
+            
+            if(CollideWithMap)
+                Position -= _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
+            else
+                Speed.X = -_latteralMove.X;
         }
 
         private void MoveLeft(GameTime gameTime)
         {
             Yaw = BaseYaw;
-            Position += _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if(CollideWithMap)
+                Position += _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
+            else
+                Speed.X = _latteralMove.X;
         }
 
         void Attack(GameTime gameTime, bool special)
@@ -441,12 +449,14 @@ namespace GameClient.Characters
             Position = new Vector3(Position.X, 0, Position.Z);
             Speed.Y = 0;
             Speed.X *= 0.7f;
+
             if (_jump)
             {
                 var ParticlesRetombe = ParticlesCharacter["Retombe"];
                 ParticlesRetombe.UpdatePositionEmitter(Position);
                 ParticlesRetombe.ActivateParticleSystem = true;
             }
+
             _jump = false;
             _doublejump = false;
         }
