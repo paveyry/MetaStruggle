@@ -76,7 +76,18 @@ namespace GameClient.Renderable.Scene
             {
                 Hud.AddCharacter(element as Character);
                 (element as Character).NumberMaxOfLives = NumberOfLives;
-                var sp = spawnPositions[Items.OfType<Character>().Count()];
+
+                Tuple<float, float> sp;
+
+                try
+                {
+                    sp = spawnPositions[Items.OfType<Character>().Count()];
+                }
+                catch
+                {
+                    sp = new Tuple<float, float>(-5, 10);
+                }
+
                 (element as Character).SpawnPosition = new Vector3(sp.Item1, sp.Item2, -17);
                 (element as Character).Position = (element as Character).SpawnPosition;
             }
