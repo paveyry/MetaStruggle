@@ -163,7 +163,7 @@ namespace GameClient.Characters
                         ParticlesAttaquegeyser.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0, 0));
                         ParticlesAttaqueeclatdeau.ActivateParticleSystem = CurrentAnimation == Animation.Attack && DateTime.Now.Millisecond % 1000 < 700;
                         ParticlesAttaquegeyser.ActivateParticleSystem = ParticlesAttaqueeclatdeau.ActivateParticleSystem;
-                        if (movements[Movement.Attack])
+                        if (CurrentAnimation == Animation.Attack)
                             GameEngine.SoundCenter.Play("water");
                         break;
                     case "Ironman":
@@ -184,8 +184,7 @@ namespace GameClient.Characters
                             ParticlesAttaquelaser.ActivateParticleSystem = CurrentAnimation == Animation.Attack &&
                                                                            DateTime.Now.Millisecond%1000 < 700;
                         }
-
-                        if (movements[Movement.Attack])
+                        if (CurrentAnimation == Animation.Attack)
                             GameEngine.SoundCenter.Play("laser");
                         break;
 
@@ -242,8 +241,6 @@ namespace GameClient.Characters
                                     ParticlesLamecote.ActivateParticleSystem = true;
                                 }
                                 break;
-                            default:
-                                break;
                         }
                     }
                     if ((DateTime.Now - _lastSA).TotalMilliseconds < 1000)
@@ -271,16 +268,16 @@ namespace GameClient.Characters
 
                     if (_jump)
                     {
-                        var ParticlesDoubleJump = ParticlesCharacter["DoubleJump"];
-                        ParticlesDoubleJump.UpdatePositionEmitter(Position);
-                        ParticlesDoubleJump.ActivateParticleSystem = true;
+                        var particlesDoubleJump = ParticlesCharacter["DoubleJump"];
+                        particlesDoubleJump.UpdatePositionEmitter(Position);
+                        particlesDoubleJump.ActivateParticleSystem = true;
                         _doublejump = true;
                     }
                     else
                     {
-                        var ParticlesJump = ParticlesCharacter["Jump"];
-                        ParticlesJump.UpdatePositionEmitter(Position);
-                        ParticlesJump.ActivateParticleSystem = true;
+                        var particlesJump = ParticlesCharacter["Jump"];
+                        particlesJump.UpdatePositionEmitter(Position);
+                        particlesJump.ActivateParticleSystem = true;
                         _jump = true;
                         _firstjump = DateTime.Now;
                     }
@@ -421,25 +418,15 @@ namespace GameClient.Characters
                 var damages = ((float)
                      (special ? 10 + (Damages / 4) : ((Damages / 7) + 6) * gameTime.ElapsedGameTime.TotalMilliseconds / 1000));
 
-                var ParticlesFrappe = ParticlesCharacter["Frappe"];
-                ParticlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
-                ParticlesFrappe.ActivateParticleSystem = DateTime.Now.Millisecond % 150 < 25;
+                var particlesFrappe = ParticlesCharacter["Frappe"];
+                particlesFrappe.UpdatePositionEmitter(Position + new Vector3((Yaw == BaseYaw) ? 1 : -1, 0.8f, 0));
+                particlesFrappe.ActivateParticleSystem = DateTime.Now.Millisecond % 150 < 25;
 
                 character.Damages += damages;
 
                 if (Client != null)
                     new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas { Damages = damages, ID = character.ID, X = impulse.X, Y = impulse.Y });
-                switch (ModelName)
-                {
-                    case "Ares":
-                        GameEngine.SoundCenter.Play("sword");
-                        break;
-                    case "Zeus":
-                    case "Alex":
-                    case "Spiderman":
-                        GameEngine.SoundCenter.Play("degats");
-                        break;
-                }
+                GameEngine.SoundCenter.Play((ModelName == "Ares")? "sword": "degats");
             }
         }
         #endregion
