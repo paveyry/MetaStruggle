@@ -394,7 +394,7 @@ namespace GameClient.Characters
             if(CollideWithMap)
                 Position -= _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
             else
-                Speed.X = -_latteralMove.X;
+                Speed.X = -_latteralMove.X * 1000;
         }
 
         private void MoveLeft(GameTime gameTime)
@@ -404,7 +404,7 @@ namespace GameClient.Characters
             if(CollideWithMap)
                 Position += _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
             else
-                Speed.X = _latteralMove.X;
+                Speed.X = _latteralMove.X * 1000;
         }
 
         void Attack(GameTime gameTime, bool special)
