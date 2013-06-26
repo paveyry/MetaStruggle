@@ -315,7 +315,10 @@ namespace GameClient.Characters
             if (!IsDead && Position.Y < -20 || !IsDead && Position.X < -38 || !IsDead && Position.X > 33)
             {
                 IsDead = true;
-                NumberOfDeath++;
+
+                if (Playing)
+                    NumberOfDeath++;
+
                 Speed = Vector3.Zero;
                 IsPermanentlyDead = (NumberMaxOfLives - NumberOfDeath <= 0);
                 DeathDate = DateTime.Now;
