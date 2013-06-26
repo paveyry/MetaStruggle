@@ -136,7 +136,6 @@
     <Compile Include="Menus\PauseMenu.cs" />
     <Compile Include="Menus\SettingsMenu.cs" />
     <Compile Include="Menus\ServerSelector.cs" />
-    <Compile Include="Menus\WaitingRoom.cs" />
     <Compile Include="Renderable\Environments\LocalEnvironnement.cs" />
     <Compile Include="Renderable\Particle\EmitterFields.cs" />
     <Compile Include="Renderable\Particle\ParticleSystem.cs" />

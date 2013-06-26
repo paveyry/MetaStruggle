@@ -21,7 +21,7 @@ namespace GameClient.Menus
         private Client Client;
         private SpriteBatch _spriteBatch;
         Menu Menu;
-        private double _oldTime;
+        private bool _hasBeenClicked;
 
 
         public ServerSelector(SpriteBatch spriteBatch, GraphicsDeviceManager graphics, string persoName, string playerName)
@@ -33,14 +33,15 @@ namespace GameClient.Menus
             GameEngine.EventManager.Register("Network.Master.ServerList", ReceiveServers);
             GameEngine.EventManager.Register("Network.Game.GameStart", GameBegin);
             AskList();
-            _oldTime = -1;
+            _hasBeenClicked = false;
         }
 
         public Menu Create()
         {
             Menu = new Menu(RessourceProvider.MenuBackgrounds["SimpleMenu"]);
-            //Menu.UpdateFunc = Update;
 
+
+            Menu.Add("WaitingRoom.Item", new SimpleText("Menu.WaitingRoom", new Vector2(15,80), Item.PosOnScreen.TopLeft, RessourceProvider.Fonts["MenuLittle"],Color.White,false));
             Menu.Add("NextButton.Item", new MenuButton("Menu.Next", new Vector2(70, 90), RessourceProvider.Fonts["Menu"], Color.White,
                 Color.DarkOrange, NextButton));
             Menu.Add("ReturnButton.Item", new MenuButton("Menu.Back", new Vector2(15, 90), RessourceProvider.Fonts["Menu"], Color.White, 
@@ -53,28 +54,21 @@ namespace GameClient.Menus
             System.Threading.Thread.Sleep(200);
 
             var listServer = Menu.Items["ListServer.Item"] as ClassicList;
-            if (listServer == null || listServer.Selected == null)
+            if (_hasBeenClicked && (listServer == null || listServer.Selected == null))
                 return;
+            Menu.Items["WaitingRomm.Item"].IsDrawable = true;
+            _hasBeenClicked = true;
 
             var serverItem = listServer.Selected[1].Split(':');
 
             Client = new Client(serverItem[0], int.Parse(serverItem[1]), GameEngine.EventManager, new Parser().Parse);
             new JoinLobby().Pack(Client.Writer, PlayerName, PersoName);
 
-            GameEngine.DisplayStack.Push(new WaitingRoom(listServer.Selected).Create());
         }
 
         void AskList()
         {
             new MasterServerListRequest().Pack(Client.Writer);
-        }
-
-        void Update(GameTime gameTime)
-        {
-            if (_oldTime != -1 || gameTime.TotalGameTime.TotalMilliseconds - _oldTime > 2000)
-                AskList();
-            else
-                _oldTime = gameTime.TotalGameTime.TotalMilliseconds;
         }
 
         void ReceiveServers(object data)
