@@ -7,6 +7,7 @@ using GameClient.Characters;
 using GameClient.Global;
 using GameClient.Menus;
 using GameClient.Renderable.GUI;
+using GameClient.Renderable.Layout;
 using GameClient.Renderable.Particle;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -97,7 +98,8 @@ namespace GameClient.Renderable.Scene
                 else
                 {
                     ResetAll();
-                    var mainmenu = GameEngine.DisplayStack.ToList().First();
+                    var mainmenu = GameEngine.DisplayStack.ToList().Last();
+                    GameEngine.DisplayStack = new LayoutStack<IBasicLayout>();
                     GameEngine.DisplayStack.Push(mainmenu);
                 }
                 return;
