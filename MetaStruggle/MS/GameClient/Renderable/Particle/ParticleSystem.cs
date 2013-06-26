@@ -21,7 +21,7 @@ namespace GameClient.Renderable.Particle
         #endregion
 
         #region Public Fields
-        public bool ActivateParticleSystem { get { return Emitter.Enabled; } set { Emitter.Enabled = value; } }
+        public bool ActivateParticleSystem { get { return Emitter.Enabled; } set { try {Emitter.Enabled = value;}catch{} } }
         public bool IsDrawable { get; set; }
         #endregion
 

@@ -111,14 +111,10 @@ namespace GameClient.Characters
             if (ParticlesCharacter != null && GameEngine.ParticleEngine.Particles.ContainsKey("defaultPerso"))
                 foreach (var kvp in GameEngine.ParticleEngine.Particles["defaultPerso"].Where(
                             kvp => !ParticlesCharacter.ContainsKey(kvp.Key)))
-                    try
-                    {
                         ParticlesCharacter.Add(kvp.Key, kvp.Value.Clone());
-                    }
-                    catch { }
             #endregion
 
-            foreach (var particleSystem in ParticlesCharacter.Where((kvp) => kvp.Key.EndsWith(MapName))
+            foreach (var particleSystem in ParticlesCharacter.Where((kvp) => kvp.Key!= null && kvp.Key.EndsWith(MapName))
                 .ToDictionary((kvp) => kvp.Key, kvp => kvp.Value))
             {
                 ParticlesCharacter[particleSystem.Key.Substring(0, particleSystem.Key.Length - MapName.Length)] =
