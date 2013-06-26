@@ -27,7 +27,7 @@ namespace GameClient.Menus
         {
             NumberOfPlayer = server[2];
             Server = server;
-            GameEngine.EventManager.Register("Network.Master.ServerList", UpdateNumberOfPlayer);
+            //GameEngine.EventManager.Register("Network.Master.ServerList", UpdateNumberOfPlayer);
             Client = new Client("metastruggle.eu", 5555, GameEngine.EventManager, new Parser().Parse);
             AskList();
             _oldTime = -1;
