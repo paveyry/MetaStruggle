@@ -20,8 +20,12 @@ namespace Network.IO
 
         public void Write(PacketHeader header)
         {
-            Write(header.ID);
-            Write(header.DataSize);
+            try
+            {
+                Write(header.ID);
+                Write(header.DataSize);
+            }
+            catch{}
         }
     }
 }

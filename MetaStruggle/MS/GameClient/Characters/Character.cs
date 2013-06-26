@@ -131,7 +131,8 @@ namespace GameClient.Characters
 
         public override void Update(GameTime gameTime)
         {
-            Dictionary<Movement, bool> movements = Enum.GetValues(typeof(Movement)).Cast<Movement>().ToDictionary(move => move, CallGetKey);
+            Dictionary<Movement, bool> movements = Enum.GetValues(typeof(Movement)).Cast<Movement>()
+                .ToDictionary(move => move, CallGetKey);
 
             #region Particle (à modifier ! -> Zone de test)
             if (ParticlesCharacter != null) //switch perso => prévoir default
@@ -196,6 +197,7 @@ namespace GameClient.Characters
             var pendingAnim = new List<Animation>();
 
             #region ManageKeyboard
+
             if (Playing && !IsDead)
             {
                 if (CurrentAnimation != Animation.Jump)
@@ -203,7 +205,8 @@ namespace GameClient.Characters
 
                 if (movements[Movement.SpecialAttack])
                 {
-                    if ((DateTime.Now - _lastSA).TotalMilliseconds > 700 && (DateTime.Now - _lastSA).TotalMilliseconds < 1000)
+                    if ((DateTime.Now - _lastSA).TotalMilliseconds > 700 &&
+                        (DateTime.Now - _lastSA).TotalMilliseconds < 1000)
                     {
                         switch (ModelName)
                         {
@@ -228,16 +231,16 @@ namespace GameClient.Characters
                                 {
                                     var ParticlesLame = ParticlesCharacter["Lame"];
                                     ParticlesLame.UpdatePositionEmitter(Position +
-                                                                              new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f,
-                                                                                          1, 0));
+                                                                        new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f,
+                                                                                    1, 0));
                                     ParticlesLame.ActivateParticleSystem = true;
                                 }
                                 else
                                 {
                                     var ParticlesLamecote = ParticlesCharacter["Lamecote"];
                                     ParticlesLamecote.UpdatePositionEmitter(Position +
-                                                                              new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f,
-                                                                                          1, 0));
+                                                                            new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f,
+                                                                                        1, 0));
                                     ParticlesLamecote.ActivateParticleSystem = true;
                                 }
                                 break;
@@ -257,14 +260,17 @@ namespace GameClient.Characters
                         _saDone = true;
                     }
                 }
+
                 if (movements[Movement.Attack])
                 {
                     pendingAnim.Add(Animation.Attack);
                     Attack(gameTime, false);
                 }
-                if (movements[Movement.Jump] && (!_jump || !_doublejump) && (DateTime.Now - _firstjump).Milliseconds > 300)
+
+                if (movements[Movement.Jump] && (!_jump || !_doublejump) &&
+                    (DateTime.Now - _firstjump).Milliseconds > 300)
                 {
-                    GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity / 1.4f));
+                    GiveImpulse(-(new Vector3(0, Speed.Y, 0) + _gravity/1.4f));
 
                     if (_jump)
                     {
@@ -287,20 +293,22 @@ namespace GameClient.Characters
                     pendingAnim.Add(Animation.Jump);
                     GameEngine.EventManager.ThrowNewEvent("Character.Jump", this);
                 }
+
                 if (movements[Movement.Right])
                 {
-                        running = true;
-                        MoveRight(gameTime);
-                        pendingAnim.Add(Animation.Run);
+                    running = true;
+                    MoveRight(gameTime);
+                    pendingAnim.Add(Animation.Run);
                 }
 
                 if (movements[Movement.Left])
                 {
-                        running = true;
-                        MoveLeft(gameTime);
-                        pendingAnim.Add(Animation.Run);
+                    running = true;
+                    MoveLeft(gameTime);
+                    pendingAnim.Add(Animation.Run);
                 }
             }
+
             #endregion
 
             #region Death
@@ -338,7 +346,6 @@ namespace GameClient.Characters
             #endregion
 
             #region Network
-
             if (Playing && Client != null && count % SyncRate == 0)
                 new SetCharacterPosition().Pack(Client.Writer, new CharacterPositionDatas { ID = ID, X = Position.X, Y = Position.Y, Yaw = Yaw, Anim = (byte)CurrentAnimation, Damages = Damages, Lives = (byte)(NumberMaxOfLives - NumberOfDeath) });
             else if (dI.HasValue)
@@ -422,7 +429,8 @@ namespace GameClient.Characters
                 character.Damages += damages;
 
                 if (Client != null)
-                    new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas { Damages = damages, ID = character.ID, X = impulse.X, Y = impulse.Y });
+                    new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas {ID = character.ID, X = impulse.X, Y = impulse.Y });
+                
                 switch (ModelName)
                 {
                     case "Ares":

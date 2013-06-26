@@ -94,7 +94,7 @@ namespace GameServer
         {
             var c = (CharacterPositionDatas) data;
 
-            foreach (var networkCharacter in Characters.GetRange(0, Characters.Count) /*.Where(e => e.ID != c.ID)*/)
+            foreach (var networkCharacter in Characters.GetRange(0, Characters.Count)/*.Where(e => e.ID != c.ID)*/)
             {
                 try
                 {
@@ -106,7 +106,7 @@ namespace GameServer
 
                     Characters.RemoveAll(ch => ch.ID == networkCharacter.ID);
 
-                    foreach (var p in Characters)
+                    foreach (var p in Characters.GetRange(0, Characters.Count))
                     {
                         new RemovePlayer().Pack(p.Client.Writer, networkCharacter.ID);
                     }
@@ -118,7 +118,7 @@ namespace GameServer
         {
             var c = (GiveImpulseDatas)data;
 
-            foreach (var networkCharacter in Characters.Where(e => e.ID == c.ID))
+            foreach (var networkCharacter in Characters.GetRange(0, Characters.Count).Where(e => e.ID == c.ID))
                 new GiveImpulse().Pack(networkCharacter.Client.Writer, c);
         }
     }

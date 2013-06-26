@@ -38,7 +38,6 @@ namespace GameServer
                 return;
             }
 
-
             if (Players.GetRange(0, Players.Count).Any(e => e.Name == playerBasicsDatas.Name))
             {
                 new JoinLobbyRefused().Pack(playerBasicsDatas.Client.Writer, "Un joueur possède le même nom");

@@ -21,7 +21,7 @@ namespace Network.Packet.Packets
         public void UnPack(Client client, Packet packet, IEventDispatcher eventDispatcher)
         {
             byte id = packet.Reader.ReadByte();
-            float x = packet.Reader.ReadSingle(), y = packet.Reader.ReadSingle(), d = packet.Reader.ReadSingle();
+            float x = packet.Reader.ReadSingle(), y = packet.Reader.ReadSingle(), d= packet.Reader.ReadSingle();
 
             eventDispatcher.ThrowNewEvent(EventID, new GiveImpulseDatas {ID = id, X = x, Y = y, Damages = d});
         }

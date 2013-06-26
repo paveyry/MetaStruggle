@@ -65,12 +65,17 @@ namespace GameClient.Global
         {
             if (dictionary == null)
                 return;
-            foreach (var kvp in dictionary)
+
+            try
             {
-                kvp.Value.IsDrawable = true;
-                ParticleSystemManager.AddParticleSystem(kvp.Value);
-                kvp.Value.InitializeParticle();
+                foreach (var kvp in dictionary)
+                {
+                    kvp.Value.IsDrawable = true;
+                    ParticleSystemManager.AddParticleSystem(kvp.Value);
+                    kvp.Value.InitializeParticle();
+                }
             }
+            catch {}
         }
         #endregion
 

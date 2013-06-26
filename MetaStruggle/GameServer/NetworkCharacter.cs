@@ -39,7 +39,5 @@ namespace GameServer
             Damages = 0;
             Gravity = 0.005f;
         }
-
-        
     }
 }

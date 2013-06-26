@@ -14,17 +14,16 @@ namespace Network
 
         public void ThrowNewEvent(string eventID, object data)
         {
-            if (_registered.ContainsKey(eventID))
+            if (!_registered.ContainsKey(eventID)) return;
+
+            try
+            {
                 foreach (var handler in _registered[eventID])
                 {
-                    //try
-                    //{
-                        handler.BeginInvoke(data, null, null);
-                    //}
-                    //catch
-                    //{
-                    //}
+                    handler.BeginInvoke(data, null, null);
                 }
+            }
+            catch {}
         }
 
         public void Register(string eventID, EventHandler handler)
