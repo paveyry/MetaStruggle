@@ -56,8 +56,6 @@ namespace GameClient.Renderable.Scene
                     if (character.Position.Y > maxY)
                         maxY = character.Position.Y;
                 }
-                else if (character.Position.Y < maxY)
-                    maxY = 2;
             }
             Target = new Vector3((maxX + minX) / 2, (maxY - 1) / 2, characters.First().Position.Z - 0.3f);
 
