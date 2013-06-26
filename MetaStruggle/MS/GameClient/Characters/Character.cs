@@ -429,7 +429,7 @@ namespace GameClient.Characters
                 character.Damages += damages;
 
                 if (Client != null)
-                    new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas {ID = character.ID, X = impulse.X, Y = impulse.Y });
+                    new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas {ID = character.ID, X = impulse.X, Y = impulse.Y, Damages = damages});
                 
                 switch (ModelName)
                 {
