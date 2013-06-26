@@ -70,17 +70,12 @@ namespace GameClient.Menus
         void ReceiveServers(object data)
         {
             Client = new Client("metastruggle.eu", 5555, GameEngine.EventManager, new Parser().Parse);
-<<<<<<< HEAD
+
             var listServers = (List<MasterServerDatas>)data;
             var servers = new List<string[]>();
             foreach (var s in listServers)
                 servers.Add(new[] { s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" + s.MaxPlayer });
-=======
-            var listServers = (List<MasterServerDatas>) data;
 
-            var servers = listServers.Select(s => new[] {s.Map, s.IP + ":" + s.Port, s.ConnectedPlayer + "/" + s.MaxPlayer}).ToList();
-            
->>>>>>> marche pas
             Client.Disconnect();
             Menu.Add("ListServer.Item", new ClassicList(new Rectangle(10, 10, 80, 50), servers, new Dictionary<string, int>
                 {
