@@ -47,13 +47,16 @@ namespace GameClient.Renderable.Scene
             float minY = float.MaxValue, maxY = float.MinValue;
             foreach (Character character in characters)
             {
-                if (character.Position.X < minX && !character.IsDead)
-                    minX = character.Position.X;
-                if (character.Position.X > maxX && !character.IsDead)
-                    maxX = character.Position.X;
-                if (character.Position.Y > maxY && !character.IsDead)
-                    maxY = character.Position.Y;
-                if (character.Position.Y < maxY && character.IsDead)
+                if (!character.IsDead)
+                {
+                    if (character.Position.X < minX)
+                        minX = character.Position.X;
+                    if (character.Position.X > maxX)
+                        maxX = character.Position.X;
+                    if (character.Position.Y > maxY)
+                        maxY = character.Position.Y;
+                }
+                else if (character.Position.Y < maxY && character.IsDead)
                     maxY = 2;
             }
             Target = new Vector3((maxX + minX) / 2, (maxY - 1) / 2, characters.First().Position.Z - 0.3f);
