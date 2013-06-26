@@ -3,7 +3,7 @@
   <EmitParticlesAutomatically>true</EmitParticlesAutomatically>
   <LerpEmittersPositionAndOrientation>true</LerpEmittersPositionAndOrientation>
   <LerpEmittersPositionAndOrientationOnNextUpdate>false</LerpEmittersPositionAndOrientationOnNextUpdate>
-  <ParticlesPerSecond>20</ParticlesPerSecond>
+  <ParticlesPerSecond>500</ParticlesPerSecond>
   <BurstParticles>0</BurstParticles>
   <BurstTime>0</BurstTime>
 </EmitterFields>

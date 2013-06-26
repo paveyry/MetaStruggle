@@ -305,7 +305,7 @@ namespace GameClient.Characters
             #endregion
 
             #region Death
-            if (!IsDead && Position.Y < -20 || !IsDead && Position.X < -38 || !IsDead && Position.X > 33)
+            if (!IsDead && Position.Y < -20 || !IsDead && Position.Y > 25 || !IsDead && Position.X < -38 || !IsDead && Position.X > 33)
             {
                 IsDead = true;
                 NumberOfDeath++;
@@ -414,7 +414,7 @@ namespace GameClient.Characters
             foreach (Character character in characters.Cast<Character>().Where(character => (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).Length() < 1.3 && (Yaw == BaseYaw ? Position - character.Position : character.Position - Position).X < 0))
             {
                 var impulse =
-                    new Vector3((float)((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages / 3) * 0.008f * (special ? 1 : 10f * gameTime.ElapsedGameTime.TotalMilliseconds / 1000)), special ? -Gravity * (1 + character.Damages) * 0.008f : 0.2f, 0);
+                    new Vector3((float)((Yaw == BaseYaw ? -1 : 1) * Gravity * (1 + character.Damages / 3) * 0.008f * (special ? 1 : 10f * gameTime.ElapsedGameTime.TotalMilliseconds / 1000)), special ? -Gravity * (1 + character.Damages) * 0.004f : 0.2f, 0);
 
                 character.GiveImpulse(impulse);
 
