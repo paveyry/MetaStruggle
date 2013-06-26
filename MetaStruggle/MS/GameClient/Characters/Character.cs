@@ -272,6 +272,7 @@ namespace GameClient.Characters
                         particlesDoubleJump.UpdatePositionEmitter(Position);
                         particlesDoubleJump.ActivateParticleSystem = true;
                         _doublejump = true;
+                        GameEngine.SoundCenter.Play("saut2");
                     }
                     else
                     {
@@ -280,6 +281,7 @@ namespace GameClient.Characters
                         particlesJump.ActivateParticleSystem = true;
                         _jump = true;
                         _firstjump = DateTime.Now;
+                        GameEngine.SoundCenter.Play("Jump");
                     }
 
                     pendingAnim.Add(Animation.Jump);
@@ -302,7 +304,7 @@ namespace GameClient.Characters
             #endregion
 
             #region Death
-            if (!IsDead && Position.Y < -20 || !IsDead && Position.Y > 25 || !IsDead && Position.X < -38 || !IsDead && Position.X > 33)
+            if (!IsDead && Position.Y < -20 || !IsDead && Position.X < -38 || !IsDead && Position.X > 33)
             {
                 IsDead = true;
                 NumberOfDeath++;
@@ -310,6 +312,7 @@ namespace GameClient.Characters
                 IsPermanentlyDead = (NumberMaxOfLives - NumberOfDeath <= 0);
                 DeathDate = DateTime.Now;
                 GameEngine.EventManager.ThrowNewEvent("Character.Die", this);
+                GameEngine.SoundCenter.Play("Die");
             }
 
             if (!IsPermanentlyDead && IsDead && (DateTime.Now - DeathDate).TotalMilliseconds > 5000)
@@ -426,7 +429,19 @@ namespace GameClient.Characters
 
                 if (Client != null)
                     new GiveImpulse().Pack(Client.Writer, new GiveImpulseDatas { Damages = damages, ID = character.ID, X = impulse.X, Y = impulse.Y });
-                GameEngine.SoundCenter.Play((ModelName == "Ares")? "sword": "degats");
+                switch (ModelName)
+                {
+                    case "Ares":
+                        GameEngine.SoundCenter.Play("sword");
+                        break;
+                    case "Zeus":
+                    case "Alex":
+                    case "Ironman":
+                    case "Spiderman":
+                        GameEngine.SoundCenter.Play("degats");
+                        break;
+                }
+
             }
         }
         #endregion
