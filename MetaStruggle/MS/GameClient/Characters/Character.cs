@@ -224,6 +224,24 @@ namespace GameClient.Characters
                             case "Poseidon":
                                 GameEngine.SoundCenter.Play("sword");
                                 break;
+                            case "Ares":
+                                if (Yaw == BaseYaw)
+                                {
+                                    var ParticlesLame = ParticlesCharacter["Lame"];
+                                    ParticlesLame.UpdatePositionEmitter(Position +
+                                                                              new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f,
+                                                                                          1, 0));
+                                    ParticlesLame.ActivateParticleSystem = true;
+                                }
+                                else
+                                {
+                                    var ParticlesLamecote = ParticlesCharacter["Lamecote"];
+                                    ParticlesLamecote.UpdatePositionEmitter(Position +
+                                                                              new Vector3((Yaw == BaseYaw) ? 1.2f : -1.2f,
+                                                                                          1, 0));
+                                    ParticlesLamecote.ActivateParticleSystem = true;
+                                }
+                                break;
                             default:
                                 break;
                         }
