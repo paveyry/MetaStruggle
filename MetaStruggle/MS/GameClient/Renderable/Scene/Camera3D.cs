@@ -53,7 +53,7 @@ namespace GameClient.Renderable.Scene
                         minX = character.Position.X;
                     if (character.Position.X > maxX)
                         maxX = character.Position.X;
-                    if (character.Position.Y > maxY)
+                    if (character.Position.Y > maxY && character.Position.Y < 25)
                         maxY = character.Position.Y;
                 }
             }

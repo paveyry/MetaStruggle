@@ -390,21 +390,15 @@ namespace GameClient.Characters
         private void MoveRight(GameTime gameTime)
         {
             Yaw = BaseYaw + MathHelper.Pi;
-            
-            if(CollideWithMap)
-                Position -= _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
-            else
-                Speed.X = -_latteralMove.X * 1000;
+
+            Position -= _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         private void MoveLeft(GameTime gameTime)
         {
             Yaw = BaseYaw;
 
-            if(CollideWithMap)
-                Position += _latteralMove*(float) gameTime.ElapsedGameTime.TotalMilliseconds;
-            else
-                Speed.X = _latteralMove.X * 1000;
+            Position += _latteralMove * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         void Attack(GameTime gameTime, bool special)
